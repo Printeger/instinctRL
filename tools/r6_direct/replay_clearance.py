@@ -163,10 +163,17 @@ def hazard_responses(nominal, protected, commands, measured, *, floor=.15, susta
         projected = (intent*measured[end:next_start]).sum(axis=1)/np.maximum(speed,.001)
         tracking = feasible & (projected >= .6*speed)
         recovered = confirmed_starts(tracking)
+        onset = int(end+recovered[0]) if len(recovered) else None
+        confirmation = onset+4 if onset is not None else None
+        elapsed = None
+        if onset is not None:
+            boundary = confirmation if sustained_opportunity else onset
+            elapsed = (boundary+1-end-int(eligible[0]))*.1
         events.append(dict(start_step=int(start), first_clear_step=int(end),
                            intervention_after_s=float(improved[0]*.1) if len(improved) else None,
                            first_feasible_request_step=int(end+eligible[0]) if len(eligible) else None,
-                           recovery_after_s=float((recovered[0]+1-eligible[0])*.1) if len(recovered) else None))
+                           recovery_onset_step=onset, recovery_confirmed_step=confirmation,
+                           recovery_after_s=elapsed))
     return dict(risk_windows=len(events), events=events)
 
 
@@ -276,7 +283,9 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
         opportunities = frozen['windows']
         stop_windows = frozen.get('stop_windows', [])
         for row in opportunities:
-            if (set(row) != {'id', 'layout', 'start_step', 'end_step'}
+            fields = {'id', 'layout', 'start_step', 'end_step'}
+            if (set(row) not in (fields, fields | {'lane'})
+                    or ('lane' in row and (type(row['lane']) is not int or not 0 <= row['lane'] < LANES))
                     or type(row['start_step']) is not int or type(row['end_step']) is not int
                     or not 0 <= row['start_step'] < row['end_step']):
                 raise ValueError('invalid predeclared progress window')
@@ -339,7 +348,7 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                                              floor=floor)
                 fixed = {}
                 for row in opportunities:
-                    if row['layout'] == score['layout']:
+                    if row['layout'] == score['layout'] and row.get('lane', lane) == lane:
                         finish = row['end_step']
                         if finish > len(rows):
                             raise ValueError('predeclared window exceeds workload horizon')

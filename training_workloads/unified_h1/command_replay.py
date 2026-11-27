@@ -397,10 +397,7 @@ def long_contract(params):
     opportunities = json.loads(checked(protocol['progress_opportunities']).read_bytes())
     if (opportunities['schema_version'] != 'instinctrl-frozen-progress-opportunities/1'
             or opportunities['run_id'] != params['experiment_id']
-            or {row['layout'] for row in opportunities['windows']} != set(COMMAND_LAYOUTS)
-            or {row['lane'] for row in opportunities['stop_windows']} != set(range(LANES))
-            or any(not 0 <= row['start_step'] < row['end_step'] <= 18000 for row in opportunities['windows'])
-            or any(not 0 < row['start_step'] <= row['end_step']-20 <= 17980 for row in opportunities['stop_windows'])):
+            or set(opportunities) != {'schema_version', 'run_id', 'windows', 'stop_windows'}):
         raise ValueError('COMMAND_REPLAY_LONG_PROGRESS_PLAN')
     gates = json.loads(checked(protocol['acceptance_gates']).read_bytes())
     limits = {'minimum_clearance_m', 'maximum_tracking_rmse_m_s', 'minimum_progress_fraction',
@@ -416,18 +413,53 @@ def long_contract(params):
                 or any(type(gate[name]) not in (int, float) or not math.isfinite(gate[name]) or gate[name] <= 0
                        for name in limits)):
             raise ValueError('COMMAND_REPLAY_LONG_LAYOUT_GATES')
-    _, streams = load_lane_streams(params['stream'], require_independent=True)
+    layouts, streams = load_lane_streams(params['stream'], require_independent=True)
     if any(stream['duration_ms'] != 1_800_000 for stream in streams):
         raise ValueError('COMMAND_REPLAY_LONG_DURATION')
     stream_meta = json.loads(checked(params['stream']).read_bytes())['generator']
     if stream_meta.get('planned_position_limits') != PLANNED_POSITION_LIMITS:
         raise ValueError('COMMAND_REPLAY_LONG_POSITION_LIMITS')
+    verify_long_opportunities(opportunities, layouts, streams)
     transitions = LANES*18000
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct', operation='dynamic',
                 mode=MODE, parameters=params, budgets=dict(wall_seconds=7200, live_process_starts=1,
                     simulator_initializations=1, initialization_ticks=10, training_transitions=0,
                     nontraining_transitions=transitions, optimizer_updates=0, checkpoint_writes=0,
                     explicit_resets=1, automatic_resets=transitions))
+
+
+def verify_long_opportunities(plan, layouts, streams):
+    """Bind each opportunity to the frozen input before a simulator starts."""
+    scheduled = [[math.hypot(*stream['events'][i]['velocity_w_m_s'][:2])
+                  for i in sampled_events(stream)[:-1]] for stream in streams]
+    horizon = len(scheduled[0])
+    progress, stops, identities = set(), set(), set()
+    for section in ('windows', 'stop_windows'):
+        for row in plan[section]:
+            start, end = row['start_step'], row['end_step']
+            if (type(start) is not int or type(end) is not int or not 0 <= start < end <= horizon
+                    or not isinstance(row['id'], str) or not row['id'] or row['id'] in identities):
+                raise ValueError('COMMAND_REPLAY_LONG_OPPORTUNITY_WINDOW')
+            identities.add(row['id'])
+            lane = row.get('lane')
+            if 'lane' in row and (type(lane) is not int or not 0 <= lane < len(layouts)):
+                raise ValueError('COMMAND_REPLAY_LONG_OPPORTUNITY_LANE')
+            if section == 'windows':
+                expected = {'id', 'layout', 'start_step', 'end_step'}
+                if set(row) not in (expected, expected | {'lane'}):
+                    raise ValueError('COMMAND_REPLAY_LONG_PROGRESS_PLAN')
+                lanes = [i for i, layout in enumerate(layouts)
+                         if layout == row['layout'] and lane in (None, i)]
+                if not lanes or any(not any(speed > .03 for speed in scheduled[i][start:end]) for i in lanes):
+                    raise ValueError('COMMAND_REPLAY_LONG_PROGRESS_WITHOUT_INPUT')
+                progress.update(lanes)
+            else:
+                if (set(row) != {'id', 'lane', 'start_step', 'end_step'} or start == 0 or end-start < 20
+                        or scheduled[lane][start-1] <= .03 or any(scheduled[lane][start:end])):
+                    raise ValueError('COMMAND_REPLAY_LONG_STOP_WITHOUT_RELEASE')
+                stops.add(lane)
+    if progress != stops or stops != set(range(len(layouts))):
+        raise ValueError('COMMAND_REPLAY_LONG_MISSING_OPPORTUNITIES')
 
 
 def contract(params):

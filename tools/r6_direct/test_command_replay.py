@@ -312,6 +312,10 @@ def test_hazard_recovery_tracks_the_latest_direction():
     assert event['intervention_after_s'] == pytest.approx(.1)
     assert event['first_feasible_request_step'] == 5
     assert event['recovery_after_s'] == pytest.approx(.4)
+    confirmed = hazard_responses(nominal, protected, intent, observed, sustained_opportunity=True)['events'][0]
+    assert confirmed['recovery_onset_step'] == 8
+    assert confirmed['recovery_confirmed_step'] == 12
+    assert confirmed['recovery_after_s'] == pytest.approx(.8)
 
 
 def test_mover_clock_preserves_three_decimal_places_at_thirty_minutes():
@@ -788,6 +792,29 @@ def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     rows[80]['mover_position_w'][0] = [0., 2.2, 0.]
     with pytest.raises(ValueError, match='CROSSING_READBACK'):
         verify_pulse_and_crossing(*args)
+
+
+def test_long_opportunities_match_each_lanes_frozen_commands():
+    from training_workloads.unified_h1.command_replay import verify_long_opportunities
+
+    layouts = ['room_corner', 'room_corner']
+    streams = [dict(duration_ms=4000, events=[dict(t_ms=0, velocity_w_m_s=[.2,0.,0.]),
+                                            dict(t_ms=release, velocity_w_m_s=[0.,0.,0.])])
+               for release in (1000, 1300)]
+    plan = dict(windows=[dict(id='early', layout='room_corner', start_step=0, end_step=8),
+                        dict(id='late', layout='room_corner', lane=1, start_step=10, end_step=12)],
+                stop_windows=[dict(id=f'stop-{lane}', lane=lane, start_step=start, end_step=start+20)
+                              for lane,start in enumerate((10,13))])
+    verify_long_opportunities(plan, layouts, streams)
+
+    plan['windows'][1]['lane'] = 0
+    with pytest.raises(ValueError, match='LONG_PROGRESS_WITHOUT_INPUT'):
+        verify_long_opportunities(plan, layouts, streams)
+
+    plan['windows'][1]['lane'] = 1
+    plan['stop_windows'][1]['start_step'] = 12
+    with pytest.raises(ValueError, match='LONG_STOP_WITHOUT_RELEASE'):
+        verify_long_opportunities(plan, layouts, streams)
 
 
 def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
