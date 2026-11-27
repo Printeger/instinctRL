@@ -299,7 +299,7 @@ def novel_contract(params):
     if paired:
         execution = (comparison[0],)
     elif params['experiment_id'] == NOVEL_CONFIRM_ID:
-        execution = (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION)
+        execution = (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
