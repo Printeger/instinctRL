@@ -10,7 +10,7 @@ from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
 from training_workloads.unified_h1.command_replay import (
-    EARLY_RETREAT_EXECUTION, RECOVERY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION,
+    CLEAR_PASS_EXECUTION, EARLY_RETREAT_EXECUTION, RECOVERY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION,
     TUBE_CONFIRM_EXECUTION, arm_execution, route_layouts,
 )
 from training_workloads.unified_h1.command_replay_audit import body_to_world
@@ -62,6 +62,7 @@ def reconstruct(initial, row, previous, lane, rays, triangles):
 
 def audit(binding, arm, lane, start, end):
     import torch
+    from instinctlab.control.governor import decode_governor
     from instinctlab.control.ics import ICSConfig, attenuate_command
     from instinctlab.training.hover_reflex import HoverReflex
 
@@ -100,7 +101,7 @@ def audit(binding, arm, lane, start, end):
     reflex._rays.copy_(ray_tensor.reshape(59, 360, 3)[::3].reshape(-1,3))
     execution = arm_execution(params, arm)
     if execution not in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION,
-                         EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION):
+                         EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION, CLEAR_PASS_EXECUTION):
         raise ValueError('shadow audit is registered only for the v2 sweep settings')
     config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True)
     results = []
@@ -115,11 +116,16 @@ def audit(binding, arm, lane, start, end):
         heading = raw/raw.norm().clamp_min(.001)
         tangent = torch.stack((-retreat[1],retreat[0],retreat[2]))
         recorded = torch.tensor(row['v_gov_b'][lane])
-        proposals = torch.stack([recorded, -.30*heading, .30*retreat,
-                                 .30*tangent, -.30*tangent])
+        selected = decode_governor(torch.tensor([row['selected_action'][lane]]), state).v_gov_b[0]
+        if not torch.allclose(selected, recorded, atol=2.e-6, rtol=0.):
+            raise ValueError('recorded selected action does not reproduce the governor')
+        original = decode_governor(torch.tensor([row['action'][lane]]), state).v_gov_b[0]
+        proposals = torch.stack([recorded, original, raw, -.30*heading, .30*retreat,
+                                 .30*tangent, -.30*tangent, torch.zeros_like(raw)])
         result = attenuate_command(lidar.expand(len(proposals),-1,-1,-1), ray_tensor, proposals, .1, config)
         outcomes = {}
-        for j, name in enumerate(('recorded_governor', 'reverse', 'away_from_return', 'tangent_left', 'tangent_right')):
+        for j, name in enumerate(('recorded_governor', 'actor_without_escape', 'latest_command', 'reverse',
+                                  'away_from_return', 'tangent_left', 'tangent_right', 'hold')):
             outcomes[name] = dict(beta=float(result.metrics['beta'][j,0]),
                                 issued_w_m_s=body_to_world(row['attitude_wxyz'][lane], result.v_final_b[j].tolist()))
         results.append(dict(step=i, facing_closure=float(retreat@heading),
