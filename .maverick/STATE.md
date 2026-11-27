@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。首判 6/6。B/C 固定三臂复现街道 8/8 接触。B 同权重提前制动在原种子和新布局街道均 0/8 接触，带风险换向 8/8。用户明确以 crazy command generator 代替当前阶段真人数据。62 s 同权重扫掠对照两臂零接触、零重置，候选门洞 8/8，转角 1/8，走廊平均最远 4.98 m，正式验收仍开放。下一批 110 s 验证连续收近、反复横穿和越过原 episode 上限；未启动训练。 [开发证据](../docs/experiments/instinct-continuous-command/crazy/REPORT.md) · [110 秒方案](../docs/experiments/instinct-continuous-command/endurance/PLAN.md)
+任务 `instinctrl-continuous-command`。首判 6/6。本阶段只使用仿真的 Crazy Command Generator。B/C 冻结三臂复现街道 8/8 接触。提前制动后两个街道种子均 0/8。B 同权重提前撤离通过 36 s 回程，并在 110 s 五布局对照完成 32/32 无接触、无重置首飞。零令换侧候选新增街道两次接触，拒绝。提前撤离仍只有 1/8 过角，街道最小策略拍包络净空 −0.041 m，最大零令漂移 0.805 m。逐物理拍净空对照已启动，长时留出和完整 R6 待验收。 [110 秒结果](../docs/experiments/instinct-continuous-command/hover/REPORT.md) · [净空采集](../docs/experiments/instinct-continuous-command/clearance/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
