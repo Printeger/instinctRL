@@ -5,9 +5,10 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTION, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CROSSING_START_M, LANES, LAYOUTS,
-    INTERCEPT_EXECUTIONS, LONG_PREFIX, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
+    INTERCEPT_EXECUTIONS, LONG_PREFIX, NOVEL_PREFIX, OFFSET_STOP_EXECUTION, RANK_EXECUTIONS, REARM_EXECUTIONS,
+    STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
 )
 
@@ -328,11 +329,16 @@ def audit(output, params, counters):
                 continued = row.get('escape_intercept_continued', [False]*LANES)
                 if len(continued) != LANES or any(type(value) is not bool for value in continued):
                     raise ValueError('COMMAND_REPLAY_INTERCEPT_CONTINUATION_LANES')
-                if ('escape_command_handoff' in row) != (model['execution'] == COMMAND_HANDOFF_EXECUTION):
+                if ('escape_command_handoff' in row) != (model['execution'] in COMMAND_HANDOFF_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HANDOFF_BINDING')
                 handoff = row.get('escape_command_handoff', [False]*LANES)
                 if len(handoff) != LANES or any(type(value) is not bool for value in handoff):
                     raise ValueError('COMMAND_REPLAY_HANDOFF_LANES')
+                if ('escape_offset_stop' in row) != (model['execution'] == OFFSET_STOP_EXECUTION):
+                    raise ValueError('COMMAND_REPLAY_OFFSET_STOP_BINDING')
+                offset = row.get('escape_offset_stop', [False]*LANES)
+                if len(offset) != LANES or any(type(value) is not bool for value in offset):
+                    raise ValueError('COMMAND_REPLAY_OFFSET_STOP_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -347,6 +353,8 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_BEHAVIOR')
                     if released[lane] and not held[lane]:
                         raise ValueError('COMMAND_REPLAY_STOP_RELEASE_BEHAVIOR')
+                    if offset[lane] and not held[lane]:
+                        raise ValueError('COMMAND_REPLAY_OFFSET_STOP_BEHAVIOR')
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)

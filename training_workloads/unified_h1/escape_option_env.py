@@ -12,7 +12,7 @@ from instinctlab.control.escape_recovery import (
     EARLY_RETREAT_25_VERSION, EscapeRecovery,
     FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
-    LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
+    LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, OFFSET_STOP_25_VERSION,
     PRIORITY_INTERCEPT_25_VERSION, RANKED_RETURN_25_VERSION, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION,
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION,
@@ -21,7 +21,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-PRIORITY_INTERCEPTS = (PRIORITY_INTERCEPT_25_VERSION, COMMAND_HANDOFF_25_VERSION)
+COMMAND_HANDOFFS = (COMMAND_HANDOFF_25_VERSION, OFFSET_STOP_25_VERSION)
+PRIORITY_INTERCEPTS = (PRIORITY_INTERCEPT_25_VERSION, *COMMAND_HANDOFFS)
 COMMITTED_INTERCEPTS = (COMMITTED_INTERCEPT_25_VERSION, *PRIORITY_INTERCEPTS)
 RESERVE_INTERCEPTS = (RESERVE_INTERCEPT_25_VERSION, *COMMITTED_INTERCEPTS)
 ALIGNED_INTERCEPTS = (ALIGNED_INTERCEPT_25_VERSION, *RESERVE_INTERCEPTS)
@@ -102,9 +103,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 turn_fallback=version in (TURN_FIT_25_VERSION, *INTERCEPTS),
                                                 intercept=version in INTERCEPTS, align_intercept=version in ALIGNED_INTERCEPTS,
                                                 intercept_reserve=version in RESERVE_INTERCEPTS,
-                                                command_handoff=version == COMMAND_HANDOFF_25_VERSION,
+                                                command_handoff=version in COMMAND_HANDOFFS,
                                                 commit_intercept=version in COMMITTED_INTERCEPTS,
-                                                retreat_priority=version in PRIORITY_INTERCEPTS)
+                                                retreat_priority=version in PRIORITY_INTERCEPTS,
+                                                offset_stop=version == OFFSET_STOP_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -191,6 +193,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                         self.escape_option.intercept_continued.detach().clone())
                 if self.escape_option.command_handoff:
                     self.extras['pre_reset']['escape_option']['handoff'] = self.escape_option.handed_off.detach().clone()
+                if self.escape_option.offset_stop:
+                    self.extras['pre_reset']['escape_option']['offset_stop'] = self.escape_option.offset_stopped.detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:

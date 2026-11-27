@@ -654,6 +654,31 @@ def test_intercept_protects_retreat_direction_without_hiding_a_blocked_retreat(m
     assert selected[2].tolist() == pytest.approx([0., .50, .50, .50])
 
 
+def test_zero_input_stays_put_only_with_clearance_from_the_whole_pass_line():
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=4, device='cpu', dtype=torch.float32, recenter=False,
+                            clear_pass=True, rank_return=True, offset_stop=True)
+    option.applied[:] = True
+    option.remaining[:] = 12
+    lidar = torch.ones(4, 12, 2, 2)
+    lidar[:, 0::3] = 1.3
+    lidar[2, 9, 0, 0] = .75
+    state = torch.zeros(4, 52)
+    state[3, 45] = .1
+    selected = torch.tensor([[0., .8, .5, .5]]*4)
+    position = torch.tensor([[1.3, -1.6], [.97, -1.6], [1.3, -1.6], [1.3, -1.6]])
+    coast = torch.tensor([[.28, 0.]]*4)
+    motion = torch.tensor([[0., .58]]*4)
+    mask = option.stop_for_offset_pass(lidar, state, selected, torch.arange(4), position,
+                                       motion, coast, torch.full((4,), .34))
+    assert mask.tolist() == [True, False, False, False]
+    assert option.offset_stopped.tolist() == mask.tolist()
+    assert option.applied.tolist() == [False, True, True, True]
+    assert selected[0].tolist() == pytest.approx([0., .50, .50, .50])
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing

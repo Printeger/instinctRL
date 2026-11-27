@@ -38,6 +38,7 @@ RESERVE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v3'
 COMMITTED_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v4'
 PRIORITY_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v5'
 COMMAND_HANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-command-handoff-v1'
+OFFSET_STOP_25_VERSION = 'm4-escape-brake-tube-p25-offset-stop-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -48,7 +49,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25, INTERCEPT_25_VERSION: 25,
                        ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25,
                        COMMITTED_INTERCEPT_25_VERSION: 25, PRIORITY_INTERCEPT_25_VERSION: 25,
-                       COMMAND_HANDOFF_25_VERSION: 25}
+                       COMMAND_HANDOFF_25_VERSION: 25, OFFSET_STOP_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -61,7 +62,8 @@ class EscapeRecovery(EscapeOption):
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
-                 intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False):
+                 intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
+                 offset_stop=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -92,6 +94,9 @@ class EscapeRecovery(EscapeOption):
             self.intercept_direction = torch.zeros_like(self.direction)
             self.intercept_continued = torch.zeros_like(self.applied)
         self.command_handoff = command_handoff
+        self.offset_stop = offset_stop
+        if offset_stop:
+            self.offset_stopped = torch.zeros_like(self.applied)
         if command_handoff:
             self.handed_off = torch.zeros_like(self.applied)
         if intercept:
@@ -152,6 +157,8 @@ class EscapeRecovery(EscapeOption):
             self.command_coast[lanes] = 0.
         if self.command_handoff:
             self.handed_off[lanes] = False
+        if self.offset_stop:
+            self.offset_stopped[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -553,10 +560,27 @@ class EscapeRecovery(EscapeOption):
         usable = (along_retreat >= .12) & (current.metrics['emergency'].flatten() == 0.)
         return lanes[usable]
 
+    def stop_for_offset_pass(self, lidar, state, selected, lanes, position, motion, coast, radius):
+        zero = state[lanes, 45:48].norm(dim=1) <= .001
+        ordinary = self.applied[lanes] & ~self.ranked[lanes] & ~self.retreating[lanes] & ~self.braking[lanes]
+        normal = torch.stack((-motion[:, 1], motion[:, 0]), dim=1)/motion.norm(dim=1, keepdim=True)
+        cross = (position*normal).sum(dim=1)
+        after_stop = cross-.35*(coast*normal).sum(dim=1)
+        separated = (cross*after_stop > 0.) & (torch.minimum(cross.abs(), after_stop.abs())-radius >= .65)
+        scans = lidar[lanes]
+        reliable = (scans[:, 10] > .5) & (scans[:, 11] > .55)
+        nearest = scans[:, 9].masked_fill(~reliable, torch.inf).flatten(1).amin(dim=1)
+        cancel = zero & ordinary & separated & (nearest >= .85)
+        self.hold_neutral(lanes[cancel], selected)
+        self.offset_stopped[lanes[cancel]] = True
+        return cancel
+
     def avoid_interception(self, lidar, state, selected, config):
         from .escape_passage import intercept_scores, moving_intercepts
 
         self.intercepted.zero_()
+        if self.offset_stop:
+            self.offset_stopped.zero_()
         eligible = (state[:, -1] <= .04) & (state.reshape(-1, 4, 13)[:, :, :3].norm(dim=2).amax(dim=1) <= .50)
         if self.clear_pass:
             eligible &= ~self.holding
@@ -574,6 +598,11 @@ class EscapeRecovery(EscapeOption):
             self.continue_intercept(lidar, state, selected, config, observed)
         if not len(lanes):
             return
+        if self.offset_stop:
+            keep = ~self.stop_for_offset_pass(lidar, state, selected, lanes, position, motion, coast, radius)
+            lanes, position, motion, coast, radius = (x[keep] for x in (lanes, position, motion, coast, radius))
+            if not len(lanes):
+                return
         scans, history = lidar[lanes], state[lanes]
         original = self.issued(scans, history, selected[lanes], config)
         score = intercept_scores(position, motion, coast, radius, original.v_final_b[:, None])[:, 0]

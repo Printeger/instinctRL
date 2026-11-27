@@ -34,6 +34,7 @@ NOVEL_RESERVE_ID = NOVEL_PREFIX+'06'
 NOVEL_HANDOFF_ID = NOVEL_PREFIX+'07'
 NOVEL_COMMITTED_ID = NOVEL_PREFIX+'08'
 NOVEL_PRIORITY_ID = NOVEL_PREFIX+'09'
+NOVEL_OFFSET_STOP_ID = NOVEL_PREFIX+'10'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -74,7 +75,9 @@ RESERVE_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v3'
 COMMITTED_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v4'
 PRIORITY_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v5'
 COMMAND_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-command-handoff-v1'
-PRIORITY_INTERCEPT_EXECUTIONS = (PRIORITY_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION)
+OFFSET_STOP_EXECUTION = 'm4-escape-brake-tube-p25-offset-stop-v1'
+COMMAND_HANDOFF_EXECUTIONS = (COMMAND_HANDOFF_EXECUTION, OFFSET_STOP_EXECUTION)
+PRIORITY_INTERCEPT_EXECUTIONS = (PRIORITY_INTERCEPT_EXECUTION, *COMMAND_HANDOFF_EXECUTIONS)
 COMMITTED_INTERCEPT_EXECUTIONS = (COMMITTED_INTERCEPT_EXECUTION, *PRIORITY_INTERCEPT_EXECUTIONS)
 INTERCEPT_EXECUTIONS = (INTERCEPT_EXECUTION, ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION,
                         *COMMITTED_INTERCEPT_EXECUTIONS)
@@ -322,7 +325,8 @@ def novel_contract(params):
                   NOVEL_RESERVE_ID: (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION),
                   NOVEL_COMMITTED_ID: (RESERVE_INTERCEPT_EXECUTION, COMMITTED_INTERCEPT_EXECUTION),
                   NOVEL_PRIORITY_ID: (COMMITTED_INTERCEPT_EXECUTION, PRIORITY_INTERCEPT_EXECUTION),
-                  NOVEL_HANDOFF_ID: PRIORITY_INTERCEPT_EXECUTIONS}.get(params['experiment_id'])
+                  NOVEL_HANDOFF_ID: (PRIORITY_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION),
+                  NOVEL_OFFSET_STOP_ID: COMMAND_HANDOFF_EXECUTIONS}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
@@ -667,6 +671,8 @@ def run(backend, params):
                         tensors['escape_intercept_continued'] = option['intercept_continued']
                     if 'handoff' in option:
                         tensors['escape_command_handoff'] = option['handoff']
+                    if 'offset_stop' in option:
+                        tensors['escape_offset_stop'] = option['offset_stop']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
