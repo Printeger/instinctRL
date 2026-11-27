@@ -1,0 +1,18 @@
+{
+  "schema_version": "instinctrl-frozen-progress-opportunities/1",
+  "run_id": "R6-DIRECT-INSTINCT-GPU-COMMAND-RANK-01",
+  "windows": [
+    {"id":"room-door-approach","layout":"room_corner","start_step":25,"end_step":90},
+    {"id":"tree-aisle-before-offset","layout":"trunk_aisle","start_step":15,"end_step":60},
+    {"id":"street-before-first-crossing","layout":"street_gap","start_step":20,"end_step":28},
+    {"id":"corridor-after-offset","layout":"corridor","start_step":185,"end_step":278},
+    {"id":"pipe-axial-after-offset","layout":"open_tube","start_step":160,"end_step":260}
+  ],
+  "stop_windows": [
+    {"id":"room-release","lane":2,"start_step":1011,"end_step":1046},
+    {"id":"woods-release","lane":9,"start_step":330,"end_step":358},
+    {"id":"street-release","lane":19,"start_step":784,"end_step":821},
+    {"id":"corridor-release","lane":27,"start_step":595,"end_step":623},
+    {"id":"pipe-release","lane":30,"start_step":637,"end_step":674}
+  ]
+}

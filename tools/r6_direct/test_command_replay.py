@@ -196,6 +196,24 @@ def test_frozen_opportunities_keep_missed_ticks_in_the_denominator():
     assert result['measured_progress_m'] == pytest.approx(.28)
 
 
+def test_frozen_stop_rejects_a_short_stationary_spell_and_a_reset():
+    import numpy as np
+    from tools.r6_direct.replay_clearance import frozen_stop
+
+    commands = np.zeros((31, 3))
+    commands[0, 0] = .3
+    velocities = commands.copy()
+    velocities[8, 0] = .1
+    before = np.zeros_like(commands)
+    after = np.cumsum(velocities*.1, axis=0)
+    passed = frozen_stop(before, after, velocities, commands, 31, 1, 31)
+    assert passed['stopped_after_s'] == pytest.approx(.9)
+    assert passed['max_drift_m'] == pytest.approx(.04)
+    failed = frozen_stop(before, after, velocities, commands, 15, 1, 31)
+    assert not failed['first_flight_completed_window']
+    assert failed['stopped_after_s'] is None
+
+
 def test_mover_clock_preserves_three_decimal_places_at_thirty_minutes():
     from types import SimpleNamespace
     import torch
@@ -380,3 +398,15 @@ def test_hover_path_stops_only_when_the_legacy_projection_loses_clearance(monkey
     assert selected[1].tolist() == pytest.approx([0., .8, .5, .5])
     assert option.holding.tolist() == [True, False]
     assert option.applied.tolist() == [False, True]
+
+
+def test_releasing_old_escape_requires_clear_fresh_scan_evidence():
+    import torch
+    from instinctlab.control.escape_passage import clear_to_end_escape
+
+    lidar = torch.ones(4, 12, 59, 360)
+    lidar[:, 0::3] *= 1.2
+    lidar[1, 9, 30, 180] = .7
+    lidar[2, 11] = 0.
+    lidar[3, 9] = .95
+    assert clear_to_end_escape(lidar, torch.zeros(4, 52)).tolist() == [True, False, False, False]

@@ -108,6 +108,23 @@ def frozen_opportunity(velocities, commands, first_flight_steps, start, end):
                 observed_only_rmse_m_s=float(np.sqrt(np.mean(error**2))) if len(error) else None)
 
 
+def frozen_stop(before, after, velocities, commands, first_flight_steps, start, end):
+    """Require a stable stop across the rest of a predeclared zero-input window."""
+    if start <= 0 or end-start < 20 or end > len(commands):
+        raise ValueError('scheduled stop must cover two seconds of recorded zero input')
+    if np.linalg.norm(commands[start-1]) <= .03 or np.any(commands[start:end]):
+        raise ValueError('scheduled stop does not begin with a move-to-zero change')
+    observed_end = min(first_flight_steps, end)
+    if observed_end <= start:
+        return dict(first_flight_completed_window=False, stopped_after_s=None, max_drift_m=None)
+    speed = np.linalg.norm(velocities[start:observed_end], axis=1)
+    stable = np.flatnonzero(np.logical_and.accumulate((speed <= .07)[::-1])[::-1])
+    stopped = (int(stable[0])+1)*.1 if len(stable) >= 5 and observed_end == end else None
+    drift = np.linalg.norm(after[start:observed_end]-before[start], axis=1)
+    return dict(first_flight_completed_window=observed_end == end, stopped_after_s=stopped,
+                max_drift_m=float(drift.max()))
+
+
 def measured_clearance(samples, lane, end, triangles, *, crossing):
     # Neighboring intervals share endpoints throughout the first flight.
     starts = samples[:end, :-1, lane].reshape(-1, samples.shape[-1])
@@ -144,13 +161,16 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
         raise ValueError('unrecognized collider envelope')
     radius = envelope['maximum_rest_pose_rotation_envelope_m']
     opportunities = []
+    stop_windows = []
     if opportunity_pin is not None:
         frozen = read(opportunity_pin)
-        if (set(frozen) != {'schema_version', 'run_id', 'windows'}
+        if (set(frozen) not in ({'schema_version', 'run_id', 'windows'},
+                              {'schema_version', 'run_id', 'windows', 'stop_windows'})
                 or frozen['schema_version'] != 'instinctrl-frozen-progress-opportunities/1'
                 or frozen['run_id'] != ctx['plan']['run_id'] or not frozen['windows']):
             raise ValueError('invalid predeclared progress opportunity identity')
         opportunities = frozen['windows']
+        stop_windows = frozen.get('stop_windows', [])
         for row in opportunities:
             if (set(row) != {'id', 'layout', 'start_step', 'end_step'}
                     or type(row['start_step']) is not int or type(row['end_step']) is not int
@@ -158,6 +178,14 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
                 raise ValueError('invalid predeclared progress window')
         if len({row['id'] for row in opportunities}) != len(opportunities):
             raise ValueError('duplicate predeclared progress window')
+        seen = set()
+        for row in stop_windows:
+            if (set(row) != {'id', 'lane', 'start_step', 'end_step'} or row['id'] in seen
+                    or type(row['lane']) is not int or not 0 <= row['lane'] < LANES
+                    or type(row['start_step']) is not int or type(row['end_step']) is not int
+                    or not 0 < row['start_step'] < row['end_step']):
+                raise ValueError('invalid scheduled stop')
+            seen.add(row['id'])
 
     geometry_pin = pin(ctx['output']/'initial_preflight/geometry.json')
     geometry = read(geometry_pin)
@@ -213,6 +241,11 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
                                    closest_surface='mover' if mover is not None and mover[step] < static[step] else 'static',
                                    tracking_in_feasible_moving_windows=tracking,
                                    externally_scheduled_progress=fixed))
+                if stop_windows:
+                    values[-1]['externally_scheduled_stops'] = {
+                        row['id']: frozen_stop(before[:, lane], roots[:, lane], velocities[:, lane], commands[:, lane],
+                                               end, row['start_step'], row['end_step'])
+                        for row in stop_windows if row['lane'] == lane}
                 if dense is not None:
                     values[-1]['physics_tick_clearance'] = dict(
                         source=dense_pin, sample_period_ms=5,

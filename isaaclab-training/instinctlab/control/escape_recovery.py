@@ -30,13 +30,15 @@ RECOVERY_REARM_25_VERSION = 'm4-escape-brake-tube-p25-recovery-rearm-v1'
 RANKED_RETURN_25_VERSION = 'm4-escape-brake-tube-p25-ranked-return-v1'
 CURVED_PASS_25_VERSION = 'm4-escape-brake-tube-p25-curved-pass-v1'
 HOVER_PATH_25_VERSION = 'm4-escape-brake-tube-p25-hover-path-v1'
+STOP_RELEASE_25_VERSION = 'm4-escape-brake-tube-p25-stop-release-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
                        BRAKE_FORWARD_25_VERSION: 25, BRAKE_TUBE_25_VERSION: 25, BRAKE_TUBE_CONFIRM_25_VERSION: 25,
                        RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25,
                        SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25,
-                       RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25}
+                       RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25,
+                       STOP_RELEASE_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -47,7 +49,8 @@ class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
-                 clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False):
+                 clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
+                 stop_release=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -67,6 +70,10 @@ class EscapeRecovery(EscapeOption):
         self.clear_pass = clear_pass
         self.curved_pass = curved_pass
         self.hover_path = hover_path
+        self.stop_release = stop_release
+        if stop_release:
+            self.release_checks = torch.zeros_like(self.remaining)
+            self.released = torch.zeros_like(self.applied)
         if clear_pass:
             self.holding = torch.zeros_like(self.applied)
         self.recenter_rearm = recenter_rearm
@@ -102,6 +109,9 @@ class EscapeRecovery(EscapeOption):
             self.rearm_steps[lanes] = 0
         if self.rank_return:
             self.ranked[lanes] = False
+        if self.stop_release:
+            self.release_checks[lanes] = 0
+            self.released[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -410,6 +420,24 @@ class EscapeRecovery(EscapeOption):
         self.ranked[changed] = True
         selected[changed] = trials[switch, option[switch]]
 
+    def release_older_escape(self, lidar, state, selected):
+        from .escape_passage import clear_to_end_escape
+
+        previous = state[:, 32:35].norm(dim=1) > .03
+        zero = state[:, 45:48].norm(dim=1) <= .001
+        continuing = self.applied & (self.remaining < DURATION_STEPS-1)
+        eligible = zero & continuing & ~self.ranked & (self.retreat_hold_steps == 0)
+        self.release_checks = torch.where(eligible & previous, 3, (self.release_checks-1).clamp_min(0))
+        self.release_checks = torch.where(eligible, self.release_checks, 0)
+        self.released.zero_()
+        lanes = (self.release_checks > 0).nonzero().flatten()
+        if not len(lanes):
+            return
+        ended = lanes[clear_to_end_escape(lidar[lanes], state[lanes])]
+        self.released[ended] = True
+        self.release_checks[ended] = 0
+        self.hold_neutral(ended, selected)
+
     def update_recenter_rearm(self, lidar, config):
         depth, valid, reliability = lidar[:, -3], lidar[:, -2], lidar[:, -1]
         threshold = config.ics.emergency_clearance_m+config.ics.clearance_margin_m
@@ -424,6 +452,8 @@ class EscapeRecovery(EscapeOption):
             self.hold_during_clear_pass(lidar, state, selected)
         if self.rank_return:
             self.ranked &= self.applied & (self.remaining < DURATION_STEPS-1)
+        if self.stop_release:
+            self.release_older_escape(lidar, state, selected)
         if self.lateral:
             self.select_lateral(lidar, state, selected, config)
         if self.fast_lateral:

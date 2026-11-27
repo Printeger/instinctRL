@@ -6,7 +6,7 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RANK_EXECUTIONS, REARM_EXECUTIONS,
-    STEP_MS, arm_execution, conditions, event_schedule,
+    STEP_MS, STOP_RELEASE_EXECUTION, arm_execution, conditions, event_schedule,
 )
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
@@ -259,6 +259,11 @@ def audit(output, params, counters):
                 ranked = row.get('escape_ranked_direction', [False]*LANES)
                 if len(ranked) != LANES or any(type(value) is not bool for value in ranked):
                     raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_LANES')
+                if ('escape_stop_release' in row) != (model['execution'] == STOP_RELEASE_EXECUTION):
+                    raise ValueError('COMMAND_REPLAY_STOP_RELEASE_BINDING')
+                released = row.get('escape_stop_release', [False]*LANES)
+                if len(released) != LANES or any(type(value) is not bool for value in released):
+                    raise ValueError('COMMAND_REPLAY_STOP_RELEASE_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -271,6 +276,8 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_REARM_BEHAVIOR')
                     if ranked[lane] and not row['escape_active'][lane]:
                         raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_BEHAVIOR')
+                    if released[lane] and not held[lane]:
+                        raise ValueError('COMMAND_REPLAY_STOP_RELEASE_BEHAVIOR')
                     if step and not rows[step-1]['reset'][lane]:
                         if actor[:-1] != rows[step-1]['actor_state'][lane][1:]:
                             raise ValueError('COMMAND_REPLAY_ACTOR_HISTORY')

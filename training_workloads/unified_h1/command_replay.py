@@ -24,9 +24,10 @@ REARM_PREFIX = PREFIX + 'REARM-'
 RANK_PREFIX = PREFIX + 'RANK-'
 CURVED_PREFIX = PREFIX + 'CURVED-'
 HOVER_PATH_PREFIX = PREFIX + 'HOVERPATH-'
+STOP_RELEASE_PREFIX = PREFIX + 'RELEASE-'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
-PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX)
+PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
 ENDURANCE_PREFIXES = (ENDURANCE_PREFIX, HOVER_PREFIX, *PHYSICS_CLEARANCE_PREFIXES)
 RETURN_DURATION_MS = 36000
 CLEARANCE_ID = EARLY_PREFIX + '02'
@@ -56,7 +57,8 @@ RECOVERY_REARM_EXECUTION = 'm4-escape-brake-tube-p25-recovery-rearm-v1'
 RANKED_RETURN_EXECUTION = 'm4-escape-brake-tube-p25-ranked-return-v1'
 CURVED_PASS_EXECUTION = 'm4-escape-brake-tube-p25-curved-pass-v1'
 HOVER_PATH_EXECUTION = 'm4-escape-brake-tube-p25-hover-path-v1'
-RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION, HOVER_PATH_EXECUTION)
+STOP_RELEASE_EXECUTION = 'm4-escape-brake-tube-p25-stop-release-v1'
+RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION, HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
 REARM_EXECUTIONS = (RECOVERY_REARM_EXECUTION, *RANK_EXECUTIONS)
 CLEAR_PASS_EXECUTIONS = (CLEAR_PASS_EXECUTION, *REARM_EXECUTIONS)
 EXECUTION_PAIRS = {
@@ -71,6 +73,7 @@ EXECUTION_PAIRS = {
     RANK_PREFIX: (RECOVERY_REARM_EXECUTION, RANKED_RETURN_EXECUTION),
     CURVED_PREFIX: (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION),
     HOVER_PATH_PREFIX: (RANKED_RETURN_EXECUTION, HOVER_PATH_EXECUTION),
+    STOP_RELEASE_PREFIX: (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION),
     CORNER_PREFIX: (EARLY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION),
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
@@ -78,7 +81,7 @@ CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|CORNER|LONG)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
@@ -535,6 +538,8 @@ def run(backend, params):
                         tensors['recovery_rearm_steps'] = option['rearm_steps']
                     if 'ranked' in option:
                         tensors['escape_ranked_direction'] = option['ranked']
+                    if 'released' in option:
+                        tensors['escape_stop_release'] = option['released']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
