@@ -142,3 +142,6 @@ python3 -m tools.r6_direct.generate_crazy_commands --prefix ROUTE_STREAMS.json \
 ```
 
 使用 `--independent-lanes` 为每条仿真轨迹派生不同的生成子种子，并保留对应的布局标签。
+30 分钟契约还要求 `--limit-planned-position`，该选项只限制生成指令的积分，不读取飞行状态。
+回放保留输入、精确源码和权重哈希。使用同一个 `run --inputs` 入口执行已冻结的长程输入。
+运行结束后可用 `analyze` 和 `replay_clearance` 复算原件。长程净空复算从输入协议读取推进、松杆与危险门槛。

@@ -136,22 +136,29 @@ def projected_clearance(before, measured_before, targets, mover, triangles, body
     path += lag[None, :, None]*(measured_before-targets)[:, None]
     speed = np.maximum(np.linalg.norm(measured_before, axis=1), np.linalg.norm(targets, axis=1))
     nearest = static_distance(path.reshape(-1, 3), triangles).reshape(ticks.shape).min(axis=1)-.1*speed
+    mover_limited = np.zeros(len(before), dtype=bool)
     if mover is not None:
         centers = mover[ticks.clip(max=len(before)-1)]
         mover_speed = np.linalg.norm(np.diff(mover, axis=0), axis=1).max(initial=0.)/.1
         moving = np.linalg.norm(path-centers, axis=2).min(axis=1)-.34-.1*(speed+mover_speed)
+        mover_limited = complete & (moving < nearest)
         nearest = np.minimum(nearest, moving)
-    return np.where(complete, nearest-body_radius, np.nan)
+    return np.where(complete, nearest-body_radius, np.nan), mover_limited
 
 
-def hazard_responses(nominal, protected, commands, measured, *, floor=.15, sustained_opportunity=False):
+def hazard_responses(nominal, protected, commands, measured, *, floor=.15, sustained_opportunity=False,
+                     exposure=None):
     """Audit intervention and recovery against the current request at each boundary."""
     risky = np.isfinite(nominal) & (nominal < floor)
     edges = np.diff(np.r_[False, risky, False].astype(np.int8))
     starts, ends = np.flatnonzero(edges == 1), np.flatnonzero(edges == -1)
+    if sustained_opportunity and len(starts) > 1:
+        separated = starts[1:]-ends[:-1] >= 5
+        starts, ends = starts[np.r_[True, separated]], ends[np.r_[separated, True]]
     events = []
     for i, (start, end) in enumerate(zip(starts, ends, strict=True)):
-        improved = np.flatnonzero(protected[start:end]-nominal[start:end] >= .04)
+        in_risk = risky[start:end]
+        improved = np.flatnonzero(in_risk & (protected[start:end]-nominal[start:end] >= .04))
         next_start = int(starts[i+1]) if i+1 < len(starts) else len(nominal)
         intent = commands[end:next_start]
         speed = np.linalg.norm(intent, axis=1)
@@ -174,6 +181,12 @@ def hazard_responses(nominal, protected, commands, measured, *, floor=.15, susta
                            first_feasible_request_step=int(end+eligible[0]) if len(eligible) else None,
                            recovery_onset_step=onset, recovery_confirmed_step=confirmation,
                            recovery_after_s=elapsed))
+        if exposure is not None:
+            mover_limited, observed_mover, actual = exposure
+            dynamic = in_risk & mover_limited[start:end]
+            visible = dynamic & observed_mover[start:end]
+            events[-1].update(actual_minimum_clearance_m=float(actual[start:end][in_risk].min()),
+                              moving_hazard_steps=int(dynamic.sum()), visible_moving_hazard_steps=int(visible.sum()))
     return dict(risk_windows=len(events), events=events)
 
 
@@ -194,6 +207,8 @@ def long_gate_results(metrics, first_flights, gates):
         stops = measures['externally_scheduled_stops'].values()
         tracking = measures['tracking_in_feasible_moving_windows']
         events = measures['hazard_response_preview']['events']
+        visible_moving_events = sum(event['visible_moving_hazard_steps'] > 0 for event in events)
+        qualifying = visible_moving_events if layout == 'street_gap' else len(events)
         recoveries = [event for event in events if event['first_feasible_request_step'] is not None]
         route = flight['route_progress']
         passed = dict(
@@ -213,7 +228,7 @@ def long_gate_results(metrics, first_flights, gates):
             stops=bool(stops) and all(s['first_flight_completed_window'] and s['stopped_after_s'] is not None
                           and s['stopped_after_s'] <= gate['maximum_stop_s']
                           and s['max_drift_m'] <= gate['maximum_stop_drift_m'] for s in stops),
-            intervention=len(events) >= gate['minimum_hazard_events'] and all(
+            intervention=qualifying >= gate['minimum_hazard_events'] and all(
                 e['intervention_after_s'] is not None and e['intervention_after_s'] <= gate['maximum_intervention_s']
                 for e in events),
             latest_command_recovery=len(recoveries) >= gate['minimum_recovery_opportunities'] and all(
@@ -221,7 +236,8 @@ def long_gate_results(metrics, first_flights, gates):
                 for e in recoveries),
         )
         layouts[layout].append(dict(lane=measures['lane'], exposure_s=flight['elapsed_s'],
-                                    hazard_events=len(events), recovery_opportunities=len(recoveries),
+                                    hazard_events=len(events), qualifying_hazard_events=qualifying,
+                                    visible_moving_events=visible_moving_events, recovery_opportunities=len(recoveries),
                                     failed=[check for check, assess in passed.items() if not assess]))
     by_layout = {name: dict(passed=len(rows) >= 3 and all(not r['failed'] for r in rows), lanes=rows)
                  for name, rows in layouts.items()}
@@ -334,6 +350,8 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
             if hazard_preview:
                 velocity_before = np.concatenate((np.asarray(initial['root_state_w'])[None, :, 7:10], velocities[:-1]), axis=0)
                 issued = np.asarray([row['v_final_w'] for row in rows], dtype=np.float64)
+            if long_run:
+                seen_mover = np.asarray([row['mover_winning_beams'] for row in rows]) > 0
             values = []
             for lane, (end, score) in enumerate(zip(contact_or_end, item['lanes'], strict=True)):
                 static = static_distance(roots[:end, lane], triangles)
@@ -371,13 +389,14 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                 if hazard_preview:
                     collider = values[-1].get('physics_tick_clearance', {}).get('maximum_measured_link_envelope_m', radius)
                     path_mover = None if mover is None else movers_before[:end, lane]
-                    nominal = projected_clearance(before[:end, lane], velocity_before[:end, lane],
-                                                  commands[:end, lane], path_mover, triangles, collider)
-                    physical = projected_clearance(before[:end, lane], velocity_before[:end, lane],
-                                                   issued[:end, lane], path_mover, triangles, collider)
+                    nominal, mover_limited = projected_clearance(before[:end, lane], velocity_before[:end, lane],
+                                                                 commands[:end, lane], path_mover, triangles, collider)
+                    physical, _ = projected_clearance(before[:end, lane], velocity_before[:end, lane],
+                                                       issued[:end, lane], path_mover, triangles, collider)
+                    exposure = (mover_limited, seen_mover[:end, lane], nearest-collider) if long_run else None
                     values[-1]['hazard_response_preview'] = hazard_responses(
                         nominal, physical, commands[:end, lane], velocities[:end, lane], floor=floor,
-                        sustained_opportunity=long_run)
+                        sustained_opportunity=long_run, exposure=exposure)
             models[name][trial] = values
     result = dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
                 envelope=envelope_pin, sample_period_ms=100, diagnostic_clearance_m=.15, sweep_horizon_s=.6,

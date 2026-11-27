@@ -317,6 +317,18 @@ def test_hazard_recovery_tracks_the_latest_direction():
     assert confirmed['recovery_confirmed_step'] == 12
     assert confirmed['recovery_after_s'] == pytest.approx(.8)
 
+    nominal[7] = .1
+    mover = np.zeros(20, dtype=bool)
+    mover[2:5] = True
+    visible = np.zeros(20, dtype=bool)
+    visible[3] = True
+    grouped = hazard_responses(nominal, protected, intent, observed, sustained_opportunity=True,
+                               exposure=(mover, visible, np.full(20, .3)))
+    assert grouped['risk_windows'] == 1
+    assert grouped['events'][0]['first_clear_step'] == 8
+    assert grouped['events'][0]['moving_hazard_steps'] == 3
+    assert grouped['events'][0]['visible_moving_hazard_steps'] == 1
+
 
 def test_mover_clock_preserves_three_decimal_places_at_thirty_minutes():
     from types import SimpleNamespace
@@ -863,7 +875,8 @@ def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
                    externally_scheduled_stops={'stop': dict(first_flight_completed_window=True,
                                                              stopped_after_s=.8, max_drift_m=.16)},
                    hazard_response_preview=dict(events=[dict(first_feasible_request_step=70,
-                                                             intervention_after_s=.2, recovery_after_s=1.2)]))
+                                                             intervention_after_s=.2, recovery_after_s=1.2,
+                                                             visible_moving_hazard_steps=6)]))
     logs = [dict(deepcopy(measure), lane=i) for i in range(3)]
     lanes = [dict(flight) for i in range(3)]
     assert long_gate_results(logs, lanes, {'street_gap': gate})['passed']
@@ -874,3 +887,6 @@ def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
     assert not results['passed']
     assert results['by_layout']['street_gap']['lanes'][0]['failed'] == ['uninterrupted']
     assert results['by_layout']['street_gap']['lanes'][1]['failed'] == ['latest_command_recovery']
+    logs[2]['hazard_response_preview']['events'][0]['visible_moving_hazard_steps'] = 0
+    assert long_gate_results(logs, lanes, {'street_gap': gate})['by_layout']['street_gap']['lanes'][2]['failed'] == [
+        'intervention']
