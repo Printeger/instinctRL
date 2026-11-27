@@ -53,6 +53,30 @@ def test_extended_crossing_range_keeps_the_original_seed_gate():
     assert far.tolist() == [True, False]
 
 
+def test_opening_crossing_stop_checks_four_scans_and_other_close_returns():
+    import torch
+    from instinctlab.control.escape_passage import clear_opening_crossing_at_stop
+    from instinctlab.control.ics import mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    centers = torch.tensor([[.90, value, 0.] for value in (.26, .32, .38, .44)]).expand(6, -1, -1).clone()
+    centers[4] = centers[4].flip(0)
+    centers[5, :, 0] = .73
+    projection = centers @ rays.T
+    discriminant = .34**2 - centers.square().sum(dim=2, keepdim=True) + projection.square()
+    first = projection-discriminant.clamp_min(0.).sqrt()
+    depth = torch.where((discriminant >= 0.) & (first > 0.), first, 3.)
+    separate_return = (rays - torch.tensor([-1., 0., 0.])).square().sum(dim=1).argmin()
+    depth[3, -1, separate_return] = .77
+    lidar = torch.stack((depth, torch.ones_like(depth), torch.ones_like(depth)), dim=2).reshape(6, 12, 59, 360)
+    histories = torch.zeros(6, 4, 13)
+    histories[1, 0, 0] = .26
+    histories[2, 0, 12] = .05
+    response = torch.zeros(6, 4, 2), torch.zeros(6, 2)
+    clear = clear_opening_crossing_at_stop(lidar, histories.flatten(1), rays, response, .4)
+    assert clear.tolist() == [True, False, False, False, False, False]
+
+
 def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
     from tools.r6_direct import storage
 

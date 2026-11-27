@@ -113,6 +113,20 @@ def clear_fitted_crossing_at_stop(lidar, state, rays, command_response, settled,
     clearance = across.abs()-.35*drift-.1*pending-radius
 
     center, surface_radius, _ = shapes[-1]
+    nearest, others, supported_surface = fitted_sphere_returns(scans, rays, center, surface_radius)
+    safe = supported & tracked & (speed >= .20) & (speed <= 1.5) & ((position*(motion-coast)).sum(dim=1) < 0.)
+    safe &= (others >= .85) & others.isfinite() & (nearest >= emergency_m) & supported_surface
+    safe &= clearance >= torch.where(settled[lanes], .45, .65)
+    strict = (safe & settled[lanes]).nonzero().flatten()
+    if len(strict):
+        safe[strict] = clear_hover_passage(scans[strict], history[strict], rays, curved=True,
+                                         require_curvature=True, turn_fallback=True)
+    clear[lanes] = safe
+    return clear
+
+
+def fitted_sphere_returns(scans, rays, center, surface_radius):
+    """Find reliable ranges on the fitted sphere and on separately observed surfaces."""
     projection = center @ rays.T
     discriminant = surface_radius[:, None].square()-center.square().sum(dim=1, keepdim=True)+projection.square()
     first_hit = projection-discriminant.clamp_min(0.).sqrt()
@@ -121,14 +135,55 @@ def clear_fitted_crossing_at_stop(lidar, state, rays, command_response, settled,
     on_mover = (discriminant >= 0.) & (first_hit > 0.) & ((depth-first_hit).abs() <= .018)
     others = depth.masked_fill(~reliable | on_mover, torch.inf).amin(dim=1)
     nearest = depth.masked_fill(~reliable, torch.inf).amin(dim=1)
-    safe = supported & tracked & (speed >= .20) & (speed <= 1.5) & ((position*(motion-coast)).sum(dim=1) < 0.)
-    safe &= (others >= .85) & others.isfinite() & (nearest >= emergency_m) & (on_mover & reliable).any(dim=1)
-    safe &= clearance >= torch.where(settled[lanes], .45, .65)
-    strict = (safe & settled[lanes]).nonzero().flatten()
-    if len(strict):
-        safe[strict] = clear_hover_passage(scans[strict], history[strict], rays, curved=True,
-                                         require_curvature=True, turn_fallback=True)
-    clear[lanes] = safe
+    return nearest, others, (on_mover & reliable).any(dim=1)
+
+
+def clear_opening_crossing_at_stop(lidar, state, rays, command_response, emergency_m):
+    """Verify a receding return when the closing-seeded track can no longer see it."""
+    history = state.reshape(-1, 4, 13)
+    ages = history[:, :, 12]
+    ranges = lidar[:, 0::3]
+    valid = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
+    times = ranges.new_tensor([-.3, -.2, -.1, 0.])-ages+ages[:, -1:]
+    gaps = times.diff(dim=1)
+    nearest, seed = ranges[:, -1].masked_fill(~valid[:, -1], torch.inf).flatten(1).min(dim=1)
+    ready = (ages <= .04).all(dim=1) & ((gaps >= .07) & (gaps <= .13)).all(dim=1)
+    ready &= (history[:, :, :3].norm(dim=2).amax(dim=1) <= .25)
+    ready &= (nearest >= emergency_m) & (nearest <= 1.35)
+    lanes = ready.nonzero().flatten()
+    clear = torch.zeros_like(ready)
+    if not len(lanes):
+        return clear
+
+    scans, ages, times = lidar[lanes], ages[lanes], times[lanes]
+    offsets, coast = (tensor[lanes] for tensor in command_response)
+    offsets = offsets+(ages[:, -1:]-ages)[:, :, None]*coast[:, None]
+    seeded = (ready[lanes], seed[lanes], times)
+    supported, _, _, shapes = track_nearby_return(scans, state[lanes], rays, curved=True,
+        maximum_previous_command=.46, seeded=seeded, fit_full_center=True)
+    centers = torch.stack([frame[0] for frame in shapes], dim=1)
+    planar = [(center[:, :2], radius, valid) for center, radius, valid in shapes]
+    tracked, _, motion, radius = _curved_motion(planar, times, turn_fallback=False, offsets=offsets)
+    outward = centers.norm(dim=2).diff(dim=1)/gaps[lanes]
+    aligned = centers[:, :, :2]+offsets
+    segments = aligned.diff(dim=1)/gaps[lanes, :, None]
+    directions = torch.cat((motion[:, None], segments), dim=1)
+    speed = directions.norm(dim=2)
+    directions = directions/speed.clamp_min(.001)[..., None]
+    normals = torch.stack((-directions[..., 1], directions[..., 0]), dim=2)
+    consistent = (directions[:, :1]*directions).sum(dim=2).amin(dim=1) >= .99
+    across = (aligned[:, -1, None]*normals).sum(dim=2)
+    consistent &= (across.sign() == across[:, :1].sign()).all(dim=1)
+    coast_toward = (across.sign()*(coast[:, None]*normals).sum(dim=2)).clamp_min(0.)
+    queued_toward = (across.sign()*(state[lanes, None, 48:50]*normals).sum(dim=2)).clamp_min(0.)
+    # The entire fitted line must stay clear, including a change in travel direction.
+    # .50 m includes the .21 m body, .15 m clearance, and .14 m fit reserve.
+    line = across.abs()-.35*coast_toward-.1*queued_toward-radius[:, None]
+    center, surface_radius, _ = shapes[-1]
+    nearest, others, supported_surface = fitted_sphere_returns(scans, rays, center, surface_radius)
+    clear[lanes] = (supported & tracked & consistent & ((speed >= .20) & (speed <= 1.5)).all(dim=1)
+                    & (outward[:, -2:] >= .06).all(dim=1) & (line >= .50).all(dim=1)
+                    & (others >= .85) & others.isfinite() & (others > nearest+.02) & supported_surface)
     return clear
 
 
