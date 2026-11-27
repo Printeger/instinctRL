@@ -170,7 +170,7 @@ def run(plan, input_pin):
         from training_workloads.unified_h1.command_replay import (
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, ENDURANCE_PREFIXES,
             EDGE_CONTINUATION_EXECUTION, FINITE_EDGE_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS,
-            ALONG_INTERCEPT_EXECUTION, CROSSING_FALLBACK_EXECUTIONS, EARLY_DIAGONAL_EXECUTIONS,
+            ALONG_INTERCEPT_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS, EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTION,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
             VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
@@ -337,7 +337,8 @@ def run(plan, input_pin):
                     reserve_direction = option_version in RESERVE_DIRECTION_EXECUTIONS
                     crossing_fallback = option_version in CROSSING_FALLBACK_EXECUTIONS
                     opening_steering = option_version in OPENING_STEERING_EXECUTIONS
-                    along_intercept = option_version == ALONG_INTERCEPT_EXECUTION
+                    along_intercept = option_version in ALONG_INTERCEPT_EXECUTIONS
+                    finite_intercept = option_version == FINITE_INTERCEPT_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -357,7 +358,8 @@ def run(plan, input_pin):
                             or env.escape_option.zero_recheck != crossing_fallback
                             or env.escape_option.reverse_diagonal != crossing_fallback
                             or env.escape_option.opening_steering != opening_steering
-                            or env.escape_option.along_intercept != along_intercept):
+                            or env.escape_option.along_intercept != along_intercept
+                            or env.escape_option.finite_intercept != finite_intercept):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -396,6 +398,8 @@ def run(plan, input_pin):
                         execution['opening_steering'] = True
                     if along_intercept:
                         execution['along_intercept'] = True
+                    if finite_intercept:
+                        execution['finite_intercept'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

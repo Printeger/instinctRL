@@ -296,12 +296,18 @@ def moving_intercepts(lidar, state, rays, eligible, *, command_response=None):
     return lanes[keep], position[keep], motion[keep], coast[keep], radius[keep]
 
 
-def intercept_scores(position, motion, coast, radius, issued):
+def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None):
     """Estimate closest surface separation under each admissible request."""
-    time = torch.arange(61, device=position.device, dtype=position.dtype)*.05
+    # Use the 2.4 s braking preview for the finite-hold comparison.
+    samples = 49 if hold_s is not None else 61
+    time = torch.arange(samples, device=position.device, dtype=position.dtype)*.05
     lag = .35*(1.-torch.exp(-time/.35))
     relative = position[:, None]+time[None, :, None]*motion[:, None]-lag[None, :, None]*coast[:, None]
-    paths = relative[:, None]-(time-lag)[None, None, :, None]*issued[:, :, None, :2]
+    travel = time-lag
+    if hold_s is not None:
+        hold = time.clamp_max(hold_s)
+        travel = hold-.35*(1.-torch.exp(-hold/.35))*torch.exp(-(time-hold)/.35)
+    paths = relative[:, None]-travel[None, None, :, None]*issued[:, :, None, :2]
     return paths.norm(dim=-1).amin(dim=2)-radius[:, None]
 
 

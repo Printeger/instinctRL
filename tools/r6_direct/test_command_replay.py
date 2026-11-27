@@ -1105,7 +1105,8 @@ def test_reverse_diagonal_requires_imminent_contact_and_no_standard_choice(monke
     assert torch.equal(selected[2], actor[2])
 
 
-def test_along_intercept_requires_zero_intent_and_a_measured_clearance_gain(monkeypatch):
+@pytest.mark.parametrize('finite', [False, True])
+def test_along_intercept_requires_zero_intent_and_a_measured_clearance_gain(monkeypatch, finite):
     import torch
     from instinctlab.control import escape_passage
     from instinctlab.control.escape_recovery import EscapeRecovery
@@ -1113,7 +1114,7 @@ def test_along_intercept_requires_zero_intent_and_a_measured_clearance_gain(monk
 
     guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False, intercept=True,
                            intercept_reserve=True, commit_intercept=True, intercept_choice=True,
-                           early_diagonal=True, reserve_direction=True, along_intercept=True)
+                           early_diagonal=True, reserve_direction=True, along_intercept=True, finite_intercept=finite)
     scans = torch.ones(3, 12, 59, 360)
     scans[:, 0::3] = 3.
     states = torch.zeros(3, 52)
@@ -1121,9 +1122,14 @@ def test_along_intercept_requires_zero_intent_and_a_measured_clearance_gain(monk
     selected = torch.tensor([[0., .74, .5, .5]]*3)
     tracks = (torch.arange(3), torch.zeros(3, 2), torch.tensor([[0., .58]]*3),
               torch.zeros(3, 2), torch.full((3,), .34))
+    guard.intercept_direction[1, 1] = 1.
+    guard.reserve_direction_seen[1] = True
     monkeypatch.setattr(escape_passage, 'moving_intercepts', lambda *args, **kwargs: tracks)
 
-    def closest(pos, velocity, coast, radius, candidates):
+    def closest(pos, velocity, coast, radius, candidates, *, hold_s=None):
+        if hold_s is not None:
+            assert hold_s == .60
+            return candidates.new_tensor([[.32, .44], [.32, .44]])
         if candidates.shape[1] == 1:
             return torch.where(candidates.norm(dim=2) > .01, .40, .10)
         if candidates.shape[1] == 6:
@@ -1132,14 +1138,23 @@ def test_along_intercept_requires_zero_intent_and_a_measured_clearance_gain(monk
 
     def observed(scan, rays, coast, candidates):
         assert len(scan) == 2
-        return candidates.new_tensor([[.383, .80], [.70, .80]])
+        return candidates.new_tensor([[.383, .80], [.55, .80]])
 
     monkeypatch.setattr(escape_passage, 'intercept_scores', closest)
     monkeypatch.setattr(escape_passage, 'observed_path_clearance', observed)
     guard.avoid_interception(scans, states, selected, ControlCoreConfig())
     torch.testing.assert_close(selected[0, 1:], torch.tensor([.5, .7999, .5]))
-    torch.testing.assert_close(selected[1:, 1:], torch.tensor([[.80, .5, .5]]*2))
-    assert guard.intercept_speed.tolist() == pytest.approx([.2999, .30, .30])
+    torch.testing.assert_close(selected[1, 1:], torch.tensor([.5, .7999, .5] if finite else [.80, .5, .5]))
+    torch.testing.assert_close(selected[2, 1:], torch.tensor([.80, .5, .5]))
+    assert guard.intercept_speed.tolist() == pytest.approx([.2999, .2999 if finite else .30, .30])
+    assert guard.intercept_steps.tolist() == ([4, 4, 0] if finite else [0, 0, 0])
+    if finite:
+        monkeypatch.setattr(escape_passage, 'moving_intercepts',
+                            lambda *args, **kwargs: (torch.empty(0, dtype=torch.long), None, None, None, None))
+        braking = torch.tensor([[0., .5, .5, .5]]*3)
+        guard.avoid_interception(scans, states, braking, ControlCoreConfig())
+        torch.testing.assert_close(braking[:2, 1:], torch.tensor([[.5, .7999, .5]]*2))
+        assert guard.intercept_steps.tolist() == [3, 3, 0]
 
 
 def test_opening_steering_requires_a_single_repeated_open_flank():

@@ -12,7 +12,7 @@ from instinctlab.control.escape_recovery import (
     CONFIRMED_TUBE_25_VERSION,
     CURVED_PASS_25_VERSION,
     EARLY_DIAGONAL_25_VERSION, EARLY_RETREAT_25_VERSION, EDGE_CONTINUATION_25_VERSION, EscapeRecovery,
-    FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FINITE_EDGE_25_VERSION,
+    FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FINITE_EDGE_25_VERSION, FINITE_INTERCEPT_25_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     INTERCEPT_CHOICE_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, NEIGHBOR_HISTORY_25_VERSION,
@@ -27,7 +27,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-OPENING_STEERING_VERSIONS = (OPENING_STEERING_25_VERSION, ALONG_INTERCEPT_25_VERSION)
+ALONG_INTERCEPT_VERSIONS = (ALONG_INTERCEPT_25_VERSION, FINITE_INTERCEPT_25_VERSION)
+OPENING_STEERING_VERSIONS = (OPENING_STEERING_25_VERSION, *ALONG_INTERCEPT_VERSIONS)
 CROSSING_FALLBACK_VERSIONS = (CROSSING_FALLBACK_25_VERSION, *OPENING_STEERING_VERSIONS)
 RESERVE_DIRECTION_VERSIONS = (RESERVE_DIRECTION_25_VERSION, *CROSSING_FALLBACK_VERSIONS)
 EARLY_DIAGONAL_VERSIONS = (EARLY_DIAGONAL_25_VERSION, *RESERVE_DIRECTION_VERSIONS)
@@ -141,7 +142,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 zero_recheck=version in CROSSING_FALLBACK_VERSIONS,
                                                 reverse_diagonal=version in CROSSING_FALLBACK_VERSIONS,
                                                 opening_steering=version in OPENING_STEERING_VERSIONS,
-                                                along_intercept=version == ALONG_INTERCEPT_25_VERSION)
+                                                along_intercept=version in ALONG_INTERCEPT_VERSIONS,
+                                                finite_intercept=version == FINITE_INTERCEPT_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

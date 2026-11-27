@@ -56,6 +56,7 @@ RESERVE_DIRECTION_25_VERSION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
 CROSSING_FALLBACK_25_VERSION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
 OPENING_STEERING_25_VERSION = 'm4-escape-brake-tube-p25-opening-steering-v1'
 ALONG_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-along-intercept-v1'
+FINITE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-finite-intercept-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -73,7 +74,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
                        VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
                        RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25,
-                       OPENING_STEERING_25_VERSION: 25, ALONG_INTERCEPT_25_VERSION: 25}
+                       OPENING_STEERING_25_VERSION: 25, ALONG_INTERCEPT_25_VERSION: 25,
+                       FINITE_INTERCEPT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -90,7 +92,8 @@ class EscapeRecovery(EscapeOption):
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
                  intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
-                 zero_recheck=False, reverse_diagonal=False, opening_steering=False, along_intercept=False):
+                 zero_recheck=False, reverse_diagonal=False, opening_steering=False, along_intercept=False,
+                 finite_intercept=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -134,6 +137,9 @@ class EscapeRecovery(EscapeOption):
         self.early_diagonal = early_diagonal
         self.reverse_diagonal = reverse_diagonal
         self.along_intercept = along_intercept
+        self.finite_intercept = finite_intercept
+        if finite_intercept and not (along_intercept and reserve_direction):
+            raise ValueError('Finite interception requires recalled along-track steering')
         if along_intercept:
             if not (intercept_choice and commit_intercept and intercept_reserve):
                 raise ValueError('Along-track interception requires ranked and committed reserve actions')
@@ -882,6 +888,8 @@ class EscapeRecovery(EscapeOption):
         move = trials[rows, choice]
         issued = velocity[rows, choice]
         direction = directions[rows, choice]
+        if self.finite_intercept:
+            renewed = torch.zeros_like(change)
         if self.reverse_diagonal:
             fallback = ((score < .21) & ~change).nonzero().flatten()
             if len(fallback):
@@ -919,6 +927,14 @@ class EscapeRecovery(EscapeOption):
                 buffered_body = .21+.15+.03
                 threatened = (observed[:, 0] < buffered_body) | (~change[witness] & (score[witness] < .21))
                 combined = torch.minimum(tracked, observed)
+                if self.finite_intercept:
+                    pending = lanes[witness]
+                    remembered = previously_confirmed[pending] | reserve_seen[pending]
+                    same_direction = (self.intercept_direction[pending]*pace).sum(dim=1) >= .95
+                    finite = intercept_scores(position[witness], motion[witness], coast[witness], radius[witness],
+                                              velocities, hold_s=.60)
+                    second_clearance = finite[:, 1] >= .36
+                    threatened |= remembered & same_direction & (finite[:, 0] < .36) & second_clearance
                 approved = ((observed[:, 1] >= buffered_body) & (tracked[:, 1] >= .28)
                             & (combined[:, 1]-combined[:, 0] >= gain[witness])
                             & ((checked.v_final_b*pace).sum(dim=1) >= .12))
@@ -928,11 +944,15 @@ class EscapeRecovery(EscapeOption):
                 issued[accepted] = checked.v_final_b[use]
                 direction[accepted] = pace[use]
                 change[accepted] = True
+                if self.finite_intercept:
+                    renewed[accepted] = second_clearance[use] & (combined[use, 1] >= .45)
         selected[lanes[change]] = move[change]
         self.intercepted[lanes[change]] = True
         if self.commit_intercept:
             turn = (issued-original.v_final_b[consider]).norm(dim=1)
             commit = change & exposed & ~hold & (turn >= .12)
+            if self.finite_intercept:
+                commit |= renewed
             self.intercept_steps[lanes[commit]] = 4
             if self.reserve_direction:
                 reserve = change & ~exposed & ~hold & (turn >= .12)

@@ -58,6 +58,7 @@ NOVEL_CROSSING_FALLBACK_ID = NOVEL_PREFIX+'29'
 NOVEL_OPENING_STEERING_ID = NOVEL_PREFIX+'30'
 NOVEL_ALONG_INTERCEPT_ID = NOVEL_PREFIX+'31'
 NOVEL_ALONG_CONFIRM_ID = NOVEL_PREFIX+'32'
+NOVEL_FINITE_INTERCEPT_ID = NOVEL_PREFIX+'33'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -118,7 +119,9 @@ RESERVE_DIRECTION_EXECUTION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
 CROSSING_FALLBACK_EXECUTION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
 OPENING_STEERING_EXECUTION = 'm4-escape-brake-tube-p25-opening-steering-v1'
 ALONG_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-along-intercept-v1'
-OPENING_STEERING_EXECUTIONS = (OPENING_STEERING_EXECUTION, ALONG_INTERCEPT_EXECUTION)
+FINITE_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-finite-intercept-v1'
+ALONG_INTERCEPT_EXECUTIONS = (ALONG_INTERCEPT_EXECUTION, FINITE_INTERCEPT_EXECUTION)
+OPENING_STEERING_EXECUTIONS = (OPENING_STEERING_EXECUTION, *ALONG_INTERCEPT_EXECUTIONS)
 CROSSING_FALLBACK_EXECUTIONS = (CROSSING_FALLBACK_EXECUTION, *OPENING_STEERING_EXECUTIONS)
 RESERVE_DIRECTION_EXECUTIONS = (RESERVE_DIRECTION_EXECUTION, *CROSSING_FALLBACK_EXECUTIONS)
 EARLY_DIAGONAL_EXECUTIONS = (EARLY_DIAGONAL_EXECUTION, *RESERVE_DIRECTION_EXECUTIONS)
@@ -186,7 +189,7 @@ def compress_trace(run_id):
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
                                                        NOVEL_OPENING_STEERING_ID, NOVEL_ALONG_INTERCEPT_ID,
-                                                       NOVEL_ALONG_CONFIRM_ID)
+                                                       NOVEL_ALONG_CONFIRM_ID, NOVEL_FINITE_INTERCEPT_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -438,8 +441,12 @@ def novel_contract(params):
         execution = (CROSSING_FALLBACK_EXECUTION,)
     elif params['experiment_id'] == NOVEL_OPENING_STEERING_ID:
         execution = (OPENING_STEERING_EXECUTION,)
-    elif params['experiment_id'] in (NOVEL_ALONG_INTERCEPT_ID, NOVEL_ALONG_CONFIRM_ID):
+    elif params['experiment_id'] == NOVEL_ALONG_INTERCEPT_ID:
         execution = (ALONG_INTERCEPT_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_FINITE_INTERCEPT_ID:
+        execution = (FINITE_INTERCEPT_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
+        execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
@@ -716,7 +723,8 @@ def run(backend, params):
             reserve_direction = execution in RESERVE_DIRECTION_EXECUTIONS
             crossing_fallback = execution in CROSSING_FALLBACK_EXECUTIONS
             opening_steering = execution in OPENING_STEERING_EXECUTIONS
-            along_intercept = execution == ALONG_INTERCEPT_EXECUTION
+            along_intercept = execution in ALONG_INTERCEPT_EXECUTIONS
+            finite_intercept = execution == FINITE_INTERCEPT_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -729,7 +737,8 @@ def run(backend, params):
                     or env.escape_option.zero_recheck != crossing_fallback
                     or env.escape_option.reverse_diagonal != crossing_fallback
                     or env.escape_option.opening_steering != opening_steering
-                    or env.escape_option.along_intercept != along_intercept):
+                    or env.escape_option.along_intercept != along_intercept
+                    or env.escape_option.finite_intercept != finite_intercept):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -766,6 +775,8 @@ def run(backend, params):
                 model['opening_steering'] = True
             if along_intercept:
                 model['along_intercept'] = True
+            if finite_intercept:
+                model['finite_intercept'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
