@@ -1,6 +1,6 @@
-# 接续 u1792 开发与长训发车状态
+# 接续 u1792 的开发与正式长训状态
 
-`instinctrl-post-u1792-two-long` 当前已验收 1/2。A、B 两条正式训练链和独评均已关闭。B 通过全部冻结门槛，A 触发物理留出的新增接触门槛。各轮均从上次验收的 `u1792` 分叉。 [本轮完整复算](study/COMPLETION-AUDIT.json) · [上一轮验收](../instinct-post-r4-next-long/REPORT.md)
+`instinctrl-post-u1792-two-long` 已验收 **2/2**。B、C 通过全部冻结门槛，A 触发物理留出的新增接触门槛。三条正式训练链和独评均已关闭，各轮均从上次验收的 `u1792` 分叉。 [结项报告](REPORT.md) · [A、B 完整复算](study/COMPLETION-AUDIT.json) · [C 完整复算](study-front/COMPLETION-AUDIT.json)
 
 ## A、B 训练和独评完成
 
@@ -11,6 +11,10 @@
 A 的初始选侧差异已有原轨迹定位。新镜像场景固定 A 权重，先验证首拍选侧证据。C 已另锁独立训练种子和新物理留出，沿用既定训练规模、覆盖及验收条件。 [前向失效诊断](study/FRONT-FIRST-DESIGN.md) · [后续方案](study-front/PLAN.md) · [C 独立协议](study-front/INDEPENDENT-PROTOCOL.json)
 
 前向固定权重验证完成 46,080 步。预设的八条镜像树干轨迹首拍均无活跃束，下发方向一致，未触发待验证规则。两臂完整六组均为 6/192 次接触，案例与接触步一致。另有五条预设范围外的开管轨迹实际换侧，少了 5–7 拍非急停零下发，保留为探索证据。Scientist 独立复核 12 份原轨迹及退出回执。C 采用通过验收的 B 执行和训练配方，以提前锁定的种子 `428032978` 启动。 [固定权重复算](study-front/FRONT-CLEARANCE-01-AUDIT.json) · [原轨迹及回执绑定](study-front/FRONT-CLEARANCE-01.json) · [C 冻结方案](study-front/FORMAL-C-SPEC.json)
+
+## C 独立复验通过
+
+C 两个实训分段各完成 512 次更新、262,144 步，续训随机状态逐字节检验一致，管道覆盖达到全部七项下限。新物理留出完成 92,160 步，终点与同执行起点均为 5/192 次接触，五条接触身份和时刻一致。终点 R6 完成 193,600 步，原五项和 16 扰动块全部通过；对同执行起点及旧合格的最差跟踪增量分别为 0.000180 和 0.002546 m/s。 [C 训练](study-front/FORMAL-C/RESULTS.json) · [C 物理留出](study-front/HOLDOUT-C.json) · [C 完整复算](study-front/COMPLETION-AUDIT.json)
 
 ## 恢复开发
 
