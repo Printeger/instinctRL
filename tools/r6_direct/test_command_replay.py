@@ -163,6 +163,46 @@ def test_extended_crossing_range_keeps_the_original_seed_gate():
     assert far.tolist() == [True, False]
 
 
+def test_early_crossing_direction_uses_the_far_return_seed(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage, escape_reference
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    config = ControlCoreConfig()
+    state = torch.zeros((1, 4, 13))
+    state[:, :, 5] = -1.
+    state[:, :, 6] = -.24
+    lidar = torch.ones((1, 12, 59, 360))
+    lidar[:, 0::3] = torch.tensor([2.57, 2.51, 2.45, 2.39])[None, :, None, None]
+    actor = torch.tensor([[1., .5, .5, .5]])
+    eligible = torch.ones(1, dtype=torch.bool)
+    response = torch.zeros(1, 4, 2), torch.zeros(1, 2)
+
+    def moving_return(*args, **kwargs):
+        return (torch.tensor([0]), torch.tensor([[.025, -2.60]]), torch.tensor([[-.0414, .5861]]),
+                torch.zeros(1, 2), torch.tensor([.34]))
+
+    def refine(scan, history, rays, motion, *, seeded):
+        far = escape_passage._return_seed(scan, history, minimum_range_m=1.9, maximum_range_m=2.65)
+        assert not escape_passage._return_seed(scan, history)[0].any()
+        assert far[0].all() and all(torch.equal(actual, expected) for actual, expected in zip(seeded, far))
+        return motion.new_tensor([[0., .5861]])
+
+    monkeypatch.setattr(escape_passage, 'moving_intercepts', moving_return)
+    monkeypatch.setattr(escape_reference, 'crossing_direction_from_planes', refine)
+    for use_plane in (False, True):
+        option = EscapeRecovery(lanes=1, device='cpu', dtype=torch.float32, recenter=True,
+            align_intercept=True, intercept=True, intercept_reserve=True, commit_intercept=True,
+            intercept_choice=True, reserve_direction=True, along_intercept=True, finite_intercept=True,
+            crossing_stop=True, crossing_stop_continuation=True, crossing_stop_shallow=True,
+            crossing_stop_early=True, crossing_reference=True, far_crossing_reference=use_plane)
+        lanes, _, _ = option.anticipate_crossing(lidar, state.flatten(1), actor, config, eligible, response)
+        assert lanes.tolist() == ([] if use_plane else [0])
+        if use_plane:
+            assert option.far_crossing_refined.tolist() == [True]
+
+
 def test_opening_crossing_stop_checks_four_scans_and_other_close_returns():
     import torch
     from instinctlab.control.escape_passage import clear_opening_crossing_at_stop

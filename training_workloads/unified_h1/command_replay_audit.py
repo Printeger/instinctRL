@@ -12,7 +12,7 @@ from .command_replay import (
     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
-    HOVER_OWN_SIDE_EXECUTION,
+    FAR_CROSSING_REFERENCE_EXECUTION, HOVER_OWN_SIDE_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -341,9 +341,12 @@ def audit(output, params, counters):
         bilateral_profile = model['execution'] == BILATERAL_STOPPING_EXECUTION
         if model.get('bilateral_stopping', False) is not bilateral_profile:
             raise ValueError('COMMAND_REPLAY_BILATERAL_PROFILE')
-        hover_own_side_profile = model['execution'] == HOVER_OWN_SIDE_EXECUTION
+        hover_own_side_profile = model['execution'] in HOVER_OWN_SIDE_EXECUTIONS
         if model.get('hover_escape_own_side', False) is not hover_own_side_profile:
             raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_PROFILE')
+        far_crossing_profile = model['execution'] == FAR_CROSSING_REFERENCE_EXECUTION
+        if model.get('far_crossing_reference', False) is not far_crossing_profile:
+            raise ValueError('COMMAND_REPLAY_FAR_CROSSING_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -472,6 +475,10 @@ def audit(output, params, counters):
                 if (('escape_hover_own_side' in row) != hover_own_side_profile or len(hover_own_side) != LANES
                         or any(type(value) is not bool for value in hover_own_side)):
                     raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_BINDING')
+                far_crossing = row.get('escape_far_crossing_refined', [False]*LANES)
+                if (('escape_far_crossing_refined' in row) != far_crossing_profile or len(far_crossing) != LANES
+                        or any(type(value) is not bool for value in far_crossing)):
+                    raise ValueError('COMMAND_REPLAY_FAR_CROSSING_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:

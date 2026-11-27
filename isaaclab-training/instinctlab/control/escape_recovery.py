@@ -74,6 +74,7 @@ CROSSING_STOP_25_V12 = 'm4-escape-brake-tube-p25-crossing-stop-v12'
 CROSSING_STOP_25_V13 = 'm4-escape-brake-tube-p25-crossing-stop-v13'
 CROSSING_STOP_25_V14 = 'm4-escape-brake-tube-p25-crossing-stop-v14'
 CROSSING_STOP_25_V15 = 'm4-escape-brake-tube-p25-crossing-stop-v15'
+CROSSING_STOP_25_V16 = 'm4-escape-brake-tube-p25-crossing-stop-v16'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -97,7 +98,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V4: 25, CROSSING_STOP_25_V5: 25, CROSSING_STOP_25_V6: 25,
                        CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25, CROSSING_STOP_25_V9: 25,
                        CROSSING_STOP_25_V10: 25, CROSSING_STOP_25_V11: 25, CROSSING_STOP_25_V12: 25,
-                       CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25}
+                       CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25,
+                       CROSSING_STOP_25_V16: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -121,7 +123,7 @@ class EscapeRecovery(EscapeOption):
                  crossing_retreat_own_side=False, crossing_retreat_extended=False, settled_crossing_mount=None,
                  static_scan_stop=False, crossing_reference=False, shallow_steering=False,
                  observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
-                 hover_escape_own_side=False):
+                 hover_escape_own_side=False, far_crossing_reference=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -188,6 +190,11 @@ class EscapeRecovery(EscapeOption):
             raise ValueError('Settled crossing turn requires the calibrated mount')
         self.static_scan_stop = static_scan_stop
         self.crossing_reference = crossing_reference
+        self.far_crossing_reference = far_crossing_reference
+        if far_crossing_reference:
+            if not (crossing_reference and crossing_stop_early):
+                raise ValueError('Far crossing direction requires early crossing and plane support')
+            self.far_crossing_refined = torch.zeros_like(self.applied)
         self.shallow_steering = shallow_steering
         self.observed_heading_steering = observed_heading_steering
         self.tracked_resume = tracked_resume
@@ -334,6 +341,8 @@ class EscapeRecovery(EscapeOption):
             self.intercept_speed[lanes] = SPEED_M_S
         if self.crossing_stop_early:
             self.early_crossing[lanes] = False
+        if self.far_crossing_reference:
+            self.far_crossing_refined[lanes] = False
         if self.reserve_direction:
             self.reserve_direction_seen[lanes] = False
         if self.align_intercept:
@@ -1021,6 +1030,8 @@ class EscapeRecovery(EscapeOption):
     def anticipate_crossing(self, lidar, state, actor_action, config, eligible, response):
         from .escape_passage import intercept_scores, moving_intercepts, observed_path_clearance
 
+        if self.far_crossing_reference:
+            self.far_crossing_refined.zero_()
         request, previous = extract_latest_commands(state)
         history = state.reshape(-1, 4, 13)
         speed = request.norm(dim=1)
@@ -1044,6 +1055,21 @@ class EscapeRecovery(EscapeOption):
 
         scans, states = lidar[lanes], state[lanes]
         continuing = ongoing[lanes]
+        if self.far_crossing_reference:
+            from .escape_passage import _return_seed
+            from .escape_reference import crossing_direction_from_planes
+
+            along = torch.nn.functional.normalize(motion, dim=1)
+            normal = torch.stack((-along[:, 1], along[:, 0]), dim=1)
+            near_line = ((position*normal).sum(dim=1).abs() <= .28) & ~continuing
+            checks = near_line.nonzero().flatten()
+            if len(checks):
+                scan, history = scans[checks], states[checks]
+                # Fit the same distant return that triggered the early preview.
+                seed = _return_seed(scan, history, minimum_range_m=1.9, maximum_range_m=2.65)
+                refined = crossing_direction_from_planes(scan, history, rays, motion[checks], seeded=seed)
+                self.far_crossing_refined[lanes[checks]] = (refined != motion[checks]).any(dim=1)
+                motion[checks] = refined
         speed_mover = motion.norm(dim=1, keepdim=True)
         along = motion/speed_mover
         normal = torch.stack((-along[:, 1], along[:, 0]), dim=1)

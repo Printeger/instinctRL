@@ -175,7 +175,7 @@ def run(plan, input_pin):
             CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
             CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
             BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
-            HOVER_OWN_SIDE_EXECUTION,
+            FAR_CROSSING_REFERENCE_EXECUTION, HOVER_OWN_SIDE_EXECUTIONS,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -359,7 +359,8 @@ def run(plan, input_pin):
                     observed_heading = option_version in OBSERVED_HEADING_EXECUTIONS
                     sampled_turn = option_version in SAMPLED_TURN_EXECUTIONS
                     bilateral_stopping = option_version == BILATERAL_STOPPING_EXECUTION
-                    hover_own_side = option_version == HOVER_OWN_SIDE_EXECUTION
+                    hover_own_side = option_version in HOVER_OWN_SIDE_EXECUTIONS
+                    far_crossing_reference = option_version == FAR_CROSSING_REFERENCE_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -398,7 +399,8 @@ def run(plan, input_pin):
                             or env.escape_option.tracked_resume != observed_heading
                             or env.escape_option.crossing_turn_between_samples != sampled_turn
                             or env.bilateral_stopping != bilateral_stopping
-                            or env.escape_option.hover_escape_own_side != hover_own_side):
+                            or env.escape_option.hover_escape_own_side != hover_own_side
+                            or env.escape_option.far_crossing_reference != far_crossing_reference):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -469,6 +471,8 @@ def run(plan, input_pin):
                         execution['bilateral_stopping'] = True
                     if hover_own_side:
                         execution['hover_escape_own_side'] = True
+                    if far_crossing_reference:
+                        execution['far_crossing_reference'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

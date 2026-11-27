@@ -82,6 +82,8 @@ NOVEL_BILATERAL_STOPPING_ID = NOVEL_PREFIX+'53'
 NOVEL_BILATERAL_STOPPING_CONFIRM_ID = NOVEL_PREFIX+'54'
 NOVEL_HOVER_OWN_SIDE_ID = NOVEL_PREFIX+'55'
 NOVEL_HOVER_OWN_SIDE_CONFIRM_ID = NOVEL_PREFIX+'56'
+NOVEL_FAR_CROSSING_REFERENCE_ID = NOVEL_PREFIX+'57'
+NOVEL_FAR_CROSSING_REFERENCE_CONFIRM_ID = NOVEL_PREFIX+'58'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -159,7 +161,9 @@ OBSERVED_HEADING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v12'
 CROSSING_SAMPLED_TURN_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v13'
 BILATERAL_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v14'
 HOVER_OWN_SIDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v15'
-SAMPLED_TURN_EXECUTIONS = (CROSSING_SAMPLED_TURN_EXECUTION, BILATERAL_STOPPING_EXECUTION, HOVER_OWN_SIDE_EXECUTION)
+FAR_CROSSING_REFERENCE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v16'
+HOVER_OWN_SIDE_EXECUTIONS = (HOVER_OWN_SIDE_EXECUTION, FAR_CROSSING_REFERENCE_EXECUTION)
+SAMPLED_TURN_EXECUTIONS = (CROSSING_SAMPLED_TURN_EXECUTION, BILATERAL_STOPPING_EXECUTION, *HOVER_OWN_SIDE_EXECUTIONS)
 OBSERVED_HEADING_EXECUTIONS = (OBSERVED_HEADING_EXECUTION, *SAMPLED_TURN_EXECUTIONS)
 SHALLOW_STEERING_EXECUTIONS = (SHALLOW_STEERING_EXECUTION, *OBSERVED_HEADING_EXECUTIONS)
 CROSSING_REFERENCE_EXECUTIONS = (CROSSING_REFERENCE_EXECUTION, *SHALLOW_STEERING_EXECUTIONS)
@@ -254,7 +258,8 @@ def compress_trace(run_id):
                                                        NOVEL_OBSERVED_HEADING_ID, NOVEL_OBSERVED_HEADING_CONFIRM_ID,
                                                        NOVEL_CROSSING_SAMPLED_TURN_ID, NOVEL_CROSSING_SAMPLED_TURN_CONFIRM_ID,
                                                        NOVEL_BILATERAL_STOPPING_ID, NOVEL_BILATERAL_STOPPING_CONFIRM_ID,
-                                                       NOVEL_HOVER_OWN_SIDE_ID, NOVEL_HOVER_OWN_SIDE_CONFIRM_ID)
+                                                       NOVEL_HOVER_OWN_SIDE_ID, NOVEL_HOVER_OWN_SIDE_CONFIRM_ID,
+                                                       NOVEL_FAR_CROSSING_REFERENCE_ID, NOVEL_FAR_CROSSING_REFERENCE_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -542,6 +547,8 @@ def novel_contract(params):
         execution = (BILATERAL_STOPPING_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_HOVER_OWN_SIDE_ID, NOVEL_HOVER_OWN_SIDE_CONFIRM_ID):
         execution = (HOVER_OWN_SIDE_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_FAR_CROSSING_REFERENCE_ID, NOVEL_FAR_CROSSING_REFERENCE_CONFIRM_ID):
+        execution = (FAR_CROSSING_REFERENCE_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -836,7 +843,8 @@ def run(backend, params):
             observed_heading = execution in OBSERVED_HEADING_EXECUTIONS
             sampled_turn = execution in SAMPLED_TURN_EXECUTIONS
             bilateral_stopping = execution == BILATERAL_STOPPING_EXECUTION
-            hover_own_side = execution == HOVER_OWN_SIDE_EXECUTION
+            hover_own_side = execution in HOVER_OWN_SIDE_EXECUTIONS
+            far_crossing_reference = execution == FAR_CROSSING_REFERENCE_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -868,7 +876,8 @@ def run(backend, params):
                     or env.escape_option.tracked_resume != observed_heading
                     or env.escape_option.crossing_turn_between_samples != sampled_turn
                     or env.bilateral_stopping != bilateral_stopping
-                    or env.escape_option.hover_escape_own_side != hover_own_side):
+                    or env.escape_option.hover_escape_own_side != hover_own_side
+                    or env.escape_option.far_crossing_reference != far_crossing_reference):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -937,6 +946,8 @@ def run(backend, params):
                 model['bilateral_stopping'] = True
             if hover_own_side:
                 model['hover_escape_own_side'] = True
+            if far_crossing_reference:
+                model['far_crossing_reference'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -1064,6 +1075,8 @@ def run(backend, params):
                         tensors['bilateral_stopping'] = option['bilateral_stopping']
                     if 'hover_own_side' in option:
                         tensors['escape_hover_own_side'] = option['hover_own_side']
+                    if 'far_crossing_refined' in option:
+                        tensors['escape_far_crossing_refined'] = option['far_crossing_refined']
                     if 'edge_continued' in option:
                         tensors['escape_edge_continued'] = option['edge_continued']
                     if 'verified_resume' in option:

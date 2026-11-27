@@ -6,10 +6,10 @@ from torch.nn import functional as F
 from .escape_passage import rotate_scan_rays, track_nearby_return
 
 
-def crossing_direction_from_planes(lidar, state, rays, motion):
+def crossing_direction_from_planes(lidar, state, rays, motion, *, seeded=None):
     """Keep the original fit unless four scans place a sphere alongside a plane."""
     supported, _, times, shapes = track_nearby_return(
-        lidar, state, rays, curved=True, maximum_previous_command=.46, fit_full_center=True)
+        lidar, state, rays, curved=True, maximum_previous_command=.46, seeded=seeded, fit_full_center=True)
     centers, radii, valid = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
     history = state.reshape(-1, 4, 13)
     supported &= valid.all(dim=1) & (radii.amax(dim=1)-radii.amin(dim=1) <= .04)
