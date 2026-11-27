@@ -296,10 +296,10 @@ def moving_intercepts(lidar, state, rays, eligible, *, command_response=None):
     return lanes[keep], position[keep], motion[keep], coast[keep], radius[keep]
 
 
-def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None):
+def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None, preview_steps=None):
     """Estimate closest surface separation under each admissible request."""
     # Use the 2.4 s braking preview for the finite-hold comparison.
-    samples = 49 if hold_s is not None else 61
+    samples = preview_steps if preview_steps is not None else (49 if hold_s is not None else 61)
     time = torch.arange(samples, device=position.device, dtype=position.dtype)*.05
     lag = .35*(1.-torch.exp(-time/.35))
     relative = position[:, None]+time[None, :, None]*motion[:, None]-lag[None, :, None]*coast[:, None]
@@ -311,16 +311,19 @@ def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None):
     return paths.norm(dim=-1).amin(dim=2)-radius[:, None]
 
 
-def observed_path_clearance(lidar, rays, coast, issued):
+def observed_path_clearance(lidar, rays, coast, issued, *, hold_s=None):
     """Measure distance from a delayed request path to the currently observed returns."""
     depth = lidar[:, 9].flatten(1)
     valid = ((lidar[:, 10] > .5) & (lidar[:, 11] > .55)).flatten(1)
     points = depth[..., None]*rays
-    time = issued.new_tensor([0., .4, 1.2, 2.4])
+    time = issued.new_tensor([0., .4, 1.2, 2.4] if hold_s is None else [0., .4, 1.2, hold_s, hold_s+1.4])
     lag = .35*(1.-torch.exp(-time/.35))
     coast = torch.nn.functional.pad(coast, (0, 1))
-    paths = lag[None, None, :, None]*coast[:, None, None]
-    paths = paths+(time-lag)[None, None, :, None]*issued[:, :, None]
+    travel = time-lag
+    if hold_s is not None:
+        hold = time.clamp_max(hold_s)
+        travel = hold-.35*(1.-torch.exp(-hold/.35))*torch.exp(-(time-hold)/.35)
+    paths = lag[None, None, :, None]*coast[:, None, None]+travel[None, None, :, None]*issued[:, :, None]
     minimum = issued.new_full(issued.shape[:2], torch.inf)
     for start, end in zip(paths[:, :, :-1].unbind(dim=2), paths[:, :, 1:].unbind(dim=2), strict=True):
         segment = end-start
@@ -330,6 +333,18 @@ def observed_path_clearance(lidar, rays, coast, issued):
         distance = (offset-fraction*segment[:, :, None]).norm(dim=3)
         minimum = torch.minimum(minimum, distance.masked_fill(~valid[:, None], torch.inf).amin(dim=2))
     return minimum
+
+
+def crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued, *, hold_s):
+    """Bound a finite escape and the eventual stationary separation from the crossing line."""
+    swept = intercept_scores(position, motion, coast, radius, issued, hold_s=hold_s, preview_steps=101)
+    forward = motion/motion.norm(dim=1, keepdim=True)
+    across = torch.stack((-forward[:, 1], forward[:, 0]), dim=1)
+    resting_offset = ((position-.35*coast)*across).sum(dim=1)
+    settled = resting_offset[:, None]-hold_s*(issued[..., :2]*across[:, None]).sum(dim=2)
+    line = resting_offset.sign()[:, None]*settled-radius[:, None]
+    observed = observed_path_clearance(lidar, rays, coast, issued, hold_s=hold_s)
+    return torch.minimum(torch.minimum(swept, line), observed)
 
 
 def approach_scores(lidar, state, rays, issued):

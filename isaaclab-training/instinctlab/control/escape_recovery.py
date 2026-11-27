@@ -57,6 +57,7 @@ CROSSING_FALLBACK_25_VERSION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
 OPENING_STEERING_25_VERSION = 'm4-escape-brake-tube-p25-opening-steering-v1'
 ALONG_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-along-intercept-v1'
 FINITE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-finite-intercept-v1'
+CROSSING_STOP_25_VERSION = 'm4-escape-brake-tube-p25-crossing-stop-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -75,7 +76,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
                        RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25,
                        OPENING_STEERING_25_VERSION: 25, ALONG_INTERCEPT_25_VERSION: 25,
-                       FINITE_INTERCEPT_25_VERSION: 25}
+                       FINITE_INTERCEPT_25_VERSION: 25, CROSSING_STOP_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -93,7 +94,7 @@ class EscapeRecovery(EscapeOption):
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
                  intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
                  zero_recheck=False, reverse_diagonal=False, opening_steering=False, along_intercept=False,
-                 finite_intercept=False):
+                 finite_intercept=False, crossing_stop=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -138,6 +139,9 @@ class EscapeRecovery(EscapeOption):
         self.reverse_diagonal = reverse_diagonal
         self.along_intercept = along_intercept
         self.finite_intercept = finite_intercept
+        self.crossing_stop = crossing_stop
+        if crossing_stop and not finite_intercept:
+            raise ValueError('Crossing stop requires finite interception')
         if finite_intercept and not (along_intercept and reserve_direction):
             raise ValueError('Finite interception requires recalled along-track steering')
         if along_intercept:
@@ -787,6 +791,26 @@ class EscapeRecovery(EscapeOption):
         self.since_escape[release] = RECOVERY_LIMIT
         self.resumed[release] = True
 
+    def crossing_stop_trial(self, scans, history, config, position, motion, coast, radius,
+                            directions, previous_direction, current):
+        from .escape_passage import crossing_stop_clearance
+
+        actions = torch.cat((history.new_zeros((*directions.shape[:2], 1)),
+                             .5+(SPEED_M_S-.0001)*directions), dim=2)
+        checked = torch.stack([self.issued(scans, history, a, config).v_final_b
+                               for a in actions.unbind(dim=1)], dim=1)
+        velocities = torch.cat((current[:, None], checked), dim=1)
+        clearance = crossing_stop_clearance(scans, self.detector._full_rays, position, motion, coast, radius,
+                                            velocities, hold_s=2.6)
+        feasible = ((checked*directions).sum(dim=2) >= .12) & (clearance[:, 1:] >= .39)
+        confirmed = (directions*previous_direction[:, None]).sum(dim=2) >= .95
+        ranking = clearance[:, 1:]+.025*confirmed
+        choice = ranking.masked_fill(~feasible, -torch.inf).argmax(dim=1)
+        rows = torch.arange(len(history), device=history.device)
+        gain = clearance[rows, choice+1]-clearance[:, 0]
+        use = feasible[rows, choice] & (clearance[:, 0] < .39) & (gain >= .075)
+        return use, actions[rows, choice], checked[rows, choice], directions[rows, choice]
+
     def avoid_interception(self, lidar, state, selected, config, *, actor_action=None):
         from .escape_passage import intercept_scores, moving_intercepts, observed_path_clearance
 
@@ -946,6 +970,25 @@ class EscapeRecovery(EscapeOption):
                 change[accepted] = True
                 if self.finite_intercept:
                     renewed[accepted] = second_clearance[use] & (combined[use, 1] >= .45)
+        if self.crossing_stop:
+            # A pause that avoids the next encounter can leave the vehicle on
+            # the mover's line. Recheck a bounded lateral maneuver and its stop.
+            witness = (zero & (stopping[consider] < .36) & ~known_retreat).nonzero().flatten()
+            if len(witness):
+                pending = lanes[witness]
+                reverse = .22*along[witness]
+                across = side[witness]
+                previous = self.intercept_direction[pending]
+                options = torch.stack((across-reverse, -across-reverse, previous), dim=1)
+                options = torch.nn.functional.normalize(options, dim=2)
+                current = torch.where(change[witness, None], issued[witness], original.v_final_b[consider][witness])
+                use, action, checked, escape = self.crossing_stop_trial(
+                    scans[witness], history[witness], config, position[witness], motion[witness],
+                    coast[witness], radius[witness], options, previous, current)
+                accepted = witness[use]
+                move[accepted], issued[accepted], direction[accepted] = action[use], checked[use], escape[use]
+                change[accepted] = True
+                renewed[accepted] = True
         selected[lanes[change]] = move[change]
         self.intercepted[lanes[change]] = True
         if self.commit_intercept:

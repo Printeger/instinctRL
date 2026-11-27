@@ -17,6 +17,27 @@ def test_long_trace_gzip_preserves_the_original_json_lines(tmp_path):
         assert replay.read().encode() == raw
 
 
+def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
+    import torch
+    from instinctlab.control.escape_passage import crossing_stop_clearance
+
+    lidar = torch.zeros((1, 12, 1, 1))
+    rays = torch.tensor([[1., 0., 0.]])
+    position = torch.tensor([[-.075, -2.185]])
+    motion = torch.tensor([[0., .58]])
+    coast = torch.tensor([[.23, .04]])
+    radius = torch.tensor([.34])
+    issued = torch.tensor([[[0., .30, 0.], [.293, -.064, 0.], [-.293, -.064, 0.]]])
+
+    clearance = crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued, hold_s=2.6)
+    assert (clearance >= .39).tolist() == [[False, True, False]]
+
+    lidar[:, 9] = .7
+    lidar[:, 10:12] = 1.
+    clearance = crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued, hold_s=2.6)
+    assert (clearance < .39).all()
+
+
 def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
     from tools.r6_direct import storage
 
