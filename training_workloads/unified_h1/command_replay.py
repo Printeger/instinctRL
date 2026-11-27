@@ -27,6 +27,7 @@ HOVER_PATH_PREFIX = PREFIX + 'HOVERPATH-'
 STOP_RELEASE_PREFIX = PREFIX + 'RELEASE-'
 NOVEL_PREFIX = PREFIX + 'NOVEL-'
 NOVEL_TURN_ID = NOVEL_PREFIX+'02'
+NOVEL_INTERCEPT_ID = NOVEL_PREFIX+'03'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -61,7 +62,8 @@ CURVED_PASS_EXECUTION = 'm4-escape-brake-tube-p25-curved-pass-v1'
 HOVER_PATH_EXECUTION = 'm4-escape-brake-tube-p25-hover-path-v1'
 STOP_RELEASE_EXECUTION = 'm4-escape-brake-tube-p25-stop-release-v1'
 TURN_FIT_EXECUTION = 'm4-escape-brake-tube-p25-turn-fit-v1'
-STOP_RELEASE_EXECUTIONS = (STOP_RELEASE_EXECUTION, TURN_FIT_EXECUTION)
+INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v1'
+STOP_RELEASE_EXECUTIONS = (STOP_RELEASE_EXECUTION, TURN_FIT_EXECUTION, INTERCEPT_EXECUTION)
 RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION, HOVER_PATH_EXECUTION, *STOP_RELEASE_EXECUTIONS)
 REARM_EXECUTIONS = (RECOVERY_REARM_EXECUTION, *RANK_EXECUTIONS)
 CLEAR_PASS_EXECUTIONS = (CLEAR_PASS_EXECUTION, *REARM_EXECUTIONS)
@@ -272,15 +274,17 @@ def check_corner_pair(params):
 def novel_contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'clearance_envelope',
               'street_center_ms', 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
-    paired = params['experiment_id'] == NOVEL_TURN_ID
+    comparison = {NOVEL_TURN_ID: (STOP_RELEASE_EXECUTION, TURN_FIT_EXECUTION),
+                  NOVEL_INTERCEPT_ID: (TURN_FIT_EXECUTION, INTERCEPT_EXECUTION)}.get(params['experiment_id'])
+    paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
-    execution = (STOP_RELEASE_EXECUTION,) if paired else (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
+    execution = (comparison[0],) if paired else (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
-            or params['execution'] not in execution or (paired and params['candidate_execution'] != TURN_FIT_EXECUTION)
+            or params['execution'] not in execution or (paired and params['candidate_execution'] != comparison[1])
             or set(params['models']) != labels or any(pin['sha256'] != MODELS['b'] for pin in params['models'].values())
             or (paired and params['models']['candidate'] != params['models']['control'])
             or params['wall_seconds'] != wall or params['output_cap_bytes'] != 512*2**20
@@ -598,6 +602,8 @@ def run(backend, params):
                         tensors['escape_ranked_direction'] = option['ranked']
                     if 'released' in option:
                         tensors['escape_stop_release'] = option['released']
+                    if 'intercepted' in option:
+                        tensors['escape_intercepted'] = option['intercepted']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,

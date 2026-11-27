@@ -32,6 +32,7 @@ CURVED_PASS_25_VERSION = 'm4-escape-brake-tube-p25-curved-pass-v1'
 HOVER_PATH_25_VERSION = 'm4-escape-brake-tube-p25-hover-path-v1'
 STOP_RELEASE_25_VERSION = 'm4-escape-brake-tube-p25-stop-release-v1'
 TURN_FIT_25_VERSION = 'm4-escape-brake-tube-p25-turn-fit-v1'
+INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -39,7 +40,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25,
                        SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25,
                        RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25,
-                       STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25}
+                       STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25, INTERCEPT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -51,7 +52,7 @@ class EscapeRecovery(EscapeOption):
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
-                 stop_release=False, turn_fallback=False):
+                 stop_release=False, turn_fallback=False, intercept=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -72,6 +73,9 @@ class EscapeRecovery(EscapeOption):
         self.curved_pass = curved_pass
         self.hover_path = hover_path
         self.turn_fallback = turn_fallback
+        self.intercept = intercept
+        if intercept:
+            self.intercepted = torch.zeros_like(self.applied)
         self.stop_release = stop_release
         if stop_release:
             self.release_checks = torch.zeros_like(self.remaining)
@@ -114,6 +118,8 @@ class EscapeRecovery(EscapeOption):
         if self.stop_release:
             self.release_checks[lanes] = 0
             self.released[lanes] = False
+        if self.intercept:
+            self.intercepted[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -447,8 +453,48 @@ class EscapeRecovery(EscapeOption):
         emergency = ((depth < threshold) & (valid > .5) & (reliability >= config.ics.min_reliability)).flatten(1).any(dim=1)
         self.rearm_steps = torch.where(emergency, RECENTER_REARM_STEPS, (self.rearm_steps-1).clamp_min(0))
 
+    def avoid_interception(self, lidar, state, selected, config):
+        from .escape_passage import intercept_scores, moving_intercepts
+
+        self.intercepted.zero_()
+        eligible = (state[:, -1] <= .04) & (state.reshape(-1, 4, 13)[:, :, :3].norm(dim=2).amax(dim=1) <= .50)
+        if self.clear_pass:
+            eligible &= ~self.holding
+        lanes, position, motion, coast, radius = moving_intercepts(lidar, state, self.detector._full_rays, eligible)
+        if not len(lanes):
+            return
+        scans, history = lidar[lanes], state[lanes]
+        original = self.issued(scans, history, selected[lanes], config)
+        score = intercept_scores(position, motion, coast, radius, original.v_final_b[:, None])[:, 0]
+        exposed = (score < .36) & (original.metrics['emergency'].flatten() == 0.)
+        if not bool(exposed.any()):
+            return
+        lanes, scans, history = lanes[exposed], scans[exposed], history[exposed]
+        position, motion, coast, radius, score = (x[exposed] for x in (position, motion, coast, radius, score))
+        side = torch.stack((-motion[:, 1], motion[:, 0], torch.zeros_like(radius)), dim=1)
+        side /= side.norm(dim=1, keepdim=True)
+        zero = torch.zeros_like(side)
+        directions = torch.stack((zero, side, -side), dim=1)
+        trials = torch.cat((history.new_zeros((len(lanes), 3, 1)), .5+SPEED_M_S*directions), dim=2)
+        velocity = torch.stack([self.issued(scans, history, a, config).v_final_b
+                                for a in trials.unbind(dim=1)], dim=1)
+        scores = intercept_scores(position, motion, coast, radius, velocity)
+        hold = (scores[:, 0] >= .42) & (scores[:, 0]-score >= .12)
+        admissible = (velocity[:, 1:]*directions[:, 1:]).sum(dim=2) >= .12
+        best, side_id = scores[:, 1:].masked_fill(~admissible, -torch.inf).max(dim=1)
+        change = hold | ((best >= .28) & (best-score >= .15))
+        choice = torch.where(hold, 0, side_id+1)
+        selected[lanes[change]] = trials[change, choice[change]]
+        self.intercepted[lanes[change]] = True
+
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
+        selected = self._apply_recovery(policy, action, config)
+        if self.intercept:
+            self.avoid_interception(policy['lidar_grid'], policy['state_vec'], selected, config)
+        return selected
+
+    def _apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
         lidar, state = policy['lidar_grid'], policy['state_vec']
         if self.clear_pass:

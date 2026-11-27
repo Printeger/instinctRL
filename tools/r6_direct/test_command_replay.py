@@ -442,3 +442,34 @@ def test_turn_fit_requires_two_agreeing_intervals_after_reversal():
     valid, velocity = _latest_turn(centers, elapsed)
     assert valid.tolist() == [True, False]
     assert velocity[0].tolist() == pytest.approx([0., -.47], abs=2.e-6)
+
+
+def test_intercept_checks_contact_before_waiting_for_range_crop():
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.governor import GovernorConfig
+    from instinctlab.control.ics import ICSConfig
+    from instinctlab.observations.moving_sphere import sphere_range
+
+    option = EscapeRecovery(lanes=4, device='cpu', dtype=torch.float32, recenter=False, intercept=True)
+    directions = option.detector._full_rays[None].expand(4, -1, -1)
+    center = torch.tensor([[.38, -1.50, .10], [-1.28, -1.50, .10], [.38, -1.50, .10], [.38, -1.50, .10]])
+    history = []
+    for index in range(4):
+        movement = torch.tensor([[0., .58, 0.], [0., .58, 0.], [0., .58, 0.], [0., .30, 0.]])
+        distance = sphere_range(torch.zeros_like(center), directions, center-(3-index)*.1*movement)
+        valid = distance.isfinite()
+        history.append(torch.stack((torch.where(valid, distance, 40.), valid, valid), dim=1))
+    lidar = torch.cat(history, dim=1).reshape(4, 12, 59, 360)
+    state = torch.zeros(4, 4, 13)
+    state[2, 1, 12] = .20
+    state[3, :, 10] = -.30
+    action = torch.tensor([[0., .69, .50, .50]]*4)
+    config = SimpleNamespace(governor=GovernorConfig(), ics=ICSConfig(
+        clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True))
+
+    option.avoid_interception(lidar, state.reshape(4, 52), action, config)
+    assert option.intercepted.tolist() == [True, False, False, False]
+    assert action[0].tolist() == pytest.approx([0., .20, .50, .50], abs=2.e-5)
+    assert action[1, 1].item() == pytest.approx(.69)

@@ -55,8 +55,7 @@ def _fit_curvature(points, patch):
     return centers[:, :2], radius, supported
 
 
-def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_command=.08):
-    """Associate a supported closing return across four delivered scans."""
+def _return_seed(lidar, state):
     histories = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
     reliable = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
@@ -64,6 +63,16 @@ def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_co
     gap = elapsed.diff(dim=1)
     accepted, seed = _closing_seed(ranges, reliable, elapsed)
     accepted &= ((gap >= .065) & (gap <= .135)).all(dim=1)
+    return accepted, seed, elapsed
+
+
+def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_command=.08, seeded=None):
+    """Associate a supported closing return across four delivered scans."""
+    histories = state.reshape(-1, 4, 13)
+    ranges = lidar[:, 0::3]
+    reliable = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
+    accepted, seed, elapsed = _return_seed(lidar, state) if seeded is None else seeded
+    gap = elapsed.diff(dim=1)
     accepted &= histories[:, :, 9:12].norm(dim=2).amax(dim=1) <= maximum_previous_command
     lanes = torch.arange(len(lidar), device=lidar.device)
     rays = rays[None].expand(len(lidar), -1, -1)
@@ -141,9 +150,7 @@ def _latest_turn(centers, elapsed):
     return valid, .3*velocity[:, 1]+.7*velocity[:, 2]
 
 
-def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
-    """Compare the held escape directions and zero across a fitted curved return."""
-    supported, _, elapsed, shapes = track_nearby_return(lidar, state, rays, curved=True, maximum_previous_command=.30001)
+def _curved_motion(shapes, elapsed, *, turn_fallback):
     centers, radii, viable = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
     position, relative, error = _fit_motion(centers, elapsed)
     fit = error <= .02
@@ -153,12 +160,20 @@ def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
         position = torch.where(use_latest[:, None], centers[:, -1], position)
         relative = torch.where(use_latest[:, None], latest, relative)
         fit |= use_latest
+    radius = radii.amax(dim=1)
+    valid = viable.all(dim=1) & fit & ((radius-radii.amin(dim=1)) <= .04)
+    return valid, position, relative, radius
+
+
+def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
+    """Compare the held escape directions and zero across a fitted curved return."""
+    supported, _, elapsed, shapes = track_nearby_return(lidar, state, rays, curved=True, maximum_previous_command=.30001)
+    valid, position, relative, radius = _curved_motion(shapes, elapsed, turn_fallback=turn_fallback)
     previous = state.reshape(-1, 4, 13)[:, :, 9:12]
     stable = (previous-previous[:, -1:]).norm(dim=2).amax(dim=1) <= .035
     last = previous[:, -1, :2]
     motion = relative+last
-    radius = radii.amax(dim=1)
-    supported &= stable & viable.all(dim=1) & fit & ((radius-radii.amin(dim=1)) <= .04)
+    supported &= stable & valid
     supported &= (motion.norm(dim=1) >= .2) & (motion.norm(dim=1) <= 1.5) & ((position*relative).sum(dim=1) < 0.)
     time = torch.arange(81, device=position.device, dtype=position.dtype)*.05
     hold = time.clamp_max(2.5)
@@ -168,6 +183,36 @@ def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
     predicted = position[:, None]+time[None, :, None]*motion[:, None]-coast[None, :, None]*last[:, None]
     separation = (predicted[:, None]-travel[None, None, :, None]*issued[:, :, None, :2]).norm(dim=-1)
     return supported, separation.amin(dim=2)-radius[:, None]
+
+
+def moving_intercepts(lidar, state, rays, eligible):
+    """Return approaching curved tracks supported by the four delivered scans."""
+    accepted, seed, elapsed = _return_seed(lidar, state)
+    lanes = (accepted & eligible).nonzero().flatten()
+    if not len(lanes):
+        return lanes, None, None, None, None
+    history = state[lanes]
+    seeded = (accepted[lanes], seed[lanes], elapsed[lanes])
+    supported, _, elapsed, shapes = track_nearby_return(lidar[lanes], history, rays, curved=True,
+                                                       maximum_previous_command=.46, seeded=seeded)
+    valid, position, relative, radius = _curved_motion(shapes, elapsed, turn_fallback=True)
+    past = history.reshape(-1, 4, 13)[:, :, 9:11]
+    # First-order response to issued commands at 100 ms intervals. The oldest
+    # command covers the portion before the recorded history.
+    coast = (past*past.new_tensor([.424, .140, .187, .249])[None, :, None]).sum(dim=1)
+    motion = relative+coast
+    speed = motion.norm(dim=1)
+    keep = supported & valid & (speed >= .2) & (speed <= 1.5) & ((position*relative).sum(dim=1) < 0.)
+    return lanes[keep], position[keep], motion[keep], coast[keep], radius[keep]
+
+
+def intercept_scores(position, motion, coast, radius, issued):
+    """Estimate closest surface separation under each admissible request."""
+    time = torch.arange(61, device=position.device, dtype=position.dtype)*.05
+    lag = .35*(1.-torch.exp(-time/.35))
+    relative = position[:, None]+time[None, :, None]*motion[:, None]-lag[None, :, None]*coast[:, None]
+    paths = relative[:, None]-(time-lag)[None, None, :, None]*issued[:, :, None, :2]
+    return paths.norm(dim=-1).amin(dim=2)-radius[:, None]
 
 
 def approach_scores(lidar, state, rays, issued):
