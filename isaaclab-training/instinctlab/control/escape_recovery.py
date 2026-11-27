@@ -73,6 +73,7 @@ CROSSING_STOP_25_V11 = 'm4-escape-brake-tube-p25-crossing-stop-v11'
 CROSSING_STOP_25_V12 = 'm4-escape-brake-tube-p25-crossing-stop-v12'
 CROSSING_STOP_25_V13 = 'm4-escape-brake-tube-p25-crossing-stop-v13'
 CROSSING_STOP_25_V14 = 'm4-escape-brake-tube-p25-crossing-stop-v14'
+CROSSING_STOP_25_V15 = 'm4-escape-brake-tube-p25-crossing-stop-v15'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -96,7 +97,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V4: 25, CROSSING_STOP_25_V5: 25, CROSSING_STOP_25_V6: 25,
                        CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25, CROSSING_STOP_25_V9: 25,
                        CROSSING_STOP_25_V10: 25, CROSSING_STOP_25_V11: 25, CROSSING_STOP_25_V12: 25,
-                       CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25}
+                       CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -119,7 +120,8 @@ class EscapeRecovery(EscapeOption):
                  crossing_stop_verified_hover=False, crossing_stop_receding_hover=False,
                  crossing_retreat_own_side=False, crossing_retreat_extended=False, settled_crossing_mount=None,
                  static_scan_stop=False, crossing_reference=False, shallow_steering=False,
-                 observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False):
+                 observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
+                 hover_escape_own_side=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -175,6 +177,13 @@ class EscapeRecovery(EscapeOption):
         self.crossing_retreat_extended = crossing_retreat_extended
         self.settled_crossing_mount = settled_crossing_mount
         self.crossing_turn_between_samples = crossing_turn_between_samples
+        self.hover_escape_own_side = hover_escape_own_side
+        if hover_escape_own_side:
+            if not (crossing_turn_between_samples and crossing_stop and rank_return):
+                raise ValueError('Hover escape direction requires the settled crossing profile')
+            self.hover_escape_redirected = torch.zeros_like(self.applied)
+            self.hover_escape_continuation = torch.zeros_like(self.applied)
+            self.hover_escape_direction = torch.zeros_like(self.direction)
         if crossing_turn_between_samples and settled_crossing_mount is None:
             raise ValueError('Settled crossing turn requires the calibrated mount')
         self.static_scan_stop = static_scan_stop
@@ -313,6 +322,10 @@ class EscapeRecovery(EscapeOption):
         if self.tracked_resume:
             self.tracked_resume_used[lanes] = False
             self.tracked_resume_witness[lanes] = False
+        if self.hover_escape_own_side:
+            self.hover_escape_redirected[lanes] = False
+            self.hover_escape_continuation[lanes] = False
+            self.hover_escape_direction[lanes] = 0.
         if self.commit_intercept:
             self.intercept_steps[lanes] = 0
             self.intercept_direction[lanes] = 0.
@@ -1190,6 +1203,66 @@ class EscapeRecovery(EscapeOption):
         self.early_crossing[changed] = False
         return changed
 
+    def redirect_hover_escape_from_crossing(self, lidar, state, selected, config):
+        from .escape_passage import crossing_stop_components, intercept_scores, moving_intercepts, rotate_scan_rays
+
+        continuing = self.hover_escape_continuation.clone()
+        self.hover_escape_continuation.zero_()
+        self.hover_escape_redirected.zero_()
+        history = state.reshape(-1, 4, 13)
+        zero = (history[:, :, 6:9].norm(dim=2) <= 1.e-6).all(dim=1)
+        fresh = (history[:, :, 12] <= .04).all(dim=1)
+        angular_rate = history[:, :, :3].norm(dim=2).amax(dim=1)
+        settled = (history[:, :, 9:12].norm(dim=2) <= .02).all(dim=1) & (angular_rate <= .08)
+        starting = self.applied & (self.remaining == DURATION_STEPS-1) & settled
+        protected = self.ranked | self.retreating | self.braking | self.holding | self.intercepted
+        eligible = zero & fresh & (angular_rate <= .50) & (starting | continuing) & ~protected
+        if not bool(eligible.any()):
+            return
+        rays = self.detector._full_rays
+        lanes, position, motion, coast, radius = moving_intercepts(lidar, state, rays, eligible,
+            command_response=(self.command_offsets, self.command_coast))
+        if not len(lanes):
+            return
+        scans, local = lidar[lanes], state[lanes]
+        speed = motion.norm(dim=1, keepdim=True)
+        along = motion/speed
+        normal = torch.stack((-along[:, 1], along[:, 0]), dim=1)
+        own_side = -(position*normal).sum(dim=1).sign()[:, None]*normal
+        reverse = torch.nn.functional.normalize(own_side-.84*along, dim=1)
+        direction = torch.nn.functional.pad(reverse, (0, 1))
+        action = torch.cat((local.new_zeros((len(lanes), 1)), .5+(SPEED_M_S-.0001)*direction), dim=1)
+        candidate = self.issued(scans, local, action, config)
+        original = self.issued(scans, local, selected[lanes], config)
+        choices = torch.stack((original.v_final_b, torch.zeros_like(original.v_final_b), candidate.v_final_b), dim=1)
+        swept, settled = crossing_stop_components(scans, rays, position, motion, coast, radius, choices, hold_s=2.4)
+        minimum = torch.minimum(swept, settled)
+        for difference in (-.12, 0., .12):
+            varied = (speed+difference).clamp_min(.20)*along
+            robust = intercept_scores(position, varied, coast, radius, choices, hold_s=2.4, preview_steps=121)
+            minimum = torch.minimum(minimum, robust)
+        floor = minimum-.10*local[:, 48:51].norm(dim=1, keepdim=True)
+        toward_crossing = (original.v_final_b[:, :2]*own_side).sum(dim=1) <= -.12
+        hidden_by_stop_reserve = (floor[:, 1] >= .36) & (floor[:, 1] < .42)
+        begin = starting[lanes] & toward_crossing & (floor[:, 0] < .21) & hidden_by_stop_reserve
+        stop = continuing[lanes] & (floor[:, 1] >= .39)
+        rotation = -.05*(history[lanes, -2, :3]+history[lanes, -1, :3])
+        previous = rotate_scan_rays(self.hover_escape_direction[lanes, None], rotation)[:, 0]
+        same_heading = (previous*direction).sum(dim=1) >= .95
+        proceed = (begin | (continuing[lanes] & ~stop & same_heading)) & (floor[:, 2] >= .39)
+        proceed &= (candidate.v_final_b[:, :2]*own_side).sum(dim=1) >= .12
+        proceed &= (candidate.metrics['beta'][:, 0] >= .90) & (original.metrics['emergency'][:, 0] == 0.)
+        chosen = lanes[proceed]
+        selected[chosen] = action[proceed]
+        self.hover_escape_redirected[chosen] = True
+        self.hover_escape_continuation[chosen] = True
+        self.hover_escape_direction[chosen] = direction[proceed]
+        self.intercepted[chosen] = True
+        self.applied[chosen] = False
+        self.remaining[chosen] = 0
+        self.cooldown[chosen] = 1
+        self.hold_neutral(lanes[stop], selected)
+
     def avoid_interception(self, lidar, state, selected, config, *, actor_action=None):
         from .escape_passage import intercept_scores, moving_intercepts, observed_path_clearance
 
@@ -1719,6 +1792,8 @@ class EscapeRecovery(EscapeOption):
             else:
                 self.avoid_interception(policy['lidar_grid'], state, selected, config,
                                         actor_action=action if self.crossing_stop_early else None)
+            if self.hover_escape_own_side:
+                self.redirect_hover_escape_from_crossing(policy['lidar_grid'], state, selected, config)
             if self.tracked_resume:
                 self.resume_after_interception(selected, action)
             if self.wall_tangent:

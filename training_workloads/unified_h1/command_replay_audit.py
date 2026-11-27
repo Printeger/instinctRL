@@ -12,6 +12,7 @@ from .command_replay import (
     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
+    HOVER_OWN_SIDE_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -340,6 +341,9 @@ def audit(output, params, counters):
         bilateral_profile = model['execution'] == BILATERAL_STOPPING_EXECUTION
         if model.get('bilateral_stopping', False) is not bilateral_profile:
             raise ValueError('COMMAND_REPLAY_BILATERAL_PROFILE')
+        hover_own_side_profile = model['execution'] == HOVER_OWN_SIDE_EXECUTION
+        if model.get('hover_escape_own_side', False) is not hover_own_side_profile:
+            raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -464,6 +468,10 @@ def audit(output, params, counters):
                 if (('bilateral_stopping' in row) != bilateral_profile or len(bilateral) != LANES
                         or any(type(value) is not bool for value in bilateral)):
                     raise ValueError('COMMAND_REPLAY_BILATERAL_BINDING')
+                hover_own_side = row.get('escape_hover_own_side', [False]*LANES)
+                if (('escape_hover_own_side' in row) != hover_own_side_profile or len(hover_own_side) != LANES
+                        or any(type(value) is not bool for value in hover_own_side)):
+                    raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -532,6 +540,9 @@ def audit(output, params, counters):
                             or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_BILATERAL_BEHAVIOR')
+                    if hover_own_side[lane] and (not intercepted[lane] or row['escape_active'][lane]
+                            or row['ics_beta'][lane] < .89999 or any(math.hypot(*frame[6:9]) > 1.e-6 for frame in actor)):
+                        raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_BEHAVIOR')
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)
