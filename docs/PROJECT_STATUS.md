@@ -6,7 +6,7 @@
 
 B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，带风险实际换向 8/8，无横穿时运动与下发不变。五布局闭环仍复现门洞、走廊 ICS 归零。按用户更新，当前仿真使用 crazy command generator，独立生成替代真人序列。62 秒同权重对照两臂均零接触，候选过门 8/8、过角 1/8，走廊平均最远轴向 4.98 m。正式逐类长时留出与完整 R6 尚未验收。 [基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动结果](experiments/instinct-continuous-command/guard/REPORT.md) · [五布局复核](experiments/instinct-continuous-command/routes/REPORT.md) · [生成指令评价](experiments/instinct-continuous-command/crazy/REPORT.md)
 
-同 B 权重的提前撤离在 36 秒回程将街道接触从 2/8 降至 0/8，在 110 秒同配置对照的 32 条首飞中零接触、零重置。零令换侧候选新增两条街道接触，已拒绝。提前撤离控制的街道最大零令漂移 0.805 m，最小策略拍包络净空估计 −0.041 m。36 秒配对复放验证 5 毫秒净空采集，策略拍原件逐字节一致。室内延后横移把 62 秒过角从 0/8 提升到 5/8，零接触。新的 110 秒零令保持对照已启动。 [110 秒对照](experiments/instinct-continuous-command/hover/REPORT.md) · [净空采集](experiments/instinct-continuous-command/clearance/REPORT.md) · [转角时序](experiments/instinct-continuous-command/corner/REPORT.md) · [零令保持方案](experiments/instinct-continuous-command/passage/PLAN.md)
+同 B 权重的提前撤离在 36 秒回程将街道接触从 2/8 降至 0/8，在 110 秒同配置对照的 32 条首飞中零接触、零重置。逐 5 ms 复算的街道最小包络净空为 −0.042 m，最大零令漂移 0.805 m。零令换侧与零令保持各因新增接触拒绝。36 秒重复验证显示增加净空采集后策略拍原件逐字节一致。室内延后横移把 62 秒过角从 0/8 提升到 5/8，零接触。新一轮单独隔离近险后的回中补偿，正式 30 分钟留出和同配置完整 R6 仍待验收。 [110 秒对照](experiments/instinct-continuous-command/hover/REPORT.md) · [净空采集](experiments/instinct-continuous-command/clearance/REPORT.md) · [转角时序](experiments/instinct-continuous-command/corner/REPORT.md) · [零令保持结果](experiments/instinct-continuous-command/passage/REPORT.md) · [回中配对](experiments/instinct-continuous-command/rearm/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
