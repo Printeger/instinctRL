@@ -19,6 +19,7 @@ ENDURANCE_PREFIX = PREFIX + 'ENDURANCE-'
 RETURN_PREFIX = PREFIX + 'RETURN-'
 EARLY_PREFIX = PREFIX + 'EARLY-'
 HOVER_PREFIX = PREFIX + 'HOVER-'
+CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 RETURN_DURATION_MS = 36000
 CLEARANCE_ID = EARLY_PREFIX + '02'
@@ -50,17 +51,19 @@ EXECUTION_PAIRS = {
     RETURN_PREFIX: (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION),
     EARLY_PREFIX: (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION),
     HOVER_PREFIX: (EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION),
+    CORNER_PREFIX: (EARLY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION),
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
 CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|LONG)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|CORNER|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
-    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX, EARLY_PREFIX, HOVER_PREFIX, LONG_PREFIX))
+    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX, EARLY_PREFIX,
+                              HOVER_PREFIX, CORNER_PREFIX, LONG_PREFIX))
 
 
 def arm_execution(params, label):
@@ -188,10 +191,11 @@ def conditions(params):
     return CONDITIONS
 
 
-def event_schedule(params):
+def event_schedule(params, label=None):
     """Keep single-stream pair rows stable and expand route inputs by lane."""
     if route_layouts(params['experiment_id']):
-        layouts, by_lane = load_lane_streams(params['stream'], require_independent=params['experiment_id'].startswith(LONG_PREFIX))
+        stream_pin = params.get('candidate_stream', params['stream']) if label == 'candidate' else params['stream']
+        layouts, by_lane = load_lane_streams(stream_pin, require_independent=params['experiment_id'].startswith(LONG_PREFIX))
         limit = RETURN_DURATION_MS//STEP_MS+1 if params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX)) else None
         indices = list(zip(*(sampled_events(stream)[:limit] for stream in by_lane), strict=True))
         events = [[stream['events'][index] for stream, index in zip(by_lane, row, strict=True)] for row in indices]
@@ -222,6 +226,18 @@ def clearance_radii(pin):
             raise ValueError('COMMAND_REPLAY_CLEARANCE_RADIUS')
         radii[name] = max(radii.get(name, 0.), radius)
     return radii
+
+
+def check_corner_pair(params):
+    baseline = load_route_streams(params['stream'])
+    retimed = load_route_streams(params['candidate_stream'])
+    for name in COMMAND_LAYOUTS:
+        original, revised = baseline[name], retimed[name]
+        original_tail = [event for event in original['events'] if 'mode' in event]
+        revised_tail = [event for event in revised['events'] if 'mode' in event]
+        if (original['source'] != 'crazy_command_generator' or original['duration_ms'] != revised['duration_ms']
+                or original_tail != revised_tail or ((original != revised) != (name == 'room_corner'))):
+            raise ValueError('COMMAND_REPLAY_CORNER_INPUT_PAIR')
 
 
 def long_contract(params):
@@ -296,6 +312,8 @@ def contract(params):
         fields.add('candidate_execution')
     if run_id == CLEARANCE_ID:
         fields.add('clearance_envelope')
+    if run_id.startswith(CORNER_PREFIX):
+        fields.add('candidate_stream')
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or ((guard or routes) and params['candidate_execution'] != candidate_execution)
             or type(params['seed']) is not int
@@ -306,6 +324,8 @@ def contract(params):
         raise ValueError('COMMAND_REPLAY_PARAMETERS')
     if run_id == CLEARANCE_ID:
         clearance_radii(params['clearance_envelope'])
+    if run_id.startswith(CORNER_PREFIX):
+        check_corner_pair(params)
     for label, checkpoint in params['models'].items():
         if checkpoint['sha256'] != expected_models[label]:
             raise ValueError('COMMAND_REPLAY_FROZEN_CHECKPOINT')
@@ -343,14 +363,11 @@ def run(backend, params):
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
     from .lidar_calibration import record as record_mount
 
-    layouts, event_ids, events = event_schedule(params)
+    default_schedule = event_schedule(params)
+    layouts, event_ids, _ = default_schedule
     env, counters = backend.environment, backend.counters
     budgets = backend.runtime_contract['budgets']
-    if route_layouts(params['experiment_id']):
-        commands = env._command_b.new_tensor([[event['velocity_w_m_s'] for event in row] for row in events])
-    else:
-        commands = env._command_b.new_tensor([event['velocity_w_m_s'] for event in events])
-        commands = commands[:, None, :].expand(-1, LANES, -1)
+    routes = route_layouts(params['experiment_id'])
     obstacle = env._h1_moving_sphere
     axis = env._command_b.new_zeros((LANES, 3))
     axis[:, 0] = 1.
@@ -366,7 +383,7 @@ def run(backend, params):
     endurance = params['experiment_id'].startswith((ENDURANCE_PREFIX, HOVER_PREFIX))
     returns = params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX))
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
-    timed_crossings = endurance or returns or long_run
+    timed_crossings = endurance or returns or long_run or params['experiment_id'].startswith(CORNER_PREFIX)
     env.capture_ics_limiter = timed_crossings or params['experiment_id'].startswith(CRAZY_PREFIX)
     capture = 'clearance_envelope' in params
     if capture:
@@ -381,6 +398,13 @@ def run(backend, params):
 
     results = {}
     for label, checkpoint in params['models'].items():
+        _, event_ids, events = (event_schedule(params, label) if label == 'candidate' and 'candidate_stream' in params
+                                else default_schedule)
+        if routes:
+            commands = env._command_b.new_tensor([[event['velocity_w_m_s'] for event in row] for row in events])
+        else:
+            commands = env._command_b.new_tensor([event['velocity_w_m_s'] for event in events])
+            commands = commands[:, None, :].expand(-1, LANES, -1)
         payload = torch.load(checked(checkpoint), map_location='cpu', weights_only=True)
         if (NetworkConfig(**payload['network_config']) != NetworkConfig()
                 or payload['method_hashes'].get(METHOD_FIELD) != EXECUTION):

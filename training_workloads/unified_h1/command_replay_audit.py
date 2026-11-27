@@ -187,9 +187,10 @@ def audit(output, params, counters):
     saved = json.loads(path.read_bytes())
     if saved['counters'] != counters or set(saved['models']) != set(params['models']):
         raise ValueError('COMMAND_REPLAY_COUNTERS')
-    layouts, event_ids, events = event_schedule(params)
     trial_conditions = conditions(params)
     sources = [file_pin(path), params['stream']]
+    if 'candidate_stream' in params:
+        sources.append(params['candidate_stream'])
     if 'clearance_envelope' in params:
         sources.append(params['clearance_envelope'])
     if 'protocol' in params:
@@ -199,6 +200,7 @@ def audit(output, params, counters):
     results = {}
     first_pose = None
     for label, model in saved['models'].items():
+        layouts, event_ids, events = event_schedule(params, label)
         if (model['checkpoint'] != params['models'][label] or set(model['trials']) != set(trial_conditions)
                 or model['execution'] != arm_execution(params, label)):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
