@@ -25,12 +25,13 @@ from instinctlab.control.escape_recovery import (
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
-    CROSSING_STOP_25_V16, CROSSING_STOP_25_V17,
+    CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-FAR_CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V16, CROSSING_STOP_25_V17)
+VERIFIED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V17, CROSSING_STOP_25_V18)
+FAR_CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V16, *VERIFIED_RETREAT_ONSET_VERSIONS)
 HOVER_OWN_SIDE_VERSIONS = (CROSSING_STOP_25_V15, *FAR_CROSSING_REFERENCE_VERSIONS)
 SAMPLED_TURN_VERSIONS = (CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, *HOVER_OWN_SIDE_VERSIONS)
 OBSERVED_HEADING_VERSIONS = (CROSSING_STOP_25_V12, *SAMPLED_TURN_VERSIONS)
@@ -187,7 +188,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 crossing_turn_between_samples=version in SAMPLED_TURN_VERSIONS,
                                                 hover_escape_own_side=version in HOVER_OWN_SIDE_VERSIONS,
                                                 far_crossing_reference=version in FAR_CROSSING_REFERENCE_VERSIONS,
-                                                verified_retreat_onset=version == CROSSING_STOP_25_V17)
+                                                verified_retreat_onset=version in VERIFIED_RETREAT_ONSET_VERSIONS,
+                                                retain_only_clipped_retreat=version == CROSSING_STOP_25_V18)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

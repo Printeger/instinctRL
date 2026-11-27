@@ -76,6 +76,7 @@ CROSSING_STOP_25_V14 = 'm4-escape-brake-tube-p25-crossing-stop-v14'
 CROSSING_STOP_25_V15 = 'm4-escape-brake-tube-p25-crossing-stop-v15'
 CROSSING_STOP_25_V16 = 'm4-escape-brake-tube-p25-crossing-stop-v16'
 CROSSING_STOP_25_V17 = 'm4-escape-brake-tube-p25-crossing-stop-v17'
+CROSSING_STOP_25_V18 = 'm4-escape-brake-tube-p25-crossing-stop-v18'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -100,7 +101,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25, CROSSING_STOP_25_V9: 25,
                        CROSSING_STOP_25_V10: 25, CROSSING_STOP_25_V11: 25, CROSSING_STOP_25_V12: 25,
                        CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25,
-                       CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25}
+                       CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25, CROSSING_STOP_25_V18: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -124,7 +125,8 @@ class EscapeRecovery(EscapeOption):
                  crossing_retreat_own_side=False, crossing_retreat_extended=False, settled_crossing_mount=None,
                  static_scan_stop=False, crossing_reference=False, shallow_steering=False,
                  observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
-                 hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False):
+                 hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
+                 retain_only_clipped_retreat=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -141,6 +143,9 @@ class EscapeRecovery(EscapeOption):
         self.recovery_retreat = recovery_retreat
         self.early_retreat = early_retreat
         self.verified_retreat_onset = verified_retreat_onset
+        self.retain_only_clipped_retreat = retain_only_clipped_retreat
+        if retain_only_clipped_retreat and not verified_retreat_onset:
+            raise ValueError('Clipped retreat handoff requires verified retreat onset')
         if verified_retreat_onset:
             if not (early_retreat and align_intercept):
                 raise ValueError('Verified retreat onset requires early retreat and aligned command history')
@@ -685,6 +690,9 @@ class EscapeRecovery(EscapeOption):
         eligible = (self.retreating[candidates] & (speed[candidates] <= .30)
                     & (history[:, :, 12] <= .04).all(dim=1)
                     & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .50))
+        if self.retain_only_clipped_retreat:
+            retreat = self.issued(scans, states, selected[candidates], config)
+            eligible &= (retreat.metrics['beta'][:, 0] < .60) & (retreat.metrics['emergency'][:, 0] == 0.)
         if not bool(eligible.any()):
             return
         response = advance_command_response(self.command_offsets[candidates], self.command_coast[candidates], states)

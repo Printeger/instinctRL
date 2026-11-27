@@ -86,6 +86,8 @@ NOVEL_FAR_CROSSING_REFERENCE_ID = NOVEL_PREFIX+'57'
 NOVEL_FAR_CROSSING_REFERENCE_CONFIRM_ID = NOVEL_PREFIX+'58'
 NOVEL_VERIFIED_RETREAT_ONSET_ID = NOVEL_PREFIX+'59'
 NOVEL_VERIFIED_RETREAT_ONSET_CONFIRM_ID = NOVEL_PREFIX+'60'
+NOVEL_CLIPPED_RETREAT_ONSET_ID = NOVEL_PREFIX+'61'
+NOVEL_CLIPPED_RETREAT_ONSET_CONFIRM_ID = NOVEL_PREFIX+'62'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -165,7 +167,9 @@ BILATERAL_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v14'
 HOVER_OWN_SIDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v15'
 FAR_CROSSING_REFERENCE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v16'
 VERIFIED_RETREAT_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v17'
-FAR_CROSSING_REFERENCE_EXECUTIONS = (FAR_CROSSING_REFERENCE_EXECUTION, VERIFIED_RETREAT_ONSET_EXECUTION)
+CLIPPED_RETREAT_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v18'
+VERIFIED_RETREAT_ONSET_EXECUTIONS = (VERIFIED_RETREAT_ONSET_EXECUTION, CLIPPED_RETREAT_ONSET_EXECUTION)
+FAR_CROSSING_REFERENCE_EXECUTIONS = (FAR_CROSSING_REFERENCE_EXECUTION, *VERIFIED_RETREAT_ONSET_EXECUTIONS)
 HOVER_OWN_SIDE_EXECUTIONS = (HOVER_OWN_SIDE_EXECUTION, *FAR_CROSSING_REFERENCE_EXECUTIONS)
 SAMPLED_TURN_EXECUTIONS = (CROSSING_SAMPLED_TURN_EXECUTION, BILATERAL_STOPPING_EXECUTION, *HOVER_OWN_SIDE_EXECUTIONS)
 OBSERVED_HEADING_EXECUTIONS = (OBSERVED_HEADING_EXECUTION, *SAMPLED_TURN_EXECUTIONS)
@@ -264,7 +268,8 @@ def compress_trace(run_id):
                                                        NOVEL_BILATERAL_STOPPING_ID, NOVEL_BILATERAL_STOPPING_CONFIRM_ID,
                                                        NOVEL_HOVER_OWN_SIDE_ID, NOVEL_HOVER_OWN_SIDE_CONFIRM_ID,
                                                        NOVEL_FAR_CROSSING_REFERENCE_ID, NOVEL_FAR_CROSSING_REFERENCE_CONFIRM_ID,
-                                                       NOVEL_VERIFIED_RETREAT_ONSET_ID, NOVEL_VERIFIED_RETREAT_ONSET_CONFIRM_ID)
+                                                       NOVEL_VERIFIED_RETREAT_ONSET_ID, NOVEL_VERIFIED_RETREAT_ONSET_CONFIRM_ID,
+                                                       NOVEL_CLIPPED_RETREAT_ONSET_ID, NOVEL_CLIPPED_RETREAT_ONSET_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -556,6 +561,8 @@ def novel_contract(params):
         execution = (FAR_CROSSING_REFERENCE_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_VERIFIED_RETREAT_ONSET_ID, NOVEL_VERIFIED_RETREAT_ONSET_CONFIRM_ID):
         execution = (VERIFIED_RETREAT_ONSET_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_CLIPPED_RETREAT_ONSET_ID, NOVEL_CLIPPED_RETREAT_ONSET_CONFIRM_ID):
+        execution = (CLIPPED_RETREAT_ONSET_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -852,7 +859,8 @@ def run(backend, params):
             bilateral_stopping = execution == BILATERAL_STOPPING_EXECUTION
             hover_own_side = execution in HOVER_OWN_SIDE_EXECUTIONS
             far_crossing_reference = execution in FAR_CROSSING_REFERENCE_EXECUTIONS
-            verified_retreat_onset = execution == VERIFIED_RETREAT_ONSET_EXECUTION
+            verified_retreat_onset = execution in VERIFIED_RETREAT_ONSET_EXECUTIONS
+            clipped_retreat_only = execution == CLIPPED_RETREAT_ONSET_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -886,7 +894,8 @@ def run(backend, params):
                     or env.bilateral_stopping != bilateral_stopping
                     or env.escape_option.hover_escape_own_side != hover_own_side
                     or env.escape_option.far_crossing_reference != far_crossing_reference
-                    or env.escape_option.verified_retreat_onset != verified_retreat_onset):
+                    or env.escape_option.verified_retreat_onset != verified_retreat_onset
+                    or env.escape_option.retain_only_clipped_retreat != clipped_retreat_only):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -959,6 +968,8 @@ def run(backend, params):
                 model['far_crossing_reference'] = True
             if verified_retreat_onset:
                 model['verified_retreat_onset'] = True
+            if clipped_retreat_only:
+                model['retain_only_clipped_retreat'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 

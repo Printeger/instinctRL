@@ -12,7 +12,8 @@ from .command_replay import (
     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
-    FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTION,
+    FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
+    CLIPPED_RETREAT_ONSET_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -347,9 +348,12 @@ def audit(output, params, counters):
         far_crossing_profile = model['execution'] in FAR_CROSSING_REFERENCE_EXECUTIONS
         if model.get('far_crossing_reference', False) is not far_crossing_profile:
             raise ValueError('COMMAND_REPLAY_FAR_CROSSING_PROFILE')
-        verified_retreat_profile = model['execution'] == VERIFIED_RETREAT_ONSET_EXECUTION
+        verified_retreat_profile = model['execution'] in VERIFIED_RETREAT_ONSET_EXECUTIONS
         if model.get('verified_retreat_onset', False) is not verified_retreat_profile:
             raise ValueError('COMMAND_REPLAY_VERIFIED_RETREAT_PROFILE')
+        clipped_retreat_profile = model['execution'] == CLIPPED_RETREAT_ONSET_EXECUTION
+        if model.get('retain_only_clipped_retreat', False) is not clipped_retreat_profile:
+            raise ValueError('COMMAND_REPLAY_CLIPPED_RETREAT_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
