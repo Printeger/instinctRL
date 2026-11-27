@@ -170,7 +170,7 @@ def run(plan, input_pin):
         from training_workloads.unified_h1.command_replay import (
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, ENDURANCE_PREFIXES,
             EDGE_CONTINUATION_EXECUTION, FINITE_EDGE_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS,
-            INTERCEPT_CHOICE_EXECUTION, ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
+            EARLY_DIAGONAL_EXECUTION, INTERCEPT_CHOICE_EXECUTIONS, ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
             VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
             NOVEL_PREFIX, REGRESSION_IDS,
             SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS,
@@ -330,7 +330,8 @@ def run(plan, input_pin):
                     aligns_rotation = option_version in ROTATION_TUBE_EXECUTIONS
                     resumes = option_version == VERIFIED_RESUME_EXECUTION
                     zero_stop = option_version in VERIFIED_ZERO_EXECUTIONS
-                    intercept_choice = option_version == INTERCEPT_CHOICE_EXECUTION
+                    intercept_choice = option_version in INTERCEPT_CHOICE_EXECUTIONS
+                    early_diagonal = option_version == EARLY_DIAGONAL_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -344,7 +345,8 @@ def run(plan, input_pin):
                             or env.escape_option.tangent_magnitude != tangent_magnitude
                             or env.escape_option.verified_resume != resumes or env.escape_option.verified_zero != zero_stop
                             or env.escape_option.intercept_choice != intercept_choice
-                            or env.escape_option.receding_stop != intercept_choice):
+                            or env.escape_option.receding_stop != intercept_choice
+                            or env.escape_option.early_diagonal != early_diagonal):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -373,6 +375,8 @@ def run(plan, input_pin):
                         execution['verified_zero'] = True
                     if intercept_choice:
                         execution.update(intercept_choice=True, receding_stop=True)
+                    if early_diagonal:
+                        execution['early_diagonal'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

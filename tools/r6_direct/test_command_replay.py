@@ -954,14 +954,15 @@ def test_settled_turn_fallback_requires_the_independent_surface_margin(monkeypat
     assert revised.tolist() == [True,False]
 
 
-def test_fresh_intercept_can_keep_the_prior_choice_or_use_a_diagonal(monkeypatch):
+@pytest.mark.parametrize('use_early_diagonal',[False,True])
+def test_fresh_intercept_can_keep_the_prior_choice_or_use_a_diagonal(monkeypatch, use_early_diagonal):
     import torch
     from instinctlab.control import escape_passage
     from instinctlab.control.escape_recovery import EscapeRecovery
     from instinctlab.control.pipeline import ControlCoreConfig
 
     guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False, intercept=True,
-                           commit_intercept=True, intercept_choice=True)
+                           commit_intercept=True, intercept_choice=True, early_diagonal=use_early_diagonal)
     prior = torch.tensor([-.8,.6,0.])
     guard.intercept_direction[0] = prior
     guard.intercept_continued[0] = True
@@ -983,7 +984,9 @@ def test_fresh_intercept_can_keep_the_prior_choice_or_use_a_diagonal(monkeypatch
     monkeypatch.setattr(escape_passage,'intercept_scores',closest)
     guard.avoid_interception(lidar,states,selected,ControlCoreConfig())
     assert guard.intercepted.tolist() == [True,True]
-    assert torch.allclose(selected[0,1:], .5+.30*prior)
+    side = torch.tensor([-1.,.60,0.])
+    expected = side/side.norm() if use_early_diagonal else prior
+    assert torch.allclose(selected[0,1:], .5+.30*expected)
     assert selected[1,1] < .5 and selected[1,2] > .5
 
 

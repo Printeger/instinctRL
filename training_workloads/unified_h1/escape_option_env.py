@@ -11,7 +11,7 @@ from instinctlab.control.escape_recovery import (
     CLEAR_PASS_25_VERSION, COMMAND_HANDOFF_25_VERSION, COMMITTED_INTERCEPT_25_VERSION, CONFIRMED_STANDOFF_25_VERSION,
     CONFIRMED_TUBE_25_VERSION,
     CURVED_PASS_25_VERSION,
-    EARLY_RETREAT_25_VERSION, EDGE_CONTINUATION_25_VERSION, EscapeRecovery,
+    EARLY_DIAGONAL_25_VERSION, EARLY_RETREAT_25_VERSION, EDGE_CONTINUATION_25_VERSION, EscapeRecovery,
     FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FINITE_EDGE_25_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     INTERCEPT_CHOICE_25_VERSION,
@@ -27,7 +27,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-VERIFIED_ZERO_VERSIONS = (VERIFIED_ZERO_25_VERSION, INTERCEPT_CHOICE_25_VERSION)
+INTERCEPT_CHOICE_VERSIONS = (INTERCEPT_CHOICE_25_VERSION, EARLY_DIAGONAL_25_VERSION)
+VERIFIED_ZERO_VERSIONS = (VERIFIED_ZERO_25_VERSION, *INTERCEPT_CHOICE_VERSIONS)
 ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION, *VERIFIED_ZERO_VERSIONS)
 FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION,
                         TANGENT_MAGNITUDE_25_VERSION, *ROTATION_TUBE_VERSIONS)
@@ -129,8 +130,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 tangent_magnitude=version == TANGENT_MAGNITUDE_25_VERSION,
                                                 verified_resume=version == VERIFIED_RESUME_25_VERSION,
                                                 verified_zero=version in VERIFIED_ZERO_VERSIONS,
-                                                intercept_choice=version == INTERCEPT_CHOICE_25_VERSION,
-                                                receding_stop=version == INTERCEPT_CHOICE_25_VERSION)
+                                                intercept_choice=version in INTERCEPT_CHOICE_VERSIONS,
+                                                receding_stop=version in INTERCEPT_CHOICE_VERSIONS,
+                                                early_diagonal=version == EARLY_DIAGONAL_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

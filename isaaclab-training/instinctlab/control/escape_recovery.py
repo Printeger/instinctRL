@@ -51,6 +51,7 @@ ROTATION_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
 VERIFIED_RESUME_25_VERSION = 'm4-escape-brake-tube-p25-verified-resume-v1'
 VERIFIED_ZERO_25_VERSION = 'm4-escape-brake-tube-p25-verified-zero-v1'
 INTERCEPT_CHOICE_25_VERSION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
+EARLY_DIAGONAL_25_VERSION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -66,7 +67,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
-                       VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25}
+                       VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -82,7 +83,7 @@ class EscapeRecovery(EscapeOption):
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
-                 intercept_choice=False, receding_stop=False):
+                 intercept_choice=False, receding_stop=False, early_diagonal=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -123,6 +124,7 @@ class EscapeRecovery(EscapeOption):
         self.verified_zero = verified_zero
         self.intercept_choice = intercept_choice
         self.receding_stop = receding_stop
+        self.early_diagonal = early_diagonal
         if verified_resume:
             self.resume_witness = torch.zeros_like(self.applied)
             self.resumed = torch.zeros_like(self.applied)
@@ -782,10 +784,16 @@ class EscapeRecovery(EscapeOption):
         gain = torch.where(exposed, .15, .04)
         if self.intercept_choice:
             admissible[:, 2] &= previously_confirmed[lanes]
-            standard = admissible[:, :3] & (scores[:, 1:4] >= .28)
-            standard &= scores[:, 1:4]-score[:, None] >= gain[:, None]
-            admissible[:, 3:] &= ((score < .21) & ~standard.any(dim=1))[:, None]
+            if not self.early_diagonal:
+                standard = admissible[:, :3] & (scores[:, 1:4] >= .28)
+                standard &= scores[:, 1:4]-score[:, None] >= gain[:, None]
+                admissible[:, 3:] &= ((score < .21) & ~standard.any(dim=1))[:, None]
         best, side_id = scores[:, 1:].masked_fill(~admissible, -torch.inf).max(dim=1)
+        if self.early_diagonal:
+            prior = scores[:, 3]
+            prefer_prior = (admissible[:, 2] & (prior >= .28) & (prior-score >= gain) & (prior >= best-.04))
+            best = torch.where(prefer_prior, prior, best)
+            side_id = torch.where(prefer_prior, 2, side_id)
         change = hold | ((best >= .28) & (best-score >= gain))
         choice = torch.where(hold, 0, side_id+1)
         selected[lanes[change]] = trials[change, choice[change]]
