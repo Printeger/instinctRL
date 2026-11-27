@@ -58,6 +58,8 @@
 
 远距横穿方向的独立 Crazy 复验同样完成 32/32 条首飞和预设松杆，五类安全净空通过，最低为街道 0.20579 米，零接触和重置。最长可行低进展 9.6 秒出现在管道，街道跟踪和危险后恢复也仍需改进。 [独立结果](experiments/instinct-continuous-command/independent_far_crossing_reference/REPORT.md)
 
+反向撤离启动验证在同输入完成 32/32 首飞和预设松杆，五类净空均过，保留两条必要撤离反例。目标街道窗口净空从 0.37934 升至 0.50562 米，另一条街道最长低进展从 3.4 增至 5.4 秒。本版暂缓独立复验。 [同输入结果](experiments/instinct-continuous-command/verified_retreat_onset/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
