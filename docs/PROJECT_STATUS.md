@@ -72,6 +72,8 @@
 
 新指令横穿恢复的同输入仿真完成五类 32/32 条首飞和停车，零接触与重置。原接触窗净空从 −0.06669 升至 0.42217 米，全组最低 0.22235 米。跟踪和恢复仍有缺口，按相同冻结配置复验预先登记的独立 Crazy 输入。 [横穿配对结果](experiments/instinct-continuous-command/crossing_restart/REPORT.md)
 
+新指令横穿恢复的独立 Crazy 复验，五类 32/32 条首飞完整且净空通过，零接触和重置。室内一条停令漂移 0.391 米且 1.5 秒停稳，停车 31/32。保留原输入及原件进行停驻配对，正式验收未开始。 [独立结果](experiments/instinct-continuous-command/independent_crossing_restart/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
