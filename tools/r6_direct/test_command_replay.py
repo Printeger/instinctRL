@@ -7,11 +7,11 @@ from training_workloads.unified_h1.command_replay_audit import body_to_world, sc
 
 
 def test_long_trace_gzip_preserves_the_original_json_lines(tmp_path):
-    from training_workloads.unified_h1.command_replay import encode_trace_row, open_trace, trace_path
+    from training_workloads.unified_h1.command_replay import LONG_PREFIX, encode_trace_row, open_trace, trace_path
 
     rows = [{'kind': 'initial'}, {'kind': 'transition', 'measured': .22177478671073914}]
     raw = b''.join(encode_trace_row(row, compressed=False) for row in rows)
-    path = trace_path(tmp_path, 'candidate', 'layout_routes', long_run=True)
+    path = trace_path(tmp_path, 'candidate', 'layout_routes', run_id=LONG_PREFIX+'01')
     path.write_bytes(b''.join(encode_trace_row(row, compressed=True) for row in rows))
     with open_trace(path) as replay:
         assert replay.read().encode() == raw
@@ -952,6 +952,39 @@ def test_settled_turn_fallback_requires_the_independent_surface_margin(monkeypat
     revised = escape_passage.clear_hover_passage(None,None,None,curved=True,require_curvature=True,turn_fallback=True)
     assert baseline.tolist() == [False,False]
     assert revised.tolist() == [True,False]
+
+
+def test_fresh_intercept_can_keep_the_prior_choice_or_use_a_diagonal(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False, intercept=True,
+                           commit_intercept=True, intercept_choice=True)
+    prior = torch.tensor([-.8,.6,0.])
+    guard.intercept_direction[0] = prior
+    guard.intercept_continued[0] = True
+    lidar = torch.ones(2,12,59,360)
+    lidar[:, 0::3] = 3.
+    states = torch.zeros(2,52)
+    states[:, 45] = .24
+    selected = torch.tensor([[1.,.5,.5,.5]]*2)
+    positions = torch.ones(2,2)
+    motion = torch.tensor([[0.,.58]]*2)
+    tracks = (torch.arange(2), positions, motion, torch.zeros_like(positions), torch.full((2,),.34))
+    monkeypatch.setattr(escape_passage, 'moving_intercepts', lambda *args, **kwargs: tracks)
+
+    def closest(pos, velocity, coast, radius, candidates):
+        if candidates.shape[1] == 1:
+            return torch.full((2,1),.05)
+        return torch.tensor([[.09,.437,.25,.454,.61,.1],[.09,.25,.22,.64,.297,.1]])
+
+    monkeypatch.setattr(escape_passage,'intercept_scores',closest)
+    guard.avoid_interception(lidar,states,selected,ControlCoreConfig())
+    assert guard.intercepted.tolist() == [True,True]
+    assert torch.allclose(selected[0,1:], .5+.30*prior)
+    assert selected[1,1] < .5 and selected[1,2] > .5
 
 
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):

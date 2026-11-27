@@ -50,6 +50,7 @@ TANGENT_MAGNITUDE_25_VERSION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
 ROTATION_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
 VERIFIED_RESUME_25_VERSION = 'm4-escape-brake-tube-p25-verified-resume-v1'
 VERIFIED_ZERO_25_VERSION = 'm4-escape-brake-tube-p25-verified-zero-v1'
+INTERCEPT_CHOICE_25_VERSION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -65,7 +66,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
-                       VERIFIED_ZERO_25_VERSION: 25}
+                       VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -80,7 +81,8 @@ class EscapeRecovery(EscapeOption):
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
-                 edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False):
+                 edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
+                 intercept_choice=False, receding_stop=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -119,6 +121,8 @@ class EscapeRecovery(EscapeOption):
         self.edge_continuation = edge_continuation
         self.verified_resume = verified_resume
         self.verified_zero = verified_zero
+        self.intercept_choice = intercept_choice
+        self.receding_stop = receding_stop
         if verified_resume:
             self.resume_witness = torch.zeros_like(self.applied)
             self.resumed = torch.zeros_like(self.applied)
@@ -528,9 +532,20 @@ class EscapeRecovery(EscapeOption):
         if not len(lanes):
             return
         if self.verified_zero:
-            ended = lanes[clear_to_end_escape(lidar[lanes], state[lanes], allow_distant_returns=True)]
+            clear = clear_to_end_escape(lidar[lanes], state[lanes], allow_distant_returns=True)
         else:
-            ended = lanes[clear_to_end_escape(lidar[lanes], state[lanes])]
+            clear = clear_to_end_escape(lidar[lanes], state[lanes])
+        if self.receding_stop:
+            from .escape_passage import advance_command_response, clear_receding_return_at_stop
+
+            receding = ~clear & ~self.braking[lanes]
+            unresolved = lanes[receding]
+            if len(unresolved):
+                track = advance_command_response(self.command_offsets[unresolved], self.command_coast[unresolved],
+                                                  state[unresolved])
+                clear[receding] = clear_receding_return_at_stop(lidar[unresolved], state[unresolved],
+                                                               self.detector._full_rays, track)
+        ended = lanes[clear]
         self.released[ended] = True
         self.release_checks[ended] = 0
         self.hold_neutral(ended, selected)
@@ -707,6 +722,7 @@ class EscapeRecovery(EscapeOption):
         response = (self.command_offsets, self.command_coast) if self.align_intercept else None
         lanes, position, motion, coast, radius = moving_intercepts(
             lidar, state, self.detector._full_rays, eligible, command_response=response)
+        previously_confirmed = ((self.intercept_steps > 0) | self.intercept_continued) if self.intercept_choice else None
         if actor_action is not None:
             self.resume_latest_request(lidar, state, selected, actor_action, config, eligible,
                                        (lanes, position, motion, coast, radius))
@@ -740,7 +756,12 @@ class EscapeRecovery(EscapeOption):
         side /= side.norm(dim=1, keepdim=True)
         zero = torch.zeros_like(side)
         directions = torch.stack((zero, side, -side), dim=1)
-        trials = torch.cat((history.new_zeros((len(lanes), 3, 1)), .5+SPEED_M_S*directions), dim=2)
+        if self.intercept_choice:
+            along = torch.cat((motion/motion.norm(dim=1, keepdim=True), zero[:, :1]), dim=1)
+            diagonal = torch.stack((side+.60*along, -side+.60*along), dim=1)
+            diagonal /= diagonal.norm(dim=2, keepdim=True)
+            directions = torch.cat((directions, self.intercept_direction[lanes, None], diagonal), dim=1)
+        trials = torch.cat((history.new_zeros((*directions.shape[:2], 1)), .5+SPEED_M_S*directions), dim=2)
         velocity = torch.stack([self.issued(scans, history, a, config).v_final_b
                                 for a in trials.unbind(dim=1)], dim=1)
         scores = intercept_scores(position, motion, coast, radius, velocity)
@@ -758,8 +779,13 @@ class EscapeRecovery(EscapeOption):
             aligned = (velocity[:, 1:]*self.retreat_hold_direction[lanes, None]).sum(dim=2) >= .12
             admissible &= ~keep[:, None] | aligned
             hold &= ~keep
-        best, side_id = scores[:, 1:].masked_fill(~admissible, -torch.inf).max(dim=1)
         gain = torch.where(exposed, .15, .04)
+        if self.intercept_choice:
+            admissible[:, 2] &= previously_confirmed[lanes]
+            standard = admissible[:, :3] & (scores[:, 1:4] >= .28)
+            standard &= scores[:, 1:4]-score[:, None] >= gain[:, None]
+            admissible[:, 3:] &= ((score < .21) & ~standard.any(dim=1))[:, None]
+        best, side_id = scores[:, 1:].masked_fill(~admissible, -torch.inf).max(dim=1)
         change = hold | ((best >= .28) & (best-score >= gain))
         choice = torch.where(hold, 0, side_id+1)
         selected[lanes[change]] = trials[change, choice[change]]

@@ -82,7 +82,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, EDGE_CONTINUATION_EXECUTION,
                     FINITE_EDGE_EXECUTIONS,
                     NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_IDS, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
-                    ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION, VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTION,
+                    INTERCEPT_CHOICE_EXECUTION, ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
+                    VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
                 )
 
                 if ctx['plan']['run_id'] in REGRESSION_IDS:
@@ -112,8 +113,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['tangent_magnitude'] = True
                     if override == VERIFIED_RESUME_EXECUTION:
                         expected['verified_resume'] = True
-                    if override == VERIFIED_ZERO_EXECUTION:
+                    if override in VERIFIED_ZERO_EXECUTIONS:
                         expected['verified_zero'] = True
+                    if override == INTERCEPT_CHOICE_EXECUTION:
+                        expected.update(intercept_choice=True, receding_stop=True)
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

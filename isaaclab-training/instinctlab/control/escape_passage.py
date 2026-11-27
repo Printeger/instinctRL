@@ -38,7 +38,54 @@ def clear_to_end_escape(lidar, state, *, minimum_coverage=.60, allow_distant_ret
     return fresh & stable & observed & ~closing
 
 
-def _fit_curvature(points, patch):
+def clear_receding_return_at_stop(lidar, state, rays, command_response):
+    """Verify a nearby opening surface with the delayed zero-command path."""
+    history = state.reshape(-1, 4, 13)
+    ranges = lidar[:, 0::3]
+    reliable = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
+    closing, _, elapsed = _return_seed(lidar, state)
+    gaps = elapsed.diff(dim=1)
+    ages = history[:, :, 12]
+    nearest, seed = ranges[:, -1].masked_fill(~reliable[:, -1], torch.inf).flatten(1).min(dim=1)
+    coverage = reliable.all(dim=1).float().flatten(1).mean(dim=1)
+    ready = ((ages <= .04).all(dim=1) & ((gaps >= .07) & (gaps <= .13)).all(dim=1)
+             & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .50) & ~closing
+             & (coverage >= .55) & (nearest >= .70) & (nearest <= 1.35))
+    candidates = ready.nonzero().flatten()
+    clear = torch.zeros_like(ready)
+    if not len(candidates):
+        return clear
+    seed_fit = (ready[candidates], seed[candidates], elapsed[candidates])
+    supported, _, times, shapes = track_nearby_return(lidar[candidates], state[candidates], rays,
+        curved=True, maximum_previous_command=.46, seeded=seed_fit, fit_full_center=True)
+    centers = torch.stack([frame[0] for frame in shapes], dim=1)
+    outward = centers.norm(dim=2).diff(dim=1)/times.diff(dim=1)
+    center, sphere_radius, _ = shapes[-1]
+    latest = ranges[candidates, -1].flatten(1)
+    distance = (rays[None]*latest[..., None]-center[:, None]).norm(dim=2)
+    associated = (distance-sphere_radius[:, None]).abs() <= .018
+    other_nearby = (reliable[candidates, -1].flatten(1) & (latest < .85) & ~associated).any(dim=1)
+    offsets, coast = (value[candidates] for value in command_response)
+    alignment = ages[candidates, -1:]-ages[candidates]
+    offsets = offsets+alignment[:, :, None]*coast[:, None]
+    planar = [(center[:, :2], radius, valid) for center, radius, valid in shapes]
+    tracked, position, motion, radius = _curved_motion(planar, times, turn_fallback=False, offsets=offsets)
+    speed = motion.norm(dim=1)
+    previous = history[candidates, -1, 9:11]
+    normal = torch.stack((-motion[:, 1], motion[:, 0]), dim=1)/speed.clamp_min(.001)[:, None]
+    across = (position*normal).sum(dim=1)
+    coast_across = .35*(coast*normal).sum(dim=1)
+    pending_across = .10*(previous*normal).sum(dim=1)
+    # Bound both partial displacements before settling, even if the mover reverses along its line.
+    lower = across-coast_across.clamp_min(0.)-pending_across.clamp_min(0.)
+    upper = across-coast_across.clamp_max(0.)-pending_across.clamp_max(0.)
+    least = torch.maximum(lower, -upper).clamp_min(0.)-radius
+    clear[candidates] = (supported & tracked & ~other_nearby & (outward >= .08).all(dim=1)
+                         & (speed >= .20) & (speed <= 1.5) & (least >= .65))
+    return clear
+
+
+def _fit_curvature(points, patch, *, full_center=False):
     weights = patch.to(points.dtype)
     count = weights.sum(dim=1, keepdim=True).clamp_min(1.)
     mean = (points*weights[:, :, None]).sum(dim=1)/count
@@ -55,7 +102,7 @@ def _fit_curvature(points, patch):
     residual = (((radii-radius[:, None]).square()*weights).sum(dim=1)/count[:, 0]).sqrt()
     supported = (info == 0) & (torch.linalg.eigvalsh(covariance)[:, 0] >= 1.e-5)
     supported &= (radius >= .14) & (radius <= .9) & (residual <= .008)
-    return centers[:, :2], radius, supported
+    return (centers if full_center else centers[:, :2]), radius, supported
 
 
 def _return_seed(lidar, state):
@@ -69,7 +116,8 @@ def _return_seed(lidar, state):
     return accepted, seed, elapsed
 
 
-def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_command=.08, seeded=None):
+def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_command=.08, seeded=None,
+                        fit_full_center=False):
     """Associate a supported closing return across four delivered scans."""
     histories = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
@@ -105,7 +153,7 @@ def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_co
         coords = points[:, :, :2].masked_fill(~patch[:, :, None], torch.nan)
         medians.append(coords.nanmedian(dim=1).values)
         if curved:
-            shapes.append(_fit_curvature(points, patch))
+            shapes.append(_fit_curvature(points, patch, full_center=fit_full_center))
     path = torch.stack(medians[::-1], dim=1)
     return accepted, path, elapsed, shapes[::-1]
 

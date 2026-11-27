@@ -14,6 +14,7 @@ from instinctlab.control.escape_recovery import (
     EARLY_RETREAT_25_VERSION, EDGE_CONTINUATION_25_VERSION, EscapeRecovery,
     FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FINITE_EDGE_25_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
+    INTERCEPT_CHOICE_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, NEIGHBOR_HISTORY_25_VERSION,
     OFFSET_STOP_25_VERSION,
     PRIORITY_INTERCEPT_25_VERSION, RANKED_RETURN_25_VERSION, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION,
@@ -26,7 +27,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION)
+VERIFIED_ZERO_VERSIONS = (VERIFIED_ZERO_25_VERSION, INTERCEPT_CHOICE_25_VERSION)
+ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION, *VERIFIED_ZERO_VERSIONS)
 FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION,
                         TANGENT_MAGNITUDE_25_VERSION, *ROTATION_TUBE_VERSIONS)
 CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, *FINITE_EDGE_VERSIONS)
@@ -126,7 +128,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
                                                 tangent_magnitude=version == TANGENT_MAGNITUDE_25_VERSION,
                                                 verified_resume=version == VERIFIED_RESUME_25_VERSION,
-                                                verified_zero=version == VERIFIED_ZERO_25_VERSION)
+                                                verified_zero=version in VERIFIED_ZERO_VERSIONS,
+                                                intercept_choice=version == INTERCEPT_CHOICE_25_VERSION,
+                                                receding_stop=version == INTERCEPT_CHOICE_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

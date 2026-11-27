@@ -49,6 +49,8 @@ NOVEL_ROTATION_TUBE_ID = NOVEL_PREFIX+'20'
 NOVEL_VERIFIED_RESUME_ID = NOVEL_PREFIX+'21'
 NOVEL_VERIFIED_ZERO_ID = NOVEL_PREFIX+'22'
 NOVEL_ZERO_CONFIRM_ID = NOVEL_PREFIX+'23'
+NOVEL_INTERCEPT_CHOICE_ID = NOVEL_PREFIX+'24'
+NOVEL_TRACKING_CONFIRM_ID = NOVEL_PREFIX+'25'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -103,7 +105,9 @@ TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
 ROTATION_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
 VERIFIED_RESUME_EXECUTION = 'm4-escape-brake-tube-p25-verified-resume-v1'
 VERIFIED_ZERO_EXECUTION = 'm4-escape-brake-tube-p25-verified-zero-v1'
-ROTATION_TUBE_EXECUTIONS = (ROTATION_TUBE_EXECUTION, VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTION)
+INTERCEPT_CHOICE_EXECUTION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
+VERIFIED_ZERO_EXECUTIONS = (VERIFIED_ZERO_EXECUTION, INTERCEPT_CHOICE_EXECUTION)
+ROTATION_TUBE_EXECUTIONS = (ROTATION_TUBE_EXECUTION, VERIFIED_RESUME_EXECUTION, *VERIFIED_ZERO_EXECUTIONS)
 FINITE_EDGE_EXECUTIONS = (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION,
                           TANGENT_MAGNITUDE_EXECUTION, *ROTATION_TUBE_EXECUTIONS)
 CONFIRMED_TUBE_EXECUTIONS = (CONFIRMED_TUBE_EXECUTION, *FINITE_EDGE_EXECUTIONS)
@@ -160,8 +164,12 @@ def arm_execution(params, label):
     return params.get('candidate_execution', params['execution']) if label == 'candidate' else params['execution']
 
 
-def trace_path(output, label, condition, *, long_run):
-    suffix = 'jsonl.gz' if long_run else 'jsonl'
+def compress_trace(run_id):
+    return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID)
+
+
+def trace_path(output, label, condition, *, run_id):
+    suffix = 'jsonl.gz' if compress_trace(run_id) else 'jsonl'
     return output/f'{label}-{condition}.{suffix}'
 
 
@@ -397,6 +405,8 @@ def novel_contract(params):
         execution = (VERIFIED_RESUME_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_VERIFIED_ZERO_ID, NOVEL_ZERO_CONFIRM_ID):
         execution = (VERIFIED_ZERO_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID):
+        execution = (INTERCEPT_CHOICE_EXECUTION,)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
@@ -607,6 +617,7 @@ def run(backend, params):
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     novel = params['experiment_id'].startswith(NOVEL_PREFIX)
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
+    compressed = compress_trace(params['experiment_id'])
     independently_timed = novel or long_run
     if independently_timed:
         settings = json.loads(checked(params['protocol']).read_bytes()) if long_run else params
@@ -624,7 +635,7 @@ def run(backend, params):
         env.enable_clearance_capture(clearance_radii(params['clearance_envelope']))
 
     def save_row(handle, row):
-        data = encode_trace_row(row, compressed=long_run)
+        data = encode_trace_row(row, compressed=compressed)
         reserve_output_bytes(Path(handle.name), len(data))
         handle.write(data)
 
@@ -666,12 +677,15 @@ def run(backend, params):
             tangent_magnitude = execution == TANGENT_MAGNITUDE_EXECUTION
             aligns_rotation = execution in ROTATION_TUBE_EXECUTIONS
             resumes = execution == VERIFIED_RESUME_EXECUTION
-            zero_stop = execution == VERIFIED_ZERO_EXECUTION
+            zero_stop = execution in VERIFIED_ZERO_EXECUTIONS
+            intercept_choice = execution == INTERCEPT_CHOICE_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
                     or env.escape_option.tangent_magnitude != tangent_magnitude
-                    or env.escape_option.verified_resume != resumes or env.escape_option.verified_zero != zero_stop):
+                    or env.escape_option.verified_resume != resumes or env.escape_option.verified_zero != zero_stop
+                    or env.escape_option.intercept_choice != intercept_choice
+                    or env.escape_option.receding_stop != intercept_choice):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -696,6 +710,8 @@ def run(backend, params):
                 model['verified_resume'] = True
             if zero_stop:
                 model['verified_zero'] = True
+            if intercept_choice:
+                model.update(intercept_choice=True, receding_stop=True)
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -728,7 +744,7 @@ def run(backend, params):
             env.stage_r6_world_command(commands[0])
             backend.resource_check('before_command_replay_reset', counters.explicit_resets+1)
             observation, _ = backend._preserving_reset(seed=params['seed'])
-            trace = trace_path(output, label, name, long_run=long_run)
+            trace = trace_path(output, label, name, run_id=params['experiment_id'])
             dense_path = output/f'{label}-{name}-clearance.f32'
             # Stream completed transitions to disk. A failed run still leaves its prefix intact.
             with ExitStack() as files:

@@ -7,8 +7,8 @@ from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
-    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS, ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
-    VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTION,
+    FINITE_EDGE_EXECUTIONS, INTERCEPT_CHOICE_EXECUTION, LANES, LAYOUTS, ROTATION_TUBE_EXECUTIONS,
+    TANGENT_MAGNITUDE_EXECUTION, VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -283,14 +283,17 @@ def audit(output, params, counters):
         resume_profile = model['execution'] == VERIFIED_RESUME_EXECUTION
         if model.get('verified_resume', False) is not resume_profile:
             raise ValueError('COMMAND_REPLAY_VERIFIED_RESUME_PROFILE')
-        if model.get('verified_zero', False) is not (model['execution'] == VERIFIED_ZERO_EXECUTION):
+        if model.get('verified_zero', False) is not (model['execution'] in VERIFIED_ZERO_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_VERIFIED_ZERO_PROFILE')
+        choice_profile = model['execution'] == INTERCEPT_CHOICE_EXECUTION
+        if any(model.get(key, False) is not choice_profile for key in ('intercept_choice', 'receding_stop')):
+            raise ValueError('COMMAND_REPLAY_INTERCEPT_CHOICE_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []
         for name, trial in model['trials'].items():
             trace = checked(trial['trace'])
-            if trace != trace_path(output, label, name, long_run=long_run):
+            if trace != trace_path(output, label, name, run_id=params['experiment_id']):
                 raise ValueError('COMMAND_REPLAY_TRACE_PATH')
             sources.append(trial['trace'])
             with open_trace(trace) as handle:
