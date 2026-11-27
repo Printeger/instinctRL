@@ -80,6 +80,8 @@
 
 相邻测距停驻的独立 Crazy 回放 32 个停车窗达标。街道 20 在避让换边后接触并重置，31/32 条首飞完整，接触窗最低 −0.07716 米。保留原件，按同输入复核同侧撤离和回到横穿线的分岔。 [独立结果](experiments/instinct-continuous-command/independent_overlapping_stop/REPORT.md)
 
+制动中逐拍恢复的较宽候选在同一 Crazy 输入出现街道接触、重置与一个新停车失败，原固定目标恢复未重现。提前放行改变了横穿前的位置，保留失败原件。后续缩小到有实际变令证据的窗口。 [原生对照](experiments/instinct-continuous-command/brake_recovery/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
