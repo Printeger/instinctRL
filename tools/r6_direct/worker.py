@@ -170,7 +170,7 @@ def run(plan, input_pin):
         from training_workloads.unified_h1.command_replay import (
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, ENDURANCE_PREFIXES,
             EDGE_CONTINUATION_EXECUTION, FINITE_EDGE_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS,
-            TANGENT_MAGNITUDE_EXECUTION,
+            ROTATION_TUBE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION,
             NOVEL_PREFIX, REGRESSION_IDS,
             SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS,
             WALL_TANGENT_EXECUTIONS,
@@ -326,10 +326,12 @@ def run(plan, input_pin):
                     detour = option_version in FINITE_EDGE_EXECUTIONS
                     edge_continuation = option_version == EDGE_CONTINUATION_EXECUTION
                     tangent_magnitude = option_version == TANGENT_MAGNITUDE_EXECUTION
-                    expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube)
+                    aligns_rotation = option_version == ROTATION_TUBE_EXECUTION
+                    expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
-                                 p.config.ics.confirmed_standoff_m, p.config.ics.confirmed_tube_radius_m)
+                                 p.config.ics.confirmed_standoff_m, p.config.ics.confirmed_tube_radius_m,
+                                 p.config.ics.confirmed_tube_align_rotation)
                                 for p in env._control_pipelines}
                     if (profiles != {expected} or env.escape_option_version != option_version
                             or env.lidar_mount_pitch_degrees != 25 or env.escape_option.settled_offset_stop != settled_stop
@@ -350,6 +352,8 @@ def run(plan, input_pin):
                         execution['wall_tangent'] = True
                     if inner_tube:
                         execution['confirmed_tube_radius_m'] = inner_tube
+                    if aligns_rotation:
+                        execution['confirmed_tube_align_rotation'] = True
                     if detour:
                         execution['finite_edge'] = True
                     if edge_continuation:

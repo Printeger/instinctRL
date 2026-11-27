@@ -82,7 +82,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, EDGE_CONTINUATION_EXECUTION,
                     FINITE_EDGE_EXECUTIONS,
                     NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_IDS, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
-                    TANGENT_MAGNITUDE_EXECUTION,
+                    ROTATION_TUBE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION,
                 )
 
                 if ctx['plan']['run_id'] in REGRESSION_IDS:
@@ -102,6 +102,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['wall_tangent'] = True
                     if override in CONFIRMED_TUBE_EXECUTIONS:
                         expected['confirmed_tube_radius_m'] = .41
+                    if override == ROTATION_TUBE_EXECUTION:
+                        expected['confirmed_tube_align_rotation'] = True
                     if override in FINITE_EDGE_EXECUTIONS:
                         expected['finite_edge'] = True
                     if override == EDGE_CONTINUATION_EXECUTION:

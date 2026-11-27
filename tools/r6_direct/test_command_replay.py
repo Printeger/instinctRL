@@ -856,6 +856,36 @@ def test_narrow_tube_needs_clear_axis_and_return_support_on_both_sides():
     assert candidate.metrics['beta'].flatten().tolist() == [1.,0.,0.,0.]
 
 
+def test_inner_tube_aligns_small_turns_using_only_imu_and_command_history():
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    angle = torch.tensor([.084, .056, .028, 0.])
+    heading = torch.stack((angle.cos(), torch.zeros_like(angle), -angle.sin()), dim=1)
+    gravity = torch.stack((-angle.sin(), torch.zeros_like(angle), -angle.cos()), dim=1)
+    forward = heading@rays.T
+    side = (.46/rays[:, 1].clamp_min(.001)).masked_fill(rays[:, 1] <= 0., torch.inf)
+    far = (2.25/forward.clamp_min(.001)).masked_fill(forward <= 0., torch.inf)
+    depth = torch.minimum(side, far)
+    frontal = (.80/forward.clamp_min(.001)).masked_fill(forward <= 0., torch.inf)
+    ranges = torch.stack((depth, frontal, depth, depth, depth))
+    valid = ranges <= 40.
+    scans = torch.stack((ranges.clamp_max(40.), valid, valid), dim=2).reshape(5,12,59,360)
+    state = torch.zeros(5,4,13)
+    state[:, :, 1] = .28
+    state[:, :, 3:6] = gravity
+    state[:, :, 6:9] = .24*heading
+    state[2, :, 1] = .45
+    state[3, 1, 12] = .05
+    state[4, 1, 7] = -.10
+    command = state[:, -1, 6:9]
+    config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True,
+                       confirmed_tube_radius_m=.41, confirmed_tube_align_rotation=True)
+    result = attenuate_command(scans, rays, command, .1, config, state_vec=state.reshape(5,52))
+    assert result.metrics['beta'].flatten().tolist() == [1.,0.,0.,0.,0.]
+
+
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
     from instinctlab.control import escape_tangent

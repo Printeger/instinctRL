@@ -7,7 +7,7 @@ from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
-    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS, TANGENT_MAGNITUDE_EXECUTION,
+    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS, ROTATION_TUBE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -261,8 +261,10 @@ def audit(output, params, counters):
         expected_standoff = .45 if model['execution'] == CONFIRMED_STANDOFF_EXECUTION else 0.
         inner_tube = model.get('ics_profile', {}).get('confirmed_tube_radius_m', 0.)
         expected_inner_tube = .41 if model['execution'] in CONFIRMED_TUBE_EXECUTIONS else 0.
+        aligns_rotation = model.get('ics_profile', {}).get('confirmed_tube_align_rotation', False)
         if (uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS)
-                or standoff != expected_standoff or inner_tube != expected_inner_tube):
+                or standoff != expected_standoff or inner_tube != expected_inner_tube
+                or aligns_rotation is not (model['execution'] == ROTATION_TUBE_EXECUTION)):
             raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
         if model.get('settled_offset_stop', False) is not (model['execution'] in SETTLED_OFFSET_STOP_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_SETTLED_OFFSET_STOP_PROFILE')

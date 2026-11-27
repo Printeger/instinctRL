@@ -1,4 +1,4 @@
-"""Continuous, command replay on the frozen B/C plant."""
+"""Continuous command replay on the frozen B/C plant."""
 from bisect import bisect_right
 from contextlib import ExitStack
 import gzip
@@ -45,6 +45,7 @@ NOVEL_FINITE_EDGE_ID = NOVEL_PREFIX+'16'
 NOVEL_REVALIDATE_ID = NOVEL_PREFIX+'17'
 NOVEL_EDGE_CONTINUATION_ID = NOVEL_PREFIX+'18'
 NOVEL_TANGENT_MAGNITUDE_ID = NOVEL_PREFIX+'19'
+NOVEL_ROTATION_TUBE_ID = NOVEL_PREFIX+'20'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -96,7 +97,9 @@ CONFIRMED_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
 FINITE_EDGE_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-v1'
 EDGE_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-continued-v1'
 TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
-FINITE_EDGE_EXECUTIONS = (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION, TANGENT_MAGNITUDE_EXECUTION)
+ROTATION_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
+FINITE_EDGE_EXECUTIONS = (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION,
+                          TANGENT_MAGNITUDE_EXECUTION, ROTATION_TUBE_EXECUTION)
 CONFIRMED_TUBE_EXECUTIONS = (CONFIRMED_TUBE_EXECUTION, *FINITE_EDGE_EXECUTIONS)
 WALL_TANGENT_EXECUTIONS = (WALL_TANGENT_EXECUTION, *CONFIRMED_TUBE_EXECUTIONS)
 SETTLED_OFFSET_STOP_EXECUTIONS = (SETTLED_OFFSET_STOP_EXECUTION, *WALL_TANGENT_EXECUTIONS)
@@ -375,7 +378,8 @@ def novel_contract(params):
                   NOVEL_CONFIRMED_TUBE_ID: (WALL_TANGENT_EXECUTION, CONFIRMED_TUBE_EXECUTION),
                   NOVEL_FINITE_EDGE_ID: (CONFIRMED_TUBE_EXECUTION, FINITE_EDGE_EXECUTION),
                   NOVEL_EDGE_CONTINUATION_ID: (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION),
-                  NOVEL_TANGENT_MAGNITUDE_ID: (FINITE_EDGE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION)}.get(params['experiment_id'])
+                  NOVEL_TANGENT_MAGNITUDE_ID: (FINITE_EDGE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION),
+                  NOVEL_ROTATION_TUBE_ID: (FINITE_EDGE_EXECUTION, ROTATION_TUBE_EXECUTION)}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
@@ -638,7 +642,7 @@ def run(backend, params):
         if timed_crossings:
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure,
                               p.config.ics.motion_tube_neighbor_history, p.config.ics.confirmed_standoff_m,
-                              p.config.ics.confirmed_tube_radius_m)
+                              p.config.ics.confirmed_tube_radius_m, p.config.ics.confirmed_tube_align_rotation)
                              for p in env._control_pipelines}
             confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION,
                                     SIDE_HOVER_RETREAT_EXECUTION, *CLEAR_PASS_EXECUTIONS)
@@ -650,7 +654,8 @@ def run(backend, params):
             detour = execution in FINITE_EDGE_EXECUTIONS
             edge_continuation = execution == EDGE_CONTINUATION_EXECUTION
             tangent_magnitude = execution == TANGENT_MAGNITUDE_EXECUTION
-            if (configuration != {(.60, confirm, neighbors, standoff, inner_tube)}
+            aligns_rotation = execution == ROTATION_TUBE_EXECUTION
+            if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
                     or env.escape_option.tangent_magnitude != tangent_magnitude):
@@ -662,6 +667,8 @@ def run(backend, params):
                 model['ics_profile']['confirmed_standoff_m'] = standoff
             if inner_tube:
                 model['ics_profile']['confirmed_tube_radius_m'] = inner_tube
+            if aligns_rotation:
+                model['ics_profile']['confirmed_tube_align_rotation'] = True
             if settled_stop:
                 model['settled_offset_stop'] = True
             if tangent:

@@ -40,6 +40,7 @@ class ICSConfig:
     motion_tube_neighbor_history: bool = False
     confirmed_standoff_m: float = 0.0
     confirmed_tube_radius_m: float = 0.0
+    confirmed_tube_align_rotation: bool = False
 
     def __post_init__(self) -> None:
         for name in (
@@ -68,6 +69,10 @@ class ICSConfig:
             raise ValueError("motion tube radius must be in [0, d_safe_m]")
         if not 0.0 <= self.confirmed_tube_radius_m <= self.motion_tube_radius_m:
             raise ValueError("confirmed tube radius must fit inside the motion tube")
+        if not isinstance(self.confirmed_tube_align_rotation, bool):
+            raise TypeError("confirmed_tube_align_rotation must be boolean")
+        if self.confirmed_tube_align_rotation and self.confirmed_tube_radius_m == 0.0:
+            raise ValueError("rotation alignment requires an inner tube")
         if not isinstance(self.range_rate_filter, bool):
             raise TypeError("range_rate_filter must be boolean")
         if not isinstance(self.motion_tube_confirm_closure, bool):
@@ -201,7 +206,7 @@ def _neighbor_history(ranges, reliable, rays, command, candidates, across, paral
     return lanes[supported], beams[supported]
 
 
-def _fresh_history(state, reference, interval):
+def _fresh_history(state, reference, interval, *, maximum_gyro=.22):
     if state is None:
         return torch.zeros_like(reference[:, :1], dtype=torch.bool)
     if not isinstance(state, torch.Tensor):
@@ -211,7 +216,7 @@ def _fresh_history(state, reference, interval):
     history = state.reshape(-1, 4, 13)[:, 1:]
     age = history[:, :, 12]
     gap = interval-age.diff(dim=1)
-    gentle_rotation = history[:, :, :3].norm(dim=2).amax(dim=1, keepdim=True) <= .22
+    gentle_rotation = history[:, :, :3].norm(dim=2).amax(dim=1, keepdim=True) <= maximum_gyro
     fresh = (age <= .4*interval).all(dim=1, keepdim=True)
     consecutive = ((gap >= .7*interval) & (gap <= 1.3*interval)).all(dim=1, keepdim=True)
     return fresh & consecutive & gentle_rotation
@@ -219,15 +224,45 @@ def _fresh_history(state, reference, interval):
 
 def _visible_inner_tube(ranges, reliable, rays, heading, gravity, radius):
     """Certify forward depth using actual returns bracketing the request."""
-    cosine = (heading @ rays.T).clamp(-1., 1.)
-    depth = ranges*cosine[:, None]
-    across = ranges*(1.-cosine.square()).sqrt()[:, None]
+    cosine = (heading @ rays.T).clamp(-1., 1.)[:, None]
+    side = (torch.cross(gravity, heading, dim=1) @ rays.T)[:, None] >= 0.
+    return _bracketed_inner_tube(ranges, reliable, cosine, side, radius)
+
+
+def _bracketed_inner_tube(ranges, reliable, cosine, side, radius):
+    depth = ranges*cosine
+    across = ranges*(1.-cosine.square()).sqrt()
     occupied = reliable & (depth > 0.) & (depth <= 1.10) & (across < radius)
-    witness = reliable & (cosine[:, None] >= .99) & (depth > 1.10)
-    side = (torch.cross(gravity, heading, dim=1) @ rays.T) >= 0.
-    columns = [((witness & flank[:, None]).reshape(len(heading), 3, ELEVATION_SAMPLES, AZIMUTH_SAMPLES)
+    witness = reliable & (cosine >= .99) & (depth > 1.10)
+    columns = [((witness & flank).reshape(len(ranges), 3, ELEVATION_SAMPLES, AZIMUTH_SAMPLES)
                 .any(dim=2).sum(dim=2) >= 3).all(dim=1) for flank in (side, ~side)]
     return columns[0] & columns[1] & ~occupied.flatten(1).any(dim=1)
+
+
+def _rotate_inner_tube(ranges, reliable, rays, heading, state, interval, radius):
+    history = state.reshape(-1, 4, 13)[:, 1:]
+    gap = interval-history[:, :, 12].diff(dim=1)
+    angular_step = .5*(history[:, 1:, :3]+history[:, :-1, :3])*gap[..., None]
+    half_angle = .5*angular_step.norm(dim=2, keepdim=True)
+    rotation = torch.cat((half_angle.cos(), .5*angular_step*torch.sinc(half_angle/math.pi)), dim=2)
+    intent = history[:, :, 6:9]
+    speed = intent.norm(dim=2, keepdim=True)
+    unit = intent/speed.clamp_min(1.e-6)
+    requested_axes = torch.stack((heading, unit[:, -1]), dim=1)
+    previous = _quat_rotate_wxyz(rotation[:, 1:2], requested_axes)
+    oldest = _quat_rotate_wxyz(rotation[:, 0:1], previous)
+    axes = torch.stack((oldest, previous, requested_axes), dim=1)
+    residual = (axes[:, :, 1]-unit).norm(dim=2)
+    minimum_speed = speed[:, :, 0].amin(dim=1)
+    maximum_speed = speed[:, :, 0].amax(dim=1)
+    coherent = ((residual.amax(dim=1) <= .020) & (minimum_speed >= .10) & (maximum_speed <= .30)
+                & (maximum_speed-minimum_speed <= .025))
+    headings = axes[:, :, 0]
+    cosine = (headings @ rays.T).clamp(-1., 1.)
+    side = (torch.cross(history[:, :, 3:6], headings, dim=2) @ rays.T) >= 0.
+    # Carry uncertainty from the measured intent alignment to the end of the observed core.
+    radius_with_rotation_error = radius+1.10*residual[..., None]
+    return coherent & _bracketed_inner_tube(ranges, reliable, cosine, side, radius_with_rotation_error)
 
 
 def attenuate_command(
@@ -304,13 +339,21 @@ def attenuate_command(
             proof = (validity[:, -3:] & (reliability[:, -3:] >= .65)).flatten(2)
             quiet = last_two_rates.abs().amax(dim=1) <= approach+.10
             shoulder = (active & ~outside & (v_safe < closing) & (across_m >= config.confirmed_tube_radius_m)
-                        & proof.all(dim=1) & quiet & fresh & (speed <= .30))
-            lanes = shoulder.any(dim=1).nonzero().flatten()
+                        & proof.all(dim=1) & quiet & (speed <= .30))
+            lanes = (shoulder & fresh).any(dim=1).nonzero().flatten()
             if len(lanes):
                 heading = v_gov_b[lanes]/speed[lanes].clamp_min(1.e-6)
                 clear = _visible_inner_tube(ranges[lanes, -3:].flatten(2), proof[lanes], rays_body,
                                             heading, state_vec[lanes, 42:45], config.confirmed_tube_radius_m)
                 outside[lanes[clear]] |= shoulder[lanes[clear]]
+            if config.confirmed_tube_align_rotation:
+                rotating = _fresh_history(state_vec, speed, history_dt_s, maximum_gyro=.38) & ~fresh
+                lanes = (shoulder & rotating).any(dim=1).nonzero().flatten()
+                if len(lanes):
+                    heading = v_gov_b[lanes]/speed[lanes].clamp_min(1.e-6)
+                    clear = _rotate_inner_tube(ranges[lanes, -3:].flatten(2), proof[lanes], rays_body,
+                                               heading, state_vec[lanes], history_dt_s, config.confirmed_tube_radius_m)
+                    outside[lanes[clear]] |= shoulder[lanes[clear]]
         active = active & ~outside
     ratios = (v_safe / closing.clamp_min(torch.finfo(v_gov_b.dtype).tiny)).clamp(0.0, 1.0)
     beta = torch.where(active, ratios, torch.ones_like(ratios)).min(dim=1, keepdim=True).values

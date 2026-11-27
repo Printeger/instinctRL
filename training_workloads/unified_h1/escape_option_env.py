@@ -18,7 +18,7 @@ from instinctlab.control.escape_recovery import (
     OFFSET_STOP_25_VERSION,
     PRIORITY_INTERCEPT_25_VERSION, RANKED_RETURN_25_VERSION, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION,
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
-    RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION,
+    RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION, ROTATION_TUBE_25_VERSION,
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
     TURN_FIT_25_VERSION,
     WALL_TANGENT_25_VERSION,
@@ -26,7 +26,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION, TANGENT_MAGNITUDE_25_VERSION)
+FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION,
+                        TANGENT_MAGNITUDE_25_VERSION, ROTATION_TUBE_25_VERSION)
 CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, *FINITE_EDGE_VERSIONS)
 WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, *CONFIRMED_TUBE_VERSIONS)
 SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, *WALL_TANGENT_VERSIONS)
@@ -141,16 +142,19 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         neighbor_history = version in NEIGHBOR_HISTORY_VERSIONS
         standoff = .45 if version == CONFIRMED_STANDOFF_25_VERSION else 0.
         inner = .41 if version in CONFIRMED_TUBE_VERSIONS else 0.
+        align = version == ROTATION_TUBE_25_VERSION
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
             actual = (ics.motion_tube_radius_m, ics.motion_tube_confirm_closure,
-                      ics.motion_tube_neighbor_history, ics.confirmed_standoff_m, ics.confirmed_tube_radius_m)
-            if actual != (radius, confirm, neighbor_history, standoff, inner):
+                      ics.motion_tube_neighbor_history, ics.confirmed_standoff_m, ics.confirmed_tube_radius_m,
+                      ics.confirmed_tube_align_rotation)
+            if actual != (radius, confirm, neighbor_history, standoff, inner, align):
                 pipeline.config = replace(pipeline.config, ics=replace(ics, motion_tube_radius_m=radius,
                                                                       motion_tube_confirm_closure=confirm,
                                                                       motion_tube_neighbor_history=neighbor_history,
                                                                       confirmed_standoff_m=standoff,
-                                                                      confirmed_tube_radius_m=inner))
+                                                                      confirmed_tube_radius_m=inner,
+                                                                      confirmed_tube_align_rotation=align))
 
     def enable_clearance_capture(self, radius_by_body):
         names = self._robot.body_names
