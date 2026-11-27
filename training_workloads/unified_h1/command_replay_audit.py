@@ -7,7 +7,8 @@ from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CROSSING_START_M, LANES, LAYOUTS,
-    INTERCEPT_EXECUTIONS, LONG_PREFIX, NOVEL_PREFIX, OFFSET_STOP_EXECUTION, RANK_EXECUTIONS, REARM_EXECUTIONS,
+    INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTION, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
+    RANK_EXECUTIONS, REARM_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
 )
@@ -253,6 +254,9 @@ def audit(output, params, counters):
         if (model['checkpoint'] != params['models'][label] or set(model['trials']) != set(trial_conditions)
                 or model['execution'] != arm_execution(params, label)):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
+        uses_neighbors = model.get('ics_profile', {}).get('uses_neighbor_history', False)
+        if uses_neighbors != (model['execution'] == NEIGHBOR_HISTORY_EXECUTION):
+            raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []
@@ -334,7 +338,7 @@ def audit(output, params, counters):
                 handoff = row.get('escape_command_handoff', [False]*LANES)
                 if len(handoff) != LANES or any(type(value) is not bool for value in handoff):
                     raise ValueError('COMMAND_REPLAY_HANDOFF_LANES')
-                if ('escape_offset_stop' in row) != (model['execution'] == OFFSET_STOP_EXECUTION):
+                if ('escape_offset_stop' in row) != (model['execution'] in OFFSET_STOP_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_OFFSET_STOP_BINDING')
                 offset = row.get('escape_offset_stop', [False]*LANES)
                 if len(offset) != LANES or any(type(value) is not bool for value in offset):

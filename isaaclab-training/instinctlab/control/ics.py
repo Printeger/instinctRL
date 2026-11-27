@@ -37,6 +37,7 @@ class ICSConfig:
     empty_active_set_beta: float = 1.0
     motion_tube_radius_m: float = 0.0
     motion_tube_confirm_closure: bool = False
+    motion_tube_neighbor_history: bool = False
 
     def __post_init__(self) -> None:
         for name in (
@@ -67,6 +68,8 @@ class ICSConfig:
             raise TypeError("range_rate_filter must be boolean")
         if not isinstance(self.motion_tube_confirm_closure, bool):
             raise TypeError("motion_tube_confirm_closure must be boolean")
+        if not isinstance(self.motion_tube_neighbor_history, bool):
+            raise TypeError("motion_tube_neighbor_history must be boolean")
 
 
 @dataclass(frozen=True)
@@ -170,6 +173,28 @@ def _validate(
     return ranges, validity, reliability
 
 
+def _neighbor_history(ranges, reliable, rays, command, candidates, across, parallel):
+    lanes, beams = candidates.nonzero(as_tuple=True)
+    if not len(lanes):
+        return lanes, beams
+    span = torch.arange(-3, 4, device=beams.device)
+    row = beams[:, None] // AZIMUTH_SAMPLES + span.repeat_interleave(len(span))
+    azimuth = (beams[:, None] % AZIMUTH_SAMPLES + span.repeat(len(span))) % AZIMUTH_SAMPLES
+    valid_row = (row >= 0) & (row < ELEVATION_SAMPLES)
+    neighbors = row.clamp(0, ELEVATION_SAMPLES-1)*AZIMUTH_SAMPLES + azimuth
+    clocks = torch.arange(1, 3, device=beams.device)
+    valid = reliable[lanes[:, None, None], clocks[None, :, None], neighbors[:, None]]
+    depth = ranges[lanes[:, None, None], clocks[None, :, None], neighbors[:, None]]
+    heading = command[lanes]/command[lanes].norm(dim=1, keepdim=True).clamp_min(1.e-6)
+    axis = (rays[neighbors]*heading[:, None]).sum(dim=2).clamp(0., 1.)
+    closer = depth*axis[:, None]
+    sideways = depth*(1.-axis[:, None].square()).sqrt()
+    cross_match = (sideways-across[lanes, beams, None, None]).abs() <= .045
+    along_match = (closer-parallel[lanes, beams, None, None]).abs() <= .095
+    supported = ((valid & valid_row[:, None] & cross_match & along_match).sum(dim=2) >= 2).all(dim=1)
+    return lanes[supported], beams[supported]
+
+
 def attenuate_command(
     lidar_grid: torch.Tensor,
     rays_body: torch.Tensor,
@@ -222,6 +247,13 @@ def attenuate_command(
         unexplained_closure = measured_closure > approach + .18
         outside = ((across_m > config.motion_tube_radius_m) & last_two_valid & ~unexplained_closure
                    & (latest_reliability >= .65) & (speed <= .30))
+        if config.motion_tube_neighbor_history:
+            ambiguous = (active & (v_safe < closing) & ~last_two_valid & (across_m > config.motion_tube_radius_m)
+                         & (latest_reliability >= .65) & (speed <= .30))
+            support = (validity & (reliability >= .65)).flatten(2)
+            lanes, beam_ids = _neighbor_history(ranges.flatten(2), support, rays_body, v_gov_b, ambiguous,
+                                                 across_m, parallel_m)
+            outside[lanes, beam_ids] = True
         active = active & ~outside
     ratios = (v_safe / closing.clamp_min(torch.finfo(v_gov_b.dtype).tiny)).clamp(0.0, 1.0)
     beta = torch.where(active, ratios, torch.ones_like(ratios)).min(dim=1, keepdim=True).values

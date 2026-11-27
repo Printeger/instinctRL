@@ -170,6 +170,37 @@ def test_motion_tube_keeps_forward_hazards_and_unexplained_closure():
     assert output(side, one_spike, confirms) == pytest.approx(.24)
 
 
+def test_motion_tube_can_use_neighbor_history_for_a_consistent_off_path_return():
+    from dataclasses import replace
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    side = int((rays-torch.tensor([.109, .994, 0.])).square().sum(dim=1).argmin())
+    ahead = int(rays[:, 0].argmax())
+    velocity = torch.tensor([[.24, 0., 0.]]*4)
+    base = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True)
+    beams = torch.zeros(4, 4, 3, len(rays))
+    beams[:, :, 0] = 40.
+    old_neighbors = [side-2, side-1, side+1, side+2]
+    beams[:, 1:3, 0, old_neighbors] = .92
+    beams[:, 1:3, 1:, old_neighbors] = 1.
+    beams[:, -1, 0, side] = .92
+    beams[:, -1, 1:, side] = 1.
+    beams[1, 2, 0, old_neighbors] = .75
+    beams[2, -1, 0, ahead] = .92
+    beams[2, -1, 1:, ahead] = 1.
+    beams[3, -1, 0, ahead] = .39
+    beams[3, -1, 1:, ahead] = 1.
+    scan = beams.reshape(4, 12, 59, 360)
+
+    assert not attenuate_command(scan, rays, velocity, .1, base).v_final_b.any()
+    test = replace(base, motion_tube_neighbor_history=True)
+    issued = attenuate_command(scan, rays, velocity, .1, test)
+    assert issued.v_final_b[:, 0].tolist() == pytest.approx([.24, 0., 0., 0.])
+    assert issued.metrics['emergency'][:, 0].tolist() == [0., 0., 0., 1.]
+
+
 def test_clearance_uses_the_nearest_finite_wall_surface():
     import numpy as np
     from tools.r6_direct.replay_clearance import triangle_distance_squared

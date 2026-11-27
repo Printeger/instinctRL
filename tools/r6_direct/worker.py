@@ -168,7 +168,7 @@ def run(plan, input_pin):
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.command_replay import (
-            BRAKE_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX, NOVEL_PREFIX, REGRESSION_ID, STEP_MS,
+            BRAKE_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTION, NOVEL_PREFIX, REGRESSION_ID, STEP_MS,
             load_lane_streams, matches as command_replay,
             route_layouts,
         )
@@ -313,14 +313,19 @@ def run(plan, input_pin):
                 evaluator.evaluate_registered(backend)
                 if plan['run_id'] == REGRESSION_ID:
                     tube = option_version != BRAKE_EXECUTION
-                    expected = (.15, .60 if tube else 0., tube)
+                    use_neighbors = option_version == NEIGHBOR_HISTORY_EXECUTION
+                    expected = (.15, .60 if tube else 0., tube, use_neighbors)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
-                                 p.config.ics.motion_tube_confirm_closure) for p in env._control_pipelines}
+                                 p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history)
+                                for p in env._control_pipelines}
                     if profiles != {expected} or env.escape_option_version != option_version or env.lidar_mount_pitch_degrees != 25:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
-                    atomic(backend.output/'command-execution.json', dict(execution=option_version,
+                    execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
-                           clearance_margin_m=expected[0], motion_tube_radius_m=expected[1], confirm_motion=expected[2]))
+                           clearance_margin_m=expected[0], motion_tube_radius_m=expected[1], confirm_motion=expected[2])
+                    if use_neighbors:
+                        execution['uses_neighbor_history'] = True
+                    atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:
                 resource_guard.seal()
