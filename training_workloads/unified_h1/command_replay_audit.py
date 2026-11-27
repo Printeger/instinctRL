@@ -5,8 +5,9 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RANK_EXECUTIONS, REARM_EXECUTIONS,
-    STEP_MS, STOP_RELEASE_EXECUTION, arm_execution, conditions, event_schedule,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S, CROSSING_START_M, LANES, LAYOUTS,
+    NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTION, arm_execution, conditions,
+    event_schedule,
 )
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
@@ -74,6 +75,36 @@ def verify_clearance(path, initial, rows):
                 or not np.allclose(sample[-1, :, 3:6], row['mover_position_after_w'], atol=2e-5, rtol=0)):
             raise ValueError(f'COMMAND_REPLAY_CLEARANCE_ENDPOINT {step}')
         previous = row
+
+
+def verify_novel_pulse(path, initial, rows, layouts, center_times, acceleration):
+    from .robustness import lane_role
+
+    pulse = json.loads(path.read_bytes())
+    if not isinstance(pulse, list) or len(pulse) != 40:
+        raise ValueError('COMMAND_REPLAY_PULSE_COUNT')
+    first = pulse[0]['sim_tick']
+    block = {'task': 'pulse_hold'}
+    for i, row in enumerate(pulse):
+        if set(row) != {'block_tick', 'sim_tick', 'force_n', 'mass_kg'} or row['block_tick'] != 1000+i or row['sim_tick'] != first+i:
+            raise ValueError('COMMAND_REPLAY_PULSE_CLOCK')
+        for lane, (mass, force) in enumerate(zip(row['mass_kg'], row['force_n'], strict=True)):
+            _, direction = lane_role(block, lane)
+            expected = [axis*mass*acceleration for axis in direction]
+            if abs(mass-1.181517923) > 1.e-5 or math.dist(force, expected) > 1.e-5:
+                raise ValueError('COMMAND_REPLAY_PULSE_FORCE')
+        if len(row['mass_kg']) != LANES:
+            raise ValueError('COMMAND_REPLAY_PULSE_LANES')
+    centers = iter(center_times)
+    for lane, (layout, delay) in enumerate(zip(layouts, initial['departure_delay_s'], strict=True)):
+        center = next(centers) if layout == 'street_gap' else None
+        expected = 0. if center is None else center/1000.-CROSSING_START_M/CROSSING_SPEED_M_S
+        if abs(delay-expected) > 2.e-6:
+            raise ValueError('COMMAND_REPLAY_CROSSING_DELAY')
+        if center is not None:
+            row = rows[round(center/STEP_MS)]
+            if abs(row['mover_position_w'][lane][1]-initial['path_reference_w'][lane][1]) > .04:
+                raise ValueError('COMMAND_REPLAY_CROSSING_READBACK')
 
 
 def score_lane(rows, initial, lane, crossing):
@@ -192,6 +223,7 @@ def audit(output, params, counters):
         raise ValueError('COMMAND_REPLAY_COUNTERS')
     trial_conditions = conditions(params)
     sources = [file_pin(path), params['stream']]
+    novel = params['experiment_id'].startswith(NOVEL_PREFIX)
     if 'candidate_stream' in params:
         sources.append(params['candidate_stream'])
     if 'clearance_envelope' in params:
@@ -230,6 +262,14 @@ def audit(output, params, counters):
                     raise ValueError('COMMAND_REPLAY_CLEARANCE_PATH')
                 verify_clearance(dense, initial, rows)
                 sources.append(trial['clearance'])
+            if ('pulse' in trial) != novel:
+                raise ValueError('COMMAND_REPLAY_PULSE_BINDING')
+            if novel:
+                pulse = checked(trial['pulse'])
+                if pulse != output/f'{label}-{name}-pulse.json':
+                    raise ValueError('COMMAND_REPLAY_PULSE_PATH')
+                verify_novel_pulse(pulse, initial, rows, layouts, params['street_center_ms'], params['pulse_acceleration_m_s2'])
+                sources.append(trial['pulse'])
             if first_pose is None:
                 first_pose = initial['root_state_w']
             if any(math.dist(a, b) > .001 for a, b in zip(first_pose, initial['root_state_w'], strict=True)):
@@ -292,6 +332,8 @@ def audit(output, params, counters):
                 for lane in range(LANES)])
             if 'clearance' in trial:
                 results[label][name]['clearance'] = trial['clearance']
+            if novel:
+                results[label][name]['pulse'] = trial['pulse']
         if active_starts and any(start != active_starts[0] for start in active_starts[1:]):
             raise ValueError('COMMAND_REPLAY_MOVER_START')
     if resets != counters['automatic_resets']:

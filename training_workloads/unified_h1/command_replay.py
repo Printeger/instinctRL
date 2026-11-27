@@ -25,6 +25,7 @@ RANK_PREFIX = PREFIX + 'RANK-'
 CURVED_PREFIX = PREFIX + 'CURVED-'
 HOVER_PATH_PREFIX = PREFIX + 'HOVERPATH-'
 STOP_RELEASE_PREFIX = PREFIX + 'RELEASE-'
+NOVEL_PREFIX = PREFIX + 'NOVEL-'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -81,12 +82,12 @@ CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|LONG)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|NOVEL|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
     return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, RETURN_PREFIX, EARLY_PREFIX,
-                              CORNER_PREFIX, LONG_PREFIX, *ENDURANCE_PREFIXES))
+                              CORNER_PREFIX, NOVEL_PREFIX, LONG_PREFIX, *ENDURANCE_PREFIXES))
 
 
 def arm_execution(params, label):
@@ -206,6 +207,8 @@ def load_lane_streams(pin, *, require_independent=False):
 
 
 def conditions(params):
+    if params['experiment_id'].startswith(NOVEL_PREFIX):
+        return {'layout_routes': params['street_center_ms']}
     if params['experiment_id'].startswith(LONG_PREFIX):
         protocol = json.loads(checked(params['protocol']).read_bytes())
         return {'layout_routes': protocol['street_first_center_ms']}
@@ -218,7 +221,7 @@ def event_schedule(params, label=None):
     """Keep single-stream pair rows stable and expand route inputs by lane."""
     if route_layouts(params['experiment_id']):
         stream_pin = params.get('candidate_stream', params['stream']) if label == 'candidate' else params['stream']
-        layouts, by_lane = load_lane_streams(stream_pin, require_independent=params['experiment_id'].startswith(LONG_PREFIX))
+        layouts, by_lane = load_lane_streams(stream_pin, require_independent=params['experiment_id'].startswith((NOVEL_PREFIX, LONG_PREFIX)))
         limit = RETURN_DURATION_MS//STEP_MS+1 if params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX)) else None
         indices = list(zip(*(sampled_events(stream)[:limit] for stream in by_lane), strict=True))
         events = [[stream['events'][index] for stream, index in zip(by_lane, row, strict=True)] for row in indices]
@@ -261,6 +264,33 @@ def check_corner_pair(params):
         if (original['source'] != 'crazy_command_generator' or original['duration_ms'] != revised['duration_ms']
                 or original_tail != revised_tail or ((original != revised) != (name == 'room_corner'))):
             raise ValueError('COMMAND_REPLAY_CORNER_INPUT_PAIR')
+
+
+def novel_contract(params):
+    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'clearance_envelope',
+              'street_center_ms', 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
+    if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
+            or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
+            or params['execution'] not in (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
+            or set(params['models']) != {'candidate'} or params['models']['candidate']['sha256'] != MODELS['b']
+            or params['wall_seconds'] != 1200 or params['output_cap_bytes'] != 512*2**20
+            or params['pulse_acceleration_m_s2'] != .5):
+        raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
+    centers = params['street_center_ms']
+    if (not isinstance(centers, list) or len(centers) != 8
+            or any(type(t) is not int or not 4000 <= t <= 20000 for t in centers) or len(set(centers)) != 8):
+        raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
+    checked(params['models']['candidate'])
+    clearance_radii(params['clearance_envelope'])
+    _, streams = load_lane_streams(params['stream'], require_independent=True)
+    if any(stream['duration_ms'] != 120000 for stream in streams):
+        raise ValueError('COMMAND_REPLAY_NOVEL_DURATION')
+    transitions = LANES*1200
+    return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct', operation='dynamic',
+                mode=MODE, parameters=params, budgets=dict(wall_seconds=1200, live_process_starts=1,
+                    simulator_initializations=1, initialization_ticks=10, training_transitions=0,
+                    nontraining_transitions=transitions, optimizer_updates=0, checkpoint_writes=0,
+                    explicit_resets=1, automatic_resets=transitions))
 
 
 def long_contract(params):
@@ -315,6 +345,8 @@ def long_contract(params):
 
 def contract(params):
     run_id = params['experiment_id']
+    if run_id.startswith(NOVEL_PREFIX):
+        return novel_contract(params)
     if run_id.startswith(LONG_PREFIX):
         return long_contract(params)
     guard = run_id.startswith(GUARD_PREFIX)
@@ -403,11 +435,15 @@ def run(backend, params):
         raise ValueError('COMMAND_REPLAY_EPISODE_HORIZON')
     block = dict(id='continuous-replay-pair', task='stop', speed_m_s=.25,
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
+    novel = params['experiment_id'].startswith(NOVEL_PREFIX)
+    if novel:
+        block.update(id='continuous-replay-independent', task='pulse_hold',
+                     pulse_acceleration_m_s2=params['pulse_acceleration_m_s2'])
     output = Path(backend.output)
     endurance = params['experiment_id'].startswith(ENDURANCE_PREFIXES)
     returns = params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX))
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
-    timed_crossings = endurance or returns or long_run or params['experiment_id'].startswith(CORNER_PREFIX)
+    timed_crossings = endurance or returns or long_run or novel or params['experiment_id'].startswith(CORNER_PREFIX)
     env.capture_ics_limiter = timed_crossings or params['experiment_id'].startswith(CRAZY_PREFIX)
     capture = 'clearance_envelope' in params
     if capture:
@@ -450,8 +486,16 @@ def run(backend, params):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
         for name, crossing_ms in conditions(params).items():
+            pulse = []
+
+            def capture_force(row):
+                if novel and row['active']:
+                    pulse.append(dict(block_tick=row['block_tick'], sim_tick=row['sim_tick'],
+                                      force_n=row['additional_world_n'].sum(dim=1).cpu().tolist(),
+                                      mass_kg=row['mass_kg'].sum(dim=1).cpu().tolist()))
+
             env.configure_r6_physics(block=block, seed=params['seed'], split='development',
-                                     reset_sink=lambda row: None, force_sink=lambda row: None,
+                                     reset_sink=lambda row: None, force_sink=capture_force,
                                      expected_mass_kg=1.181517923)
             sensor_origins = env.scene.env_origins + axis.new_tensor(
                 [spec['sensor_position_local_m'] for spec in env._r6_physics['specs']])
@@ -460,10 +504,14 @@ def run(backend, params):
             if crossing_ms is not None:
                 ids = obstacle.indices
                 modes[street] = 2 + ids[street].remainder(2)
-                delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
+                if novel:
+                    delay = axis.new_zeros(LANES)
+                    delay[street] = axis.new_tensor(crossing_ms)/1000.-CROSSING_START_M/CROSSING_SPEED_M_S
+                else:
+                    delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
                                half_period_s=CROSSING_TRAVEL_S if timed_crossings else None,
-                               exact_clock=long_run)
+                               exact_clock=long_run or novel)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])
@@ -479,7 +527,7 @@ def run(backend, params):
                                       path_reference_w=sensor_origins.cpu().tolist(),
                                       scene_origins_w=env.scene.env_origins.cpu().tolist(),
                                       root_state_w=env._robot.data.root_state_w.cpu().tolist(),
-                                      departure_delay_s=delay, layouts=layouts))
+                                      departure_delay_s=delay.cpu().tolist() if novel else delay, layouts=layouts))
                 for step in range(steps):
                     backend.resource_check('before_command_replay_step', step)
                     counters.require_step_capacity(kind='nontraining', lanes=LANES,
@@ -559,5 +607,9 @@ def run(backend, params):
             model['trials'][name] = dict(trace=file_pin(trace), physics=completion)
             if capture:
                 model['trials'][name]['clearance'] = file_pin(dense_path)
+            if novel:
+                filename = f'{label}-{name}-pulse.json'
+                atomic_json_replace(output, filename, pulse)
+                model['trials'][name]['pulse'] = file_pin(output/filename)
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

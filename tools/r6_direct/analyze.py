@@ -68,7 +68,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
             parameters = ctx['contract']['parameters']
             definition = (read(parameters['r6_training_plan']['recipe']) if operation == 'train'
                           else read(parameters['evaluation_selection']['comparison']))
-            pitch = MOUNT_PITCH_DEGREES.get(action_option_version(definition['candidate_id']))
+            override = parameters['evaluation_selection'].get('execution_override') if operation == 'evaluate' else None
+            pitch = MOUNT_PITCH_DEGREES.get(override or action_option_version(definition['candidate_id']))
             if pitch is not None:
                 calibration = pin(ctx['output']/'lidar-calibration.json')
                 observed = read(calibration)
@@ -76,6 +77,20 @@ def analyze(input_pin, *, probability_diagnostic=None):
                 for item in (calibration, rays):
                     report['inputs'].append(dict(item, bytes=Path(item['path']).stat().st_size))
                 summary['lidar_mount'] = observed
+            if operation == 'evaluate':
+                from training_workloads.unified_h1.command_replay import BRAKE_EXECUTION, REGRESSION_ID
+
+                if ctx['plan']['run_id'] == REGRESSION_ID:
+                    binding = pin(ctx['output']/'command-execution.json')
+                    observed = read(binding)
+                    tube = override != BRAKE_EXECUTION
+                    expected = dict(execution=override, checkpoint=parameters['evaluation_selection']['checkpoint'],
+                                    mount_pitch_degrees=25, clearance_margin_m=.15,
+                                    motion_tube_radius_m=.60 if tube else 0., confirm_motion=tube)
+                    if observed != expected:
+                        raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
+                    report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))
+                    summary['command_execution'] = observed
     return report, summary
 
 

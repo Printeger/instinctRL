@@ -168,7 +168,8 @@ def run(plan, input_pin):
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.command_replay import (
-            ENDURANCE_PREFIXES, LONG_PREFIX, REGRESSION_ID, STEP_MS, load_lane_streams, matches as command_replay,
+            BRAKE_EXECUTION, ENDURANCE_PREFIXES, LONG_PREFIX, NOVEL_PREFIX, REGRESSION_ID, STEP_MS,
+            load_lane_streams, matches as command_replay,
             route_layouts,
         )
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
@@ -226,7 +227,7 @@ def run(plan, input_pin):
                     if candidate in RECOVERY_CANDIDATES:
                         option_version = action_option_version(candidate)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            if plan['run_id'].startswith((*ENDURANCE_PREFIXES, LONG_PREFIX)):
+            if plan['run_id'].startswith((*ENDURANCE_PREFIXES, NOVEL_PREFIX, LONG_PREFIX)):
                 duration = load_lane_streams(params['stream'])[1][0]['duration_ms']
                 cfg.episode_length_s = (duration + 2*STEP_MS)/1000.
             from training_workloads.unified_h1.dynamic_assay import physical_layout, three_case, OPTION_RUN, RECOVERY_PREFIX
@@ -310,6 +311,16 @@ def run(plan, input_pin):
                 from training_workloads.unified_h1 import robustness_candidate_contract,robustness_final_contract
                 evaluator=robustness_final_contract if operation=='final' else robustness_candidate_contract
                 evaluator.evaluate_registered(backend)
+                if plan['run_id'] == REGRESSION_ID:
+                    tube = option_version != BRAKE_EXECUTION
+                    expected = (.15, .60 if tube else 0., tube)
+                    profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
+                                 p.config.ics.motion_tube_confirm_closure) for p in env._control_pipelines}
+                    if profiles != {expected} or env.escape_option_version != option_version or env.lidar_mount_pitch_degrees != 25:
+                        raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
+                    atomic(backend.output/'command-execution.json', dict(execution=option_version,
+                           checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
+                           clearance_margin_m=expected[0], motion_tube_radius_m=expected[1], confirm_motion=expected[2]))
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:
                 resource_guard.seal()
