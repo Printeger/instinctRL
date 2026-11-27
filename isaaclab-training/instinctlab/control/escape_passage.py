@@ -187,6 +187,50 @@ def clear_opening_crossing_at_stop(lidar, state, rays, command_response, emergen
     return clear
 
 
+def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, mount_offset, emergency_m,
+                                     previously_verified):
+    """Bound clearance from every observed segment of a reversing mover's line."""
+    history = state.reshape(-1, 4, 13)
+    ages = history[:, :, 12]
+    accepted, seeds, times = _return_seed(lidar, state)
+    accepted &= (ages <= .04).all(dim=1) & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .06)
+    accepted &= (history[:, :, 6:9].norm(dim=2) <= 1.e-6).all(dim=1)
+    accepted &= (history[:, :, 9:12].norm(dim=2) <= .02).all(dim=1)
+    lanes = accepted.nonzero().flatten()
+    clear = torch.zeros_like(accepted)
+    if not len(lanes):
+        return clear
+
+    scans, local_history, local_times = lidar[lanes], state[lanes], times[lanes]
+    seeded = (accepted[lanes], seeds[lanes], local_times)
+    supported, _, _, shapes = track_nearby_return(scans, local_history, rays, curved=True,
+        maximum_previous_command=.02, seeded=seeded, fit_full_center=True)
+    centers, radii, valid = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
+    offsets, coast = (tensor[lanes] for tensor in command_response)
+    offsets = offsets+(ages[lanes, -1:]-ages[lanes])[:, :, None]*coast[:, None]
+    corrected = centers+F.pad(offsets, (0, 1))
+    segments = corrected.diff(dim=1)/local_times.diff(dim=1)[..., None]
+    speed = segments.norm(dim=2)
+    axis = F.normalize(segments, dim=2)
+    agreement = (axis*axis[:, -1:]).sum(dim=2)
+    reversal = (agreement[:, 0] <= -.995) & (agreement[:, 1] >= .995)
+    straight = (agreement[:, :2] >= .995).all(dim=1) & previously_verified[lanes]
+
+    # Ranges start at the calibrated LiDAR, while the clearance envelope is
+    # centered on the vehicle. Use the full perpendicular distance to the line.
+    center_body = corrected[:, -1]+corrected.new_tensor(mount_offset)
+    along = (center_body[:, None]*axis).sum(dim=2)
+    lateral = center_body[:, None]-along[..., None]*axis
+    radius = radii.amax(dim=1)
+    drift = .35*coast.norm(dim=1)+.10*local_history[:, 48:51].norm(dim=1)
+    separation = lateral.norm(dim=2).amin(dim=1)-radius-drift-.002
+    nearest, others, on_mover = fitted_sphere_returns(scans, rays, centers[:, -1], radii[:, -1])
+    clear[lanes] = (supported & valid.all(dim=1) & (reversal | straight) & ((speed >= .20) & (speed <= 1.5)).all(dim=1)
+                    & (along[:, -1] < 0.) & (radius-radii.amin(dim=1) <= .04) & (separation >= .45)
+                    & (nearest >= emergency_m) & (others >= .85) & others.isfinite() & on_mover)
+    return clear
+
+
 def _fit_curvature(points, patch, *, full_center=False):
     weights = patch.to(points.dtype)
     count = weights.sum(dim=1, keepdim=True).clamp_min(1.)

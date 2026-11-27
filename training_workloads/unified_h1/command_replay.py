@@ -69,6 +69,8 @@ NOVEL_CROSSING_VERIFIED_CONFIRM_ID = NOVEL_PREFIX+'40'
 NOVEL_CROSSING_RECEDING_HOVER_ID = NOVEL_PREFIX+'41'
 NOVEL_CROSSING_RECEDING_CONFIRM_ID = NOVEL_PREFIX+'42'
 NOVEL_CROSSING_EXTENDED_RETREAT_ID = NOVEL_PREFIX+'43'
+NOVEL_CROSSING_SETTLED_REVERSAL_ID = NOVEL_PREFIX+'44'
+NOVEL_CROSSING_SETTLED_CONFIRM_ID = NOVEL_PREFIX+'45'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -138,7 +140,10 @@ CROSSING_COMPATIBLE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v5'
 CROSSING_VERIFIED_HOVER_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v6'
 CROSSING_RECEDING_HOVER_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v7'
 CROSSING_EXTENDED_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v8'
-CROSSING_RECEDING_HOVER_EXECUTIONS = (CROSSING_RECEDING_HOVER_EXECUTION, CROSSING_EXTENDED_RETREAT_EXECUTION)
+CROSSING_SETTLED_REVERSAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v9'
+CROSSING_SETTLED_MOUNT = (0., 0., .05)
+CROSSING_EXTENDED_RETREAT_EXECUTIONS = (CROSSING_EXTENDED_RETREAT_EXECUTION, CROSSING_SETTLED_REVERSAL_EXECUTION)
+CROSSING_RECEDING_HOVER_EXECUTIONS = (CROSSING_RECEDING_HOVER_EXECUTION, *CROSSING_EXTENDED_RETREAT_EXECUTIONS)
 CROSSING_VERIFIED_HOVER_EXECUTIONS = (CROSSING_VERIFIED_HOVER_EXECUTION, *CROSSING_RECEDING_HOVER_EXECUTIONS)
 CROSSING_COMPATIBLE_EXECUTIONS = (CROSSING_COMPATIBLE_EXECUTION, *CROSSING_VERIFIED_HOVER_EXECUTIONS)
 CROSSING_EARLY_EXECUTIONS = (CROSSING_STOP_EARLY_EXECUTION, *CROSSING_COMPATIBLE_EXECUTIONS)
@@ -221,7 +226,8 @@ def compress_trace(run_id):
                                                        NOVEL_CROSSING_COMPATIBLE_ID, NOVEL_CROSSING_VERIFIED_HOVER_ID,
                                                        NOVEL_CROSSING_VERIFIED_CONFIRM_ID, NOVEL_CROSSING_RECEDING_HOVER_ID,
                                                        NOVEL_CROSSING_RECEDING_CONFIRM_ID,
-                                                       NOVEL_CROSSING_EXTENDED_RETREAT_ID)
+                                                       NOVEL_CROSSING_EXTENDED_RETREAT_ID, NOVEL_CROSSING_SETTLED_REVERSAL_ID,
+                                                       NOVEL_CROSSING_SETTLED_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -494,7 +500,9 @@ def novel_contract(params):
     elif params['experiment_id'] == NOVEL_CROSSING_EXTENDED_RETREAT_ID:
         execution = (CROSSING_EXTENDED_RETREAT_EXECUTION,)
     elif params['experiment_id'] == NOVEL_CROSSING_RECEDING_CONFIRM_ID:
-        execution = CROSSING_RECEDING_HOVER_EXECUTIONS
+        execution = (CROSSING_RECEDING_HOVER_EXECUTION, CROSSING_EXTENDED_RETREAT_EXECUTION)
+    elif params['experiment_id'] in (NOVEL_CROSSING_SETTLED_REVERSAL_ID, NOVEL_CROSSING_SETTLED_CONFIRM_ID):
+        execution = (CROSSING_SETTLED_REVERSAL_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -782,7 +790,8 @@ def run(backend, params):
             crossing_stop_compatible = execution in CROSSING_COMPATIBLE_EXECUTIONS
             crossing_stop_verified_hover = execution in CROSSING_VERIFIED_HOVER_EXECUTIONS
             crossing_stop_receding_hover = execution in CROSSING_RECEDING_HOVER_EXECUTIONS
-            crossing_retreat_extended = execution == CROSSING_EXTENDED_RETREAT_EXECUTION
+            crossing_retreat_extended = execution in CROSSING_EXTENDED_RETREAT_EXECUTIONS
+            settled_mount = CROSSING_SETTLED_MOUNT if execution == CROSSING_SETTLED_REVERSAL_EXECUTION else None
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -805,7 +814,8 @@ def run(backend, params):
                     or env.escape_option.crossing_stop_verified_hover != crossing_stop_verified_hover
                     or env.escape_option.crossing_stop_receding_hover != crossing_stop_receding_hover
                     or env.escape_option.crossing_retreat_own_side != crossing_stop_receding_hover
-                    or env.escape_option.crossing_retreat_extended != crossing_retreat_extended):
+                    or env.escape_option.crossing_retreat_extended != crossing_retreat_extended
+                    or env.escape_option.settled_crossing_mount != settled_mount):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -860,6 +870,8 @@ def run(backend, params):
                 model.update(crossing_stop_receding_hover=True, crossing_retreat_own_side=True)
             if crossing_retreat_extended:
                 model['crossing_retreat_extended'] = True
+            if settled_mount is not None:
+                model['settled_crossing_mount_m'] = list(settled_mount)
         for name, crossing_ms in conditions(params).items():
             pulse = []
 

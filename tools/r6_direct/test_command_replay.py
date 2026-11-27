@@ -77,6 +77,31 @@ def test_opening_crossing_stop_checks_four_scans_and_other_close_returns():
     assert clear.tolist() == [True, False, False, False, False, False]
 
 
+def test_settled_crossing_requires_a_reversal_before_continuing_that_proof():
+    import torch
+    from instinctlab.control.escape_passage import clear_reversing_crossing_at_hover
+    from instinctlab.control.ics import mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    centers = torch.tensor([[.80, value, .05] for value in (-1.83, -1.888, -1.838, -1.780)]).expand(6, -1, -1).clone()
+    centers[1:3, :, 1] = torch.tensor([-1.952, -1.895, -1.838, -1.780])
+    centers[4, :, 0] = .65
+    projection = centers @ rays.T
+    discriminant = .34**2 - centers.square().sum(dim=2, keepdim=True) + projection.square()
+    first = projection-discriminant.clamp_min(0.).sqrt()
+    depth = torch.where((discriminant >= 0.) & (first > 0.), first, 3.)
+    other = (rays - torch.tensor([-1., 0., 0.])).square().sum(dim=1).argmin()
+    depth[5, -1, other] = .82
+    scans = torch.stack((depth, torch.ones_like(depth), torch.ones_like(depth)), dim=2).reshape(6, 12, 59, 360)
+    histories = torch.zeros(6, 4, 13)
+    histories[3, -1, 6] = .01
+    response = torch.zeros(6, 4, 2), torch.zeros(6, 2)
+    previously_verified = torch.tensor([False, False, True, True, False, False])
+    clear = clear_reversing_crossing_at_hover(scans, histories.flatten(1), rays, response,
+                                              (0., 0., .05), .40, previously_verified)
+    assert clear.tolist() == [True, False, True, False, False, False]
+
+
 def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
     from tools.r6_direct import storage
 

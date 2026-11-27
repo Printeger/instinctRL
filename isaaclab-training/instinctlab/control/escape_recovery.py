@@ -65,6 +65,7 @@ CROSSING_STOP_25_V5 = 'm4-escape-brake-tube-p25-crossing-stop-v5'
 CROSSING_STOP_25_V6 = 'm4-escape-brake-tube-p25-crossing-stop-v6'
 CROSSING_STOP_25_V7 = 'm4-escape-brake-tube-p25-crossing-stop-v7'
 CROSSING_STOP_25_V8 = 'm4-escape-brake-tube-p25-crossing-stop-v8'
+CROSSING_STOP_25_V9 = 'm4-escape-brake-tube-p25-crossing-stop-v9'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -86,7 +87,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        FINITE_INTERCEPT_25_VERSION: 25, CROSSING_STOP_25_VERSION: 25,
                        CROSSING_STOP_25_V2: 25, CROSSING_STOP_25_V3: 25,
                        CROSSING_STOP_25_V4: 25, CROSSING_STOP_25_V5: 25, CROSSING_STOP_25_V6: 25,
-                       CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25}
+                       CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25, CROSSING_STOP_25_V9: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -107,7 +108,7 @@ class EscapeRecovery(EscapeOption):
                  finite_intercept=False, crossing_stop=False, crossing_stop_continuation=False,
                  crossing_stop_shallow=False, crossing_stop_early=False, crossing_stop_compatible=False,
                  crossing_stop_verified_hover=False, crossing_stop_receding_hover=False,
-                 crossing_retreat_own_side=False, crossing_retreat_extended=False):
+                 crossing_retreat_own_side=False, crossing_retreat_extended=False, settled_crossing_mount=None):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -161,6 +162,11 @@ class EscapeRecovery(EscapeOption):
         self.crossing_stop_receding_hover = crossing_stop_receding_hover
         self.crossing_retreat_own_side = crossing_retreat_own_side
         self.crossing_retreat_extended = crossing_retreat_extended
+        self.settled_crossing_mount = settled_crossing_mount
+        if settled_crossing_mount is not None:
+            if not (crossing_stop_verified_hover and rank_return):
+                raise ValueError('Settled crossing requires verified hover and ranked escape')
+            self.settled_crossing_verified = torch.zeros_like(self.applied)
         if crossing_retreat_extended and not crossing_retreat_own_side:
             raise ValueError('Extended crossing retreat requires a certified same-side retreat')
         if crossing_retreat_own_side and not (retreat_priority and crossing_stop_early):
@@ -238,6 +244,8 @@ class EscapeRecovery(EscapeOption):
 
     def reset(self, lanes):
         super().reset(lanes)
+        if self.settled_crossing_mount is not None:
+            self.settled_crossing_verified[lanes] = False
         if self.opening_steering:
             self.opening_steered[lanes] = False
         self.since_escape[lanes] = RECOVERY_LIMIT
@@ -977,6 +985,29 @@ class EscapeRecovery(EscapeOption):
         self.offset_stopped[held] = True
         return held
 
+    def keep_settled_hover_at_reversal(self, lidar, state, selected, config, eligible):
+        from .escape_passage import clear_reversing_crossing_at_hover
+
+        onset = self.applied & self.ranked & (self.remaining == DURATION_STEPS-1)
+        was_verified = self.settled_crossing_verified
+        lanes = (eligible & (onset | was_verified) & ~self.braking & ~self.retreating).nonzero().flatten()
+        prior = was_verified[lanes]
+        was_verified.zero_()
+        if not len(lanes):
+            return lanes
+        response = self.command_offsets[lanes], self.command_coast[lanes]
+        emergency_m = config.ics.emergency_clearance_m+config.ics.clearance_margin_m
+        proof = clear_reversing_crossing_at_hover(lidar[lanes], state[lanes], self.detector._full_rays,
+                                                response, self.settled_crossing_mount, emergency_m, prior)
+        was_verified[lanes[proof]] = True
+        held = lanes[proof]
+        self.hold_neutral(held, selected)
+        self.ranked[held] = False
+        self.intercept_steps[held] = 0
+        self.early_crossing[held] = False
+        self.offset_stopped[held] = True
+        return held
+
     def keep_side_at_retreat_start(self, scans, history, selected, config, lanes, position, motion, coast, radius):
         from .escape_passage import crossing_stop_components, intercept_scores
 
@@ -1047,6 +1078,9 @@ class EscapeRecovery(EscapeOption):
             eligible &= ~self.holding
         if self.crossing_stop_verified_hover:
             held = self.end_at_verified_hover(lidar, state, selected, config, eligible)
+            eligible[held] = False
+        if self.settled_crossing_mount is not None:
+            held = self.keep_settled_hover_at_reversal(lidar, state, selected, config, eligible)
             eligible[held] = False
         protected_retreat = torch.zeros_like(self.applied)
         if self.retreat_priority:
