@@ -52,6 +52,7 @@ VERIFIED_RESUME_25_VERSION = 'm4-escape-brake-tube-p25-verified-resume-v1'
 VERIFIED_ZERO_25_VERSION = 'm4-escape-brake-tube-p25-verified-zero-v1'
 INTERCEPT_CHOICE_25_VERSION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
 EARLY_DIAGONAL_25_VERSION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
+RESERVE_DIRECTION_25_VERSION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -67,7 +68,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
-                       VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25}
+                       VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
+                       RESERVE_DIRECTION_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -83,7 +85,7 @@ class EscapeRecovery(EscapeOption):
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
-                 intercept_choice=False, receding_stop=False, early_diagonal=False):
+                 intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -125,6 +127,9 @@ class EscapeRecovery(EscapeOption):
         self.intercept_choice = intercept_choice
         self.receding_stop = receding_stop
         self.early_diagonal = early_diagonal
+        self.reserve_direction = reserve_direction
+        if reserve_direction:
+            self.reserve_direction_seen = torch.zeros_like(self.applied)
         if verified_resume:
             self.resume_witness = torch.zeros_like(self.applied)
             self.resumed = torch.zeros_like(self.applied)
@@ -193,6 +198,8 @@ class EscapeRecovery(EscapeOption):
             self.intercept_steps[lanes] = 0
             self.intercept_direction[lanes] = 0.
             self.intercept_continued[lanes] = False
+        if self.reserve_direction:
+            self.reserve_direction_seen[lanes] = False
         if self.align_intercept:
             self.command_offsets[lanes] = 0.
             self.command_coast[lanes] = 0.
@@ -725,6 +732,9 @@ class EscapeRecovery(EscapeOption):
         lanes, position, motion, coast, radius = moving_intercepts(
             lidar, state, self.detector._full_rays, eligible, command_response=response)
         previously_confirmed = ((self.intercept_steps > 0) | self.intercept_continued) if self.intercept_choice else None
+        if self.reserve_direction:
+            reserve_seen = self.reserve_direction_seen.clone()
+            self.reserve_direction_seen.zero_()
         if actor_action is not None:
             self.resume_latest_request(lidar, state, selected, actor_action, config, eligible,
                                        (lanes, position, motion, coast, radius))
@@ -783,6 +793,10 @@ class EscapeRecovery(EscapeOption):
             hold &= ~keep
         gain = torch.where(exposed, .15, .04)
         if self.intercept_choice:
+            if self.reserve_direction:
+                # Reserve-only choices can be ranked on a fresh exposure. They
+                # never grant the missing-observation continuation lease.
+                previously_confirmed[lanes] |= reserve_seen[lanes] & exposed
             admissible[:, 2] &= previously_confirmed[lanes]
             if not self.early_diagonal:
                 standard = admissible[:, :3] & (scores[:, 1:4] >= .28)
@@ -803,6 +817,10 @@ class EscapeRecovery(EscapeOption):
                     - original.v_final_b[consider]).norm(dim=1)
             commit = change & exposed & ~hold & (turn >= .12)
             self.intercept_steps[lanes[commit]] = 4
+            if self.reserve_direction:
+                reserve = change & ~exposed & ~hold & (turn >= .12)
+                self.reserve_direction_seen[lanes[reserve]] = True
+                commit |= reserve
             self.intercept_direction[lanes[commit]] = directions[commit, choice[commit]]
 
     @staticmethod

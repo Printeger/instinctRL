@@ -990,6 +990,53 @@ def test_fresh_intercept_can_keep_the_prior_choice_or_use_a_diagonal(monkeypatch
     assert selected[1,1] < .5 and selected[1,2] > .5
 
 
+def test_reserve_choice_is_reused_only_on_the_next_fresh_exposure(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False,
+                           intercept=True, intercept_reserve=True, commit_intercept=True,
+                           intercept_choice=True, early_diagonal=True, reserve_direction=True)
+    scans = torch.ones(2, 12, 59, 360)
+    scans[:, 0::3] = 3.
+    states = torch.zeros(2, 52)
+    states[:, 45] = -.16
+    actor = torch.tensor([[1., .5, .5, .5]]*2)
+    lanes = torch.arange(2)
+    base_score = .37
+
+    def moving(*args, **kwargs):
+        n = len(lanes)
+        return lanes, torch.zeros(n, 2), torch.tensor([[0., .58]]*n), torch.zeros(n, 2), torch.full((n,), .34)
+
+    def closest(pos, velocity, coast, radius, candidates):
+        if candidates.shape[1] == 1:
+            return torch.where(candidates.norm(dim=-1) > .01, base_score, .05)
+        scores = [.05, .29, .19, .50, .70, .71]
+        if base_score < .36:
+            scores[3:] = [.61, .61, .62]
+        return candidates.new_tensor(scores).expand(len(pos), -1)
+
+    monkeypatch.setattr(escape_passage, 'moving_intercepts', moving)
+    monkeypatch.setattr(escape_passage, 'intercept_scores', closest)
+    first = actor.clone()
+    guard.avoid_interception(scans, states, first, ControlCoreConfig())
+    assert (first[:, 1] < .5).all()
+    assert guard.reserve_direction_seen.tolist() == [True, True]
+    assert guard.intercept_steps.tolist() == [0, 0]
+
+    lanes = torch.tensor([0])
+    base_score = .30
+    second = actor.clone()
+    guard.avoid_interception(scans, states, second, ControlCoreConfig())
+    assert torch.allclose(second[0], first[0])
+    assert torch.equal(second[1], actor[1])
+    assert guard.intercept_steps.tolist() == [4, 0]
+    assert guard.reserve_direction_seen.tolist() == [False, False]
+
+
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
     from instinctlab.control import escape_tangent
