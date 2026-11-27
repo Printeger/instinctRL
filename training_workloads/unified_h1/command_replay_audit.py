@@ -54,6 +54,20 @@ def score_lane(rows, initial, lane, crossing):
         return (read(row, 'ics_emergency') or read(row, 'ics_beta') < INTERVENTION_BETA
                 or read(row, 'escape_active') or read(row, 'escape_recovering'))
 
+    def recovery_window(start):
+        latest = flight[start]['event_index']
+        window = []
+        for row in flight[start:]:
+            if row['event_index'] != latest or not math.hypot(*command(row)[:2]) or read(row, 'reset'):
+                break
+            window.append(row)
+        times = {'event_index': latest, 'observation_s': len(window)*STEP_MS/1000.}
+        for name, velocity in (('issued', lambda row: read(row, 'v_final_w')), ('actual', actual)):
+            index = first_stable(window, lambda row: progress(row, velocity(row)) >= .6*math.hypot(*command(row)[:2]))
+            offset = None if index is None else index + (name == 'actual')
+            times[name+'_resume_s'] = None if offset is None else offset*STEP_MS/1000.
+        return times
+
     first_reset = next((i for i, row in enumerate(rows) if read(row, 'reset')), None)
     flight = rows if first_reset is None else rows[:first_reset+1]
     active = [row for row in flight if math.hypot(*command(row)[:2])]
@@ -64,7 +78,7 @@ def score_lane(rows, initial, lane, crossing):
                  for row in flight] if crossing else []
     reported = dict(
         layout=LAYOUTS[lane//8], elapsed_s=len(flight)*STEP_MS/1000.,
-        first_reset_step=first_reset, first_collision_step=next(
+        first_reset_step=first_reset, first_contact_step=next(
             (row['step'] for row in flight if read(row, 'collision')), None),
         initial_termination_reason=None if first_reset is None else read(flight[-1], 'termination_reason'),
         minimum_sampled_ray_m=min(read(row, 'ray_minimum_m') for row in flight),
@@ -78,19 +92,13 @@ def score_lane(rows, initial, lane, crossing):
         average_tracking_error_m_s=fmean(math.dist(actual(row), command(row)) for row in active) if active else None,
         average_intent_progress_m_s=fmean(progress(row, actual(row)) for row in active) if active else None,
     )
-    if exposed and exposed[-1]+1 < len(flight):
-        start = exposed[-1]+1
-        latest = flight[start]['event_index']
-        window = []
-        for row in flight[start:]:
-            if row['event_index'] != latest or not math.hypot(*command(row)[:2]) or read(row, 'reset'):
-                break
-            window.append(row)
-        for name, velocity in (('issued', lambda row: read(row, 'v_final_w')), ('actual', actual)):
-            index = first_stable(window, lambda row: progress(row, velocity(row)) >= .6*math.hypot(*command(row)[:2]))
-            observed_index = None if index is None else index + (name == 'actual')
-            reported[name+'_resume_after_corridor_s'] = None if observed_index is None else observed_index*STEP_MS/1000.
-        reported['resume_observation_s'] = len(window)*STEP_MS/1000.
+    release = exposed[-1]+1 if exposed else None
+    reported['after_corridor'] = recovery_window(release) if release is not None and release < len(flight) else None
+    reversal = CONDITIONS['crossing_at_reversal']//STEP_MS
+    compare_start = max(reversal, release or 0)
+    reported['after_reversal'] = None
+    if (not crossing or release is not None) and compare_start < len(flight) and flight[compare_start]['event_index'] == flight[reversal]['event_index']:
+        reported['after_reversal'] = dict(start_s=compare_start*STEP_MS/1000., **recovery_window(compare_start))
     stops = []
     last_event = None
     for i, row in enumerate(flight):

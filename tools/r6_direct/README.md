@@ -122,3 +122,26 @@ pin，文件采用 `instinctrl-third-training-resources/1` 并绑定第三轮用
 当前计划和账本规则继续核验作业授权和前驱回执。每个运行目录独立创建，核对
 真实文件系统和权限，运行中维持 30 GiB 余量并对整个运行目录计量一次。
 原件可通过既有离线分析入口复算，保留历史挂载清单以说明当时的运行条件。
+
+## 连续指令开发
+
+同一直接入口可执行冻结的 B/C 三臂脚本配对。应从输入指定的 detached
+工作树运行，并显式给监督器设置仓库导入路径。
+
+```bash
+PYTHONPATH=.:isaaclab-training /usr/bin/python3 -B -P -m tools.r6_direct.run --inputs "$INPUTS"
+```
+
+单独录制物理摇杆可用 `python3 -m tools.r6_direct.record_sticks`。例如
+Linux 以 `/dev/input/js0` 提供设备，正向为轴 1 的负方向，右向为轴 0
+的正方向时，在仓库根运行以下命令。各设备的真实轴号、正负方向和录制时长应按实际会话指定。
+
+```bash
+python3 -m tools.r6_direct.record_sticks --device /dev/input/js0 \
+  --forward-axis 1 --forward-sign -1 --lateral-axis 0 --lateral-sign 1 \
+  --session independent-01 --duration-s 1800 --output independent-01.jsonl
+```
+
+收集原始轴值、设备时间和实际接收单调时间，并附速度映射。有效录制以
+`complete` 行关闭。独立留出还需要记录来源、对应场景和采集条件，并在正式评价前固定文件哈希。
+此采集命令与仿真解耦。真人在环使用独立试验记录。

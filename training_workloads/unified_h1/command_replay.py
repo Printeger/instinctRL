@@ -63,8 +63,9 @@ def sampled_events(stream):
 
 
 def contract(params):
-    if (set(params) != {'experiment_id', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
-            or not matches(params['experiment_id']) or type(params['seed']) is not int
+    if (set(params) != {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
+            or not matches(params['experiment_id']) or params['training_seed'] != 20260908
+            or type(params['seed']) is not int
             or not 0 <= params['seed'] < 2**31 or params['execution'] != EXECUTION
             or not isinstance(params['models'], dict) or set(params['models']) != set(MODELS)
             or type(params['wall_seconds']) is not int or not 120 <= params['wall_seconds'] <= 1800

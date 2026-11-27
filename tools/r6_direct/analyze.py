@@ -42,9 +42,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                 or counters['real_optimizer_updates'] != 0):
             raise ValueError('DYNAMIC_ASSAY_INCOMPLETE_COUNTERS')
         if command_replay.matches(ctx['plan']['run_id']):
-            from training_workloads.unified_h1.command_replay_audit import audit as replay_audit
+            from training_workloads.unified_h1 import command_replay_audit
 
-            summary, pins = replay_audit(ctx['output'], ctx['contract']['parameters'], counters)
+            summary, pins = command_replay_audit.audit(ctx['output'], ctx['contract']['parameters'], counters)
+            pins.extend(pin(Path(module.__file__)) for module in (command_replay, command_replay_audit))
         else:
             raw, pins = audit(ctx['output'], ctx['contract']['parameters'], counters)
             summary = {'models': raw['models'], 'counters': counters, 'witnesses_replayed': True}
