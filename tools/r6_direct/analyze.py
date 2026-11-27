@@ -85,7 +85,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
                     CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
                     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
-                    CROSSING_REFERENCE_EXECUTION, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
+                    CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT, SHALLOW_STEERING_EXECUTION,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -153,8 +153,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['crossing_retreat_extended'] = True
                     if override in CROSSING_SETTLED_EXECUTIONS:
                         expected['settled_crossing_mount_m'] = list(CROSSING_SETTLED_MOUNT)
-                    if override == CROSSING_REFERENCE_EXECUTION:
+                    if override in CROSSING_REFERENCE_EXECUTIONS:
                         expected.update(static_scan_stop=True, crossing_reference=True)
+                    if override == SHALLOW_STEERING_EXECUTION:
+                        expected['shallow_steering'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

@@ -17,6 +17,40 @@ def test_long_trace_gzip_preserves_the_original_json_lines(tmp_path):
         assert replay.read().encode() == raw
 
 
+def test_shallow_steering_requires_two_observed_paths_and_respects_protection():
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.ics import ICSConfig
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    option = EscapeRecovery(lanes=5, device='cpu', dtype=torch.float32, recenter=True,
+        align_intercept=True, intercept=True, intercept_reserve=True, commit_intercept=True,
+        retreat_priority=True, command_handoff=True, wall_tangent=True, finite_edge=True, rank_return=True,
+        intercept_choice=True, reserve_direction=True, along_intercept=True, finite_intercept=True,
+        crossing_stop=True, crossing_stop_continuation=True, crossing_stop_shallow=True,
+        crossing_stop_early=True, crossing_reference=True, shallow_steering=True)
+    state = torch.zeros((5, 4, 13))
+    state[:, :, 5] = -1.
+    state[:, :, 6] = .28
+    state[-1, :, 6] = 0.
+    lidar = torch.ones((5, 12, 59, 360))
+    lidar[:, 0::3] = 3.
+    lidar[1, 5::3] = .4
+    lidar[2, 0::3] = .2
+    selected = torch.tensor([[0., .5, .5, .5]]).repeat(5, 1)
+    actor = torch.tensor([[1., .5, .5, .5]]).repeat(5, 1)
+    option.applied[:] = True
+    option.remaining[:] = 12
+    config = ControlCoreConfig(ics=ICSConfig(motion_tube_radius_m=.60, confirmed_tube_radius_m=.41))
+    option.steer_along_observed_opening(lidar, state.flatten(1), selected, actor, config,
+                                      torch.tensor([True, True, True, False, True]))
+
+    assert option.shallow_used.tolist() == [True, False, False, False, False]
+    assert option.applied.tolist() == [False, True, True, True, True]
+    assert option.remaining.tolist() == [0, 12, 12, 12, 12]
+    assert option.issued(lidar, state.flatten(1), selected, config).v_final_b[0, 0] > .26
+
+
 def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     import torch
     from instinctlab.control.escape_passage import crossing_stop_clearance

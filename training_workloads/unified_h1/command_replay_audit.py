@@ -10,7 +10,7 @@ from .command_replay import (
     EARLY_DIAGONAL_EXECUTIONS, FINITE_EDGE_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, LANES, LAYOUTS,
     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
-    CROSSING_REFERENCE_EXECUTION, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
+    CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT, SHALLOW_STEERING_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -322,10 +322,13 @@ def audit(output, params, counters):
         settled_mount = list(CROSSING_SETTLED_MOUNT) if model['execution'] in CROSSING_SETTLED_EXECUTIONS else None
         if model.get('settled_crossing_mount_m') != settled_mount:
             raise ValueError('COMMAND_REPLAY_SETTLED_CROSSING_MOUNT')
-        crossing_reference = model['execution'] == CROSSING_REFERENCE_EXECUTION
+        crossing_reference = model['execution'] in CROSSING_REFERENCE_EXECUTIONS
         if (model.get('crossing_reference', False) is not crossing_reference
                 or model.get('static_scan_stop', False) is not crossing_reference):
             raise ValueError('COMMAND_REPLAY_CROSSING_REFERENCE_PROFILE')
+        shallow_profile = model['execution'] == SHALLOW_STEERING_EXECUTION
+        if model.get('shallow_steering', False) is not shallow_profile:
+            raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -429,6 +432,11 @@ def audit(output, params, counters):
                 if ('escape_finite_edge' in row) != detour_profile:
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_BINDING')
                 detour = row.get('escape_finite_edge', [False]*LANES)
+                if ('escape_shallow_steering' in row) != shallow_profile:
+                    raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_BINDING')
+                shallow = row.get('escape_shallow_steering', [False]*LANES)
+                if len(shallow) != LANES or any(type(value) is not bool for value in shallow):
+                    raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_LANES')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -460,6 +468,8 @@ def audit(output, params, counters):
                             or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_FINITE_EDGE_BEHAVIOR')
+                    if shallow[lane] and (not detour[lane] or row['ics_beta'][lane] < .89999):
+                        raise ValueError('COMMAND_REPLAY_SHALLOW_STEERING_BEHAVIOR')
                     if continued_edge[lane] and (not detour[lane]
                             or any(math.dist(old[6:9], actor[-1][6:9]) > .040001 for old in actor[:-1])
                             or not any(old['escape_finite_edge'][lane] and not old['escape_edge_continued'][lane]
