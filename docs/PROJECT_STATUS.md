@@ -46,6 +46,8 @@
 
 同输入实测选向和逐拍恢复完成 32/32 条首飞及松杆，零接触与重置，最小净空 0.1969 米。走廊四个固定窗口达到沿令速度六成的拍数从 0/207 到 195/207，树林最长低进展从 7.5 秒降到 4.6 秒。街道误差仍为 0/8 达标，开始准备新独立 Crazy 复验。 [同输入仿真结果](experiments/instinct-continuous-command/observed_heading/REPORT.md)
 
+新独立 Crazy 回放完成 32/32 条首飞，零接触及重置，最小净空 0.1865 米。街道一条零令已减速后因来物在两帧之间折返重启普通避让，漂移 0.2375 米。松杆 31/32 达标，正在配对验证停驻修复。 [独立失败回执](experiments/instinct-continuous-command/independent_observed_heading/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
