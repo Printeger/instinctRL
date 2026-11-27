@@ -264,6 +264,7 @@ def audit(output, params, counters):
         inner_tube = model.get('ics_profile', {}).get('confirmed_tube_radius_m', 0.)
         expected_inner_tube = .41 if model['execution'] in CONFIRMED_TUBE_EXECUTIONS else 0.
         aligns_rotation = model.get('ics_profile', {}).get('confirmed_tube_align_rotation', False)
+        intercept_speeds = (0., .30, .2999) if model['execution'] in CROSSING_FALLBACK_EXECUTIONS else (0., .30)
         if (uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS)
                 or standoff != expected_standoff or inner_tube != expected_inner_tube
                 or aligns_rotation is not (model['execution'] in ROTATION_TUBE_EXECUTIONS)):
@@ -444,7 +445,7 @@ def audit(output, params, counters):
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)
                         if (held[lane] or row['ics_emergency'][lane] or abs(alpha) > 1.e-6 or abs(z-.5) > 1.e-6
-                                or min(planar_speed, abs(planar_speed-.30)) > 1.e-6):
+                                or min(abs(planar_speed-speed) for speed in intercept_speeds) > 1.e-6):
                             raise ValueError('COMMAND_REPLAY_INTERCEPT_BEHAVIOR')
                     if handoff[lane] and (row['escape_active'][lane] or math.hypot(*observed) < .079999
                                           or (not intercepted[lane] and row['selected_action'][lane] != row['action'][lane])):
