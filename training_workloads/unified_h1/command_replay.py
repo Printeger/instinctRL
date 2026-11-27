@@ -95,6 +95,8 @@ NOVEL_HOVER_REFERENCE_RESERVE_CONFIRM_ID = NOVEL_PREFIX+'66'
 NOVEL_CROSSING_RESTART_ID = NOVEL_PREFIX+'67'
 NOVEL_CROSSING_RESTART_CONFIRM_ID = NOVEL_PREFIX+'68'
 NOVEL_LOCAL_WALL_STOPPING_ID = NOVEL_PREFIX+'69'
+NOVEL_OVERLAPPING_STOP_ID = NOVEL_PREFIX+'70'
+NOVEL_OVERLAPPING_STOP_CONFIRM_ID = NOVEL_PREFIX+'71'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -182,7 +184,8 @@ HOVER_REFERENCE_RESERVE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v20'
 CROSSING_RESTART_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v21'
 LOCAL_WALL_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v22'
 LOCAL_WALL_STOPPING_TRACE_FIELDS = tuple(field.replace('tube_', 'local_wall_', 1) for field in TUBE_STOPPING_TRACE_FIELDS)
-CROSSING_RESTART_EXECUTIONS = (CROSSING_RESTART_EXECUTION, LOCAL_WALL_STOPPING_EXECUTION)
+OVERLAPPING_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v23'
+CROSSING_RESTART_EXECUTIONS = (CROSSING_RESTART_EXECUTION, LOCAL_WALL_STOPPING_EXECUTION, OVERLAPPING_STOP_EXECUTION)
 HOVER_REFERENCE_RESERVE_EXECUTIONS = (HOVER_REFERENCE_RESERVE_EXECUTION, *CROSSING_RESTART_EXECUTIONS)
 CLIPPED_RETREAT_ONSET_EXECUTIONS = (CLIPPED_RETREAT_ONSET_EXECUTION, *HOVER_REFERENCE_RESERVE_EXECUTIONS)
 VERIFIED_RETREAT_ONSET_EXECUTIONS = (VERIFIED_RETREAT_ONSET_EXECUTION, *CLIPPED_RETREAT_ONSET_EXECUTIONS)
@@ -290,7 +293,8 @@ def compress_trace(run_id):
                                                        NOVEL_TUBE_STOPPING_ID, NOVEL_TUBE_STOPPING_CONFIRM_ID,
                                                        NOVEL_HOVER_REFERENCE_RESERVE_ID, NOVEL_HOVER_REFERENCE_RESERVE_CONFIRM_ID,
                                                        NOVEL_CROSSING_RESTART_ID, NOVEL_CROSSING_RESTART_CONFIRM_ID,
-                                                       NOVEL_LOCAL_WALL_STOPPING_ID)
+                                                       NOVEL_LOCAL_WALL_STOPPING_ID, NOVEL_OVERLAPPING_STOP_ID,
+                                                       NOVEL_OVERLAPPING_STOP_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -592,6 +596,8 @@ def novel_contract(params):
         execution = (CROSSING_RESTART_EXECUTION,)
     elif params['experiment_id'] == NOVEL_LOCAL_WALL_STOPPING_ID:
         execution = (LOCAL_WALL_STOPPING_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_OVERLAPPING_STOP_ID, NOVEL_OVERLAPPING_STOP_CONFIRM_ID):
+        execution = (OVERLAPPING_STOP_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -894,6 +900,7 @@ def run(backend, params):
             hover_reference_reserve = execution in HOVER_REFERENCE_RESERVE_EXECUTIONS
             crossing_restart = execution in CROSSING_RESTART_EXECUTIONS
             local_wall_stopping = execution == LOCAL_WALL_STOPPING_EXECUTION
+            overlapping_stop = execution == OVERLAPPING_STOP_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -932,7 +939,8 @@ def run(backend, params):
                     or env.tube_stopping != tube_stopping
                     or env.escape_option.verify_hover_reference_reserve != hover_reference_reserve
                     or env.escape_option.verify_crossing_restart != crossing_restart
-                    or env.local_wall_stopping != local_wall_stopping):
+                    or env.local_wall_stopping != local_wall_stopping
+                    or env.escape_option.verify_overlapping_stop != overlapping_stop):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -1015,6 +1023,8 @@ def run(backend, params):
                 model['verify_crossing_restart'] = True
             if local_wall_stopping:
                 model['local_wall_stopping'] = True
+            if overlapping_stop:
+                model['verify_overlapping_stop'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -1149,6 +1159,8 @@ def run(backend, params):
                     if 'crossing_restart_verified' in option:
                         tensors['escape_crossing_restart_verified'] = option['crossing_restart_verified']
                         tensors['escape_crossing_restart_previous_b'] = option['crossing_restart_previous_b']
+                    if 'overlapping_stop_verified' in option:
+                        tensors['escape_overlapping_stop_verified'] = option['overlapping_stop_verified']
                     if 'tube_stopping_hold_s' in option:
                         tensors.update({field:option[field] for field in TUBE_STOPPING_TRACE_FIELDS})
                     if 'local_wall_stopping_hold_s' in option:

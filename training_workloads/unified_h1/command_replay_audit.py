@@ -15,7 +15,7 @@ from .command_replay import (
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
-    LOCAL_WALL_STOPPING_EXECUTION, LOCAL_WALL_STOPPING_TRACE_FIELDS,
+    LOCAL_WALL_STOPPING_EXECUTION, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -365,6 +365,9 @@ def audit(output, params, counters):
         local_wall_stopping_profile = model['execution'] == LOCAL_WALL_STOPPING_EXECUTION
         if model.get('local_wall_stopping', False) is not local_wall_stopping_profile:
             raise ValueError('COMMAND_REPLAY_LOCAL_WALL_PROFILE')
+        overlapping_stop_profile = model['execution'] == OVERLAPPING_STOP_EXECUTION
+        if model.get('verify_overlapping_stop', False) is not overlapping_stop_profile:
+            raise ValueError('COMMAND_REPLAY_OVERLAPPING_STOP_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -512,6 +515,10 @@ def audit(output, params, counters):
                             type(x) not in (int, float) or not math.isfinite(x) or (not used and x != 0.)
                             for x in vector) for used, vector in zip(restart, previous, strict=True))):
                     raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_BINDING')
+                overlap = row.get('escape_overlapping_stop_verified', [False]*LANES)
+                if (('escape_overlapping_stop_verified' in row) != overlapping_stop_profile or len(overlap) != LANES
+                        or any(type(used) is not bool for used in overlap)):
+                    raise ValueError('COMMAND_REPLAY_OVERLAPPING_STOP_BINDING')
                 if any(((field in row) != tube_stopping_profile) or (field in row and len(row[field]) != LANES)
                        for field in TUBE_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BINDING')
@@ -589,6 +596,10 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_BEHAVIOR')
                     if released[lane] and not held[lane]:
                         raise ValueError('COMMAND_REPLAY_STOP_RELEASE_BEHAVIOR')
+                    if overlap[lane] and (not released[lane] or not held[lane] or row['ics_emergency'][lane]
+                            or math.hypot(*actor[-2][6:9]) <= .029999
+                            or math.hypot(*observed) > 1.e-6 or any(frame[12] > .040001 for frame in actor)):
+                        raise ValueError('COMMAND_REPLAY_OVERLAPPING_STOP_BEHAVIOR')
                     if offset[lane] and not held[lane]:
                         raise ValueError('COMMAND_REPLAY_OFFSET_STOP_BEHAVIOR')
                     if settled_crossing[lane] and (not offset[lane] or row['ics_emergency'][lane]

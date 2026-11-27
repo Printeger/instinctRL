@@ -178,6 +178,7 @@ def run(plan, input_pin):
             FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
             CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
             CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTION,
+            OVERLAPPING_STOP_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -369,6 +370,7 @@ def run(plan, input_pin):
                     hover_reference_reserve = option_version in HOVER_REFERENCE_RESERVE_EXECUTIONS
                     crossing_restart = option_version in CROSSING_RESTART_EXECUTIONS
                     local_wall_stopping = option_version == LOCAL_WALL_STOPPING_EXECUTION
+                    overlapping_stop = option_version == OVERLAPPING_STOP_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -414,7 +416,8 @@ def run(plan, input_pin):
                             or env.tube_stopping != tube_stopping
                             or env.escape_option.verify_hover_reference_reserve != hover_reference_reserve
                             or env.escape_option.verify_crossing_restart != crossing_restart
-                            or env.local_wall_stopping != local_wall_stopping):
+                            or env.local_wall_stopping != local_wall_stopping
+                            or env.escape_option.verify_overlapping_stop != overlapping_stop):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -499,6 +502,8 @@ def run(plan, input_pin):
                         execution['verify_crossing_restart'] = True
                     if local_wall_stopping:
                         execution['local_wall_stopping'] = True
+                    if overlapping_stop:
+                        execution['verify_overlapping_stop'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

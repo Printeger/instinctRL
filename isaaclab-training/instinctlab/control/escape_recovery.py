@@ -81,6 +81,7 @@ CROSSING_STOP_25_V19 = 'm4-escape-brake-tube-p25-crossing-stop-v19'
 CROSSING_STOP_25_V20 = 'm4-escape-brake-tube-p25-crossing-stop-v20'
 CROSSING_STOP_25_V21 = 'm4-escape-brake-tube-p25-crossing-stop-v21'
 CROSSING_STOP_25_V22 = 'm4-escape-brake-tube-p25-crossing-stop-v22'
+CROSSING_STOP_25_V23 = 'm4-escape-brake-tube-p25-crossing-stop-v23'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -106,7 +107,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V10: 25, CROSSING_STOP_25_V11: 25, CROSSING_STOP_25_V12: 25,
                        CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25,
                        CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25, CROSSING_STOP_25_V18: 25,
-                       CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25, CROSSING_STOP_25_V21: 25, CROSSING_STOP_25_V22: 25}
+                       CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25, CROSSING_STOP_25_V21: 25,
+                       CROSSING_STOP_25_V22: 25, CROSSING_STOP_25_V23: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -132,7 +134,7 @@ class EscapeRecovery(EscapeOption):
                  observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
                  hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
                  retain_only_clipped_retreat=False, verify_hover_reference_reserve=False,
-                 verify_crossing_restart=False):
+                 verify_crossing_restart=False, verify_overlapping_stop=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -216,6 +218,11 @@ class EscapeRecovery(EscapeOption):
         if crossing_turn_between_samples and settled_crossing_mount is None:
             raise ValueError('Settled crossing turn requires the calibrated mount')
         self.static_scan_stop = static_scan_stop
+        self.verify_overlapping_stop = verify_overlapping_stop
+        if verify_overlapping_stop:
+            if not (static_scan_stop and verify_crossing_restart):
+                raise ValueError('Overlapping scan stop requires the static and crossing checks')
+            self.overlapping_stop_verified = torch.zeros_like(self.applied)
         self.crossing_reference = crossing_reference
         self.far_crossing_reference = far_crossing_reference
         if far_crossing_reference:
@@ -325,6 +332,8 @@ class EscapeRecovery(EscapeOption):
         super().reset(lanes)
         if self.static_scan_stop:
             self.static_stop_verified[lanes] = False
+        if self.verify_overlapping_stop:
+            self.overlapping_stop_verified[lanes] = False
         if self.settled_crossing_mount is not None:
             self.settled_crossing_verified[lanes] = False
         if self.opening_steering:
@@ -843,10 +852,12 @@ class EscapeRecovery(EscapeOption):
         self.hold_neutral(ended, selected)
 
     def hold_after_static_stop(self, lidar, state, selected):
-        from .escape_passage import advance_command_response, clear_static_scan_at_stop
+        from .escape_passage import advance_command_response, clear_overlapping_scans_at_stop, clear_static_scan_at_stop
 
         zero = state[:, 45:48].norm(dim=1) <= 1.e-6
         continuing_escape = self.applied & (self.remaining < DURATION_STEPS-1)
+        if self.verify_overlapping_stop:
+            self.overlapping_stop_verified.zero_()
         self.static_stop_verified &= zero
         eligible = (self.applied & (continuing_escape | self.static_stop_verified)
                     & zero & ~self.ranked & ~self.braking & (self.retreat_hold_steps == 0))
@@ -856,6 +867,15 @@ class EscapeRecovery(EscapeOption):
             return
         response = advance_command_response(self.command_offsets[lanes], self.command_coast[lanes], state[lanes])
         proved = clear_static_scan_at_stop(lidar[lanes], state[lanes], self.detector._full_rays, response)
+        if self.verify_overlapping_stop:
+            first_zero = state[lanes, 32:35].norm(dim=1) > .03
+            checks = (~proved & first_zero & continuing_escape[lanes] & ~self.retreating[lanes]).nonzero().flatten()
+            if len(checks):
+                checked = lanes[checks]
+                confirmed = clear_overlapping_scans_at_stop(lidar[checked], state[checked], self.detector._full_rays,
+                                                           tuple(value[checks] for value in response))
+                proved[checks] = confirmed
+                self.overlapping_stop_verified[checked] = confirmed
         held = lanes[proved]
         self.static_stop_verified[held] = True
         self.released[held] = True

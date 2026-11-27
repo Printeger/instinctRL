@@ -52,6 +52,21 @@ def _near_scan_agrees(source, target, *, limit):
     return distant <= .007*len(source)
 
 
+def _nearby_scans_agree(ranges, reliable, history, rays, gaps, shifts):
+    points = []
+    aligned = rays
+    for frame in (3, 2, 1, 0):
+        if frame < 3:
+            gyro = (history[frame, :3]+history[frame+1, :3])*.5
+            aligned = rotate_scan_rays(aligned, -gyro*gaps[frame])
+        keep = reliable[frame] & (ranges[frame] < 3.5)
+        points.append(ranges[frame, keep, None]*aligned[keep]+F.pad(shifts[frame], (0, 1)))
+    latest, *past = points
+    return all(_near_scan_agrees(latest, earlier, limit=limit)
+               and _near_scan_agrees(earlier, latest, limit=limit)
+               for earlier, limit in zip(past, (.055, .085, .115), strict=True))
+
+
 def clear_static_scan_at_stop(lidar, state, rays, command_response):
     """Check stopping room and consistent nearby surfaces after a zero request."""
     history = state.reshape(-1, 4, 13)
@@ -71,19 +86,41 @@ def clear_static_scan_at_stop(lidar, state, rays, command_response):
     ready &= nearest.isfinite() & (nearest >= 1.) & (nearest-drift >= .85) & (coverage >= .65)
     clear = torch.zeros_like(ready)
     for lane in ready.nonzero().flatten():
-        frame_points = []
-        aligned = rays
         shifts = offsets[lane]+(ages[lane, -1:]-ages[lane])[:, None]*coast[lane]
-        for frame in (3, 2, 1, 0):
-            if frame < 3:
-                gyro = (history[lane, frame, :3]+history[lane, frame+1, :3])*.5
-                aligned = rotate_scan_rays(aligned, -gyro*gaps[lane, frame])
-            keep = reliable[lane, frame] & (ranges[lane, frame] < 3.5)
-            frame_points.append(ranges[lane, frame, keep, None]*aligned[keep]+F.pad(shifts[frame], (0, 1)))
-        latest, *past = frame_points
-        clear[lane] = all(_near_scan_agrees(latest, earlier, limit=limit)
-                          and _near_scan_agrees(earlier, latest, limit=limit)
-                          for earlier, limit in zip(past, (.055, .085, .115), strict=True))
+        clear[lane] = _nearby_scans_agree(ranges[lane], reliable[lane], history[lane], rays, gaps[lane], shifts)
+    return clear
+
+
+def clear_overlapping_scans_at_stop(lidar, state, rays, command_response):
+    """Verify braking at a new zero request using both adjacent three-scan windows."""
+    history = state.reshape(-1, 4, 13)
+    ranges = lidar[:, 0::3].flatten(2)
+    reliable = ((lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)).flatten(2)
+    ages = history[:, :, 12]
+    elapsed = ranges.new_tensor([-.3, -.2, -.1, 0.])-ages+ages[:, -1:]
+    gaps = elapsed.diff(dim=1)
+    older = reliable[:, :3].all(dim=1).float().mean(dim=1)
+    newer = reliable[:, 1:].all(dim=1).float().mean(dim=1)
+    nearest = ranges[:, -1].masked_fill(~reliable[:, -1], torch.inf).amin(dim=1)
+    speed = history[:, :, 6:9].norm(dim=2)
+    pending = history[:, :, 9:12].norm(dim=2)
+    ready = (speed[:, -1] <= 1.e-6) & (speed[:, -2] > .03) & (pending.amax(dim=1) <= .40)
+    ready &= (ages <= .04).all(dim=1) & ((gaps >= .07) & (gaps <= .13)).all(dim=1)
+    ready &= (history[:, :, :3].norm(dim=2).amax(dim=1) <= .18)
+    ready &= (older >= .60) & (newer >= .60) & nearest.isfinite() & (nearest >= .95)
+    clear = torch.zeros_like(ready)
+    lanes = ready.nonzero().flatten()
+    if not len(lanes):
+        return clear
+    offsets, coast = command_response
+    closing, _, _ = _return_seed(lidar[lanes], state[lanes], maximum_range_m=2.65)
+    neutral = state.new_zeros((len(lanes), 1, 3))
+    ahead = observed_path_clearance(lidar[lanes], rays, coast[lanes], neutral)[:, 0]
+    # Account for the queued command outside the coast segment and the LiDAR mount.
+    ahead -= .10*pending[lanes, -1]+.055
+    for lane in lanes[~closing & (ahead >= .85)]:
+        shifts = offsets[lane]+(ages[lane, -1:]-ages[lane])[:, None]*coast[lane]
+        clear[lane] = _nearby_scans_agree(ranges[lane], reliable[lane], history[lane], rays, gaps[lane], shifts)
     return clear
 
 
