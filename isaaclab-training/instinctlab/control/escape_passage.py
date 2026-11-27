@@ -86,6 +86,52 @@ def clear_receding_return_at_stop(lidar, state, rays, command_response):
     return clear
 
 
+def clear_fitted_crossing_at_stop(lidar, state, rays, command_response, settled, emergency_m):
+    """Verify the stop on the fitted mover's line and check other reliable returns."""
+    histories = state.reshape(-1, 4, 13)
+    ages = histories[:, :, 12]
+    accepted, _, _ = _return_seed(lidar, state)
+    accepted &= (ages <= .04).all(dim=1) & (histories[:, :, :3].norm(dim=2).amax(dim=1) <= .22)
+    lanes = accepted.nonzero().flatten()
+    clear = torch.zeros_like(accepted)
+    if not len(lanes):
+        return clear
+
+    scans, history, ages = lidar[lanes], state[lanes], ages[lanes]
+    offsets, coast = (tensor[lanes] for tensor in command_response)
+    offsets = offsets+(ages[:, -1:]-ages)[:, :, None]*coast[:, None]
+    supported, _, times, shapes = track_nearby_return(scans, history, rays, curved=True,
+                                                     maximum_previous_command=.46, fit_full_center=True)
+    planar = [(center[:, :2], radius, valid) for center, radius, valid in shapes]
+    tracked, position, motion, radius = _curved_motion(planar, times, turn_fallback=True, offsets=offsets)
+    speed = motion.norm(dim=1).clamp_min(.001)
+    normal = torch.stack((-motion[:, 1], motion[:, 0]), dim=1)/speed[:, None]
+    across = (position*normal).sum(dim=1)
+    direction = across.sign()
+    drift = (direction*(coast*normal).sum(dim=1)).clamp_min(0.)
+    pending = (direction*(history[:, 48:50]*normal).sum(dim=1)).clamp_min(0.)
+    clearance = across.abs()-.35*drift-.1*pending-radius
+
+    center, surface_radius, _ = shapes[-1]
+    projection = center @ rays.T
+    discriminant = surface_radius[:, None].square()-center.square().sum(dim=1, keepdim=True)+projection.square()
+    first_hit = projection-discriminant.clamp_min(0.).sqrt()
+    depth = scans[:, 9].flatten(1)
+    reliable = ((scans[:, 10] > .5) & (scans[:, 11] > .55)).flatten(1)
+    on_mover = (discriminant >= 0.) & (first_hit > 0.) & ((depth-first_hit).abs() <= .018)
+    others = depth.masked_fill(~reliable | on_mover, torch.inf).amin(dim=1)
+    nearest = depth.masked_fill(~reliable, torch.inf).amin(dim=1)
+    safe = supported & tracked & (speed >= .20) & (speed <= 1.5) & ((position*(motion-coast)).sum(dim=1) < 0.)
+    safe &= (others >= .85) & others.isfinite() & (nearest >= emergency_m) & (on_mover & reliable).any(dim=1)
+    safe &= clearance >= torch.where(settled[lanes], .45, .65)
+    strict = (safe & settled[lanes]).nonzero().flatten()
+    if len(strict):
+        safe[strict] = clear_hover_passage(scans[strict], history[strict], rays, curved=True,
+                                         require_curvature=True, turn_fallback=True)
+    clear[lanes] = safe
+    return clear
+
+
 def _fit_curvature(points, patch, *, full_center=False):
     weights = patch.to(points.dtype)
     count = weights.sum(dim=1, keepdim=True).clamp_min(1.)

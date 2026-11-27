@@ -83,7 +83,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     FINITE_EDGE_EXECUTIONS,
                     NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_IDS, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
                     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
-                    CROSSING_COMPATIBLE_EXECUTION, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
+                    CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
+                    CROSSING_VERIFIED_HOVER_EXECUTION,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -141,8 +142,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['crossing_stop_shallow'] = True
                     if override in CROSSING_EARLY_EXECUTIONS:
                         expected['crossing_stop_early'] = True
-                    if override == CROSSING_COMPATIBLE_EXECUTION:
+                    if override in CROSSING_COMPATIBLE_EXECUTIONS:
                         expected['crossing_stop_compatible'] = True
+                    if override == CROSSING_VERIFIED_HOVER_EXECUTION:
+                        expected['crossing_stop_verified_hover'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

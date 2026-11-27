@@ -64,6 +64,8 @@ NOVEL_CROSSING_STOP_CONTINUATION_ID = NOVEL_PREFIX+'35'
 NOVEL_CROSSING_STOP_SHALLOW_ID = NOVEL_PREFIX+'36'
 NOVEL_CROSSING_STOP_EARLY_ID = NOVEL_PREFIX+'37'
 NOVEL_CROSSING_COMPATIBLE_ID = NOVEL_PREFIX+'38'
+NOVEL_CROSSING_VERIFIED_HOVER_ID = NOVEL_PREFIX+'39'
+NOVEL_CROSSING_VERIFIED_CONFIRM_ID = NOVEL_PREFIX+'40'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -130,7 +132,9 @@ CROSSING_STOP_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v
 CROSSING_STOP_SHALLOW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v3'
 CROSSING_STOP_EARLY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v4'
 CROSSING_COMPATIBLE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v5'
-CROSSING_EARLY_EXECUTIONS = (CROSSING_STOP_EARLY_EXECUTION, CROSSING_COMPATIBLE_EXECUTION)
+CROSSING_VERIFIED_HOVER_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v6'
+CROSSING_COMPATIBLE_EXECUTIONS = (CROSSING_COMPATIBLE_EXECUTION, CROSSING_VERIFIED_HOVER_EXECUTION)
+CROSSING_EARLY_EXECUTIONS = (CROSSING_STOP_EARLY_EXECUTION, *CROSSING_COMPATIBLE_EXECUTIONS)
 CROSSING_SHALLOW_EXECUTIONS = (CROSSING_STOP_SHALLOW_EXECUTION, *CROSSING_EARLY_EXECUTIONS)
 CROSSING_CONTINUATION_EXECUTIONS = (CROSSING_STOP_CONTINUATION_EXECUTION, *CROSSING_SHALLOW_EXECUTIONS)
 CROSSING_STOP_EXECUTIONS = (CROSSING_STOP_EXECUTION, *CROSSING_CONTINUATION_EXECUTIONS)
@@ -207,7 +211,8 @@ def compress_trace(run_id):
                                                        NOVEL_ALONG_CONFIRM_ID, NOVEL_FINITE_INTERCEPT_ID,
                                                        NOVEL_CROSSING_STOP_ID, NOVEL_CROSSING_STOP_CONTINUATION_ID,
                                                        NOVEL_CROSSING_STOP_SHALLOW_ID, NOVEL_CROSSING_STOP_EARLY_ID,
-                                                       NOVEL_CROSSING_COMPATIBLE_ID)
+                                                       NOVEL_CROSSING_COMPATIBLE_ID, NOVEL_CROSSING_VERIFIED_HOVER_ID,
+                                                       NOVEL_CROSSING_VERIFIED_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -473,6 +478,8 @@ def novel_contract(params):
         execution = (CROSSING_STOP_EARLY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_CROSSING_COMPATIBLE_ID:
         execution = (CROSSING_COMPATIBLE_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_CROSSING_VERIFIED_HOVER_ID, NOVEL_CROSSING_VERIFIED_CONFIRM_ID):
+        execution = (CROSSING_VERIFIED_HOVER_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -757,7 +764,8 @@ def run(backend, params):
             crossing_stop_continuation = execution in CROSSING_CONTINUATION_EXECUTIONS
             crossing_stop_shallow = execution in CROSSING_SHALLOW_EXECUTIONS
             crossing_stop_early = execution in CROSSING_EARLY_EXECUTIONS
-            crossing_stop_compatible = execution == CROSSING_COMPATIBLE_EXECUTION
+            crossing_stop_compatible = execution in CROSSING_COMPATIBLE_EXECUTIONS
+            crossing_stop_verified_hover = execution == CROSSING_VERIFIED_HOVER_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -776,7 +784,8 @@ def run(backend, params):
                     or env.escape_option.crossing_stop_continuation != crossing_stop_continuation
                     or env.escape_option.crossing_stop_shallow != crossing_stop_shallow
                     or env.escape_option.crossing_stop_early != crossing_stop_early
-                    or env.escape_option.crossing_stop_compatible != crossing_stop_compatible):
+                    or env.escape_option.crossing_stop_compatible != crossing_stop_compatible
+                    or env.escape_option.crossing_stop_verified_hover != crossing_stop_verified_hover):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -825,6 +834,8 @@ def run(backend, params):
                 model['crossing_stop_early'] = True
             if crossing_stop_compatible:
                 model['crossing_stop_compatible'] = True
+            if crossing_stop_verified_hover:
+                model['crossing_stop_verified_hover'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
