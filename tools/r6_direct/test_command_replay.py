@@ -475,6 +475,28 @@ def test_intercept_checks_contact_before_waiting_for_range_crop():
     assert action[1, 1].item() == pytest.approx(.69)
 
 
+def test_displacement_is_time_aligned_during_a_command_reversal():
+    import math
+    import torch
+    from instinctlab.control.escape_passage import advance_command_response
+
+    offsets = torch.tensor([[[-.06, 0.], [-.04, 0.], [-.02, 0.], [0., 0.]]])
+    coast = torch.tensor([[.2, 0.]])
+    state = torch.zeros(1, 52)
+    state[0, 35] = .2
+    state[0, 48] = -.2
+    earlier, latest = advance_command_response(offsets, coast, state)
+    assert torch.allclose(earlier, offsets)
+    assert torch.allclose(latest, coast)
+
+    state[0, 35] = -.2
+    earlier, latest = advance_command_response(earlier, latest, state)
+    expected_distance = -.02+.35*.4*(1.-math.exp(-.1/.35))
+    assert earlier[0, 2, 0].item() == pytest.approx(-expected_distance, abs=1.e-6)
+    assert earlier[0, -1].tolist() == [0., 0.]
+    assert 0. < latest[0, 0] < .2
+
+
 def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
     from copy import deepcopy
     from tools.r6_direct.replay_clearance import long_gate_results

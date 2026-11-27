@@ -6,7 +6,7 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S, CROSSING_START_M, LANES, LAYOUTS,
-    INTERCEPT_EXECUTION, LONG_PREFIX, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
+    INTERCEPT_EXECUTIONS, LONG_PREFIX, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
 )
 
@@ -308,7 +308,7 @@ def audit(output, params, counters):
                 released = row.get('escape_stop_release', [False]*LANES)
                 if len(released) != LANES or any(type(value) is not bool for value in released):
                     raise ValueError('COMMAND_REPLAY_STOP_RELEASE_LANES')
-                if ('escape_intercepted' in row) != (model['execution'] == INTERCEPT_EXECUTION):
+                if ('escape_intercepted' in row) != (model['execution'] in INTERCEPT_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_INTERCEPT_BINDING')
                 intercepted = row.get('escape_intercepted', [False]*LANES)
                 if len(intercepted) != LANES or any(type(value) is not bool for value in intercepted):

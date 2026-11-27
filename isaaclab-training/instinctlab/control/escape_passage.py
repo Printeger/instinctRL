@@ -150,8 +150,10 @@ def _latest_turn(centers, elapsed):
     return valid, .3*velocity[:, 1]+.7*velocity[:, 2]
 
 
-def _curved_motion(shapes, elapsed, *, turn_fallback):
+def _curved_motion(shapes, elapsed, *, turn_fallback, offsets=None):
     centers, radii, viable = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
+    if offsets is not None:
+        centers = centers+offsets
     position, relative, error = _fit_motion(centers, elapsed)
     fit = error <= .02
     if turn_fallback:
@@ -185,7 +187,25 @@ def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
     return supported, separation.amin(dim=2)-radius[:, None]
 
 
-def moving_intercepts(lidar, state, rays, eligible):
+def advance_command_response(offsets, coast, state):
+    """Advance a delayed request model and keep displacements at the four scan times."""
+    import math
+
+    def rotate(v, angle):
+        x, y = v.unbind(dim=-1)
+        return torch.stack((x*angle.cos()-y*angle.sin(), x*angle.sin()+y*angle.cos()), dim=-1)
+
+    yaw = -.05*(state[:, 28]+state[:, 41])
+    previous_yaw = -.05*(state[:, 15]+state[:, 28])
+    coast = rotate(coast, yaw)
+    delayed = rotate(state[:, 35:37], yaw+previous_yaw)
+    decay = math.exp(-.1/.35)
+    travel = .1*delayed+.35*(1.-decay)*(coast-delayed)
+    earlier = rotate(offsets[:, 1:], yaw[:, None])-travel[:, None]
+    return torch.cat((earlier, torch.zeros_like(earlier[:, :1])), dim=1), delayed+decay*(coast-delayed)
+
+
+def moving_intercepts(lidar, state, rays, eligible, *, command_response=None):
     """Return approaching curved tracks supported by the four delivered scans."""
     accepted, seed, elapsed = _return_seed(lidar, state)
     lanes = (accepted & eligible).nonzero().flatten()
@@ -195,12 +215,18 @@ def moving_intercepts(lidar, state, rays, eligible):
     seeded = (accepted[lanes], seed[lanes], elapsed[lanes])
     supported, _, elapsed, shapes = track_nearby_return(lidar[lanes], history, rays, curved=True,
                                                        maximum_previous_command=.46, seeded=seeded)
-    valid, position, relative, radius = _curved_motion(shapes, elapsed, turn_fallback=True)
-    past = history.reshape(-1, 4, 13)[:, :, 9:11]
-    # First-order response to issued commands at 100 ms intervals. The oldest
-    # command covers the portion before the recorded history.
-    coast = (past*past.new_tensor([.424, .140, .187, .249])[None, :, None]).sum(dim=1)
-    motion = relative+coast
+    history = history.reshape(-1, 4, 13)
+    if command_response is not None:
+        offsets, coast = (tensor[lanes] for tensor in command_response)
+        age = history[:, -1:, 12]-history[:, :, 12]
+        offsets = offsets+age[:, :, None]*coast[:, None]
+        valid, position, motion, radius = _curved_motion(shapes, elapsed, turn_fallback=True, offsets=offsets)
+        relative = motion-coast
+    else:
+        valid, position, relative, radius = _curved_motion(shapes, elapsed, turn_fallback=True)
+        past = history[:, :, 9:11]
+        coast = (past*past.new_tensor([.424, .140, .187, .249])[None, :, None]).sum(dim=1)
+        motion = relative+coast
     speed = motion.norm(dim=1)
     keep = supported & valid & (speed >= .2) & (speed <= 1.5) & ((position*relative).sum(dim=1) < 0.)
     return lanes[keep], position[keep], motion[keep], coast[keep], radius[keep]
