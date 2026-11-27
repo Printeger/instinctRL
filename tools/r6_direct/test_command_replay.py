@@ -736,6 +736,38 @@ def test_zero_input_stays_put_only_with_clearance_from_the_whole_pass_line():
     assert selected[0].tolist() == pytest.approx([0., .50, .50, .50])
 
 
+def test_settled_zero_onset_requires_two_clearance_fits(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_option import DURATION_STEPS
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=7, device='cpu', dtype=torch.float32, recenter=False,
+                            clear_pass=True, rank_return=True, offset_stop=True, settled_offset_stop=True)
+    option.applied[:] = True
+    option.remaining[:] = DURATION_STEPS-1
+    option.remaining[3] -= 1
+    lidar = torch.ones(7, 12, 2, 2)
+    lidar[:, 0::3] = 1.25
+    lidar[6, 10] = 0.
+    state = torch.zeros(7, 52)
+    state[4, 9] = .1
+    state[5, 25] = .05
+    selected = torch.tensor([[0., .8, .5, .5]]*7)
+    position = torch.tensor([[.90, -1.6], [.90, -1.6], [.75, -1.6]]+[[.90, -1.6]]*4)
+    motion = torch.tensor([[0., .58]]*7)
+
+    def confirm(scans, history, rays, *, curved, require_curvature):
+        assert curved and require_curvature and len(scans) == len(history) == 2
+        return torch.tensor([True, False])
+
+    monkeypatch.setattr(escape_passage, 'clear_hover_passage', confirm)
+    cancel = option.stop_for_offset_pass(lidar, state, selected, torch.arange(7), position,
+                                         motion, torch.zeros(7, 2), torch.full((7,), .34))
+    assert cancel.tolist() == [True, False, False, False, False, False, False]
+    assert selected[0].tolist() == pytest.approx([0., .50, .50, .50])
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing

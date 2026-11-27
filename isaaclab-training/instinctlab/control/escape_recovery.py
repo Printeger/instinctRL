@@ -41,6 +41,7 @@ COMMAND_HANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-command-handoff-v1'
 OFFSET_STOP_25_VERSION = 'm4-escape-brake-tube-p25-offset-stop-v1'
 NEIGHBOR_HISTORY_25_VERSION = 'm4-escape-brake-tube-p25-neighbor-history-v1'
 CONFIRMED_STANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
+SETTLED_OFFSET_STOP_25_VERSION = 'm4-escape-brake-tube-p25-settled-offset-stop-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -52,7 +53,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25,
                        COMMITTED_INTERCEPT_25_VERSION: 25, PRIORITY_INTERCEPT_25_VERSION: 25,
                        COMMAND_HANDOFF_25_VERSION: 25, OFFSET_STOP_25_VERSION: 25,
-                       NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25}
+                       NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25,
+                       SETTLED_OFFSET_STOP_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -66,7 +68,7 @@ class EscapeRecovery(EscapeOption):
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
-                 offset_stop=False):
+                 offset_stop=False, settled_offset_stop=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -98,6 +100,7 @@ class EscapeRecovery(EscapeOption):
             self.intercept_continued = torch.zeros_like(self.applied)
         self.command_handoff = command_handoff
         self.offset_stop = offset_stop
+        self.settled_offset_stop = settled_offset_stop
         if offset_stop:
             self.offset_stopped = torch.zeros_like(self.applied)
         if command_handoff:
@@ -569,11 +572,25 @@ class EscapeRecovery(EscapeOption):
         normal = torch.stack((-motion[:, 1], motion[:, 0]), dim=1)/motion.norm(dim=1, keepdim=True)
         cross = (position*normal).sum(dim=1)
         after_stop = cross-.35*(coast*normal).sum(dim=1)
-        separated = (cross*after_stop > 0.) & (torch.minimum(cross.abs(), after_stop.abs())-radius >= .65)
+        same_side = cross*after_stop > 0.
+        surface = torch.minimum(cross.abs(), after_stop.abs())-radius
         scans = lidar[lanes]
         reliable = (scans[:, 10] > .5) & (scans[:, 11] > .55)
         nearest = scans[:, 9].masked_fill(~reliable, torch.inf).flatten(1).amin(dim=1)
-        cancel = zero & ordinary & separated & (nearest >= .85)
+        eligible = zero & ordinary & same_side & (nearest >= .85)
+        cancel = eligible & (surface >= .65)
+        if self.settled_offset_stop:
+            from .escape_passage import clear_hover_passage
+
+            history = state[lanes].reshape(-1, 4, 13)
+            settled = ((history[:, :, 6:9].norm(dim=2) <= .001).all(dim=1)
+                       & (history[:, :, 9:12].norm(dim=2) <= .08).all(dim=1)
+                       & (history[:, :, 12] <= .04).all(dim=1))
+            onset = self.remaining[lanes] == DURATION_STEPS-1
+            check = (eligible & ~cancel & nearest.isfinite() & onset & settled & (surface >= .45)).nonzero().flatten()
+            if len(check):
+                cancel[check] = clear_hover_passage(scans[check], state[lanes[check]], self.detector._full_rays,
+                                                   curved=True, require_curvature=True)
         self.hold_neutral(lanes[cancel], selected)
         self.offset_stopped[lanes[cancel]] = True
         return cancel

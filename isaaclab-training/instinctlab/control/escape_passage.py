@@ -126,7 +126,7 @@ def _closest_passage(path, elapsed):
     return fit, closest
 
 
-def clear_hover_passage(lidar, state, rays, *, curved=False):
+def clear_hover_passage(lidar, state, rays, *, curved=False, require_curvature=False):
     """Recognize a clear pass before the vehicle leaves its stopped position."""
     accepted, path, elapsed, shapes = track_nearby_return(lidar, state, rays, curved=curved)
     fit, closest = _closest_passage(path, elapsed)
@@ -138,6 +138,8 @@ def clear_hover_passage(lidar, state, rays, *, curved=False):
         supported = viable.all(dim=1) & fitted & ((outer-radii.amin(dim=1)) <= .04)
         # Allocate .21 m to the vehicle and .15 m to clearance, with a .09 m observation margin.
         clear = torch.where(supported, center_distance-outer >= .45, clear)
+        if require_curvature:
+            clear &= supported
     return accepted & clear
 
 
