@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。六方首判齐全，使用仿真 Crazy 指令。首份独立 120 秒 32/32 零接触，室内过角 6/8。有限边缘配对过角 8/8、32/32 松杆，全组最低 0.225 m。短续绕仍安全，但树林最差连续低速增加，后续回到有限边缘。NOVEL-19 已开始切向幅值配对，准确源码 ff2843d7。已关闭累计 2,082,848 个真实评价转换，训练为零。完整 R6 和正式 30 分钟仍待完成。 [项目状态](../docs/PROJECT_STATUS.md) · [限边结果](../docs/experiments/instinct-continuous-command/finite_edge/REPORT.md) · [续绕结果](../docs/experiments/instinct-continuous-command/edge_continuation/REPORT.md)
+任务 `instinctrl-continuous-command`。六方首判齐全，使用仿真 Crazy 指令。有限边缘配对过角 8/8、32/32 松杆。短续绕和切向速度变化都有可行慢速退化，保留记录。IMU 对齐保持五类安全，室内最低 0.311 m，代表性卡点同窗进展 0.541→1.159 m。NOVEL-21 已开始街道当前指令恢复，源码 d523faf6。已关闭累计 2,236,448 个实际评价转换，训练为零。完整 R6 和正式 30 分钟仍待完成。 [项目状态](../docs/PROJECT_STATUS.md) · [IMU 配对](../docs/experiments/instinct-continuous-command/rotation_tube/REPORT.md) · [恢复配对](../docs/experiments/instinct-continuous-command/verified_resume/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
