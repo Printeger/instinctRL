@@ -118,6 +118,29 @@ def test_crazy_generator_preserves_prefix_and_freezes_all_modes(tmp_path):
     assert layouts[0] == layouts[1] and lanes[0] != lanes[1]
 
 
+def test_long_generator_bounds_planned_position_without_reading_the_plant(tmp_path):
+    import json
+    from pathlib import Path
+    from tools.r6_direct.generate_crazy_commands import generate
+    from tools.r6_evidence import file_pin
+    from training_workloads.unified_h1.command_replay import PLANNED_POSITION_LIMITS, load_route_streams
+
+    documents = Path(__file__).resolve().parents[2]/'docs/experiments/instinct-continuous-command'
+    prefix = file_pin(documents/'corner/RETIMED-PREFIX.json')
+    bounded = generate(prefix, 725, 1800000, limit_planned_position=True)
+    path = tmp_path/'commands.json'
+    path.write_text(json.dumps(bounded))
+    streams = load_route_streams(file_pin(path))
+    assert len(streams) == 5
+    assert bounded['generator']['planned_position_limits'] == PLANNED_POSITION_LIMITS
+
+    unbounded = generate(prefix, 725, 1800000)
+    unbounded['generator']['planned_position_limits'] = PLANNED_POSITION_LIMITS
+    path.write_text(json.dumps(unbounded))
+    with pytest.raises(ValueError, match='GENERATOR_POSITION_LIMIT'):
+        load_route_streams(file_pin(path))
+
+
 def test_motion_tube_keeps_forward_hazards_and_unexplained_closure():
     import torch
     from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body

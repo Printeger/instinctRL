@@ -96,6 +96,14 @@ EXECUTION_PAIRS = {
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
 CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
+PLANNED_POSITION_LIMITS = 'layout-envelope-v1'
+LAYOUT_COMMAND_BOUNDS = {
+    'room_corner': ((-1.5, 8.9), (-2.3, 2.3)),
+    'trunk_aisle': ((-3.4, 6.4), (-2.1, 2.1)),
+    'street_gap': ((-1.5, 4.4), (-2.0, 2.0)),
+    'corridor': ((-6., 8.), (-1.2, 1.2)),
+    'open_tube': ((-6., 8.), (-1.4, 1.4)),
+}
 
 
 def matches(run_id):
@@ -158,7 +166,10 @@ def layout_stream(duration_ms, events, *, generated):
 
 
 def generator_prefix(generator):
-    if (set(generator) != {'schema_version', 'seed', 'prefix', 'prefix_duration_ms'}
+    fields = {'schema_version', 'seed', 'prefix', 'prefix_duration_ms'}
+    if generator.get('planned_position_limits') == PLANNED_POSITION_LIMITS:
+        fields.add('planned_position_limits')
+    if (set(generator) != fields
             or generator['schema_version'] != CRAZY_SCHEMA or type(generator['seed']) is not int
             or not 0 <= generator['seed'] < 2**31 or type(generator['prefix_duration_ms']) is not int):
         raise ValueError('COMMAND_REPLAY_GENERATOR_METADATA')
@@ -169,11 +180,20 @@ def generator_prefix(generator):
     return template
 
 
-def check_generated(stream, prefix, prefix_duration):
+def check_generated(stream, prefix, prefix_duration, *, bounds=None):
     extension = stream['events'][len(prefix):]
     if (stream['events'][:len(prefix)] != prefix or not extension or extension[0]['t_ms'] != prefix_duration
             or {event.get('mode') for event in extension} != set(CRAZY_MODES)):
         raise ValueError('COMMAND_REPLAY_GENERATOR_COVERAGE')
+    if bounds is not None:
+        point = [0., 0.]
+        end_times = [event['t_ms'] for event in stream['events'][1:]]+[stream['duration_ms']]
+        for event, end in zip(stream['events'], end_times, strict=True):
+            duration = (end-event['t_ms'])/1000.
+            for axis, (lower, upper) in enumerate(bounds):
+                point[axis] += duration*event['velocity_w_m_s'][axis]
+                if not lower-1.e-6 <= point[axis] <= upper+1.e-6:
+                    raise ValueError('COMMAND_REPLAY_GENERATOR_POSITION_LIMIT')
 
 
 def route_streams(value):
@@ -190,7 +210,8 @@ def route_streams(value):
     if generated:
         template = generator_prefix(value['generator'])
         for layout, stream in streams.items():
-            check_generated(stream, template['layouts'][layout], template['duration_ms'])
+            bounds = LAYOUT_COMMAND_BOUNDS[layout] if 'planned_position_limits' in value['generator'] else None
+            check_generated(stream, template['layouts'][layout], template['duration_ms'], bounds=bounds)
     return streams
 
 
@@ -216,7 +237,8 @@ def load_lane_streams(pin, *, require_independent=False):
                 or row['seed'] != lane_seed_for(generator['seed'], lane, layout)):
             raise ValueError('COMMAND_REPLAY_LANE_SEED')
         stream = layout_stream(value['duration_ms'], row['events'], generated=True)
-        check_generated(stream, template['layouts'][layout], template['duration_ms'])
+        bounds = LAYOUT_COMMAND_BOUNDS[layout] if 'planned_position_limits' in generator else None
+        check_generated(stream, template['layouts'][layout], template['duration_ms'], bounds=bounds)
         streams.append(stream)
     if len({row['seed'] for row in value['lanes']}) != LANES:
         raise ValueError('COMMAND_REPLAY_NONINDEPENDENT_SEED')
@@ -377,6 +399,9 @@ def long_contract(params):
     _, streams = load_lane_streams(params['stream'], require_independent=True)
     if any(stream['duration_ms'] != 1_800_000 for stream in streams):
         raise ValueError('COMMAND_REPLAY_LONG_DURATION')
+    stream_meta = json.loads(checked(params['stream']).read_bytes())['generator']
+    if stream_meta.get('planned_position_limits') != PLANNED_POSITION_LIMITS:
+        raise ValueError('COMMAND_REPLAY_LONG_POSITION_LIMITS')
     transitions = LANES*18000
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct', operation='dynamic',
                 mode=MODE, parameters=params, budgets=dict(wall_seconds=7200, live_process_starts=1,
