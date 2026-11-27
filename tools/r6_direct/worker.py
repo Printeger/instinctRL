@@ -167,7 +167,7 @@ def run(plan, input_pin):
             JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
-        from training_workloads.unified_h1.command_replay import ROUTE_PREFIX, matches as command_replay
+        from training_workloads.unified_h1.command_replay import REGRESSION_ID, matches as command_replay, route_layouts
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
@@ -180,7 +180,8 @@ def run(plan, input_pin):
             validate_cache_tokens(settings_map,carb.tokens.get_tokens_interface())
         pipe_probe = plan['run_id'] in MIRRORED_PIPE_RUNS
         replay = command_replay(plan['run_id'])
-        journaled = replay or plan['run_id'].startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) or pipe_probe
+        command_assay = replay or plan['run_id'] == REGRESSION_ID
+        journaled = command_assay or plan['run_id'].startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) or pipe_probe
 
         class Guard(JournaledRuntimeResourceGuard if journaled else RuntimeResourceGuard):
             def check(self,**kw):
@@ -229,7 +230,7 @@ def run(plan, input_pin):
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
                 env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'], mirrored_pipe_pairs=pipe_probe,
                                        mirrored_trunk_pairs=three_case(plan['run_id']) == 'FRONT-CLEARANCE',
-                                       command_routes=plan['run_id'].startswith(ROUTE_PREFIX))
+                                       command_routes=route_layouts(plan['run_id']))
             elif recovery_training:
                 from training_workloads.unified_h1.escape_option_env import EscapeRecoveryTrainingEnv
                 env = EscapeRecoveryTrainingEnv(cfg)
@@ -252,7 +253,7 @@ def run(plan, input_pin):
                 counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
             from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
             if holdout:
-                if plan['run_id'].startswith(ROUTE_PREFIX):
+                if route_layouts(plan['run_id']):
                     env.holdout_preflight(backend.output, scene='room-corner-trunks-street-corridor-tube')
                 else:
                     env.holdout_preflight(backend.output)
@@ -265,7 +266,7 @@ def run(plan, input_pin):
                 from training_workloads.unified_h1.lidar_calibration import record as record_mount
 
                 atomic(backend.output/'lidar-calibration.json', record_mount(env, backend.output, 'execution'))
-            if replay or plan['run_id'].startswith(RECOVERY_PREFIX):
+            if command_assay or plan['run_id'].startswith(RECOVERY_PREFIX):
                 import torch
                 from training_workloads.scale_003.resources import RUNTIME_MIN_FREE_MEMORY_BYTES
 

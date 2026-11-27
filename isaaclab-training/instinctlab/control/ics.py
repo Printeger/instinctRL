@@ -35,12 +35,13 @@ class ICSConfig:
     clearance_margin_m: float = 0.0
     range_rate_filter: bool = False
     empty_active_set_beta: float = 1.0
+    motion_tube_radius_m: float = 0.0
 
     def __post_init__(self) -> None:
         for name in (
             "d_safe_m", "emergency_clearance_m", "a_max_m_s2", "active_horizon_margin_m",
             "min_reliability", "velocity_limit_m_s", "latency_s", "clearance_margin_m",
-            "empty_active_set_beta",
+            "empty_active_set_beta", "motion_tube_radius_m",
         ):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, (int, float)):
@@ -59,6 +60,8 @@ class ICSConfig:
             raise ValueError("min_reliability must be in [0, 1]")
         if not 0.0 <= self.empty_active_set_beta <= 1.0:
             raise ValueError("empty_active_set_beta must be in [0, 1]")
+        if not 0.0 <= self.motion_tube_radius_m <= self.d_safe_m:
+            raise ValueError("motion tube radius must be in [0, d_safe_m]")
         if not isinstance(self.range_rate_filter, bool):
             raise TypeError("range_rate_filter must be boolean")
 
@@ -204,6 +207,17 @@ def attenuate_command(
         & (closing > 0.0)
         & (effective <= config.d_safe_m + config.active_horizon_margin_m)
     )
+    if config.motion_tube_radius_m > 0.0:
+        # At low speed, relax only fresh off-path returns with two consistent
+        # range intervals. Unexplained closure retains the radial brake.
+        parallel_m = latest_range * approach / speed.clamp_min(1e-6)
+        across_m = (latest_range.square() - parallel_m.square()).clamp_min(0.).sqrt()
+        last_two_rates = rates[:, -2:].flatten(2)
+        last_two_valid = usable_rates[:, -2:].flatten(2).all(dim=1)
+        unexplained_closure = -last_two_rates.amin(dim=1) > approach + .18
+        outside = ((across_m > config.motion_tube_radius_m) & last_two_valid & ~unexplained_closure
+                   & (latest_reliability >= .65) & (speed <= .30))
+        active = active & ~outside
     ratios = (v_safe / closing.clamp_min(torch.finfo(v_gov_b.dtype).tiny)).clamp(0.0, 1.0)
     beta = torch.where(active, ratios, torch.ones_like(ratios)).min(dim=1, keepdim=True).values
     active_count = active.sum(dim=1, keepdim=True)

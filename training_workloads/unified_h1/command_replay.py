@@ -12,6 +12,8 @@ from .escape_holdout_scene import COMMAND_LAYOUTS, LAYOUTS, command_layout
 PREFIX = 'R6-DIRECT-INSTINCT-GPU-COMMAND-'
 GUARD_PREFIX = PREFIX + 'GUARD-'
 ROUTE_PREFIX = PREFIX + 'ROUTE-'
+CRAZY_PREFIX = PREFIX + 'CRAZY-'
+REGRESSION_ID = PREFIX + 'R6-01'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -26,10 +28,17 @@ MODELS = {
 }
 EXECUTION = 'm4-escape-rear-clearance-p25-v1'
 BRAKE_EXECUTION = 'm4-escape-brake-forward-p25-v1'
+TUBE_EXECUTION = 'm4-escape-brake-tube-p25-v1'
+CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
+CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY)-[0-9]{2}', run_id) is not None
+
+
+def route_layouts(run_id):
+    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX))
 
 
 def arm_execution(params, label):
@@ -37,16 +46,22 @@ def arm_execution(params, label):
 
 
 def validate_stream(stream):
+    generated = stream.get('source') == 'crazy_command_generator'
     if (set(stream) != {'schema_version', 'source', 'duration_ms', 'events'}
             or stream['schema_version'] != 'instinctrl-world-command-stream/1'
-            or stream['source'] != 'scripted_development'
+            or (not generated and stream['source'] != 'scripted_development')
             or type(stream['duration_ms']) is not int or stream['duration_ms'] % STEP_MS
-            or not 8000 <= stream['duration_ms'] <= 60000
+            or not 8000 <= stream['duration_ms'] <= (3_600_000 if generated else 60000)
             or not isinstance(stream['events'], list) or not stream['events']):
         raise ValueError('COMMAND_REPLAY_STREAM')
     last = -1
     for event in stream['events']:
-        if not isinstance(event, dict) or set(event) != {'t_ms', 'velocity_w_m_s'}:
+        fields = {'t_ms', 'velocity_w_m_s'}
+        if isinstance(event, dict) and generated and 'mode' in event:
+            if event['mode'] not in CRAZY_MODES:
+                raise ValueError('COMMAND_REPLAY_GENERATOR_MODE')
+            fields.add('mode')
+        if not isinstance(event, dict) or set(event) != fields:
             raise ValueError('COMMAND_REPLAY_EVENT')
         t = event['t_ms']
         command = event['velocity_w_m_s']
@@ -67,24 +82,46 @@ def load_stream(pin):
 
 def load_route_streams(pin):
     value = json.loads(checked(pin).read_bytes())
-    if (set(value) != {'schema_version', 'duration_ms', 'layouts'}
+    fields = {'schema_version', 'duration_ms', 'layouts'}
+    generated = 'generator' in value
+    if generated:
+        fields.add('generator')
+    if (set(value) != fields
             or value['schema_version'] != 'instinctrl-command-route-streams/1'
             or not isinstance(value['layouts'], dict) or set(value['layouts']) != set(COMMAND_LAYOUTS)):
         raise ValueError('COMMAND_REPLAY_ROUTES')
-    return {layout: validate_stream(dict(schema_version='instinctrl-world-command-stream/1',
-                                         source='scripted_development', duration_ms=value['duration_ms'], events=events))
-            for layout, events in value['layouts'].items()}
+    streams = {layout: validate_stream(dict(schema_version='instinctrl-world-command-stream/1',
+                    source='crazy_command_generator' if generated else 'scripted_development',
+                    duration_ms=value['duration_ms'], events=events)) for layout, events in value['layouts'].items()}
+    if generated:
+        generator = value['generator']
+        if (set(generator) != {'schema_version', 'seed', 'prefix', 'prefix_duration_ms'}
+                or generator['schema_version'] != CRAZY_SCHEMA or type(generator['seed']) is not int
+                or not 0 <= generator['seed'] < 2**31 or type(generator['prefix_duration_ms']) is not int):
+            raise ValueError('COMMAND_REPLAY_GENERATOR_METADATA')
+        template = json.loads(checked(generator['prefix']).read_bytes())
+        if (set(template) != {'schema_version', 'duration_ms', 'layouts'}
+                or template['duration_ms'] != generator['prefix_duration_ms']):
+            raise ValueError('COMMAND_REPLAY_GENERATOR_PREFIX')
+        for layout, stream in streams.items():
+            prefix = template['layouts'][layout]
+            extension = stream['events'][len(prefix):]
+            if (stream['events'][:len(prefix)] != prefix or not extension
+                    or extension[0]['t_ms'] != template['duration_ms']
+                    or {event.get('mode') for event in extension} != set(CRAZY_MODES)):
+                raise ValueError('COMMAND_REPLAY_GENERATOR_COVERAGE')
+    return streams
 
 
 def conditions(params):
-    if params['experiment_id'].startswith(ROUTE_PREFIX):
+    if route_layouts(params['experiment_id']):
         return {'layout_routes': CONDITIONS['crossing_at_reversal']}
     return CONDITIONS
 
 
 def event_schedule(params):
     """Keep single-stream pair rows stable and expand route inputs by lane."""
-    if params['experiment_id'].startswith(ROUTE_PREFIX):
+    if route_layouts(params['experiment_id']):
         streams = load_route_streams(params['stream'])
         layouts = [command_layout(lane) for lane in range(LANES)]
         by_lane = [streams[layout] for layout in layouts]
@@ -105,9 +142,10 @@ def sampled_events(stream):
 
 def contract(params):
     guard = params['experiment_id'].startswith(GUARD_PREFIX)
-    routes = params['experiment_id'].startswith(ROUTE_PREFIX)
+    crazy = params['experiment_id'].startswith(CRAZY_PREFIX)
+    routes = route_layouts(params['experiment_id'])
     expected_models = MODELS
-    if guard:
+    if guard or crazy:
         expected_models = {'control': MODELS['b'], 'candidate': MODELS['b']}
     elif routes:
         expected_models = dict(MODELS, candidate=MODELS['b'])
@@ -115,9 +153,9 @@ def contract(params):
     if guard or routes:
         fields.add('candidate_execution')
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
-            or ((guard or routes) and params['candidate_execution'] != BRAKE_EXECUTION)
+            or ((guard or routes) and params['candidate_execution'] != (TUBE_EXECUTION if crazy else BRAKE_EXECUTION))
             or type(params['seed']) is not int
-            or not 0 <= params['seed'] < 2**31 or params['execution'] != EXECUTION
+            or not 0 <= params['seed'] < 2**31 or params['execution'] != (BRAKE_EXECUTION if crazy else EXECUTION)
             or not isinstance(params['models'], dict) or set(params['models']) != set(expected_models)
             or type(params['wall_seconds']) is not int or not 120 <= params['wall_seconds'] <= 1800
             or type(params['output_cap_bytes']) is not int or not 256*2**20 <= params['output_cap_bytes'] <= 2**30):
@@ -126,11 +164,13 @@ def contract(params):
         if checkpoint['sha256'] != expected_models[label]:
             raise ValueError('COMMAND_REPLAY_FROZEN_CHECKPOINT')
         checked(checkpoint)
-    if guard and params['models']['control'] != params['models']['candidate']:
+    if (guard or crazy) and params['models']['control'] != params['models']['candidate']:
         raise ValueError('COMMAND_REPLAY_GUARD_SAME_WEIGHTS')
-    if routes and params['models']['b'] != params['models']['candidate']:
+    if routes and not crazy and params['models']['b'] != params['models']['candidate']:
         raise ValueError('COMMAND_REPLAY_ROUTES_SAME_WEIGHTS')
     stream = load_route_streams(params['stream'])['street_gap'] if routes else load_stream(params['stream'])
+    if stream['duration_ms'] > 90000 or (crazy and stream['source'] != 'crazy_command_generator'):
+        raise ValueError('COMMAND_REPLAY_DEVELOPMENT_DURATION')
     events = {event['t_ms']: event['velocity_w_m_s'] for event in stream['events']}
     reversal = CONDITIONS['crossing_at_reversal']
     previous = next(event['velocity_w_m_s'] for event in reversed(stream['events']) if event['t_ms'] < reversal)
@@ -158,7 +198,7 @@ def run(backend, params):
     layouts, event_ids, events = event_schedule(params)
     env, counters = backend.environment, backend.counters
     budgets = backend.runtime_contract['budgets']
-    if params['experiment_id'].startswith(ROUTE_PREFIX):
+    if route_layouts(params['experiment_id']):
         commands = env._command_b.new_tensor([[event['velocity_w_m_s'] for event in row] for row in events])
     else:
         commands = env._command_b.new_tensor([event['velocity_w_m_s'] for event in events])
@@ -173,6 +213,7 @@ def run(backend, params):
     block = dict(id='continuous-replay-pair', task='stop', speed_m_s=.25,
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     output = Path(backend.output)
+    env.capture_ics_limiter = params['experiment_id'].startswith(CRAZY_PREFIX)
 
     def save_row(handle, row):
         data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
@@ -183,7 +224,7 @@ def run(backend, params):
     for label, checkpoint in params['models'].items():
         payload = torch.load(checked(checkpoint), map_location='cpu', weights_only=True)
         if (NetworkConfig(**payload['network_config']) != NetworkConfig()
-                or payload['method_hashes'].get(METHOD_FIELD) != params['execution']):
+                or payload['method_hashes'].get(METHOD_FIELD) != EXECUTION):
             raise ValueError('COMMAND_REPLAY_EXECUTION_BINDING')
         actor = checkpoint_actor(payload).to(env.device)
         actor.load_state_dict(payload['actor'], strict=True)
@@ -269,6 +310,8 @@ def run(backend, params):
                         episode_length=pre['episode_length'])
                     if 'braking' in option:
                         tensors['escape_braking'] = option['braking']
+                    if 'ics_limiter' in pre:
+                        tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
                                           event_index=event_ids[step], raw_event=events[step],
                                           physics_tick=int(before['tick']), after_tick=int(post['tick']),

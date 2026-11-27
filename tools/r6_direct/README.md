@@ -132,16 +132,11 @@ pin，文件采用 `instinctrl-third-training-resources/1` 并绑定第三轮用
 PYTHONPATH=.:isaaclab-training /usr/bin/python3 -B -P -m tools.r6_direct.run --inputs "$INPUTS"
 ```
 
-单独录制物理摇杆可用 `python3 -m tools.r6_direct.record_sticks`。例如
-Linux 以 `/dev/input/js0` 提供设备，正向为轴 1 的负方向，右向为轴 0
-的正方向时，在仓库根运行以下命令。各设备的真实轴号、正负方向和录制时长应按实际会话指定。
+Crazy command generator 使用确定种子和一至四秒的持久状态，在路线前缀之后生成
+正常导航、快速变向、预定威胁方向、振荡和零令。输出完整时间戳序列，可随运行输入冻结。
+开发与独立留出应使用不同种子。生成器只读取预先设计的指令前缀。
 
 ```bash
-python3 -m tools.r6_direct.record_sticks --device /dev/input/js0 \
-  --forward-axis 1 --forward-sign -1 --lateral-axis 0 --lateral-sign 1 \
-  --session independent-01 --duration-s 1800 --output independent-01.jsonl
+python3 -m tools.r6_direct.generate_crazy_commands --prefix ROUTE_STREAMS.json \
+  --seed 725 --duration-ms 62000 --output CRAZY_STREAMS.json
 ```
-
-收集原始轴值、设备时间和实际接收单调时间，并附速度映射。有效录制以
-`complete` 行关闭。独立留出还需要记录来源、对应场景和采集条件，并在正式评价前固定文件哈希。
-此采集命令与仿真解耦。真人在环使用独立试验记录。

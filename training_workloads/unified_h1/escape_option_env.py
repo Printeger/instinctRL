@@ -1,12 +1,13 @@
 """Apply the frozen option to motor requests while leaving PPO samples intact."""
 
+from dataclasses import replace
 import math
 
 import torch
 
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
-    BRAKE_FORWARD_25_VERSION, EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
+    BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
     REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_VERSION, REDIRECT_25_VERSION,
@@ -56,7 +57,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         elif version == METHOD_VERSION:
             self.escape_option = EscapeOption(**kwargs)
         elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
-            rear_clearance = version in (REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION, BRAKE_FORWARD_25_VERSION)
+            brake_forward = version in (BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION)
+            rear_clearance = brake_forward or version in (REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION)
             self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
                                                 lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
                                                 fast_lateral=version in (FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
@@ -68,13 +70,20 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 rear_switch=version == REAR_SWITCH_25_VERSION,
                                                 rear_clearance=rear_clearance,
                                                 front_clearance=version == FRONT_CLEARANCE_25_VERSION,
-                                                brake_forward_escape=version == BRAKE_FORWARD_25_VERSION)
+                                                brake_forward_escape=brake_forward)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
             detector = self.escape_option.detector
             detector._full_rays.copy_(self.lidar_rays_body)
             detector._rays.copy_(self.lidar_rays_body.reshape(59, 360, 3)[::3].reshape(-1, 3))
+
+    def set_h1_ics_clearance_margin(self, margin_m):
+        super().set_h1_ics_clearance_margin(margin_m)
+        radius = .60 if getattr(self, 'escape_option_version', None) == BRAKE_TUBE_25_VERSION else 0.
+        for pipeline in self._control_pipelines:
+            if pipeline.config.ics.motion_tube_radius_m != radius:
+                pipeline.config = replace(pipeline.config, ics=replace(pipeline.config.ics, motion_tube_radius_m=radius))
 
     def _pre_physics_step(self, actions):
         if isinstance(self.escape_option, EscapeRecovery):
@@ -85,6 +94,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
 
     def _get_rewards(self):
         reward = super()._get_rewards()
+        if getattr(self, 'capture_ics_limiter', False):
+            self.extras['pre_reset']['ics_limiter'] = self._ics_limiter_witness()
         if self.escape_option is not None:
             self.extras['pre_reset']['escape_option'] = {
                 'active': self.escape_option.applied.detach().clone(),
@@ -99,6 +110,19 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if getattr(self, 'mirrored_pipe_pairs', False):
                     self.extras['pre_reset']['escape_option']['retreat_basis'] = self.escape_option.retreat_basis.detach().clone()
         return reward
+
+    def _ics_limiter_witness(self):
+        caches = [pipeline._last_ics_cache for pipeline in self._control_pipelines]
+        active = torch.cat([cache['active_mask'] for cache in caches])
+        approach = torch.cat([cache['approach_speed_m_s'] for cache in caches])
+        safe = torch.cat([cache['v_safe_m_s'] for cache in caches])
+        closing = approach.clamp_min(1e-6)
+        ratio = torch.where(active, safe/closing, torch.inf)
+        index = ratio.argmin(dim=1)
+        lanes = torch.arange(self.num_envs, device=self.device)
+        distance = self._policy['lidar_grid'][:, 9].flatten(1)[lanes, index]
+        hit = distance[:, None] * self.lidar_rays_body[index]
+        return dict(limiter_beam=torch.where(active.any(dim=1), index, -1), limiter_hit_b=hit)
 
     def _reset_idx(self, env_ids):
         if self.escape_option is not None:

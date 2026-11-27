@@ -94,15 +94,47 @@ def test_recovery_uses_new_intent_and_stops_at_first_reset():
     assert report['minimum_sampled_ray_m'] == .5
 
 
-def test_stick_mapping_radially_dead_zones_and_caps_speed():
-    from math import hypot
-    from tools.r6_direct.record_sticks import velocity
+def test_crazy_generator_preserves_prefix_and_freezes_all_modes(tmp_path):
+    import json
+    from pathlib import Path
+    from tools.r6_direct.generate_crazy_commands import generate
+    from tools.r6_evidence import file_pin
+    from training_workloads.unified_h1.command_replay import CRAZY_MODES, load_route_streams
 
-    assert velocity(10, -100, 1, 1, .05, .30) == [0., 0., 0.]
-    x, y, z = velocity(-32768, 32767, -1, -1, .05, .30)
-    assert x == pytest.approx(-y)
-    assert hypot(x, y) == pytest.approx(.30)
-    assert z == 0.
+    root = Path(__file__).resolve().parents[2]
+    prefix = file_pin(root/'docs/experiments/instinct-continuous-command/routes/STREAMS.json')
+    recorded = generate(prefix, 725, 62000)
+    assert generate(prefix, 725, 62000) == recorded
+    assert generate(prefix, 726, 62000) != recorded
+    path = tmp_path/'streams.json'
+    path.write_text(json.dumps(recorded))
+    readback = load_route_streams(file_pin(path))
+    for stream in readback.values():
+        assert {e['mode'] for e in stream['events'] if 'mode' in e} == set(CRAZY_MODES)
+
+
+def test_motion_tube_keeps_forward_hazards_and_unexplained_closure():
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    side = (rays - torch.tensor([.109, .994, 0.])).square().sum(dim=1).argmin()
+    ahead = rays[:, 0].argmax()
+    cmd = torch.tensor([[.24, 0., 0.]])
+    radial = ICSConfig(clearance_margin_m=.15)
+    tube = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60)
+
+    def output(beam, history, config):
+        grid = torch.zeros(1, 4, 3, len(rays))
+        grid[:, :, 0] = 40.
+        grid[0, :, 0, beam] = torch.tensor(history)
+        grid[0, :, 1:, beam] = 1.
+        return attenuate_command(grid.reshape(1, 12, 59, 360), rays, cmd, .1, config).v_final_b[0, 0].item()
+
+    assert output(side, [.92]*4, radial) == 0.
+    assert output(side, [.92]*4, tube) == pytest.approx(.24)
+    assert output(ahead, [.92]*4, tube) == 0.
+    assert output(side, [1.1, 1.00, .94, .88], tube) == 0.
 
 
 def test_early_brake_replaces_only_an_accelerating_escape_at_its_trigger(monkeypatch):
