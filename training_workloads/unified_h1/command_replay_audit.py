@@ -84,6 +84,8 @@ def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, accele
     if not isinstance(pulse, list) or len(pulse) != 40:
         raise ValueError('COMMAND_REPLAY_PULSE_COUNT')
     first = pulse[0]['sim_tick']
+    if first != rows[50]['physics_tick']:
+        raise ValueError('COMMAND_REPLAY_PULSE_BOUNDARY')
     block = {'task': 'pulse_hold'}
     for i, row in enumerate(pulse):
         if set(row) != {'block_tick', 'sim_tick', 'force_n', 'mass_kg'} or row['block_tick'] != 1000+i or row['sim_tick'] != first+i:
@@ -102,8 +104,15 @@ def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, accele
         if abs(delay-expected) > 2.e-6:
             raise ValueError('COMMAND_REPLAY_CROSSING_DELAY')
         if center is not None:
-            row = rows[round(center/STEP_MS)]
-            if abs(row['mover_position_w'][lane][1]-initial['path_reference_w'][lane][1]) > .04:
+            center_step = round(center/STEP_MS)
+            # A contact can reset the mover before the scheduled crossing. Use
+            # the last first-flight boundary, before that reset, in this case.
+            step = next((i for i, row in enumerate(rows[:center_step]) if row['reset'][lane]), center_step)
+            reference = initial['path_reference_w'][lane][1]
+            start = initial['mover_start_w'][lane][1]-reference
+            before_center_s = max(0., (center-step*STEP_MS)/1000.)
+            offset = math.copysign(min(CROSSING_START_M, before_center_s*CROSSING_SPEED_M_S), start)
+            if abs(rows[step]['mover_position_w'][lane][1]-reference-offset) > .04:
                 raise ValueError('COMMAND_REPLAY_CROSSING_READBACK')
 
 

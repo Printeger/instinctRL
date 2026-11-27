@@ -497,6 +497,28 @@ def test_displacement_is_time_aligned_during_a_command_reversal():
     assert 0. < latest[0, 0] < .2
 
 
+def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
+    import json
+    from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing
+    from training_workloads.unified_h1.robustness import lane_role
+
+    mass = 1.181517923
+    block = {'task': 'pulse_hold'}
+    force = [[axis*mass*.5 for axis in lane_role(block, lane)[1]] for lane in range(32)]
+    pulse = [dict(block_tick=1000+i, sim_tick=1002+i, force_n=force, mass_kg=[mass]*32) for i in range(40)]
+    path = tmp_path/'pulse.json'
+    path.write_text(json.dumps(pulse))
+    initial = dict(departure_delay_s=[9.-2.2/.58]+[0.]*31, path_reference_w=[[0.,0.,0.]]*32,
+                   mover_start_w=[[0.,2.2,0.]]*32)
+    rows = [dict(physics_tick=2+20*i, reset=[i == 80]+[False]*31,
+                 mover_position_w=[[0.,.58 if i == 80 else 2.2,0.]]*32) for i in range(100)]
+    args = (path, initial, rows, ['street_gap']+['room_corner']*31, [9000], .5)
+    verify_pulse_and_crossing(*args)
+    rows[80]['mover_position_w'][0] = [0., 2.2, 0.]
+    with pytest.raises(ValueError, match='CROSSING_READBACK'):
+        verify_pulse_and_crossing(*args)
+
+
 def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
     from copy import deepcopy
     from tools.r6_direct.replay_clearance import long_gate_results
