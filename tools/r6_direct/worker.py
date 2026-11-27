@@ -176,7 +176,7 @@ def run(plan, input_pin):
             CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
             BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
             FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
-            CLIPPED_RETREAT_ONSET_EXECUTION,
+            CLIPPED_RETREAT_ONSET_EXECUTION, TUBE_STOPPING_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -364,6 +364,7 @@ def run(plan, input_pin):
                     far_crossing_reference = option_version in FAR_CROSSING_REFERENCE_EXECUTIONS
                     verified_retreat_onset = option_version in VERIFIED_RETREAT_ONSET_EXECUTIONS
                     clipped_retreat_only = option_version == CLIPPED_RETREAT_ONSET_EXECUTION
+                    tube_stopping = option_version == TUBE_STOPPING_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -405,7 +406,8 @@ def run(plan, input_pin):
                             or env.escape_option.hover_escape_own_side != hover_own_side
                             or env.escape_option.far_crossing_reference != far_crossing_reference
                             or env.escape_option.verified_retreat_onset != verified_retreat_onset
-                            or env.escape_option.retain_only_clipped_retreat != clipped_retreat_only):
+                            or env.escape_option.retain_only_clipped_retreat != clipped_retreat_only
+                            or env.tube_stopping != tube_stopping):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -482,6 +484,8 @@ def run(plan, input_pin):
                         execution['verified_retreat_onset'] = True
                     if clipped_retreat_only:
                         execution['retain_only_clipped_retreat'] = True
+                    if tube_stopping:
+                        execution['tube_stopping'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

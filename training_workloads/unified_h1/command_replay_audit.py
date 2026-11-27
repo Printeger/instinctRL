@@ -13,7 +13,7 @@ from .command_replay import (
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
-    CLIPPED_RETREAT_ONSET_EXECUTION,
+    CLIPPED_RETREAT_ONSET_EXECUTION, TUBE_STOPPING_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -354,6 +354,9 @@ def audit(output, params, counters):
         clipped_retreat_profile = model['execution'] == CLIPPED_RETREAT_ONSET_EXECUTION
         if model.get('retain_only_clipped_retreat', False) is not clipped_retreat_profile:
             raise ValueError('COMMAND_REPLAY_CLIPPED_RETREAT_PROFILE')
+        tube_stopping_profile = model['execution'] == TUBE_STOPPING_EXECUTION
+        if model.get('tube_stopping', False) is not tube_stopping_profile:
+            raise ValueError('COMMAND_REPLAY_FINITE_TUBE_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -490,6 +493,12 @@ def audit(output, params, counters):
                 if (('escape_retreat_request_kept' in row) != verified_retreat_profile or len(retreat_kept) != LANES
                         or any(type(value) is not bool for value in retreat_kept)):
                     raise ValueError('COMMAND_REPLAY_VERIFIED_RETREAT_BINDING')
+                tube_holds = row.get('tube_stopping_hold_s', [0.]*LANES)
+                tube_targets = row.get('tube_stopping_target_b', [[0.,0.,0.]]*LANES)
+                if (('tube_stopping_hold_s' in row) != tube_stopping_profile
+                        or ('tube_stopping_target_b' in row) != tube_stopping_profile
+                        or len(tube_holds) != LANES or len(tube_targets) != LANES):
+                    raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -558,6 +567,21 @@ def audit(output, params, counters):
                             or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_BILATERAL_BEHAVIOR')
+                    if tube_stopping_profile:
+                        hold, target = tube_holds[lane], tube_targets[lane]
+                        if not math.isfinite(hold) or len(target) != 3 or not all(math.isfinite(component) for component in target):
+                            raise ValueError('COMMAND_REPLAY_FINITE_TUBE_TARGET')
+                        if not hold and any(target):
+                            raise ValueError('COMMAND_REPLAY_FINITE_TUBE_INACTIVE_TARGET')
+                        if hold and (min(abs(hold-.30),abs(hold-.60)) > 1.e-6
+                                or not .02999 <= math.hypot(*observed) <= .30001
+                                or not 0. < math.hypot(*target) <= .300001
+                                or row['escape_active'][lane] or row['recovery_retreating'][lane] or held[lane]
+                                or row['escape_braking'][lane] or ranked[lane] or row['escape_recovering'][lane]
+                                or intercepted[lane] or continued[lane] or row['ics_emergency'][lane]
+                                or row['ics_beta'][lane] < .89999 or dot(actor[-1][6:9],target) <= 0.
+                                or math.dist(row['v_final_b'][lane],[v*row['ics_beta'][lane] for v in target]) > 2.e-6):
+                            raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BEHAVIOR')
                     if hover_own_side[lane] and (not intercepted[lane] or row['escape_active'][lane]
                             or row['ics_beta'][lane] < .89999 or any(math.hypot(*frame[6:9]) > 1.e-6 for frame in actor)):
                         raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_BEHAVIOR')

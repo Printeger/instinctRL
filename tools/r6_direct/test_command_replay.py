@@ -127,6 +127,47 @@ def test_bilateral_stopping_retains_unknown_near_and_emergency_constraints():
     assert pipeline.bilateral_stopping_used
 
 
+def test_tube_stopping_retains_independent_and_near_constraints():
+    import math
+
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+    from instinctlab.control.tube_stopping import certify_tube_request
+
+    rays = mounted_mid360_rays_body()
+    angles = torch.arange(12).float()*math.tau/12
+    normals = torch.stack((torch.zeros_like(angles), angles.cos(), angles.sin()), dim=1)
+    cosines = rays@normals.T
+    state = torch.zeros(1,4,13)
+    state[:,:,5] = -1.
+    state[:,:,7] = -.24
+    target = torch.tensor([[0.,-.215,0.]])
+    config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True,
+        motion_tube_neighbor_history=True, confirmed_tube_radius_m=.41, confirmed_tube_align_rotation=True)
+    for offset, obstruction in ((0.,False),(.36,False),(0.,True),(.49,False)):
+        distance = .86+offset*normals[:,1]
+        ranges = (distance/cosines.masked_fill(cosines <= 0.,1.e-10)).amin(dim=1)
+        valid = ranges < 40.
+        ranges = ranges.clamp_max(40.)
+        if obstruction:
+            foreign_surface = (rays[:,1] < -.95) & (rays[:,2].abs() < .12) & ((rays[:,0]-.3).abs() < .08)
+            ranges[foreign_surface] = .50
+        scan = torch.stack((ranges,valid.float(),valid.float())).reshape(1,3,59,360).repeat(1,4,1,1)
+        original = attenuate_command(scan,rays,target,.10,config,state_vec=state.flatten(1))
+        assert original.metrics['beta'].item() == 0.
+        assert original.metrics['emergency'].item() == (1. if offset == .49 else 0.)
+        verified = certify_tube_request(scan,state.flatten(1),rays,target,config,original,previous_speed_bound=.30)
+        if offset == 0. and not obstruction:
+            assert verified is not None
+            result, proposed, hold = verified
+            assert result.metrics['beta'].item() == 1.
+            assert torch.equal(result.v_final_b,proposed)
+            assert .28 < float(proposed.norm()) < .30
+            assert hold == .60
+        else:
+            assert verified is None
+
+
 def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     import torch
     from instinctlab.control.escape_passage import crossing_stop_clearance

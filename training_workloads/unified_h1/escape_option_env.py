@@ -25,13 +25,13 @@ from instinctlab.control.escape_recovery import (
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
-    CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18,
+    CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
 VERIFIED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V17, CROSSING_STOP_25_V18)
-FAR_CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V16, *VERIFIED_RETREAT_ONSET_VERSIONS)
+FAR_CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V16, CROSSING_STOP_25_V19, *VERIFIED_RETREAT_ONSET_VERSIONS)
 HOVER_OWN_SIDE_VERSIONS = (CROSSING_STOP_25_V15, *FAR_CROSSING_REFERENCE_VERSIONS)
 SAMPLED_TURN_VERSIONS = (CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, *HOVER_OWN_SIDE_VERSIONS)
 OBSERVED_HEADING_VERSIONS = (CROSSING_STOP_25_V12, *SAMPLED_TURN_VERSIONS)
@@ -74,6 +74,7 @@ STOP_RELEASE_VERSIONS = (STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION, *INTERCEP
 class EscapeOptionEnv(UnifiedH1DirectEnv):
     escape_option = None
     bilateral_stopping = False
+    tube_stopping = False
     lidar_mount_pitch_degrees = 30
     lidar_rays_body = None
 
@@ -109,9 +110,12 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self._set_lidar_mount(pitch)
         self.escape_option_version = version if enabled else None
         self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
+        self.tube_stopping = enabled and version == CROSSING_STOP_25_V19
         for pipeline in self._control_pipelines:
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
+            if hasattr(pipeline, 'allow_tube_stopping'):
+                pipeline.allow_tube_stopping = False
         kwargs = dict(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
         if not enabled:
             self.escape_option = None
@@ -245,18 +249,25 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self._captured = 0
         if isinstance(self.escape_option, EscapeRecovery):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
-            if self.bilateral_stopping:
+            if self.bilateral_stopping or self.tube_stopping:
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
+                from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
                 option = self.escape_option
                 protected = (option.applied | option.retreating | option.braking | option.ranked | option.holding
                              | option.intercepted | option.recovering)
+                if self.tube_stopping:
+                    protected |= option.intercept_continued
+                pipeline_type = TubeStoppingPipeline if self.tube_stopping else BilateralStoppingPipeline
                 for index, allowed in enumerate((~protected).tolist()):
                     pipeline = self._control_pipelines[index]
-                    if not isinstance(pipeline, BilateralStoppingPipeline):
-                        pipeline = BilateralStoppingPipeline(pipeline)
+                    if not isinstance(pipeline, pipeline_type):
+                        pipeline = pipeline_type(pipeline)
                         self._control_pipelines[index] = pipeline
-                    pipeline.allow_bilateral_stopping = allowed
+                    if self.tube_stopping:
+                        pipeline.allow_tube_stopping = allowed
+                    else:
+                        pipeline.allow_bilateral_stopping = allowed
         elif self.escape_option is not None:
             actions = self.escape_option.apply(self._policy, actions)
         super()._pre_physics_step(actions)
@@ -322,6 +333,16 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if self.bilateral_stopping:
                     used = [pipeline.bilateral_stopping_used for pipeline in self._control_pipelines]
                     self.extras['pre_reset']['escape_option']['bilateral_stopping'] = self.escape_option.applied.new_tensor(used)
+                if self.tube_stopping:
+                    target = torch.zeros_like(self.escape_option.direction)
+                    hold_seconds = target.new_zeros(self.num_envs)
+                    for lane, pipeline in enumerate(self._control_pipelines):
+                        if pipeline.tube_stopping is not None:
+                            command, hold = pipeline.tube_stopping
+                            target[lane] = command[0]
+                            hold_seconds[lane] = hold
+                    self.extras['pre_reset']['escape_option']['tube_stopping_target_b'] = target
+                    self.extras['pre_reset']['escape_option']['tube_stopping_hold_s'] = hold_seconds
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:
