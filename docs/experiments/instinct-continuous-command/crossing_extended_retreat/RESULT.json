@@ -1,0 +1,230 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "21": 1,
+          "24": 1,
+          "25": 1,
+          "28": 1,
+          "29": 1,
+          "30": 2,
+          "31": 2
+        },
+        "escape_finite_edge": {
+          "1": 45,
+          "10": 19,
+          "11": 10,
+          "12": 5,
+          "13": 13,
+          "14": 31,
+          "15": 6,
+          "16": 10,
+          "17": 27,
+          "18": 9,
+          "19": 8,
+          "20": 13,
+          "22": 3,
+          "23": 7,
+          "24": 2,
+          "25": 3,
+          "27": 13,
+          "28": 14,
+          "29": 24,
+          "3": 6,
+          "30": 10,
+          "5": 32,
+          "6": 12,
+          "7": 2,
+          "8": 42,
+          "9": 15
+        },
+        "escape_intercept_continued": {
+          "16": 8,
+          "17": 8,
+          "18": 8,
+          "19": 12,
+          "20": 12,
+          "21": 8,
+          "23": 4
+        },
+        "escape_intercepted": {
+          "16": 59,
+          "17": 84,
+          "18": 60,
+          "19": 66,
+          "20": 50,
+          "21": 47,
+          "22": 50,
+          "23": 46
+        },
+        "escape_offset_stop": {
+          "16": 4,
+          "17": 38,
+          "18": 21,
+          "19": 2,
+          "20": 3,
+          "21": 10,
+          "22": 15,
+          "23": 12
+        },
+        "escape_opening_steered": {
+          "0": 7,
+          "19": 1,
+          "2": 28,
+          "21": 18,
+          "23": 24,
+          "5": 25,
+          "6": 25,
+          "7": 15
+        },
+        "escape_wall_tangent": {
+          "1": 61,
+          "13": 19,
+          "14": 11,
+          "16": 1,
+          "21": 21,
+          "23": 6,
+          "24": 70,
+          "25": 63,
+          "26": 75,
+          "27": 103,
+          "28": 24,
+          "3": 4,
+          "30": 4,
+          "31": 6,
+          "8": 29,
+          "9": 40
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-43/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "edcf4dee9ab1a3421dd68f2f923137dd4d5bcc04587deca02062a49cc797940b"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 27,
+            "m": 0.5638900101184845,
+            "time_s": 91.52
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 28,
+            "m": 0.5238141327523659,
+            "time_s": 107.63
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 3,
+            "m": 0.4223965263655297,
+            "time_s": 24.310000000000002
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 19,
+            "m": 0.16848845842209997,
+            "time_s": 13.05
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 8,
+            "m": 0.41503916217623615,
+            "time_s": 65.94
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-43/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-43/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "059db4e037259e11c05d69ce4cd2c8e979f2a0e192c17929c05712a57b0b104e"
+      },
+      "windows": [
+        {
+          "end_exclusive": 1130,
+          "lane": 17,
+          "minimum_m": 0.29779914367368554,
+          "start": 1067
+        },
+        {
+          "end_exclusive": 156,
+          "lane": 20,
+          "minimum_m": 0.3551236980081449,
+          "start": 128
+        }
+      ]
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-43/analysis/binding.json",
+    "sha256": "6437a79209bfe3fc33ff28de81130b2e9dd17b4d651e70240dc1882127bed5b3"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-43/analysis/clearance-and-progress.json",
+    "sha256": "2ffb5bd59d7fe86e826573f7a714209681316911f6694f62d31806d4a3d8aed7"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "5ebc7509a8720636834c05e6f9e26eb259949969",
+  "status": "DEVELOPMENT_MATCHED_EXTENDED_RETREAT_PASSED_CLOSED"
+}

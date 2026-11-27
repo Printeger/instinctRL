@@ -30,6 +30,8 @@
 
 同输入修复使 32/32 预设松杆均达标，但一条街道首飞在后段横穿发生接触。该处的同侧撤离经 ICS 放行，1.5 秒动作预测没有足够余量。保留接触原件，继续验证通过同一净空门槛的有限撤离时长。 [同输入结果](experiments/instinct-continuous-command/crossing_stop_receding_hover/REPORT.md)
 
+有限撤离复验完成 32/32 条完整首飞，零接触与中途重置，松杆 32/32、室内过门过角各 8/8。旧接触窗净空从 −0.0732 米增至 0.2978 米，整体最小净空 0.1685 米。继续用同一配置复验此前登记的独立 Crazy 输入。 [同输入结果](experiments/instinct-continuous-command/crossing_extended_retreat/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
