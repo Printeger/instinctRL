@@ -1,0 +1,139 @@
+{
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 2,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "evidence": {
+    "binding": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-01/analysis/binding.json",
+      "sha256": "aec9f1346cb50ab96f17d7492e4c973d5dbdffe95e09ec98a1bcdcab0337097b"
+    },
+    "clearance": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-01/analysis/clearance-and-progress.json",
+      "sha256": "244c46e2d2ff99f7cb6af30aeb4769bed85a4a83711493094fa418d4aee40b0f"
+    },
+    "dense_source": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-01/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+      "sha256": "3e5a2709f5261697a9c2c2b583581f3a2965a83cb196a64b586e0dc8e068416d"
+    },
+    "pulse": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-01/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+      "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+    },
+    "shadow": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-01/hover-path-onset-shadow.jsonl",
+      "sha256": "77390c811e168d905e1d3fcdf8f88fa0926c54805220221e433bdfe51a5cddf8"
+    },
+    "trace": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-01/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl",
+      "sha256": "e9a353e2910caccaeda43caeb18c295a52e3147a860d81060ac830a1beccc9b4"
+    }
+  },
+  "layouts": {
+    "corridor": {
+      "diagnostic_risk_windows": 40,
+      "first_contacts": [],
+      "first_flight_s": 480.0,
+      "full_first_flights": 4,
+      "scheduled_lanes": 4,
+      "worst": {
+        "clearance_m": 0.555571585893631,
+        "lane": 24,
+        "seconds": 62.845,
+        "surface": "static"
+      }
+    },
+    "open_tube": {
+      "diagnostic_risk_windows": 17,
+      "first_contacts": [],
+      "first_flight_s": 480.0,
+      "full_first_flights": 4,
+      "scheduled_lanes": 4,
+      "worst": {
+        "clearance_m": 0.5518662626201912,
+        "lane": 28,
+        "seconds": 118.985,
+        "surface": "static"
+      }
+    },
+    "room_corner": {
+      "corner_passed": 5,
+      "diagnostic_risk_windows": 20,
+      "door_passed": 8,
+      "first_contacts": [],
+      "first_flight_s": 960.0,
+      "full_first_flights": 8,
+      "scheduled_lanes": 8,
+      "worst": {
+        "clearance_m": 0.5147842655565821,
+        "lane": 3,
+        "seconds": 26.225,
+        "surface": "static"
+      }
+    },
+    "street_gap": {
+      "diagnostic_risk_windows": 51,
+      "first_contacts": [
+        {
+          "clearance_m": -0.06680984921906397,
+          "lane": 18,
+          "step": 677
+        },
+        {
+          "clearance_m": -0.08665659359811034,
+          "lane": 22,
+          "step": 174
+        }
+      ],
+      "first_flight_s": 805.3,
+      "full_first_flights": 6,
+      "scheduled_lanes": 8,
+      "worst": {
+        "clearance_m": -0.08665659359811034,
+        "lane": 22,
+        "seconds": 17.495,
+        "surface": "mover"
+      }
+    },
+    "trunk_aisle": {
+      "diagnostic_risk_windows": 10,
+      "first_contacts": [],
+      "first_flight_s": 960.0,
+      "full_first_flights": 8,
+      "scheduled_lanes": 8,
+      "worst": {
+        "clearance_m": 0.4904675089167426,
+        "lane": 13,
+        "seconds": 25.295,
+        "surface": "static"
+      }
+    }
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "owners_remaining": 0
+  },
+  "pulse_physics_ticks": 40,
+  "scientific_acceptance": false,
+  "source_commit": "0631c31aa015b8a8db376309fddcab90a481f96d",
+  "status": "DEVELOPMENT_NOVEL_FAILED_CONTACT"
+}
