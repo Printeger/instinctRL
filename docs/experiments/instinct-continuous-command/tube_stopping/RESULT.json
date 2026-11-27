@@ -1,0 +1,317 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "24": 1,
+          "25": 1,
+          "27": 3,
+          "29": 1,
+          "30": 1,
+          "4": 1
+        },
+        "escape_far_crossing_refined": {
+          "19": 7,
+          "20": 1
+        },
+        "escape_finite_edge": {
+          "0": 106,
+          "1": 64,
+          "10": 12,
+          "11": 55,
+          "12": 23,
+          "13": 8,
+          "14": 3,
+          "15": 41,
+          "16": 32,
+          "17": 10,
+          "18": 4,
+          "19": 12,
+          "2": 97,
+          "20": 8,
+          "21": 25,
+          "22": 14,
+          "23": 23,
+          "24": 99,
+          "25": 85,
+          "26": 59,
+          "27": 59,
+          "28": 88,
+          "29": 33,
+          "3": 55,
+          "30": 12,
+          "31": 24,
+          "4": 85,
+          "5": 110,
+          "6": 64,
+          "7": 110,
+          "8": 21,
+          "9": 22
+        },
+        "escape_intercept_continued": {
+          "16": 4,
+          "17": 4,
+          "18": 4,
+          "19": 8,
+          "20": 12,
+          "21": 8,
+          "22": 8
+        },
+        "escape_intercepted": {
+          "16": 84,
+          "17": 41,
+          "18": 10,
+          "19": 51,
+          "20": 41,
+          "21": 85,
+          "22": 37,
+          "23": 15
+        },
+        "escape_observed_heading": {
+          "0": 29,
+          "1": 15,
+          "10": 2,
+          "11": 33,
+          "12": 12,
+          "13": 2,
+          "14": 3,
+          "15": 24,
+          "16": 12,
+          "17": 6,
+          "19": 3,
+          "2": 45,
+          "21": 11,
+          "22": 10,
+          "23": 12,
+          "24": 88,
+          "25": 84,
+          "26": 38,
+          "27": 53,
+          "28": 37,
+          "29": 1,
+          "3": 7,
+          "4": 18,
+          "5": 43,
+          "6": 15,
+          "7": 26,
+          "8": 10,
+          "9": 12
+        },
+        "escape_offset_stop": {
+          "16": 14,
+          "17": 8,
+          "18": 4,
+          "19": 2,
+          "20": 14,
+          "21": 2,
+          "22": 31,
+          "23": 20
+        },
+        "escape_shallow_steering": {
+          "0": 65,
+          "1": 43,
+          "10": 4,
+          "12": 3,
+          "15": 4,
+          "16": 14,
+          "17": 2,
+          "18": 4,
+          "19": 8,
+          "2": 41,
+          "20": 1,
+          "21": 6,
+          "23": 6,
+          "26": 7,
+          "28": 2,
+          "29": 28,
+          "3": 43,
+          "30": 4,
+          "31": 7,
+          "4": 55,
+          "5": 44,
+          "6": 41,
+          "7": 45,
+          "9": 1
+        },
+        "escape_tracked_resume": {
+          "16": 12,
+          "17": 17,
+          "18": 3,
+          "20": 12,
+          "21": 6,
+          "22": 17
+        },
+        "escape_wall_tangent": {
+          "0": 39,
+          "11": 5,
+          "15": 16,
+          "16": 1,
+          "24": 21,
+          "26": 33,
+          "27": 65,
+          "28": 23,
+          "31": 7,
+          "4": 27,
+          "6": 3,
+          "7": 50,
+          "8": 4,
+          "9": 5
+        },
+        "tube_stopping": {
+          "28": 24,
+          "29": 28,
+          "30": 14,
+          "31": 73
+        },
+        "tube_stopping_0_30_s": {
+          "28": 9,
+          "29": 3,
+          "30": 6,
+          "31": 14
+        },
+        "tube_stopping_0_60_s": {
+          "28": 15,
+          "29": 25,
+          "30": 8,
+          "31": 59
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-63/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "9ee1805dc69494f63bfd389d56d69b9244bc3db04b725a0b05471cd2ba7137fd"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 25,
+            "m": 0.44376349449157715,
+            "time_s": 14.73
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 29,
+            "m": 0.29680248253903185,
+            "time_s": 97.125
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 5,
+            "m": 0.3258120038975728,
+            "time_s": 20.315
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 19,
+            "m": 0.20578773273857148,
+            "time_s": 13.365
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 12,
+            "m": 0.44493071301061715,
+            "time_s": 13.345
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-63/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-63/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "3b0ecbd96f9eaf0bdaefe141312a6c27aeca19ef4888f87b884bfebd39aed53d"
+      },
+      "windows": [
+        {
+          "end_exclusive": 971,
+          "lane": 29,
+          "minimum_m": 62.700800802253546,
+          "start": 880
+        },
+        {
+          "end_exclusive": 1057,
+          "lane": 28,
+          "minimum_m": 62.835928790382354,
+          "start": 1023
+        }
+      ]
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-63/analysis/binding.json",
+    "sha256": "a93aedb34d718425e0c476f801328b4b7da66a2bf071e4418db4e4530259259b"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-63/analysis/clearance-and-progress.json",
+    "sha256": "4d56937d7ae8a4decc0e3ea79a4a948754a5ce44ba2d755e9160e1e1b543c62e"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "fixed_window_comparison": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/tube_stopping/MATCHED-TUBE-WINDOWS.jsonl",
+    "sha256": "0ad351d73b8ffd338e1dc3ac5f501a02566136cf469a8fb7f9ecc6a9ee1dc98a"
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "short_tracking": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/tube_stopping/SHORT-TRACKING.jsonl",
+    "sha256": "f48525ec635b6e021796fd5cd74cd935502c031b1af5b172e8e25e93d3cfc32a"
+  },
+  "source_commit": "f4e8b6e82b807bf135bc28d4344cfcabb7234682",
+  "status": "DEVELOPMENT_TUBE_STOPPING_SHORT_SAFETY_PASS_PARTIAL_TRACKING"
+}
