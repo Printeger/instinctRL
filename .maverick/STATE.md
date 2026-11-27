@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。首判 6/6。正式与开发均只用仿真 Crazy 指令。旧撤离冲突收敛后，09 匹配首飞 32/32 零接触，最低 0.228 m。07 新令交接室内过角 5/8→6/8。10 停驻把街道松杆 3/8→6/8。11 相邻回波拓展横移，候选、对照均零接触和重置，最低 0.236 m。12 低速停止距离匹配正在运行。Scientist 复算停车后真实移动体触发与双确认。Producer 复现了长程冻结窗口缺校验和恢复首拍提前计时，代码已覆盖。正式 1800 秒和完整 R6 尚未启动。 [项目状态](../docs/PROJECT_STATUS.md) · [相邻回波](../docs/experiments/instinct-continuous-command/neighbor_history/REPORT.md)
+任务 `instinctrl-continuous-command`。首判 6/6。只用仿真 Crazy 指令。09 撤离优先解决街道冲突，07 最新指令交接将室内过角增到 6/8。10、13 依次将街道首次松杆从 3/8 提至 6/8 和 8/8，13 五类 32/32 完整首飞且最低净空 0.254 m。12 已淘汰，原 R6 正迎墙影子复算确认统一缩短会放行 1235 个旧制动拍。14 沿墙切向测试运行中。30 分钟有 128 个独立推进窗与 64 个松杆窗通过 CPU 契约。正式长程和完整 R6 尚未启动。 [项目状态](../docs/PROJECT_STATUS.md) · [松杆结果](../docs/experiments/instinct-continuous-command/settled_offset_stop/REPORT.md)
 
 # 接续 u1792 的两次有效正式长训完成
 

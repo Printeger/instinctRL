@@ -1,0 +1,346 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "0": 1,
+          "1": 1,
+          "5": 1,
+          "7": 1,
+          "16": 1,
+          "17": 1,
+          "23": 1,
+          "25": 2,
+          "26": 2,
+          "27": 1,
+          "28": 1,
+          "29": 4,
+          "31": 3
+        },
+        "escape_intercept_continued": {
+          "22": 4
+        },
+        "escape_intercepted": {
+          "16": 3,
+          "17": 6,
+          "18": 45,
+          "19": 12,
+          "20": 30,
+          "21": 34,
+          "22": 56,
+          "23": 20
+        },
+        "escape_offset_stop": {
+          "16": 6,
+          "17": 10,
+          "19": 2,
+          "20": 5,
+          "21": 13,
+          "23": 7
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "579d75278a441cecf699e5cb2db5776f7c149c62bc02701326e18ef7468673ff"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 24,
+            "m": 0.555571585893631,
+            "time_s": 62.845
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 28,
+            "m": 0.5519028234175782,
+            "time_s": 118.985
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 6,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 1,
+            "m": 0.4119934616991372,
+            "time_s": 27.955000000000002
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 21,
+            "m": 0.2543631515128006,
+            "time_s": 9.435
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 13,
+            "m": 0.4904675089167426,
+            "time_s": 25.295
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl",
+        "sha256": "495b0c3622d600e43f6fbd5da5b8a39163cc863c8fa2bb21ea71f92b0752a9cb"
+      },
+      "windows": [
+        {
+          "end_exclusive": 156,
+          "lane": 21,
+          "minimum_m": 1.0262215574623053,
+          "start": 128
+        },
+        {
+          "end_exclusive": 156,
+          "lane": 23,
+          "minimum_m": 0.8973517949869252,
+          "start": 128
+        },
+        {
+          "end_exclusive": 108,
+          "lane": 21,
+          "minimum_m": 0.2543631515128006,
+          "start": 64
+        },
+        {
+          "end_exclusive": 945,
+          "lane": 22,
+          "minimum_m": 0.3384406368863193,
+          "start": 909
+        },
+        {
+          "end_exclusive": 1031,
+          "lane": 21,
+          "minimum_m": 0.27528971401424257,
+          "start": 977
+        }
+      ]
+    },
+    "control": {
+      "changes": {
+        "escape_command_handoff": {
+          "0": 1,
+          "1": 1,
+          "5": 1,
+          "7": 1,
+          "16": 1,
+          "17": 1,
+          "25": 2,
+          "26": 2,
+          "27": 1,
+          "28": 1,
+          "29": 4,
+          "31": 3
+        },
+        "escape_intercept_continued": {
+          "22": 4
+        },
+        "escape_intercepted": {
+          "16": 3,
+          "17": 6,
+          "18": 45,
+          "19": 12,
+          "20": 30,
+          "21": 44,
+          "22": 56,
+          "23": 43
+        },
+        "escape_offset_stop": {
+          "16": 6,
+          "17": 10,
+          "19": 2,
+          "20": 5,
+          "21": 3,
+          "23": 1
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/results/research-r6-dynamic-assay/control-layout_routes-clearance.f32",
+        "sha256": "9fea03ee69dec129cd20c1ea55ce5471d09d2073bcd5994f229f8d1a00a9e771"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 24,
+            "m": 0.555571585893631,
+            "time_s": 62.845
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 28,
+            "m": 0.5519028234175782,
+            "time_s": 118.985
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 6,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 1,
+            "m": 0.4119934616991372,
+            "time_s": 27.955000000000002
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [
+            {
+              "id": "lane21-first-stop",
+              "lane": 21
+            },
+            {
+              "id": "lane23-first-stop",
+              "lane": 23
+            }
+          ],
+          "minimum": {
+            "lane": 21,
+            "m": 0.2364290105180708,
+            "time_s": 24.515
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 13,
+            "m": 0.4904675089167426,
+            "time_s": 25.295
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/results/research-r6-dynamic-assay/control-layout_routes-pulse.json",
+        "sha256": "11aa63c938ba7bae4ffb0f3a4768ef7a6395d7e5464df32fa24f0563ce728ba1"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/results/research-r6-dynamic-assay/control-layout_routes.jsonl",
+        "sha256": "ec7e0f427a7e5805bd55c5e6936f8413badf22dd35bb04a0419ce5e302846301"
+      },
+      "windows": [
+        {
+          "end_exclusive": 156,
+          "lane": 21,
+          "minimum_m": 1.0781449754745644,
+          "start": 128
+        },
+        {
+          "end_exclusive": 156,
+          "lane": 23,
+          "minimum_m": 0.8973517949869252,
+          "start": 128
+        },
+        {
+          "end_exclusive": 108,
+          "lane": 21,
+          "minimum_m": 0.2543631515128006,
+          "start": 64
+        },
+        {
+          "end_exclusive": 945,
+          "lane": 22,
+          "minimum_m": 0.3385382530753278,
+          "start": 909
+        },
+        {
+          "end_exclusive": 1031,
+          "lane": 21,
+          "minimum_m": 0.9422594445454351,
+          "start": 977
+        }
+      ]
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/analysis/binding.json",
+    "sha256": "c8710602fc6bcd10ae0876079a64087bebdf2ca3f3829558b8241449bf035239"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-13/analysis/clearance-and-progress.json",
+    "sha256": "b34c2f1376419f23b40681c6d46802a83f09ce4d85be340f39047383a9fbd666"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 2400,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 2400,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 76800,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 76800,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "00164b6b04bb17ec5d81c52bc1155ae7c3302ef9",
+  "status": "DEVELOPMENT_MATCHED_ALL_FIXED_STOPS"
+}

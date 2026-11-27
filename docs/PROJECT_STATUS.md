@@ -8,7 +8,7 @@
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
 
-安全擦肩停驻配对两臂均 32/32 完整首飞，街道首个松杆窗口从 3/8 增至 6/8。相邻回波继续保持零接触和重置，最低 +0.236 m。两条门框轨迹各增加约 0.10 m 横移，室内过角仍 6/8。统一缩短停止距离使室内过角降至 5/8，原 R6 墙面同状态复算确认会取消 1,235 个近墙制动拍，候选保留为开发结果。下一对仅验证松杆后二次来物的双确认，保留既有正向停止距离。32 路新独立短程输入已登记，正式 30 分钟与完整 R6 尚未启动。 [相邻回波](experiments/instinct-continuous-command/neighbor_history/REPORT.md) · [停止距离](experiments/instinct-continuous-command/confirmed_standoff/REPORT.md) · [二次停驻](experiments/instinct-continuous-command/settled_offset_stop/PLAN.md) · [30 分钟方案](experiments/instinct-continuous-command/ACCEPTANCE-DRAFT.md)
+安全擦肩停驻使街道首个松杆从 3/8 增至 6/8。双确认进一步达到街道 8/8、五类 32/32，候选首飞零接触、零中途重置，最低 +0.254 m。相邻回波使两条门框轨迹多横移约 0.10 m，室内过角仍 6/8。已淘汰统一缩短正向停止距离，正向护栏照常使用。新的沿墙切向配对正在运行。新独立 32 路短程输入已登记，正式 30 分钟与完整 R6 尚未启动。 [双确认停驻](experiments/instinct-continuous-command/settled_offset_stop/REPORT.md) · [相邻回波](experiments/instinct-continuous-command/neighbor_history/REPORT.md) · [统一距离](experiments/instinct-continuous-command/confirmed_standoff/REPORT.md) · [切向推进](experiments/instinct-continuous-command/wall_tangent/PLAN.md) · [30 分钟方案](experiments/instinct-continuous-command/long/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
