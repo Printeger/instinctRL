@@ -64,6 +64,7 @@ CROSSING_STOP_25_V4 = 'm4-escape-brake-tube-p25-crossing-stop-v4'
 CROSSING_STOP_25_V5 = 'm4-escape-brake-tube-p25-crossing-stop-v5'
 CROSSING_STOP_25_V6 = 'm4-escape-brake-tube-p25-crossing-stop-v6'
 CROSSING_STOP_25_V7 = 'm4-escape-brake-tube-p25-crossing-stop-v7'
+CROSSING_STOP_25_V8 = 'm4-escape-brake-tube-p25-crossing-stop-v8'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -85,7 +86,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        FINITE_INTERCEPT_25_VERSION: 25, CROSSING_STOP_25_VERSION: 25,
                        CROSSING_STOP_25_V2: 25, CROSSING_STOP_25_V3: 25,
                        CROSSING_STOP_25_V4: 25, CROSSING_STOP_25_V5: 25, CROSSING_STOP_25_V6: 25,
-                       CROSSING_STOP_25_V7: 25}
+                       CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -106,7 +107,7 @@ class EscapeRecovery(EscapeOption):
                  finite_intercept=False, crossing_stop=False, crossing_stop_continuation=False,
                  crossing_stop_shallow=False, crossing_stop_early=False, crossing_stop_compatible=False,
                  crossing_stop_verified_hover=False, crossing_stop_receding_hover=False,
-                 crossing_retreat_own_side=False):
+                 crossing_retreat_own_side=False, crossing_retreat_extended=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -159,6 +160,9 @@ class EscapeRecovery(EscapeOption):
         self.crossing_stop_verified_hover = crossing_stop_verified_hover
         self.crossing_stop_receding_hover = crossing_stop_receding_hover
         self.crossing_retreat_own_side = crossing_retreat_own_side
+        self.crossing_retreat_extended = crossing_retreat_extended
+        if crossing_retreat_extended and not crossing_retreat_own_side:
+            raise ValueError('Extended crossing retreat requires a certified same-side retreat')
         if crossing_retreat_own_side and not (retreat_priority and crossing_stop_early):
             raise ValueError('Crossing retreat requires retreat priority and early crossing')
         if crossing_stop_receding_hover and not crossing_stop_verified_hover:
@@ -1004,12 +1008,30 @@ class EscapeRecovery(EscapeOption):
         queued = .10*previous[candidates, :2].norm(dim=1)
         access = (checked.metrics['beta'][:, 0] >= .90) & (checked.metrics['emergency'][:, 0] == 0.)
         access &= (checked.v_final_b*direction).sum(dim=1) >= .12
-        use = (access & (swept[:, 0] < .21) & (settled[:, 0] < -points[3])
-               & (torch.minimum(torch.minimum(swept[:, 1], settled[:, 1]), robust)-queued >= .39)
+        crossed = access & (swept[:, 0] < .21) & (settled[:, 0] < -points[3])
+        use = (crossed & (torch.minimum(torch.minimum(swept[:, 1], settled[:, 1]), robust)-queued >= .39)
                & (swept[:, 1]-swept[:, 0] >= .20))
+        remaining = torch.full_like(candidates, 14)
+        if self.crossing_retreat_extended:
+            retry = (crossed & ~use).nonzero().flatten()
+            if len(retry):
+                local = tuple(point[retry] for point in points)
+                approved = checked.v_final_b[retry, None]
+                extended_swept, extended_settled = crossing_stop_components(
+                    scans[retry], self.detector._full_rays, *local, approved, hold_s=1.8)
+                extended_robust = torch.stack([
+                    intercept_scores(local[0], unit[candidates[retry]]*(tracked_speed[retry]+delta).clamp_min(.20),
+                                     local[2], local[3], approved, hold_s=1.8, preview_steps=101)[:, 0]
+                    for delta in (-.12, .12)
+                ]).amin(dim=0)
+                clearance = torch.minimum(torch.minimum(extended_swept[:, 0], extended_settled[:, 0]), extended_robust)
+                use[retry] = ((clearance-queued[retry] >= .39)
+                              & (extended_swept[:, 0]-swept[retry, 0] >= .20))
+                remaining[retry] = 17
         changed = lanes[candidates[use]]
         selected[changed] = trial[use]
         self.retreat_hold_direction[changed] = direction[use]
+        self.retreat_hold_steps[changed] = remaining[use]
         self.intercept_steps[changed] = 0
         self.early_crossing[changed] = False
         return changed

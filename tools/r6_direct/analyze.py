@@ -84,7 +84,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_IDS, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
                     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
                     CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
-                    CROSSING_RECEDING_HOVER_EXECUTION, CROSSING_VERIFIED_HOVER_EXECUTIONS,
+                    CROSSING_EXTENDED_RETREAT_EXECUTION, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -146,8 +146,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['crossing_stop_compatible'] = True
                     if override in CROSSING_VERIFIED_HOVER_EXECUTIONS:
                         expected['crossing_stop_verified_hover'] = True
-                    if override == CROSSING_RECEDING_HOVER_EXECUTION:
+                    if override in CROSSING_RECEDING_HOVER_EXECUTIONS:
                         expected.update(crossing_stop_receding_hover=True, crossing_retreat_own_side=True)
+                    if override == CROSSING_EXTENDED_RETREAT_EXECUTION:
+                        expected['crossing_retreat_extended'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

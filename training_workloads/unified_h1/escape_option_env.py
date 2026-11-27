@@ -23,12 +23,13 @@ from instinctlab.control.escape_recovery import (
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
     TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
-    CROSSING_STOP_25_V7,
+    CROSSING_STOP_25_V7, CROSSING_STOP_25_V8,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CROSSING_VERIFIED_HOVER_VERSIONS = (CROSSING_STOP_25_V6, CROSSING_STOP_25_V7)
+CROSSING_RECEDING_HOVER_VERSIONS = (CROSSING_STOP_25_V7, CROSSING_STOP_25_V8)
+CROSSING_VERIFIED_HOVER_VERSIONS = (CROSSING_STOP_25_V6, *CROSSING_RECEDING_HOVER_VERSIONS)
 CROSSING_COMPATIBLE_VERSIONS = (CROSSING_STOP_25_V5, *CROSSING_VERIFIED_HOVER_VERSIONS)
 CROSSING_EARLY_VERSIONS = (CROSSING_STOP_25_V4, *CROSSING_COMPATIBLE_VERSIONS)
 CROSSING_SHALLOW_VERSIONS = (CROSSING_STOP_25_V3, *CROSSING_EARLY_VERSIONS)
@@ -158,8 +159,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 crossing_stop_early=version in CROSSING_EARLY_VERSIONS,
                                                 crossing_stop_compatible=version in CROSSING_COMPATIBLE_VERSIONS,
                                                 crossing_stop_verified_hover=version in CROSSING_VERIFIED_HOVER_VERSIONS,
-                                                crossing_stop_receding_hover=version == CROSSING_STOP_25_V7,
-                                                crossing_retreat_own_side=version == CROSSING_STOP_25_V7)
+                                                crossing_stop_receding_hover=version in CROSSING_RECEDING_HOVER_VERSIONS,
+                                                crossing_retreat_own_side=version in CROSSING_RECEDING_HOVER_VERSIONS,
+                                                crossing_retreat_extended=version == CROSSING_STOP_25_V8)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

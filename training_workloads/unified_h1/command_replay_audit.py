@@ -9,7 +9,7 @@ from .command_replay import (
     CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
     EARLY_DIAGONAL_EXECUTIONS, FINITE_EDGE_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, LANES, LAYOUTS,
     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
-    CROSSING_RECEDING_HOVER_EXECUTION, CROSSING_VERIFIED_HOVER_EXECUTIONS,
+    CROSSING_EXTENDED_RETREAT_EXECUTION, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -312,10 +312,12 @@ def audit(output, params, counters):
             raise ValueError('COMMAND_REPLAY_COMPATIBLE_CROSSING_PROFILE')
         if model.get('crossing_stop_verified_hover', False) is not (model['execution'] in CROSSING_VERIFIED_HOVER_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_VERIFIED_CROSSING_HOVER_PROFILE')
-        recovers_on_own_side = model['execution'] == CROSSING_RECEDING_HOVER_EXECUTION
+        recovers_on_own_side = model['execution'] in CROSSING_RECEDING_HOVER_EXECUTIONS
         if (model.get('crossing_stop_receding_hover', False) is not recovers_on_own_side
                 or model.get('crossing_retreat_own_side', False) is not recovers_on_own_side):
             raise ValueError('COMMAND_REPLAY_RECEDING_CROSSING_HOVER_PROFILE')
+        if model.get('crossing_retreat_extended', False) is not (model['execution'] == CROSSING_EXTENDED_RETREAT_EXECUTION):
+            raise ValueError('COMMAND_REPLAY_EXTENDED_CROSSING_RETREAT_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
