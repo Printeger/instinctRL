@@ -511,7 +511,7 @@ def moving_intercepts(lidar, state, rays, eligible, *, command_response=None, mi
     return lanes[keep], position[keep], motion[keep], coast[keep], radius[keep]
 
 
-def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None, preview_steps=None):
+def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None, preview_steps=None, release_early=False):
     """Estimate closest surface separation under each admissible request."""
     # Use the 2.4 s braking preview for the finite-hold comparison.
     samples = preview_steps if preview_steps is not None else (49 if hold_s is not None else 61)
@@ -522,7 +522,13 @@ def intercept_scores(position, motion, coast, radius, issued, *, hold_s=None, pr
     if hold_s is not None:
         hold = time.clamp_max(hold_s)
         travel = hold-.35*(1.-torch.exp(-hold/.35))*torch.exp(-(time-hold)/.35)
-    paths = relative[:, None]-travel[None, None, :, None]*issued[:, :, None, :2]
+    displacement = travel[None, None, :, None]*issued[:, :, None, :2]
+    if release_early:
+        # At each time, stopping earlier sweeps the segment from coasting to the full displacement.
+        fraction = ((relative[:, None]*displacement).sum(dim=-1, keepdim=True)
+                    / displacement.square().sum(dim=-1, keepdim=True).clamp_min(1.e-10))
+        displacement = displacement*fraction.clamp(0., 1.)
+    paths = relative[:, None]-displacement
     return paths.norm(dim=-1).amin(dim=2)-radius[:, None]
 
 

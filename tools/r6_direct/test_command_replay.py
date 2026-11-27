@@ -148,6 +148,25 @@ def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     assert (clearance < .39).all()
 
 
+def test_crossing_clearance_checks_a_release_before_the_planned_stop():
+    import torch
+    from instinctlab.control.escape_passage import intercept_scores
+
+    position = torch.tensor([[.20, -1.]])
+    motion = torch.tensor([[0., .50]])
+    coast = torch.zeros_like(motion)
+    radius = torch.tensor([.34])
+    issued = torch.tensor([[[.40, 0., 0.]]])
+    args = position, motion, coast, radius, issued
+    kept = intercept_scores(*args, hold_s=2.4, preview_steps=121)
+    releasing = intercept_scores(*args, hold_s=2.4, preview_steps=121, release_early=True)
+    sampled = torch.stack([intercept_scores(*args, hold_s=step*.01, preview_steps=121)
+                           for step in range(241)]).amin(dim=0)
+    assert kept.item() > releasing.item()+.25
+    assert torch.allclose(releasing, -radius[:, None], atol=1.e-6)
+    assert torch.allclose(releasing, sampled, atol=.004)
+
+
 def test_extended_crossing_range_keeps_the_original_seed_gate():
     import torch
     from instinctlab.control.escape_passage import _closing_seed

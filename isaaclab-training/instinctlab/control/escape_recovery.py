@@ -75,6 +75,7 @@ CROSSING_STOP_25_V13 = 'm4-escape-brake-tube-p25-crossing-stop-v13'
 CROSSING_STOP_25_V14 = 'm4-escape-brake-tube-p25-crossing-stop-v14'
 CROSSING_STOP_25_V15 = 'm4-escape-brake-tube-p25-crossing-stop-v15'
 CROSSING_STOP_25_V16 = 'm4-escape-brake-tube-p25-crossing-stop-v16'
+CROSSING_STOP_25_V17 = 'm4-escape-brake-tube-p25-crossing-stop-v17'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -99,7 +100,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V7: 25, CROSSING_STOP_25_V8: 25, CROSSING_STOP_25_V9: 25,
                        CROSSING_STOP_25_V10: 25, CROSSING_STOP_25_V11: 25, CROSSING_STOP_25_V12: 25,
                        CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25,
-                       CROSSING_STOP_25_V16: 25}
+                       CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -123,7 +124,7 @@ class EscapeRecovery(EscapeOption):
                  crossing_retreat_own_side=False, crossing_retreat_extended=False, settled_crossing_mount=None,
                  static_scan_stop=False, crossing_reference=False, shallow_steering=False,
                  observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
-                 hover_escape_own_side=False, far_crossing_reference=False):
+                 hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -139,6 +140,11 @@ class EscapeRecovery(EscapeOption):
         self.braking = torch.zeros_like(self.applied)
         self.recovery_retreat = recovery_retreat
         self.early_retreat = early_retreat
+        self.verified_retreat_onset = verified_retreat_onset
+        if verified_retreat_onset:
+            if not (early_retreat and align_intercept):
+                raise ValueError('Verified retreat onset requires early retreat and aligned command history')
+            self.retreat_request_kept = torch.zeros_like(self.applied)
         self.side_hover_retreat = side_hover_retreat
         self.clear_pass = clear_pass
         self.curved_pass = curved_pass
@@ -313,6 +319,8 @@ class EscapeRecovery(EscapeOption):
         self.retreat_hold_steps[lanes] = 0
         self.retreat_hold_direction[lanes] = 0.
         self.retreating[lanes] = False
+        if self.verified_retreat_onset:
+            self.retreat_request_kept[lanes] = False
         if self.recenter_rearm:
             self.rearm_steps[lanes] = 0
         if self.rank_return:
@@ -651,6 +659,8 @@ class EscapeRecovery(EscapeOption):
         self.retreat_hold_direction[used] = reverse[usable]
 
     def start_early_retreat(self, lidar, state, selected, config, command, speed):
+        if self.verified_retreat_onset:
+            self.retreat_request_kept.zero_()
         lanes = ((speed >= .08) & ~self.applied & ~self.retreating & (state[:, -1] <= .22)).nonzero().flatten()
         if not len(lanes):
             return
@@ -659,8 +669,63 @@ class EscapeRecovery(EscapeOption):
         alignment = (away*heading).sum(dim=1)
         oblique = (alignment > -.45) & (alignment < -.12)
         if bool(oblique.any()):
-            self.start_recovery_retreat(lidar, state, selected, config, lanes[oblique], heading[oblique],
-                                        brake_when_blocked=False)
+            candidates = lanes[oblique]
+            if self.verified_retreat_onset:
+                current = selected[candidates].clone()
+            self.start_recovery_retreat(lidar, state, selected, config, candidates, heading[oblique], brake_when_blocked=False)
+            if self.verified_retreat_onset:
+                self.keep_request_before_retreat(lidar, state, selected, config, candidates, current, command, speed)
+
+    def keep_request_before_retreat(self, lidar, state, selected, config, candidates, current, command, speed):
+        from .escape_passage import advance_command_response, intercept_scores, moving_intercepts, observed_path_clearance
+
+        # This check runs before the response history is advanced for normal interception.
+        scans, states = lidar[candidates], state[candidates]
+        history = states.reshape(-1, 4, 13)
+        eligible = (self.retreating[candidates] & (speed[candidates] <= .30)
+                    & (history[:, :, 12] <= .04).all(dim=1)
+                    & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .50))
+        if not bool(eligible.any()):
+            return
+        response = advance_command_response(self.command_offsets[candidates], self.command_coast[candidates], states)
+        rays = self.detector._full_rays
+        fits, position, motion, coast, radius = moving_intercepts(
+            scans, states, rays, eligible, command_response=response, maximum_range_m=2.65)
+        if not len(fits):
+            return
+
+        lanes, scans, states = candidates[fits], scans[fits], states[fits]
+        checked = self.issued(scans, states, current[fits], config)
+        issued = checked.v_final_b[:, None]
+        follows = (issued[:, 0]*command[lanes]).sum(dim=1) >= .66*speed[lanes].square()
+        usable = follows & (checked.metrics['beta'][:, 0] >= .90) & (checked.metrics['emergency'][:, 0] == 0.)
+        hold = 2.4
+        # Bound the static path for every release time, allowing for coasting and the preview tail.
+        minimum = observed_path_clearance(scans, rays, torch.zeros_like(coast), issued, hold_s=hold)[:, 0]
+        minimum -= .35*coast.norm(dim=1)+.003
+        mover_speed = motion.norm(dim=1, keepdim=True)
+        along = motion/mover_speed
+        normal = torch.stack((-along[:, 1], along[:, 0]), dim=1)
+        for lateral_margin in (-.04, 0., .04):
+            direction = torch.nn.functional.normalize(along+lateral_margin*normal, dim=1)
+            across = torch.stack((-direction[:, 1], direction[:, 0]), dim=1)
+            resting = ((position-.35*coast)*across).sum(dim=1)
+            after_hold = resting-hold*(issued[:, 0, :2]*across).sum(dim=1)
+            parked = torch.minimum(resting.abs(), resting.sign()*after_hold)-radius
+            minimum = torch.minimum(minimum, parked)
+            for speed_margin in (-.12, 0., .12):
+                uncertain = direction*(mover_speed+speed_margin).clamp_min(.20)
+                bound = intercept_scores(position, uncertain, coast, radius, issued, hold_s=hold,
+                                         preview_steps=121, release_early=True)
+                minimum = torch.minimum(minimum, bound[:, 0])
+        queued = .10*states[:, 48:51].norm(dim=1)
+        retain = usable & (minimum-queued >= .43)
+        kept = lanes[retain]
+        selected[kept] = current[fits[retain]]
+        self.retreating[kept] = False
+        self.retreat_hold_steps[kept] = 0
+        self.retreat_hold_direction[kept] = 0.
+        self.retreat_request_kept[kept] = True
 
     def hold_during_clear_pass(self, lidar, state, selected):
         from .escape_passage import clear_hover_passage
