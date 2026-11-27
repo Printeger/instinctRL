@@ -20,6 +20,8 @@
 
 提前同侧撤离把原后段近距提高到 0.234 米。32/32 首飞完整、无接触或中途重置，松杆 32/32。另一处同类交会为当前最差值 0.122 米，仍低于 0.15 米。 [提前撤离逐类结果](experiments/instinct-continuous-command/crossing_stop_early/REPORT.md)
 
+同侧撤离收尾配对通过短程安全门槛。32 条首飞均完整、零接触和重置，松杆 32/32，室内过门过角各 8/8，最差下界 0.206 米。下一步是按相同冻结配置执行预登记独立输入。 [短程配对结果](experiments/instinct-continuous-command/crossing_stop_compatible/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
