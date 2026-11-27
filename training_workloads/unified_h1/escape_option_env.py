@@ -19,13 +19,14 @@ from instinctlab.control.escape_recovery import (
     PRIORITY_INTERCEPT_25_VERSION, RANKED_RETURN_25_VERSION, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION,
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION,
-    SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION,
+    SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
+    TURN_FIT_25_VERSION,
     WALL_TANGENT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION)
+FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION, TANGENT_MAGNITUDE_25_VERSION)
 CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, *FINITE_EDGE_VERSIONS)
 WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, *CONFIRMED_TUBE_VERSIONS)
 SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, *WALL_TANGENT_VERSIONS)
@@ -120,7 +121,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 settled_offset_stop=version in SETTLED_OFFSET_STOP_VERSIONS,
                                                 wall_tangent=version in WALL_TANGENT_VERSIONS,
                                                 finite_edge=version in FINITE_EDGE_VERSIONS,
-                                                edge_continuation=version == EDGE_CONTINUATION_25_VERSION)
+                                                edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
+                                                tangent_magnitude=version == TANGENT_MAGNITUDE_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

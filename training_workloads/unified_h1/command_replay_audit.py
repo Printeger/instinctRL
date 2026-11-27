@@ -7,7 +7,7 @@ from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
-    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS,
+    FINITE_EDGE_EXECUTIONS, LANES, LAYOUTS, TANGENT_MAGNITUDE_EXECUTION,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -274,6 +274,8 @@ def audit(output, params, counters):
         continuation_profile = model['execution'] == EDGE_CONTINUATION_EXECUTION
         if model.get('edge_continuation', False) is not continuation_profile:
             raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_PROFILE')
+        if model.get('tangent_magnitude', False) is not (model['execution'] == TANGENT_MAGNITUDE_EXECUTION):
+            raise ValueError('COMMAND_REPLAY_TANGENT_MAGNITUDE_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []

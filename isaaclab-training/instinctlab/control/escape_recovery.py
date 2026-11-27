@@ -46,6 +46,7 @@ WALL_TANGENT_25_VERSION = 'm4-escape-brake-tube-p25-wall-tangent-v1'
 CONFIRMED_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
 FINITE_EDGE_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-v1'
 EDGE_CONTINUATION_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-continued-v1'
+TANGENT_MAGNITUDE_25_VERSION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -59,7 +60,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        COMMAND_HANDOFF_25_VERSION: 25, OFFSET_STOP_25_VERSION: 25,
                        NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
-                       CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25}
+                       CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
+                       TANGENT_MAGNITUDE_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -74,7 +76,7 @@ class EscapeRecovery(EscapeOption):
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
-                 edge_continuation=False):
+                 edge_continuation=False, tangent_magnitude=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -108,6 +110,7 @@ class EscapeRecovery(EscapeOption):
         self.offset_stop = offset_stop
         self.settled_offset_stop = settled_offset_stop
         self.wall_tangent = wall_tangent
+        self.tangent_magnitude = tangent_magnitude
         self.finite_edge = finite_edge
         self.edge_continuation = edge_continuation
         if wall_tangent:
@@ -731,6 +734,19 @@ class EscapeRecovery(EscapeOption):
         head = command[selected]/speed[selected, None]
         progress = ((issued.v_final_b-original.v_final_b[blocked[confirmed]])*head).sum(dim=1)
         use = (issued.metrics['beta'][:, 0] >= .9) & (progress >= .055)
+        if self.tangent_magnitude:
+            tangent = target[confirmed]
+            full_speed = tangent/tangent.norm(dim=1, keepdim=True)*speed[selected, None]
+            minimum = .60*speed[selected]
+            projection = (issued.v_final_b*head).sum(dim=1)
+            boost = (use & (projection < minimum) & ((full_speed*head).sum(dim=1) >= minimum)).nonzero().flatten()
+            if len(boost):
+                lanes = selected[boost]
+                expanded = self.action_for_velocity(full_speed[boost], previous[lanes], config.governor)
+                checked = self.issued(lidar[lanes], state[lanes], expanded, config)
+                along = (checked.v_final_b*head[boost]).sum(dim=1)
+                accept = (checked.metrics['beta'][:, 0] >= .9) & (along >= minimum[boost])
+                trial[boost[accept]] = expanded[accept]
         action[selected[use]] = trial[use]
         self.tangent_used[selected[use]] = True
 

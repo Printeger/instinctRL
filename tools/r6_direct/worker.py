@@ -170,6 +170,7 @@ def run(plan, input_pin):
         from training_workloads.unified_h1.command_replay import (
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, ENDURANCE_PREFIXES,
             EDGE_CONTINUATION_EXECUTION, FINITE_EDGE_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS,
+            TANGENT_MAGNITUDE_EXECUTION,
             NOVEL_PREFIX, REGRESSION_IDS,
             SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS,
             WALL_TANGENT_EXECUTIONS,
@@ -324,6 +325,7 @@ def run(plan, input_pin):
                     inner_tube = .41 if option_version in CONFIRMED_TUBE_EXECUTIONS else 0.
                     detour = option_version in FINITE_EDGE_EXECUTIONS
                     edge_continuation = option_version == EDGE_CONTINUATION_EXECUTION
+                    tangent_magnitude = option_version == TANGENT_MAGNITUDE_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -332,7 +334,8 @@ def run(plan, input_pin):
                     if (profiles != {expected} or env.escape_option_version != option_version
                             or env.lidar_mount_pitch_degrees != 25 or env.escape_option.settled_offset_stop != settled_stop
                             or env.escape_option.wall_tangent != tangent or env.escape_option.finite_edge != detour
-                            or env.escape_option.edge_continuation != edge_continuation):
+                            or env.escape_option.edge_continuation != edge_continuation
+                            or env.escape_option.tangent_magnitude != tangent_magnitude):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -351,6 +354,8 @@ def run(plan, input_pin):
                         execution['finite_edge'] = True
                     if edge_continuation:
                         execution['edge_continuation'] = True
+                    if tangent_magnitude:
+                        execution['tangent_magnitude'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

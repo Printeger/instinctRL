@@ -43,6 +43,7 @@ NOVEL_CONFIRMED_TUBE_ID = NOVEL_PREFIX+'15'
 NOVEL_FINITE_EDGE_ID = NOVEL_PREFIX+'16'
 NOVEL_REVALIDATE_ID = NOVEL_PREFIX+'17'
 NOVEL_EDGE_CONTINUATION_ID = NOVEL_PREFIX+'18'
+NOVEL_TANGENT_MAGNITUDE_ID = NOVEL_PREFIX+'19'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -93,7 +94,8 @@ WALL_TANGENT_EXECUTION = 'm4-escape-brake-tube-p25-wall-tangent-v1'
 CONFIRMED_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
 FINITE_EDGE_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-v1'
 EDGE_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-continued-v1'
-FINITE_EDGE_EXECUTIONS = (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION)
+TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
+FINITE_EDGE_EXECUTIONS = (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION, TANGENT_MAGNITUDE_EXECUTION)
 CONFIRMED_TUBE_EXECUTIONS = (CONFIRMED_TUBE_EXECUTION, *FINITE_EDGE_EXECUTIONS)
 WALL_TANGENT_EXECUTIONS = (WALL_TANGENT_EXECUTION, *CONFIRMED_TUBE_EXECUTIONS)
 SETTLED_OFFSET_STOP_EXECUTIONS = (SETTLED_OFFSET_STOP_EXECUTION, *WALL_TANGENT_EXECUTIONS)
@@ -356,7 +358,8 @@ def novel_contract(params):
                   NOVEL_WALL_TANGENT_ID: (SETTLED_OFFSET_STOP_EXECUTION, WALL_TANGENT_EXECUTION),
                   NOVEL_CONFIRMED_TUBE_ID: (WALL_TANGENT_EXECUTION, CONFIRMED_TUBE_EXECUTION),
                   NOVEL_FINITE_EDGE_ID: (CONFIRMED_TUBE_EXECUTION, FINITE_EDGE_EXECUTION),
-                  NOVEL_EDGE_CONTINUATION_ID: FINITE_EDGE_EXECUTIONS}.get(params['experiment_id'])
+                  NOVEL_EDGE_CONTINUATION_ID: (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION),
+                  NOVEL_TANGENT_MAGNITUDE_ID: (FINITE_EDGE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION)}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
@@ -630,9 +633,11 @@ def run(backend, params):
             tangent = execution in WALL_TANGENT_EXECUTIONS
             detour = execution in FINITE_EDGE_EXECUTIONS
             edge_continuation = execution == EDGE_CONTINUATION_EXECUTION
+            tangent_magnitude = execution == TANGENT_MAGNITUDE_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
-                    or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation):
+                    or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
+                    or env.escape_option.tangent_magnitude != tangent_magnitude):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -649,6 +654,8 @@ def run(backend, params):
                 model['finite_edge'] = True
             if edge_continuation:
                 model['edge_continuation'] = True
+            if tangent_magnitude:
+                model['tangent_magnitude'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 

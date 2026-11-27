@@ -784,13 +784,17 @@ def test_settled_zero_onset_requires_two_clearance_fits(monkeypatch):
     assert selected[0].tolist() == pytest.approx([0., .50, .50, .50])
 
 
-def test_tangent_preserves_diagonal_progress_and_keeps_the_frontal_wall_stop():
+@pytest.mark.parametrize('use_raw_speed', [False, True])
+def test_tangent_preserves_diagonal_progress_and_keeps_the_frontal_wall_stop(use_raw_speed):
+    import math
+
     import torch
     from instinctlab.control.escape_recovery import EscapeRecovery
     from instinctlab.control.ics import ICSConfig
     from instinctlab.control.pipeline import ControlCoreConfig
 
-    guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False, wall_tangent=True)
+    guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False, wall_tangent=True,
+                           tangent_magnitude=use_raw_speed)
     direction = guard.detector._full_rays[:, 1]
     hit = direction >= .78/40.
     depth = torch.where(hit, .78/direction.clamp_min(.01), 40.)
@@ -808,7 +812,8 @@ def test_tangent_preserves_diagonal_progress_and_keeps_the_frontal_wall_stop():
     guard.retain_wall_tangent(lidars, states, actions, config)
     result = guard.issued(lidars, states, actions, config)
     assert guard.tangent_used.tolist() == [True, False]
-    assert result.v_final_b[0].tolist() == pytest.approx([.15, 0., 0.], abs=1.e-6)
+    axial_speed = math.hypot(.15, .19) if use_raw_speed else .15
+    assert result.v_final_b[0].tolist() == pytest.approx([axial_speed, 0., 0.], abs=1.e-6)
     assert result.v_final_b[1].tolist() == [0.,0.,0.]
 
 
