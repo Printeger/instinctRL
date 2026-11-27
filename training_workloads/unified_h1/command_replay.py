@@ -1,6 +1,7 @@
-"""Continuous, development-only command replay on the frozen B/C plant."""
+"""Continuous, command replay on the frozen B/C plant."""
 from bisect import bisect_right
 from contextlib import ExitStack
+import gzip
 from hashlib import sha256
 import json
 import math
@@ -148,6 +149,21 @@ def route_layouts(run_id):
 
 def arm_execution(params, label):
     return params.get('candidate_execution', params['execution']) if label == 'candidate' else params['execution']
+
+
+def trace_path(output, label, condition, *, long_run):
+    suffix = 'jsonl.gz' if long_run else 'jsonl'
+    return output/f'{label}-{condition}.{suffix}'
+
+
+def open_trace(path):
+    return gzip.open(path, 'rt', encoding='utf-8') if path.suffix == '.gz' else path.open(encoding='utf-8')
+
+
+def encode_trace_row(row, *, compressed):
+    data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
+    # Each completed strategy step remains independently recoverable after interruption.
+    return gzip.compress(data, compresslevel=1, mtime=0) if compressed else data
 
 
 def validate_stream(stream):
@@ -594,7 +610,7 @@ def run(backend, params):
         env.enable_clearance_capture(clearance_radii(params['clearance_envelope']))
 
     def save_row(handle, row):
-        data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
+        data = encode_trace_row(row, compressed=long_run)
         reserve_output_bytes(Path(handle.name), len(data))
         handle.write(data)
 
@@ -688,7 +704,7 @@ def run(backend, params):
             env.stage_r6_world_command(commands[0])
             backend.resource_check('before_command_replay_reset', counters.explicit_resets+1)
             observation, _ = backend._preserving_reset(seed=params['seed'])
-            trace = output/f'{label}-{name}.jsonl'
+            trace = trace_path(output, label, name, long_run=long_run)
             dense_path = output/f'{label}-{name}-clearance.f32'
             # Stream completed transitions to disk. A failed run still leaves its prefix intact.
             with ExitStack() as files:

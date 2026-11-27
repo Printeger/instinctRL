@@ -9,7 +9,7 @@ from tools.r6_direct.evidence import read, validate_binding
 from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
-from training_workloads.unified_h1.command_replay import LANES, LONG_PREFIX, conditions, route_layouts
+from training_workloads.unified_h1.command_replay import LANES, LONG_PREFIX, conditions, open_trace, route_layouts
 from training_workloads.unified_h1.command_replay_audit import dense_clearance
 from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
 
@@ -336,7 +336,7 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
         models[name] = {}
         for trial, item in arms.items():
             trace = checked(item['trace'])
-            with trace.open() as source:
+            with open_trace(trace) as source:
                 initial = json.loads(next(source))
                 rows = [json.loads(row) for row in source]
             dense_pin = item.get('clearance')

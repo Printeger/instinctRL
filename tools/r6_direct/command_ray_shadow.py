@@ -11,7 +11,7 @@ from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
 from training_workloads.unified_h1.command_replay import (
     CLEAR_PASS_EXECUTIONS, EARLY_RETREAT_EXECUTION, RECOVERY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION,
-    TUBE_CONFIRM_EXECUTION, arm_execution, route_layouts,
+    TUBE_CONFIRM_EXECUTION, arm_execution, open_trace, route_layouts,
 )
 from training_workloads.unified_h1.command_replay_audit import body_to_world
 from training_workloads.unified_h1.escape_holdout_scene import scene_geometry
@@ -82,7 +82,7 @@ def audit(binding, arm, lane, start, end):
     calibration = pin(ctx['output']/f'{arm}-lidar-rays.f32')
     rays = np.fromfile(checked(calibration), dtype='<f4').reshape(-1,3)
     trace = checked(arm_data['trace'])
-    with trace.open() as handle:
+    with open_trace(trace) as handle:
         initial = json.loads(next(handle))
         rows = [json.loads(row) for row in handle]
     if not 3 <= start < end <= len(rows) or end-start > 100:

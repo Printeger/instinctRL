@@ -6,6 +6,17 @@ from training_workloads.unified_h1.command_replay import sampled_events
 from training_workloads.unified_h1.command_replay_audit import body_to_world, score_lane
 
 
+def test_long_trace_gzip_preserves_the_original_json_lines(tmp_path):
+    from training_workloads.unified_h1.command_replay import encode_trace_row, open_trace, trace_path
+
+    rows = [{'kind': 'initial'}, {'kind': 'transition', 'measured': .22177478671073914}]
+    raw = b''.join(encode_trace_row(row, compressed=False) for row in rows)
+    path = trace_path(tmp_path, 'candidate', 'layout_routes', long_run=True)
+    path.write_bytes(b''.join(encode_trace_row(row, compressed=True) for row in rows))
+    with open_trace(path) as replay:
+        assert replay.read().encode() == raw
+
+
 def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
     from tools.r6_direct import storage
 

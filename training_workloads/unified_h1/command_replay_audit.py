@@ -11,7 +11,7 @@ from .command_replay import (
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
-    arm_execution, conditions, event_schedule,
+    arm_execution, conditions, event_schedule, open_trace, trace_path,
 )
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
@@ -237,7 +237,8 @@ def audit(output, params, counters):
         raise ValueError('COMMAND_REPLAY_COUNTERS')
     trial_conditions = conditions(params)
     sources = [file_pin(path), params['stream']]
-    pulse_enabled = params['experiment_id'].startswith((NOVEL_PREFIX, LONG_PREFIX))
+    long_run = params['experiment_id'].startswith(LONG_PREFIX)
+    pulse_enabled = long_run or params['experiment_id'].startswith(NOVEL_PREFIX)
     pulse_settings = params
     if 'candidate_stream' in params:
         sources.append(params['candidate_stream'])
@@ -281,10 +282,10 @@ def audit(output, params, counters):
         active_starts = []
         for name, trial in model['trials'].items():
             trace = checked(trial['trace'])
-            if trace != output/f'{label}-{name}.jsonl':
+            if trace != trace_path(output, label, name, long_run=long_run):
                 raise ValueError('COMMAND_REPLAY_TRACE_PATH')
             sources.append(trial['trace'])
-            with trace.open() as handle:
+            with open_trace(trace) as handle:
                 initial = json.loads(next(handle))
                 rows = [json.loads(row) for row in handle]
             if (initial['kind'] != 'initial' or len(rows) != len(event_ids)-1
