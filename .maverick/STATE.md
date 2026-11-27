@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。六方首判齐全，使用仿真 Crazy 指令。冻结 IMU 对齐版本的第二次独立短程 32/32 完整、零接触及重置、最小 0.176 m，室内过角 7/8。街道两条松杆失败，放行规则问题已用原件重现。NOVEL-22 执行同输入松杆修复，下一份独立输入已提前登记。已关闭累计2,313,248个实际评价转换，训练为零。完整 R6 和正式 30 分钟未通过。 [状态](../docs/PROJECT_STATUS.md) · [独立结果](../docs/experiments/instinct-continuous-command/independent_second/REPORT.md) · [松杆修复](../docs/experiments/instinct-continuous-command/verified_zero/PLAN.md)
+任务 `instinctrl-continuous-command`。六方首判齐全，仿真 Crazy 输入。NOVEL-22 同输入把固定松杆修复到32/32，零接触，最低0.176m。NOVEL-23新独立首飞31/32，保留街道一次接触及一处松杆失败，未进入R6。NOVEL-24已冻结源码ab23ea4a并运行重新关联后的撤离选向和近场松杆修复，下一批独立已预登记。已关闭累计2,390,048个实际评价转换，训练为零。 [状态](../docs/PROJECT_STATUS.md) · [独立失败](../docs/experiments/instinct-continuous-command/independent_final/REPORT.md) · [同输入修复](../docs/experiments/instinct-continuous-command/intercept_choice/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
