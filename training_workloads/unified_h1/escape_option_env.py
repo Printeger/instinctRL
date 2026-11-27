@@ -25,12 +25,13 @@ from instinctlab.control.escape_recovery import (
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
-    CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20,
+    CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CLIPPED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V18, CROSSING_STOP_25_V20)
+HOVER_REFERENCE_RESERVE_VERSIONS = (CROSSING_STOP_25_V20, CROSSING_STOP_25_V21)
+CLIPPED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V18, *HOVER_REFERENCE_RESERVE_VERSIONS)
 VERIFIED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V17, *CLIPPED_RETREAT_ONSET_VERSIONS)
 FAR_CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V16, CROSSING_STOP_25_V19, *VERIFIED_RETREAT_ONSET_VERSIONS)
 HOVER_OWN_SIDE_VERSIONS = (CROSSING_STOP_25_V15, *FAR_CROSSING_REFERENCE_VERSIONS)
@@ -195,7 +196,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 far_crossing_reference=version in FAR_CROSSING_REFERENCE_VERSIONS,
                                                 verified_retreat_onset=version in VERIFIED_RETREAT_ONSET_VERSIONS,
                                                 retain_only_clipped_retreat=version in CLIPPED_RETREAT_ONSET_VERSIONS,
-                                                verify_hover_reference_reserve=version == CROSSING_STOP_25_V20)
+                                                verify_hover_reference_reserve=version in HOVER_REFERENCE_RESERVE_VERSIONS,
+                                                verify_crossing_restart=version == CROSSING_STOP_25_V21)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -332,6 +334,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['far_crossing_refined'] = self.escape_option.far_crossing_refined.detach().clone()
                 if self.escape_option.verified_retreat_onset:
                     self.extras['pre_reset']['escape_option']['retreat_request_kept'] = self.escape_option.retreat_request_kept.detach().clone()
+                if self.escape_option.verify_crossing_restart:
+                    option = self.extras['pre_reset']['escape_option']
+                    option['crossing_restart_verified'] = self.escape_option.crossing_restart_verified.detach().clone()
+                    option['crossing_restart_previous_b'] = self.escape_option.crossing_restart_previous_b.detach().clone()
                 if self.bilateral_stopping:
                     used = [pipeline.bilateral_stopping_used for pipeline in self._control_pipelines]
                     self.extras['pre_reset']['escape_option']['bilateral_stopping'] = self.escape_option.applied.new_tensor(used)

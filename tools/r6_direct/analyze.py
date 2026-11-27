@@ -88,7 +88,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
                     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
                     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
-                    CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTION,
+                    CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
+                    CROSSING_RESTART_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTIONS,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -176,8 +177,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['retain_only_clipped_retreat'] = True
                     if override == TUBE_STOPPING_EXECUTION:
                         expected['tube_stopping'] = True
-                    if override == HOVER_REFERENCE_RESERVE_EXECUTION:
+                    if override in HOVER_REFERENCE_RESERVE_EXECUTIONS:
                         expected['verify_hover_reference_reserve'] = True
+                    if override == CROSSING_RESTART_EXECUTION:
+                        expected['verify_crossing_restart'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

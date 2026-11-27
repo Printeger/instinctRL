@@ -14,7 +14,7 @@ from .command_replay import (
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
-    HOVER_REFERENCE_RESERVE_EXECUTION,
+    CROSSING_RESTART_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -358,8 +358,11 @@ def audit(output, params, counters):
         tube_stopping_profile = model['execution'] == TUBE_STOPPING_EXECUTION
         if model.get('tube_stopping', False) is not tube_stopping_profile:
             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_PROFILE')
-        if model.get('verify_hover_reference_reserve', False) is not (model['execution'] == HOVER_REFERENCE_RESERVE_EXECUTION):
+        if model.get('verify_hover_reference_reserve', False) is not (model['execution'] in HOVER_REFERENCE_RESERVE_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_HOVER_REFERENCE_PROFILE')
+        crossing_restart_profile = model['execution'] == CROSSING_RESTART_EXECUTION
+        if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
+            raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -496,6 +499,15 @@ def audit(output, params, counters):
                 if (('escape_retreat_request_kept' in row) != verified_retreat_profile or len(retreat_kept) != LANES
                         or any(type(value) is not bool for value in retreat_kept)):
                     raise ValueError('COMMAND_REPLAY_VERIFIED_RETREAT_BINDING')
+                restart = row.get('escape_crossing_restart_verified', [False]*LANES)
+                previous = row.get('escape_crossing_restart_previous_b', [[0., 0., 0.]]*LANES)
+                if (('escape_crossing_restart_verified' in row) != crossing_restart_profile
+                        or ('escape_crossing_restart_previous_b' in row) != crossing_restart_profile
+                        or len(restart) != LANES or len(previous) != LANES
+                        or any(type(used) is not bool or len(vector) != 3 or any(
+                            type(x) not in (int, float) or not math.isfinite(x) or (not used and x != 0.)
+                            for x in vector) for used, vector in zip(restart, previous, strict=True))):
+                    raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_BINDING')
                 if any(((field in row) != tube_stopping_profile) or (field in row and len(row[field]) != LANES)
                        for field in TUBE_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BINDING')
@@ -542,6 +554,20 @@ def audit(output, params, counters):
                             or not .079999 <= math.hypot(*observed) <= .300001
                             or dot(observed, row['v_final_w'][lane]) < .6599*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_TRACKED_RESUME_BEHAVIOR')
+                    if restart[lane]:
+                        speed = math.hypot(*observed)
+                        velocity = row['v_final_w'][lane]
+                        if (row['escape_active'][lane] or row['escape_braking'][lane] or row['recovery_retreating'][lane]
+                                or held[lane] or tracked[lane] or intercepted[lane] or continued[lane]
+                                or row['ics_emergency'][lane] or any(frame[12] > .040001 for frame in actor)
+                                or (math.hypot(*velocity) > .001001 and row['ics_beta'][lane] < .89999)
+                                or (speed > .001001 and (not .079999 <= speed <= .300001
+                                    or dot(observed, velocity) < .5999*speed*speed))
+                                or (speed <= .001001 and not any(
+                                    old['escape_crossing_restart_verified'][lane]
+                                    and math.hypot(*old['actor_state'][lane][-1][6:9]) >= .079999
+                                    for old in rows[max(0, step-8):step]))):
+                            raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_BEHAVIOR')
                     if continued_edge[lane] and (not detour[lane]
                             or any(math.dist(old[6:9], actor[-1][6:9]) > .040001 for old in actor[:-1])
                             or not any(old['escape_finite_edge'][lane] and not old['escape_edge_continued'][lane]
