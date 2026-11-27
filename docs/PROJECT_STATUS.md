@@ -8,7 +8,7 @@ B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8
 
 同 B 权重的提前撤离在 36 秒回程将街道接触从 2/8 降至 0/8，在 110 秒同配置对照的 32 条首飞中零接触、零重置。逐 5 ms 复算的街道最小包络净空为 −0.042 m，最大零令漂移 0.805 m。零令换侧与零令保持各因新增接触拒绝。36 秒重复验证显示增加净空采集后策略拍原件逐字节一致。室内延后横移把 62 秒过角从 0/8 提升到 5/8，零接触。正式 30 分钟留出和同配置完整 R6 仍待验收。 [110 秒对照](experiments/instinct-continuous-command/hover/REPORT.md) · [净空采集](experiments/instinct-continuous-command/clearance/REPORT.md) · [转角时序](experiments/instinct-continuous-command/corner/REPORT.md) · [零令保持结果](experiments/instinct-continuous-command/passage/REPORT.md) · [回中配对](experiments/instinct-continuous-command/rearm/PLAN.md)
 
-近险后的回中暂缓消除了折返接触。按测距预测选向进一步将同一折返窗口的最小净空从 −0.051 m 提升到 +0.171 m，两臂总计 64 次完整首飞零接触。该配置在更早一趟横穿仍有 −0.018 m 包络净空。直接采用曲面擦身保持新增两条首飞接触，已拒绝。当前配对只在预测原零令逃逸会降低净空时比较替代动作。 [折返选向](experiments/instinct-continuous-command/rank/REPORT.md) · [曲面保持失败](experiments/instinct-continuous-command/curved/REPORT.md) · [当前方案](experiments/instinct-continuous-command/hover_path/PLAN.md)
+近险后的回中暂缓消除了折返接触。按测距预测选向进一步将同一折返窗口的最小净空从 −0.051 m 提升到 +0.171 m，两臂 64 次完整首飞均零接触。随后比较原零令逃逸路径与其他可下发动作，110 s 整段 5 ms 净空从 −0.018 m 提升至 +0.157 m，32/32 条候选首飞零接触、零重置，其他四类布局下发与冻结推进窗口逐拍一致。直接曲面保持的两条新增首飞接触仍保留。松杆漂移对照已启动。 [折返选向](experiments/instinct-continuous-command/rank/REPORT.md) · [曲面保持失败](experiments/instinct-continuous-command/curved/REPORT.md) · [110 秒正净空](experiments/instinct-continuous-command/hover_path/REPORT.md) · [松杆对照](experiments/instinct-continuous-command/stop_release/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
