@@ -13,7 +13,7 @@ from .command_replay import (
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
-    CLIPPED_RETREAT_ONSET_EXECUTION, TUBE_STOPPING_EXECUTION,
+    CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -351,12 +351,14 @@ def audit(output, params, counters):
         verified_retreat_profile = model['execution'] in VERIFIED_RETREAT_ONSET_EXECUTIONS
         if model.get('verified_retreat_onset', False) is not verified_retreat_profile:
             raise ValueError('COMMAND_REPLAY_VERIFIED_RETREAT_PROFILE')
-        clipped_retreat_profile = model['execution'] == CLIPPED_RETREAT_ONSET_EXECUTION
+        clipped_retreat_profile = model['execution'] in CLIPPED_RETREAT_ONSET_EXECUTIONS
         if model.get('retain_only_clipped_retreat', False) is not clipped_retreat_profile:
             raise ValueError('COMMAND_REPLAY_CLIPPED_RETREAT_PROFILE')
         tube_stopping_profile = model['execution'] == TUBE_STOPPING_EXECUTION
         if model.get('tube_stopping', False) is not tube_stopping_profile:
             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_PROFILE')
+        if model.get('verify_hover_reference_reserve', False) is not (model['execution'] == HOVER_REFERENCE_RESERVE_EXECUTION):
+            raise ValueError('COMMAND_REPLAY_HOVER_REFERENCE_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS

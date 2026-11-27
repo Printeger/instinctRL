@@ -27,6 +27,24 @@ def crossing_direction_from_planes(lidar, state, rays, motion, *, seeded=None):
     return result
 
 
+def supports_hover_clearance(scan, history, rays, times, centers, radii, corrected,
+                             moving_axes, center_body, reserve):
+    """Corroborate both directions and a stopped body against an independent surface."""
+    up = F.normalize(-history[-1, 3:6], dim=0)
+    heading = moving_axes[-1]
+    heading = F.normalize(heading-(heading*up).sum()*up, dim=0)
+    points = crossing_reference_points(scan, history, rays, times, centers, radii, up)
+    direction = supported_plane_direction(points, centers, heading, up)
+    if direction is None or bool((abs(moving_axes@direction) < .998).any()):
+        return False
+    drift = corrected-corrected[-1]
+    transverse = drift-(drift@direction)[:, None]*direction
+    if bool(transverse.norm(dim=1).amax() > .005):
+        return False
+    across = center_body-(center_body@direction)*direction
+    return bool(across.norm()-reserve >= .45)
+
+
 def crossing_reference_points(scan, history, rays, times, centers, radii, up):
     points = []
     grid = scan.flatten(1)

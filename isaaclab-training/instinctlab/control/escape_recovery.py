@@ -78,6 +78,7 @@ CROSSING_STOP_25_V16 = 'm4-escape-brake-tube-p25-crossing-stop-v16'
 CROSSING_STOP_25_V17 = 'm4-escape-brake-tube-p25-crossing-stop-v17'
 CROSSING_STOP_25_V18 = 'm4-escape-brake-tube-p25-crossing-stop-v18'
 CROSSING_STOP_25_V19 = 'm4-escape-brake-tube-p25-crossing-stop-v19'
+CROSSING_STOP_25_V20 = 'm4-escape-brake-tube-p25-crossing-stop-v20'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -103,7 +104,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V10: 25, CROSSING_STOP_25_V11: 25, CROSSING_STOP_25_V12: 25,
                        CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25,
                        CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25, CROSSING_STOP_25_V18: 25,
-                       CROSSING_STOP_25_V19: 25}
+                       CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -128,7 +129,7 @@ class EscapeRecovery(EscapeOption):
                  static_scan_stop=False, crossing_reference=False, shallow_steering=False,
                  observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
                  hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
-                 retain_only_clipped_retreat=False):
+                 retain_only_clipped_retreat=False, verify_hover_reference_reserve=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -192,6 +193,9 @@ class EscapeRecovery(EscapeOption):
         self.crossing_retreat_extended = crossing_retreat_extended
         self.settled_crossing_mount = settled_crossing_mount
         self.crossing_turn_between_samples = crossing_turn_between_samples
+        self.verify_hover_reference_reserve = verify_hover_reference_reserve
+        if verify_hover_reference_reserve and not (crossing_turn_between_samples and crossing_reference):
+            raise ValueError('Hover reserve requires sampled reversals and a static reference')
         self.hover_escape_own_side = hover_escape_own_side
         if hover_escape_own_side:
             if not (crossing_turn_between_samples and crossing_stop and rank_return):
@@ -1235,7 +1239,8 @@ class EscapeRecovery(EscapeOption):
         emergency_m = config.ics.emergency_clearance_m+config.ics.clearance_margin_m
         proof = clear_reversing_crossing_at_hover(lidar[lanes], state[lanes], self.detector._full_rays,
             response, self.settled_crossing_mount, emergency_m, prior,
-            ordinary_onset=None if ordinary is None else ordinary[lanes])
+            ordinary_onset=None if ordinary is None else ordinary[lanes],
+            verify_reference_reserve=self.verify_hover_reference_reserve)
         was_verified[lanes[proof]] = True
         held = lanes[proof]
         self.hold_neutral(held, selected)

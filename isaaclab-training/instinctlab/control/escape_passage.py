@@ -236,7 +236,7 @@ def clear_opening_crossing_at_stop(lidar, state, rays, command_response, emergen
 
 
 def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, mount_offset, emergency_m,
-                                     previously_verified, *, ordinary_onset=None):
+                                     previously_verified, *, ordinary_onset=None, verify_reference_reserve=False):
     """Bound clearance from every observed segment of a reversing mover's line."""
     history = state.reshape(-1, 4, 13)
     ages = history[:, :, 12]
@@ -287,6 +287,17 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
         supported_distance -= radius+drift+.002
         clears_line &= ~ordinary_onset[lanes] | previously_verified[lanes]
         clears_line |= turn & (supported_distance >= .50)
+        if verify_reference_reserve:
+            from .escape_reference import supports_hover_clearance
+
+            # The short interval moves out of the history on the next packet. Recheck the two new aligned segments.
+            renew = (previously_verified[lanes] & small[:, 0] & aligned_pause[:, 0]
+                     & traveling[:, 1] & traveling[:, 2] & (agreement[:, 1] >= .995))
+            measured = (turn | renew) & ~clears_line & supported & valid.all(dim=1) & (supported_distance >= .45)
+            for index in measured.nonzero().flatten():
+                clears_line[index] = supports_hover_clearance(
+                    scans[index], history[lanes[index]], rays, local_times[index], centers[index], radii[index],
+                    corrected[index], axis[index, traveling[index]], center_body[index], radius[index]+drift[index]+.002)
     nearest, others, on_mover = fitted_sphere_returns(scans, rays, centers[:, -1], radii[:, -1])
     clear[lanes] = (supported & valid.all(dim=1) & clears_line
                     & (along[:, -1] < 0.) & (radius-radii.amin(dim=1) <= .04)

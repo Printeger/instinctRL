@@ -90,6 +90,8 @@ NOVEL_CLIPPED_RETREAT_ONSET_ID = NOVEL_PREFIX+'61'
 NOVEL_CLIPPED_RETREAT_ONSET_CONFIRM_ID = NOVEL_PREFIX+'62'
 NOVEL_TUBE_STOPPING_ID = NOVEL_PREFIX+'63'
 NOVEL_TUBE_STOPPING_CONFIRM_ID = NOVEL_PREFIX+'64'
+NOVEL_HOVER_REFERENCE_RESERVE_ID = NOVEL_PREFIX+'65'
+NOVEL_HOVER_REFERENCE_RESERVE_CONFIRM_ID = NOVEL_PREFIX+'66'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -171,7 +173,9 @@ FAR_CROSSING_REFERENCE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v16'
 VERIFIED_RETREAT_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v17'
 CLIPPED_RETREAT_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v18'
 TUBE_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v19'
-VERIFIED_RETREAT_ONSET_EXECUTIONS = (VERIFIED_RETREAT_ONSET_EXECUTION, CLIPPED_RETREAT_ONSET_EXECUTION)
+HOVER_REFERENCE_RESERVE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v20'
+CLIPPED_RETREAT_ONSET_EXECUTIONS = (CLIPPED_RETREAT_ONSET_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTION)
+VERIFIED_RETREAT_ONSET_EXECUTIONS = (VERIFIED_RETREAT_ONSET_EXECUTION, *CLIPPED_RETREAT_ONSET_EXECUTIONS)
 FAR_CROSSING_REFERENCE_EXECUTIONS = (FAR_CROSSING_REFERENCE_EXECUTION, TUBE_STOPPING_EXECUTION, *VERIFIED_RETREAT_ONSET_EXECUTIONS)
 HOVER_OWN_SIDE_EXECUTIONS = (HOVER_OWN_SIDE_EXECUTION, *FAR_CROSSING_REFERENCE_EXECUTIONS)
 SAMPLED_TURN_EXECUTIONS = (CROSSING_SAMPLED_TURN_EXECUTION, BILATERAL_STOPPING_EXECUTION, *HOVER_OWN_SIDE_EXECUTIONS)
@@ -273,7 +277,8 @@ def compress_trace(run_id):
                                                        NOVEL_FAR_CROSSING_REFERENCE_ID, NOVEL_FAR_CROSSING_REFERENCE_CONFIRM_ID,
                                                        NOVEL_VERIFIED_RETREAT_ONSET_ID, NOVEL_VERIFIED_RETREAT_ONSET_CONFIRM_ID,
                                                        NOVEL_CLIPPED_RETREAT_ONSET_ID, NOVEL_CLIPPED_RETREAT_ONSET_CONFIRM_ID,
-                                                       NOVEL_TUBE_STOPPING_ID, NOVEL_TUBE_STOPPING_CONFIRM_ID)
+                                                       NOVEL_TUBE_STOPPING_ID, NOVEL_TUBE_STOPPING_CONFIRM_ID,
+                                                       NOVEL_HOVER_REFERENCE_RESERVE_ID, NOVEL_HOVER_REFERENCE_RESERVE_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -569,6 +574,8 @@ def novel_contract(params):
         execution = (CLIPPED_RETREAT_ONSET_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_TUBE_STOPPING_ID, NOVEL_TUBE_STOPPING_CONFIRM_ID):
         execution = (TUBE_STOPPING_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_HOVER_REFERENCE_RESERVE_ID, NOVEL_HOVER_REFERENCE_RESERVE_CONFIRM_ID):
+        execution = (HOVER_REFERENCE_RESERVE_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -866,8 +873,9 @@ def run(backend, params):
             hover_own_side = execution in HOVER_OWN_SIDE_EXECUTIONS
             far_crossing_reference = execution in FAR_CROSSING_REFERENCE_EXECUTIONS
             verified_retreat_onset = execution in VERIFIED_RETREAT_ONSET_EXECUTIONS
-            clipped_retreat_only = execution == CLIPPED_RETREAT_ONSET_EXECUTION
+            clipped_retreat_only = execution in CLIPPED_RETREAT_ONSET_EXECUTIONS
             tube_stopping = execution == TUBE_STOPPING_EXECUTION
+            hover_reference_reserve = execution == HOVER_REFERENCE_RESERVE_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -903,7 +911,8 @@ def run(backend, params):
                     or env.escape_option.far_crossing_reference != far_crossing_reference
                     or env.escape_option.verified_retreat_onset != verified_retreat_onset
                     or env.escape_option.retain_only_clipped_retreat != clipped_retreat_only
-                    or env.tube_stopping != tube_stopping):
+                    or env.tube_stopping != tube_stopping
+                    or env.escape_option.verify_hover_reference_reserve != hover_reference_reserve):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -980,6 +989,8 @@ def run(backend, params):
                 model['retain_only_clipped_retreat'] = True
             if tube_stopping:
                 model['tube_stopping'] = True
+            if hover_reference_reserve:
+                model['verify_hover_reference_reserve'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
