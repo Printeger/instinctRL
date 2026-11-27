@@ -132,8 +132,10 @@ def main():
     else:
         report, summary = analyze(input_pin,probability_diagnostic=None if args.probability_diagnostic is None else pin(args.probability_diagnostic))
     from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, physical_layout
+    from training_workloads.unified_h1.command_replay import LONG_PREFIX
     run_id = ctx['plan']['run_id']
-    summary_limit = (768 if run_id.startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) and physical_layout(run_id) else
+    summary_limit = (2048 if run_id.startswith(LONG_PREFIX) else
+                     768 if run_id.startswith((NEXT_LONG_PREFIX, U1792_STUDY_PREFIX, FRONT_STUDY_PREFIX)) and physical_layout(run_id) else
                      384 if physical_layout(run_id) else
                      96 if ctx['contract']['operation'] == 'dynamic' else 48) * 1024
     if len(json.dumps(report, allow_nan=False).encode()) > 16*1024**2 or len(json.dumps(summary, allow_nan=False).encode()) > summary_limit:

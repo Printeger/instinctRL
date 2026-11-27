@@ -16,6 +16,8 @@ ROUTE_PREFIX = PREFIX + 'ROUTE-'
 CRAZY_PREFIX = PREFIX + 'CRAZY-'
 ENDURANCE_PREFIX = PREFIX + 'ENDURANCE-'
 RETURN_PREFIX = PREFIX + 'RETURN-'
+EARLY_PREFIX = PREFIX + 'EARLY-'
+LONG_PREFIX = PREFIX + 'LONG-'
 RETURN_DURATION_MS = 36000
 REGRESSION_ID = PREFIX + 'R6-01'
 MODE = 'research-r6-dynamic-assay'
@@ -35,22 +37,24 @@ BRAKE_EXECUTION = 'm4-escape-brake-forward-p25-v1'
 TUBE_EXECUTION = 'm4-escape-brake-tube-p25-v1'
 TUBE_CONFIRM_EXECUTION = 'm4-escape-brake-tube-p25-v2'
 RECOVERY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
+EARLY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-early-retreat-v1'
 EXECUTION_PAIRS = {
     GUARD_PREFIX: (EXECUTION, BRAKE_EXECUTION),
     CRAZY_PREFIX: (BRAKE_EXECUTION, TUBE_EXECUTION),
     ENDURANCE_PREFIX: (TUBE_EXECUTION, TUBE_CONFIRM_EXECUTION),
     RETURN_PREFIX: (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION),
+    EARLY_PREFIX: (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION),
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
 CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
-    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX))
+    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX, EARLY_PREFIX, LONG_PREFIX))
 
 
 def arm_execution(params, label):
@@ -144,10 +148,12 @@ def load_route_streams(pin):
     return route_streams(json.loads(checked(pin).read_bytes()))
 
 
-def load_lane_streams(pin):
+def load_lane_streams(pin, *, require_independent=False):
     value = json.loads(checked(pin).read_bytes())
     layouts = [command_layout(lane) for lane in range(LANES)]
     if value.get('schema_version') != 'instinctrl-command-lane-streams/1':
+        if require_independent:
+            raise ValueError('COMMAND_REPLAY_INDEPENDENT_LANES_REQUIRED')
         streams = route_streams(value)
         return layouts, [streams[name] for name in layouts]
     if set(value) != {'schema_version', 'duration_ms', 'generator', 'lanes'} or len(value['lanes']) != LANES:
@@ -168,6 +174,9 @@ def load_lane_streams(pin):
 
 
 def conditions(params):
+    if params['experiment_id'].startswith(LONG_PREFIX):
+        protocol = json.loads(checked(params['protocol']).read_bytes())
+        return {'layout_routes': protocol['street_first_center_ms']}
     if route_layouts(params['experiment_id']):
         return {'layout_routes': CONDITIONS['crossing_at_reversal']}
     return CONDITIONS
@@ -176,8 +185,8 @@ def conditions(params):
 def event_schedule(params):
     """Keep single-stream pair rows stable and expand route inputs by lane."""
     if route_layouts(params['experiment_id']):
-        layouts, by_lane = load_lane_streams(params['stream'])
-        limit = RETURN_DURATION_MS//STEP_MS+1 if params['experiment_id'].startswith(RETURN_PREFIX) else None
+        layouts, by_lane = load_lane_streams(params['stream'], require_independent=params['experiment_id'].startswith(LONG_PREFIX))
+        limit = RETURN_DURATION_MS//STEP_MS+1 if params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX)) else None
         indices = list(zip(*(sampled_events(stream)[:limit] for stream in by_lane), strict=True))
         events = [[stream['events'][index] for stream, index in zip(by_lane, row, strict=True)] for row in indices]
         return layouts, [list(row) for row in indices], events
@@ -193,12 +202,62 @@ def sampled_events(stream):
     return [bisect_right(times, t) - 1 for t in range(0, stream['duration_ms'] + 1, STEP_MS)]
 
 
+def long_contract(params):
+    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'protocol', 'wall_seconds', 'output_cap_bytes'}
+    if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
+            or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
+            or params['wall_seconds'] != 7200 or params['output_cap_bytes'] != 2**31
+            or params['execution'] not in (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION)
+            or set(params['models']) != {'candidate'} or params['models']['candidate']['sha256'] != MODELS['b']):
+        raise ValueError('COMMAND_REPLAY_LONG_PARAMETERS')
+    checked(params['models']['candidate'])
+    protocol = json.loads(checked(params['protocol']).read_bytes())
+    if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
+                          'progress_opportunities', 'acceptance_gates', 'street_first_center_ms'}
+            or protocol['schema_version'] != 'instinctrl-command-long-protocol/1'
+            or protocol['experiment_id'] != params['experiment_id'] or protocol['scene_seed'] != params['seed']
+            or protocol['stream'] != params['stream'] or protocol['execution'] != params['execution']
+            or protocol['checkpoint'] != params['models']['candidate']
+            or type(protocol['street_first_center_ms']) is not int
+            or not 4000 <= protocol['street_first_center_ms'] <= 20000):
+        raise ValueError('COMMAND_REPLAY_LONG_FREEZE')
+    opportunities = json.loads(checked(protocol['progress_opportunities']).read_bytes())
+    if (opportunities['schema_version'] != 'instinctrl-frozen-progress-opportunities/1'
+            or opportunities['run_id'] != params['experiment_id']
+            or {row['layout'] for row in opportunities['windows']} != set(COMMAND_LAYOUTS)
+            or any(not 0 <= row['start_step'] < row['end_step'] <= 18000 for row in opportunities['windows'])):
+        raise ValueError('COMMAND_REPLAY_LONG_PROGRESS_PLAN')
+    gates = json.loads(checked(protocol['acceptance_gates']).read_bytes())
+    limits = {'minimum_clearance_m', 'maximum_tracking_rmse_m_s', 'minimum_progress_fraction',
+              'maximum_stop_s', 'maximum_stop_drift_m', 'maximum_intervention_s', 'maximum_recovery_s'}
+    if (set(gates) != {'schema_version', 'by_layout'} or gates['schema_version'] != 'instinctrl-command-acceptance-gates/1'
+            or set(gates['by_layout']) != set(COMMAND_LAYOUTS)):
+        raise ValueError('COMMAND_REPLAY_LONG_GATES')
+    for gate in gates['by_layout'].values():
+        if (set(gate) != limits | {'minimum_hazard_events'} or type(gate['minimum_hazard_events']) is not int
+                or gate['minimum_hazard_events'] <= 0 or not 0 < gate['minimum_progress_fraction'] <= 1
+                or any(type(gate[name]) not in (int, float) or not math.isfinite(gate[name]) or gate[name] <= 0
+                       for name in limits)):
+            raise ValueError('COMMAND_REPLAY_LONG_LAYOUT_GATES')
+    _, streams = load_lane_streams(params['stream'], require_independent=True)
+    if any(stream['duration_ms'] != 1_800_000 for stream in streams):
+        raise ValueError('COMMAND_REPLAY_LONG_DURATION')
+    transitions = LANES*18000
+    return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct', operation='dynamic',
+                mode=MODE, parameters=params, budgets=dict(wall_seconds=7200, live_process_starts=1,
+                    simulator_initializations=1, initialization_ticks=10, training_transitions=0,
+                    nontraining_transitions=transitions, optimizer_updates=0, checkpoint_writes=0,
+                    explicit_resets=1, automatic_resets=transitions))
+
+
 def contract(params):
     run_id = params['experiment_id']
+    if run_id.startswith(LONG_PREFIX):
+        return long_contract(params)
     guard = run_id.startswith(GUARD_PREFIX)
     crazy = run_id.startswith(CRAZY_PREFIX)
     endurance = run_id.startswith(ENDURANCE_PREFIX)
-    returns = run_id.startswith(RETURN_PREFIX)
+    returns = run_id.startswith((RETURN_PREFIX, EARLY_PREFIX))
     routes = route_layouts(run_id)
     selected_pair = next((pair for prefix, pair in EXECUTION_PAIRS.items() if run_id.startswith(prefix)), None)
     control_execution, candidate_execution = selected_pair or (EXECUTION, BRAKE_EXECUTION)
@@ -277,8 +336,10 @@ def run(backend, params):
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     output = Path(backend.output)
     endurance = params['experiment_id'].startswith(ENDURANCE_PREFIX)
-    returns = params['experiment_id'].startswith(RETURN_PREFIX)
-    env.capture_ics_limiter = endurance or returns or params['experiment_id'].startswith(CRAZY_PREFIX)
+    returns = params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX))
+    long_run = params['experiment_id'].startswith(LONG_PREFIX)
+    timed_crossings = endurance or returns or long_run
+    env.capture_ics_limiter = timed_crossings or params['experiment_id'].startswith(CRAZY_PREFIX)
 
     def save_row(handle, row):
         data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
@@ -299,10 +360,10 @@ def run(backend, params):
         env.set_escape_option(True, version=execution)
         env.set_h1_ics_clearance_margin(.15)
         model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
-        if endurance or returns:
+        if timed_crossings:
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure)
                              for p in env._control_pipelines}
-            confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION)
+            confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION)
             if configuration != {(.60, confirm)}:
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
@@ -319,7 +380,8 @@ def run(backend, params):
                 modes[street] = 2 + ids[street].remainder(2)
                 delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
-                               half_period_s=CROSSING_TRAVEL_S if endurance or returns else None)
+                               half_period_s=CROSSING_TRAVEL_S if timed_crossings else None,
+                               exact_clock=long_run)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])

@@ -86,7 +86,28 @@ def feasible_tracking(before, measured, commands, mover, triangles, body_radius)
     )
 
 
-def summarize(binding, envelope_pin):
+def frozen_opportunity(velocities, commands, first_flight_steps, start, end):
+    """Count each externally registered nonzero command, including after a failure."""
+    intents = commands[start:end]
+    speed = np.linalg.norm(intents, axis=1)
+    expected = speed > .03
+    if not expected.any():
+        raise ValueError('registered opportunity contains no movement command')
+    observed = np.arange(start, end) < first_flight_steps
+    measured = velocities[start:end]
+    projected = (intents*measured).sum(axis=1)/np.maximum(speed, .001)
+    meets = observed & expected & (projected >= .6*speed)
+    used = observed & expected
+    total = int(expected.sum())
+    error = np.linalg.norm(intents[used]-measured[used], axis=1)
+    return dict(scheduled_moving_steps=total, first_flight_moving_steps=int(used.sum()),
+                met_steps=int(meets.sum()), met_fraction=float(meets.sum()/total),
+                measured_progress_m=float(projected[used].sum()*.1),
+                requested_progress_m=float(speed[expected].sum()*.1),
+                observed_only_rmse_m_s=float(np.sqrt(np.mean(error**2))) if len(error) else None)
+
+
+def summarize(binding, envelope_pin, opportunity_pin=None):
     import torch
 
     bound, ctx, report = validate_binding(binding)
@@ -99,6 +120,21 @@ def summarize(binding, envelope_pin):
     if envelope['status'] != 'USD_COLLIDER_BOUND_REQUIRES_LIVE_JOINT_RADIUS_VERIFICATION':
         raise ValueError('unrecognized collider envelope')
     radius = envelope['maximum_rest_pose_rotation_envelope_m']
+    opportunities = []
+    if opportunity_pin is not None:
+        frozen = read(opportunity_pin)
+        if (set(frozen) != {'schema_version', 'run_id', 'windows'}
+                or frozen['schema_version'] != 'instinctrl-frozen-progress-opportunities/1'
+                or frozen['run_id'] != ctx['plan']['run_id'] or not frozen['windows']):
+            raise ValueError('invalid predeclared progress opportunity identity')
+        opportunities = frozen['windows']
+        for row in opportunities:
+            if (set(row) != {'id', 'layout', 'start_step', 'end_step'}
+                    or type(row['start_step']) is not int or type(row['end_step']) is not int
+                    or not 0 <= row['start_step'] < row['end_step']):
+                raise ValueError('invalid predeclared progress window')
+        if len({row['id'] for row in opportunities}) != len(opportunities):
+            raise ValueError('duplicate predeclared progress window')
 
     geometry_pin = pin(ctx['output']/'initial_preflight/geometry.json')
     geometry = read(geometry_pin)
@@ -139,27 +175,37 @@ def summarize(binding, envelope_pin):
                 step = int(nearest.argmin())
                 tracking = feasible_tracking(before[:end, lane], velocities[:end, lane], commands[:end, lane],
                                              None if mover is None else movers_before[:end, lane], triangles, radius)
+                fixed = {}
+                for row in opportunities:
+                    if row['layout'] == score['layout']:
+                        finish = row['end_step']
+                        if finish > len(rows):
+                            raise ValueError('predeclared window exceeds workload horizon')
+                        fixed[row['id']] = frozen_opportunity(velocities[:, lane], commands[:, lane], end,
+                                                               row['start_step'], finish)
                 values.append(dict(lane=lane, layout=score['layout'], trace=item['trace'], samples=end,
                                    minimum_clearance_lower_bound_m=float(nearest[step]-radius), step=step,
                                    closest_surface='mover' if mover is not None and mover[step] < static[step] else 'static',
-                                   tracking_in_feasible_moving_windows=tracking))
+                                   tracking_in_feasible_moving_windows=tracking,
+                                   externally_scheduled_progress=fixed))
             models[name][trial] = values
     return dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
                 envelope=envelope_pin, sample_period_ms=100, diagnostic_clearance_m=.15, sweep_horizon_s=.6,
-                models=models, scientific_acceptance=False)
+                opportunities=opportunity_pin, models=models, scientific_acceptance=False)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--binding', type=Path, required=True)
     parser.add_argument('--envelope', type=Path, required=True)
+    parser.add_argument('--opportunities', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if stop_paths():
         raise RuntimeError('STOP')
     if args.output.exists():
         raise FileExistsError(args.output)
-    result = summarize(pin(args.binding), pin(args.envelope))
+    result = summarize(pin(args.binding), pin(args.envelope), pin(args.opportunities) if args.opportunities else None)
     if stop_paths():
         raise RuntimeError('STOP')
     print(save(args.output, result))

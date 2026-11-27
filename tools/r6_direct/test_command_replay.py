@@ -156,6 +156,20 @@ def test_clearance_uses_the_nearest_finite_wall_surface():
     assert triangle_distance_squared(queries, triangle).tolist() == pytest.approx([1., .5, 2.])
 
 
+def test_frozen_opportunities_keep_missed_ticks_in_the_denominator():
+    import numpy as np
+    from tools.r6_direct.replay_clearance import frozen_opportunity
+
+    commands = np.tile([.2, 0., 0.], (100, 1))
+    measurements = commands.copy()
+    measurements[14:30] = 0.
+    result = frozen_opportunity(measurements, commands, first_flight_steps=30, start=0, end=100)
+    assert result['scheduled_moving_steps'] == 100
+    assert result['first_flight_moving_steps'] == 30
+    assert result['met_fraction'] == pytest.approx(.14)
+    assert result['measured_progress_m'] == pytest.approx(.28)
+
+
 def test_mover_clock_preserves_three_decimal_places_at_thirty_minutes():
     from types import SimpleNamespace
     import torch

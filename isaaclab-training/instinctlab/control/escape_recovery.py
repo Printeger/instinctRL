@@ -23,11 +23,12 @@ BRAKE_FORWARD_25_VERSION = 'm4-escape-brake-forward-p25-v1'
 BRAKE_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-v1'
 BRAKE_TUBE_CONFIRM_25_VERSION = 'm4-escape-brake-tube-p25-v2'
 RECOVERY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
+EARLY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-early-retreat-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
                        BRAKE_FORWARD_25_VERSION: 25, BRAKE_TUBE_25_VERSION: 25, BRAKE_TUBE_CONFIRM_25_VERSION: 25,
-                       RECOVERY_RETREAT_25_VERSION: 25}
+                       RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -36,7 +37,7 @@ RECOVERY_LIMIT = 65
 class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
-                 brake_forward_escape=False, recovery_retreat=False):
+                 brake_forward_escape=False, recovery_retreat=False, early_retreat=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -51,6 +52,7 @@ class EscapeRecovery(EscapeOption):
         self.brake_forward_escape = brake_forward_escape
         self.braking = torch.zeros_like(self.applied)
         self.recovery_retreat = recovery_retreat
+        self.early_retreat = early_retreat
         self.retreat_hold_steps = torch.zeros_like(self.remaining)
         self.retreat_hold_direction = torch.zeros_like(self.direction)
         self.retreating = torch.zeros_like(self.applied)
@@ -251,9 +253,13 @@ class EscapeRecovery(EscapeOption):
         self.front_switched[used] = self.redirected[used] = True
 
     def hold_recovery_retreat(self, state, selected):
-        self.retreating = (self.retreat_hold_steps > 0) & ~self.applied
+        self.retreating = self.retreat_hold_steps > 0
+        if not self.early_retreat:
+            self.retreating &= ~self.applied
         self.retreat_hold_steps = torch.where(self.retreating, self.retreat_hold_steps-1, 0)
         lanes = self.retreating.nonzero().flatten()
+        if not len(lanes):
+            return
         yaw = -.1 * state[lanes, 41]
         x, y, z = self.retreat_hold_direction[lanes].unbind(dim=1)
         direction = torch.stack((x*yaw.cos()-y*yaw.sin(), x*yaw.sin()+y*yaw.cos(), z), dim=1)
@@ -261,17 +267,30 @@ class EscapeRecovery(EscapeOption):
         selected[lanes, 0] = 0.
         selected[lanes, 1:] = .5 + SPEED_M_S * direction
 
-    def start_recovery_retreat(self, lidar, state, selected, config, lanes, heading):
+    def start_recovery_retreat(self, lidar, state, selected, config, lanes, heading, *, brake_when_blocked=True):
         reverse = -heading
         trial = torch.cat((torch.zeros_like(heading[:, :1]), .5 + SPEED_M_S * reverse), dim=1)
         result = self.issued(lidar[lanes], state[lanes], trial, config)
         usable = ((result.v_final_b * reverse).sum(1) > .08) & (result.metrics['emergency'].flatten() == 0.)
-        selected[lanes] = selected.new_tensor([0., .5, .5, .5])
+        if brake_when_blocked:
+            selected[lanes] = selected.new_tensor([0., .5, .5, .5])
         used = lanes[usable]
         selected[used] = trial[usable]
         self.retreating[used] = True
         self.retreat_hold_steps[used] = 14
         self.retreat_hold_direction[used] = reverse[usable]
+
+    def start_early_retreat(self, lidar, state, selected, config, command, speed):
+        lanes = ((speed >= .08) & ~self.applied & ~self.retreating & (state[:, -1] <= .22)).nonzero().flatten()
+        if not len(lanes):
+            return
+        heading = command[lanes]/speed[lanes, None]
+        away = self.detector.retreat_direction(lidar[lanes], state[lanes], hover_only=False)
+        alignment = (away*heading).sum(dim=1)
+        oblique = (alignment > -.45) & (alignment < -.12)
+        if bool(oblique.any()):
+            self.start_recovery_retreat(lidar, state, selected, config, lanes[oblique], heading[oblique],
+                                        brake_when_blocked=False)
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
@@ -312,8 +331,10 @@ class EscapeRecovery(EscapeOption):
                 self.braking[mixed] |= starts & (projected > speed[mixed] + .02)
         if self.brake_forward_escape:
             selected[self.braking] = selected.new_tensor([0., .5, .5, .5])
-        if self.recovery_retreat:
+        if self.recovery_retreat or self.early_retreat:
             self.hold_recovery_retreat(state, selected)
+        if self.early_retreat:
+            self.start_early_retreat(lidar, state, selected, config, command, speed)
         if not self.recenter:
             return selected
 
