@@ -17,6 +17,7 @@ CRAZY_PREFIX = PREFIX + 'CRAZY-'
 ENDURANCE_PREFIX = PREFIX + 'ENDURANCE-'
 RETURN_PREFIX = PREFIX + 'RETURN-'
 EARLY_PREFIX = PREFIX + 'EARLY-'
+HOVER_PREFIX = PREFIX + 'HOVER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 RETURN_DURATION_MS = 36000
 REGRESSION_ID = PREFIX + 'R6-01'
@@ -38,23 +39,25 @@ TUBE_EXECUTION = 'm4-escape-brake-tube-p25-v1'
 TUBE_CONFIRM_EXECUTION = 'm4-escape-brake-tube-p25-v2'
 RECOVERY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
 EARLY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-early-retreat-v1'
+SIDE_HOVER_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-side-hover-v1'
 EXECUTION_PAIRS = {
     GUARD_PREFIX: (EXECUTION, BRAKE_EXECUTION),
     CRAZY_PREFIX: (BRAKE_EXECUTION, TUBE_EXECUTION),
     ENDURANCE_PREFIX: (TUBE_EXECUTION, TUBE_CONFIRM_EXECUTION),
     RETURN_PREFIX: (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION),
     EARLY_PREFIX: (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION),
+    HOVER_PREFIX: (EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION),
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
 CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|LONG)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
-    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX, EARLY_PREFIX, LONG_PREFIX))
+    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX, EARLY_PREFIX, HOVER_PREFIX, LONG_PREFIX))
 
 
 def arm_execution(params, label):
@@ -207,7 +210,7 @@ def long_contract(params):
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
             or params['wall_seconds'] != 7200 or params['output_cap_bytes'] != 2**31
-            or params['execution'] not in (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION)
+            or params['execution'] not in (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION)
             or set(params['models']) != {'candidate'} or params['models']['candidate']['sha256'] != MODELS['b']):
         raise ValueError('COMMAND_REPLAY_LONG_PARAMETERS')
     checked(params['models']['candidate'])
@@ -256,7 +259,7 @@ def contract(params):
         return long_contract(params)
     guard = run_id.startswith(GUARD_PREFIX)
     crazy = run_id.startswith(CRAZY_PREFIX)
-    endurance = run_id.startswith(ENDURANCE_PREFIX)
+    endurance = run_id.startswith((ENDURANCE_PREFIX, HOVER_PREFIX))
     returns = run_id.startswith((RETURN_PREFIX, EARLY_PREFIX))
     routes = route_layouts(run_id)
     selected_pair = next((pair for prefix, pair in EXECUTION_PAIRS.items() if run_id.startswith(prefix)), None)
@@ -335,7 +338,7 @@ def run(backend, params):
     block = dict(id='continuous-replay-pair', task='stop', speed_m_s=.25,
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     output = Path(backend.output)
-    endurance = params['experiment_id'].startswith(ENDURANCE_PREFIX)
+    endurance = params['experiment_id'].startswith((ENDURANCE_PREFIX, HOVER_PREFIX))
     returns = params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX))
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
     timed_crossings = endurance or returns or long_run
@@ -363,7 +366,8 @@ def run(backend, params):
         if timed_crossings:
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure)
                              for p in env._control_pipelines}
-            confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION)
+            confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION,
+                                    SIDE_HOVER_RETREAT_EXECUTION)
             if configuration != {(.60, confirm)}:
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)

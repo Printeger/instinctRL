@@ -246,3 +246,20 @@ def test_recovery_retreat_uses_the_existing_limiter_and_holds_briefly(monkeypatc
     assert torch.equal(option.apply_recovery(policy, action, None), result)
     option.reset(torch.tensor([0]))
     assert not option.retreat_hold_steps.any()
+
+
+def test_side_hover_prefers_an_admissible_retreat_only_on_zero_intent(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=True, side_hover_retreat=True)
+    state = torch.zeros(3, 52)
+    state[1,45] = .2
+    retreat = torch.tensor([[0., 1., 0.], [0., 1., 0.], [1., 0., 0.]])
+    tangent = torch.tensor([[1., 0., 0.], [1., 0., 0.], [0., 1., 0.]])
+    monkeypatch.setattr(option, 'issued', lambda lidar, state, action, cfg: SimpleNamespace(
+        v_final_b=action[:, 1:]-.5, metrics={'emergency': torch.zeros(len(action), 1)}))
+    chosen = option.choose_side_hover_retreat(torch.empty(3, 1), state, retreat, tangent.clone(), None)
+    assert torch.equal(chosen[0], retreat[0])
+    assert torch.equal(chosen[1:], tangent[1:])
