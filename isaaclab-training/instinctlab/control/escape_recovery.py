@@ -27,12 +27,14 @@ EARLY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-early-retreat-v1'
 SIDE_HOVER_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-side-hover-v1'
 CLEAR_PASS_25_VERSION = 'm4-escape-brake-tube-p25-clear-pass-v1'
 RECOVERY_REARM_25_VERSION = 'm4-escape-brake-tube-p25-recovery-rearm-v1'
+RANKED_RETURN_25_VERSION = 'm4-escape-brake-tube-p25-ranked-return-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
                        BRAKE_FORWARD_25_VERSION: 25, BRAKE_TUBE_25_VERSION: 25, BRAKE_TUBE_CONFIRM_25_VERSION: 25,
                        RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25,
-                       SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25}
+                       SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25,
+                       RANKED_RETURN_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -43,7 +45,7 @@ class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
-                 clear_pass=False, recenter_rearm=False):
+                 clear_pass=False, recenter_rearm=False, rank_return=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -66,6 +68,9 @@ class EscapeRecovery(EscapeOption):
         self.recenter_rearm = recenter_rearm
         if recenter_rearm:
             self.rearm_steps = torch.zeros_like(self.remaining)
+        self.rank_return = rank_return
+        if rank_return:
+            self.ranked = torch.zeros_like(self.applied)
         self.retreat_hold_steps = torch.zeros_like(self.remaining)
         self.retreat_hold_direction = torch.zeros_like(self.direction)
         self.retreating = torch.zeros_like(self.applied)
@@ -91,6 +96,8 @@ class EscapeRecovery(EscapeOption):
         self.retreating[lanes] = False
         if self.recenter_rearm:
             self.rearm_steps[lanes] = 0
+        if self.rank_return:
+            self.ranked[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -125,6 +132,8 @@ class EscapeRecovery(EscapeOption):
             best_direction = self.choose_front_clearance(local_lidar, local_state, retreat, side, best_direction, config)
         if self.side_hover_retreat:
             best_direction = self.choose_side_hover_retreat(local_lidar, local_state, retreat, best_direction, config)
+        if self.rank_return:
+            best_direction = self.choose_after_return(lidar, state, lanes, retreat, best_direction, config)
         self.direction[lanes] = best_direction
         selected[lanes, 1:] = .5 + SPEED_M_S * best_direction
         if self.fast_lateral:
@@ -187,6 +196,31 @@ class EscapeRecovery(EscapeOption):
         result = self.issued(lidar[lanes], state[lanes], action, config)
         viable = ((result.v_final_b * away).sum(1) > .08) & (result.metrics['emergency'].flatten() == 0.)
         direction[lanes[viable]] = away[viable]
+        return direction
+
+    def choose_after_return(self, lidar, state, lanes, retreat, direction, config):
+        from .escape_passage import approach_scores
+
+        raw, _ = extract_latest_commands(state[lanes])
+        speed = raw.norm(dim=1)
+        local = ((self.rearm_steps[lanes] > 0) & (speed >= .08)).nonzero().flatten()
+        if not len(local):
+            return direction
+        indices = lanes[local]
+        choices = torch.stack((direction[local], retreat[local], -raw[local]/speed[local,None]), dim=1)
+        scans, history = lidar[indices], state[indices]
+        issued = []
+        for proposed in choices.unbind(dim=1):
+            trial = torch.cat((torch.zeros_like(proposed[:, :1]), .5+SPEED_M_S*proposed), dim=1)
+            issued.append(self.issued(scans, history, trial, config).v_final_b)
+        final = torch.stack(issued, dim=1)
+        supported, scores = approach_scores(scans, history, self.detector._full_rays, final)
+        usable = (final[:, 1:]*choices[:, 1:]).sum(dim=2) >= .08
+        baseline = scores[:, 0]
+        gain, which = (scores[:, 1:]-baseline[:, None]).masked_fill(~usable, -torch.inf).max(dim=1)
+        replace = supported & (baseline < .35) & (gain >= .08)
+        direction[local[replace]] = choices[replace, which[replace]+1]
+        self.ranked[indices[replace]] = True
         return direction
 
     def redirect_clipped(self, lidar, state, selected, config):
@@ -352,6 +386,8 @@ class EscapeRecovery(EscapeOption):
         lidar, state = policy['lidar_grid'], policy['state_vec']
         if self.clear_pass:
             self.hold_during_clear_pass(lidar, state, selected)
+        if self.rank_return:
+            self.ranked &= self.applied & (self.remaining < DURATION_STEPS-1)
         if self.lateral:
             self.select_lateral(lidar, state, selected, config)
         if self.fast_lateral:
@@ -378,6 +414,8 @@ class EscapeRecovery(EscapeOption):
             preserves_escape = (issued * lateral).sum(1) >= (previous * lateral).sum(1) - 1.e-5
             gains_forward = ((issued - previous) * command[mixed]).sum(1) > .002 * speed[mixed]
             use_trial = (preserves_escape & gains_forward)[:, None]
+            if self.rank_return:
+                use_trial &= ~self.ranked[mixed, None]
             selected[mixed] = torch.where(use_trial, trial, base)
             if self.brake_forward_escape:
                 # Compare the admissible escape with the latest human command at its trigger.

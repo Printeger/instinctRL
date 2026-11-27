@@ -19,8 +19,8 @@ def _closing_seed(ranges, reliable, elapsed):
     return best > .005, seed
 
 
-def clear_hover_passage(lidar, state, rays):
-    """Conservative hold veto using observed relative motion in the body frame."""
+def track_nearby_return(lidar, state, rays):
+    """Associate a supported closing return across four delivered scans."""
     histories = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
     reliable = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
@@ -56,6 +56,12 @@ def clear_hover_passage(lidar, state, rays):
         coords = points[:, :, :2].masked_fill(~patch[:, :, None], torch.nan)
         medians.append(coords.nanmedian(dim=1).values)
     path = torch.stack(medians[::-1], dim=1)
+    return accepted, path, elapsed
+
+
+def clear_hover_passage(lidar, state, rays):
+    """Recognize a clear pass before the vehicle leaves its stopped position."""
+    accepted, path, elapsed = track_nearby_return(lidar, state, rays)
     mean = path.mean(dim=1)
     t = elapsed-elapsed.mean(dim=1, keepdim=True)
     velocity = (path*t[:, :, None]).sum(dim=1)/(t.square().sum(dim=1, keepdim=True).clamp_min(.001))
@@ -66,3 +72,20 @@ def clear_hover_passage(lidar, state, rays):
     moment = -(now*velocity).sum(dim=1)/speed_sq.clamp_min(.001)
     closest = (now+moment.clamp(0., 5.)[:, None]*velocity).norm(dim=1)
     return accepted & (rms <= .02) & (speed_sq >= .04) & (speed_sq <= 2.25) & (moment > 0.) & (closest >= .85)
+
+
+def approach_scores(lidar, state, rays, issued):
+    """Estimate separation for admissible escape commands after a nearby reversal."""
+    accepted, history, elapsed = track_nearby_return(lidar, state, rays)
+    recent = history.diff(dim=1)[:, -2:] / elapsed.diff(dim=1)[:, -2:, None].clamp_min(.001)
+    speed = recent.norm(dim=2)
+    agreement = (recent[:, 0]*recent[:, 1]).sum(dim=1)/speed.prod(dim=1).clamp_min(.001)
+    velocity = .3*recent[:, 0]+.7*recent[:, 1]
+    position = history[:, -1]
+    accepted &= (speed >= .14).all(dim=1) & (speed <= 1.5).all(dim=1) & (agreement > .85)
+    accepted &= (position.norm(dim=1) < .9) & ((position*velocity).sum(dim=1) < -.10)
+    time = position.new_tensor(.05)*torch.arange(33, device=position.device, dtype=position.dtype)
+    travelled = time-.35*(1.-torch.exp(-time/.35))
+    path = position[:, None]+time[None, :, None]*velocity[:, None]
+    separation = (path[:, None]-travelled[None, None, :, None]*issued[:, :, None, :2]).norm(dim=-1)
+    return accepted, separation.amin(dim=2)

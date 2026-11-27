@@ -332,3 +332,26 @@ def test_recenter_rearms_one_second_after_credible_emergency():
     for remaining in range(RECENTER_REARM_STEPS-1, -1, -1):
         option.update_recenter_rearm(lidar, config)
         assert option.rearm_steps.tolist() == [remaining, 0]
+
+
+def test_ranked_escape_only_switches_to_an_admissible_improvement(monkeypatch):
+    import torch
+    from types import SimpleNamespace
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=True,
+                            recenter_rearm=True, rank_return=True)
+    option.rearm_steps[0] = 2
+    state = torch.zeros(2, 52)
+    state[:, 45] = .26
+    retreat = torch.tensor([[-.54, -.84, 0.]]*2)
+    selected = torch.tensor([[.55, -.83, 0.]]*2)
+    monkeypatch.setattr(escape_passage, 'approach_scores', lambda *args: (
+        torch.tensor([True]), torch.tensor([[.14, .45, .47]])))
+    monkeypatch.setattr(option, 'issued', lambda scan, history, action, config:
+        SimpleNamespace(v_final_b=action[:, 1:]-.5))
+    direction = option.choose_after_return(torch.zeros(2, 1), state, torch.arange(2), retreat, selected, None)
+    assert direction[0].tolist() == [-1., 0., 0.]
+    assert direction[1].tolist() == pytest.approx([.55, -.83, 0.])
+    assert option.ranked.tolist() == [True, False]

@@ -5,7 +5,7 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RECOVERY_REARM_EXECUTION,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RANKED_RETURN_EXECUTION, REARM_EXECUTIONS,
     STEP_MS, arm_execution, conditions, event_schedule,
 )
 
@@ -249,11 +249,16 @@ def audit(output, params, counters):
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
                 if len(held) != LANES or any(type(value) is not bool for value in held):
                     raise ValueError('COMMAND_REPLAY_HOLD_LANES')
-                if ('recovery_rearm_steps' in row) != (model['execution'] == RECOVERY_REARM_EXECUTION):
+                if ('recovery_rearm_steps' in row) != (model['execution'] in REARM_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_REARM_BINDING')
                 rearm = row.get('recovery_rearm_steps', [0]*LANES)
                 if len(rearm) != LANES or any(type(value) is not int or not 0 <= value <= 10 for value in rearm):
                     raise ValueError('COMMAND_REPLAY_REARM_TIMER')
+                if ('escape_ranked_direction' in row) != (model['execution'] == RANKED_RETURN_EXECUTION):
+                    raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_BINDING')
+                ranked = row.get('escape_ranked_direction', [False]*LANES)
+                if len(ranked) != LANES or any(type(value) is not bool for value in ranked):
+                    raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -264,6 +269,8 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_HOLD_BEHAVIOR')
                     if rearm[lane] and row['escape_recovering'][lane]:
                         raise ValueError('COMMAND_REPLAY_REARM_BEHAVIOR')
+                    if ranked[lane] and not row['escape_active'][lane]:
+                        raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_BEHAVIOR')
                     if step and not rows[step-1]['reset'][lane]:
                         if actor[:-1] != rows[step-1]['actor_state'][lane][1:]:
                             raise ValueError('COMMAND_REPLAY_ACTOR_HISTORY')
