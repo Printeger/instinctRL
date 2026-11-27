@@ -57,6 +57,7 @@ NOVEL_RESERVE_DIRECTION_ID = NOVEL_PREFIX+'28'
 NOVEL_CROSSING_FALLBACK_ID = NOVEL_PREFIX+'29'
 NOVEL_OPENING_STEERING_ID = NOVEL_PREFIX+'30'
 NOVEL_ALONG_INTERCEPT_ID = NOVEL_PREFIX+'31'
+NOVEL_ALONG_CONFIRM_ID = NOVEL_PREFIX+'32'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -184,7 +185,8 @@ def compress_trace(run_id):
     return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
-                                                       NOVEL_OPENING_STEERING_ID, NOVEL_ALONG_INTERCEPT_ID)
+                                                       NOVEL_OPENING_STEERING_ID, NOVEL_ALONG_INTERCEPT_ID,
+                                                       NOVEL_ALONG_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -436,7 +438,7 @@ def novel_contract(params):
         execution = (CROSSING_FALLBACK_EXECUTION,)
     elif params['experiment_id'] == NOVEL_OPENING_STEERING_ID:
         execution = (OPENING_STEERING_EXECUTION,)
-    elif params['experiment_id'] == NOVEL_ALONG_INTERCEPT_ID:
+    elif params['experiment_id'] in (NOVEL_ALONG_INTERCEPT_ID, NOVEL_ALONG_CONFIRM_ID):
         execution = (ALONG_INTERCEPT_EXECUTION,)
     wall = 1800 if paired else 1200
     if paired:
