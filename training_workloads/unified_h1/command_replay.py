@@ -10,6 +10,7 @@ from .escape_holdout_scene import LAYOUTS
 
 
 PREFIX = 'R6-DIRECT-INSTINCT-GPU-COMMAND-'
+GUARD_PREFIX = PREFIX + 'GUARD-'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -23,10 +24,15 @@ MODELS = {
     'c': '450b8675161f132178eb345f85c3dd6c27dffe9f3de6a33c792c3fabcf6ba172',
 }
 EXECUTION = 'm4-escape-rear-clearance-p25-v1'
+BRAKE_EXECUTION = 'm4-escape-brake-forward-p25-v1'
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'PAIR-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD)-[0-9]{2}', run_id) is not None
+
+
+def arm_execution(params, label):
+    return params.get('candidate_execution', params['execution']) if label == 'candidate' else params['execution']
 
 
 def load_stream(pin):
@@ -63,18 +69,25 @@ def sampled_events(stream):
 
 
 def contract(params):
-    if (set(params) != {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
-            or not matches(params['experiment_id']) or params['training_seed'] != 20260908
+    guard = params['experiment_id'].startswith(GUARD_PREFIX)
+    expected_models = {'control': MODELS['b'], 'candidate': MODELS['b']} if guard else MODELS
+    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
+    if guard:
+        fields.add('candidate_execution')
+    if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
+            or (guard and params['candidate_execution'] != BRAKE_EXECUTION)
             or type(params['seed']) is not int
             or not 0 <= params['seed'] < 2**31 or params['execution'] != EXECUTION
-            or not isinstance(params['models'], dict) or set(params['models']) != set(MODELS)
+            or not isinstance(params['models'], dict) or set(params['models']) != set(expected_models)
             or type(params['wall_seconds']) is not int or not 120 <= params['wall_seconds'] <= 1800
             or type(params['output_cap_bytes']) is not int or not 256*2**20 <= params['output_cap_bytes'] <= 2**30):
         raise ValueError('COMMAND_REPLAY_PARAMETERS')
     for label, checkpoint in params['models'].items():
-        if checkpoint['sha256'] != MODELS[label]:
+        if checkpoint['sha256'] != expected_models[label]:
             raise ValueError('COMMAND_REPLAY_FROZEN_CHECKPOINT')
         checked(checkpoint)
+    if guard and params['models']['control'] != params['models']['candidate']:
+        raise ValueError('COMMAND_REPLAY_GUARD_SAME_WEIGHTS')
     stream = load_stream(params['stream'])
     events = {event['t_ms']: event['velocity_w_m_s'] for event in stream['events']}
     reversal = CONDITIONS['crossing_at_reversal']
@@ -133,9 +146,10 @@ def run(backend, params):
         actor.load_state_dict(payload['actor'], strict=True)
         actor.eval()
         del payload
-        env.set_escape_option(True, version=params['execution'])
+        execution = arm_execution(params, label)
+        env.set_escape_option(True, version=execution)
         env.set_h1_ics_clearance_margin(.15)
-        model = dict(checkpoint=checkpoint, lidar_mount=record_mount(env, output, label), trials={})
+        model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
         for name, crossing_ms in CONDITIONS.items():
             env.configure_r6_physics(block=block, seed=params['seed'], split='development',
                                      reset_sink=lambda row: None, force_sink=lambda row: None,
@@ -209,6 +223,8 @@ def run(backend, params):
                         collision=task['termination']['masks']['collision'].reshape(-1),
                         termination_reason=task['termination']['reason_code'].reshape(-1), reset=terminal,
                         episode_length=pre['episode_length'])
+                    if 'braking' in option:
+                        tensors['escape_braking'] = option['braking']
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
                                           event_index=event_ids[step], raw_event=events[event_ids[step]],
                                           physics_tick=int(before['tick']), after_tick=int(post['tick']),

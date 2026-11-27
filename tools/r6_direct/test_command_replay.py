@@ -88,3 +88,36 @@ def test_stick_mapping_radially_dead_zones_and_caps_speed():
     assert x == pytest.approx(-y)
     assert hypot(x, y) == pytest.approx(.30)
     assert z == 0.
+
+
+def test_early_brake_replaces_only_an_accelerating_escape_at_its_trigger(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_option import DURATION_STEPS, EscapeOption
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.governor import GovernorConfig, decode_governor
+
+    policy = {'lidar_grid': torch.empty(2, 1), 'state_vec': torch.zeros(2, 52)}
+    policy['state_vec'][:, 45] = .25
+    action = torch.tensor([[0., .8, .5, .5], [0., .5, .8, .5]])
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False,
+                            brake_forward_escape=True)
+    option.applied.fill_(True)
+    option.direction[:, 0] = 1.
+    option.remaining.fill_(DURATION_STEPS-1)
+    monkeypatch.setattr(EscapeOption, 'apply', lambda self, policy, action: action.clone())
+    governor = GovernorConfig(v_corr_limit=.5)
+    monkeypatch.setattr(option, 'issued', lambda lidar, state, action, cfg: SimpleNamespace(
+        v_final_b=decode_governor(action, state, governor).v_gov_b))
+
+    def selected():
+        return option.apply_recovery(policy, action, None)
+
+    assert selected()[0].tolist() == [0., .5, .5, .5]
+    assert option.braking.tolist() == [True, False]
+    option.remaining.sub_(1)
+    policy['state_vec'][:, 45] = -.25
+    assert selected()[0].tolist() == [0., .5, .5, .5]
+    option.applied.zero_()
+    assert torch.equal(selected(), action)
+    assert not option.braking.any()

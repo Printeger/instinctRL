@@ -6,7 +6,8 @@ import torch
 
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
-    EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION,
+    BRAKE_FORWARD_25_VERSION, EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
+    FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
     REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_VERSION, REDIRECT_25_VERSION,
 )
@@ -55,19 +56,19 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         elif version == METHOD_VERSION:
             self.escape_option = EscapeOption(**kwargs)
         elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
+            rear_clearance = version in (REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION, BRAKE_FORWARD_25_VERSION)
             self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
                                                 lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
                                                 fast_lateral=version in (FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
-                                                redirect=version in (REDIRECT_25_VERSION, FALLBACK_25_VERSION,
-                                                                     FRONT_SWITCH_25_VERSION, REAR_SWITCH_25_VERSION,
-                                                                     REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION),
-                                                fallback=version in (FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION,
-                                                                     REAR_SWITCH_25_VERSION, REAR_CLEARANCE_25_VERSION,
-                                                                     FRONT_CLEARANCE_25_VERSION),
+                                                redirect=rear_clearance or version in (REDIRECT_25_VERSION, FALLBACK_25_VERSION,
+                                                                                      FRONT_SWITCH_25_VERSION, REAR_SWITCH_25_VERSION),
+                                                fallback=rear_clearance or version in (FALLBACK_25_VERSION, FRONT_SWITCH_25_VERSION,
+                                                                                      REAR_SWITCH_25_VERSION),
                                                 front_switch=version == FRONT_SWITCH_25_VERSION,
                                                 rear_switch=version == REAR_SWITCH_25_VERSION,
-                                                rear_clearance=version in (REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION),
-                                                front_clearance=version == FRONT_CLEARANCE_25_VERSION)
+                                                rear_clearance=rear_clearance,
+                                                front_clearance=version == FRONT_CLEARANCE_25_VERSION,
+                                                brake_forward_escape=version == BRAKE_FORWARD_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -93,6 +94,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             if isinstance(self.escape_option, EscapeRecovery):
                 self.extras['pre_reset']['escape_option']['recovery'] = self.escape_option.recovering.detach().clone()
                 self.extras['pre_reset']['escape_option']['redirected'] = self.escape_option.redirected.detach().clone()
+                if self.escape_option.brake_forward_escape:
+                    self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if getattr(self, 'mirrored_pipe_pairs', False):
                     self.extras['pre_reset']['escape_option']['retreat_basis'] = self.escape_option.retreat_basis.detach().clone()
         return reward

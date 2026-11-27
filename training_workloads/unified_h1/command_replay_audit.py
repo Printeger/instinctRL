@@ -4,7 +4,7 @@ import math
 from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
-from .command_replay import CONDITIONS, LANES, LAYOUTS, STEP_MS, load_stream, sampled_events
+from .command_replay import CONDITIONS, GUARD_PREFIX, LANES, LAYOUTS, STEP_MS, arm_execution, load_stream, sampled_events
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
 CORRIDOR_HALF_WIDTH_M = .58
@@ -89,6 +89,8 @@ def score_lane(rows, initial, lane, crossing):
         earliest_delivered_mover_step=next((row['step'] for row in flight
             if crossing and read(row, 'mover_winning_beams') and read(row, 'actor_witness')[-1][1] > .5), None),
         first_intervention_step=next((row['step'] for row in flight if intervened(row)), None),
+        first_escape_brake_step=next((row['step'] for row in flight
+            if 'escape_braking' in row and read(row, 'escape_braking')), None),
         average_tracking_error_m_s=fmean(math.dist(actual(row), command(row)) for row in active) if active else None,
         average_intent_progress_m_s=fmean(progress(row, actual(row)) for row in active) if active else None,
     )
@@ -134,7 +136,8 @@ def audit(output, params, counters):
     results = {}
     first_pose = None
     for label, model in saved['models'].items():
-        if model['checkpoint'] != params['models'][label] or set(model['trials']) != set(CONDITIONS):
+        if (model['checkpoint'] != params['models'][label] or set(model['trials']) != set(CONDITIONS)
+                or (params['experiment_id'].startswith(GUARD_PREFIX) and model['execution'] != arm_execution(params, label))):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
