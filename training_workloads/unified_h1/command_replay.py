@@ -21,6 +21,7 @@ EARLY_PREFIX = PREFIX + 'EARLY-'
 HOVER_PREFIX = PREFIX + 'HOVER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 RETURN_DURATION_MS = 36000
+CLEARANCE_ID = EARLY_PREFIX + '02'
 REGRESSION_ID = PREFIX + 'R6-01'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
@@ -293,9 +294,8 @@ def contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
     if guard or routes:
         fields.add('candidate_execution')
-    if 'clearance_envelope' in params and run_id.startswith((EARLY_PREFIX, HOVER_PREFIX)):
+    if run_id == CLEARANCE_ID:
         fields.add('clearance_envelope')
-        clearance_radii(params['clearance_envelope'])
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or ((guard or routes) and params['candidate_execution'] != candidate_execution)
             or type(params['seed']) is not int
@@ -304,6 +304,8 @@ def contract(params):
             or type(params['wall_seconds']) is not int or not 120 <= params['wall_seconds'] <= 1800
             or type(params['output_cap_bytes']) is not int or not 256*2**20 <= params['output_cap_bytes'] <= 2**30):
         raise ValueError('COMMAND_REPLAY_PARAMETERS')
+    if run_id == CLEARANCE_ID:
+        clearance_radii(params['clearance_envelope'])
     for label, checkpoint in params['models'].items():
         if checkpoint['sha256'] != expected_models[label]:
             raise ValueError('COMMAND_REPLAY_FROZEN_CHECKPOINT')
