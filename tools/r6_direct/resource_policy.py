@@ -9,6 +9,7 @@ from training_workloads.unified_h1.command_replay import (
     CRAZY_PREFIX as COMMAND_CRAZY_PREFIX, GUARD_PREFIX as COMMAND_GUARD_PREFIX, PREFIX as COMMAND_REPLAY_PREFIX,
     EARLY_PREFIX as COMMAND_EARLY_PREFIX, ENDURANCE_PREFIX as COMMAND_ENDURANCE_PREFIX,
     HOVER_PREFIX as COMMAND_HOVER_PREFIX, LONG_PREFIX as COMMAND_LONG_PREFIX,
+    PASSAGE_PREFIX as COMMAND_PASSAGE_PREFIX,
     REGRESSION_ID as COMMAND_REGRESSION_ID,
     RETURN_PREFIX as COMMAND_RETURN_PREFIX, ROUTE_PREFIX as COMMAND_ROUTE_PREFIX,
 )
@@ -34,6 +35,7 @@ FRONT_STUDY_SCHEMA = 'instinctrl-post-u1792-front-study-resources/1'
 COMMAND_REPLAY_SCHEMA = 'instinctrl-continuous-command-resources/1'
 BOUNDED_SCOPES = {
     COMMAND_HOVER_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/hover/RESOURCE_LEDGER.json'),
+    COMMAND_PASSAGE_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/passage/RESOURCE_LEDGER.json'),
     COMMAND_CORNER_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/corner/RESOURCE_LEDGER.json'),
     COMMAND_CLEARANCE_ID: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/clearance/RESOURCE_LEDGER.json'),
     COMMAND_EARLY_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/early/RESOURCE_LEDGER.json'),

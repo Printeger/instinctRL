@@ -168,7 +168,7 @@ def run(plan, input_pin):
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
         from training_workloads.unified_h1.command_replay import (
-            ENDURANCE_PREFIX, HOVER_PREFIX, LONG_PREFIX, REGRESSION_ID, STEP_MS, load_lane_streams, matches as command_replay,
+            ENDURANCE_PREFIX, HOVER_PREFIX, LONG_PREFIX, PASSAGE_PREFIX, REGRESSION_ID, STEP_MS, load_lane_streams, matches as command_replay,
             route_layouts,
         )
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
@@ -226,7 +226,7 @@ def run(plan, input_pin):
                     if candidate in RECOVERY_CANDIDATES:
                         option_version = action_option_version(candidate)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
-            if plan['run_id'].startswith((ENDURANCE_PREFIX, HOVER_PREFIX, LONG_PREFIX)):
+            if plan['run_id'].startswith((ENDURANCE_PREFIX, HOVER_PREFIX, PASSAGE_PREFIX, LONG_PREFIX)):
                 duration = load_lane_streams(params['stream'])[1][0]['duration_ms']
                 cfg.episode_length_s = (duration + 2*STEP_MS)/1000.
             from training_workloads.unified_h1.dynamic_assay import physical_layout, three_case, OPTION_RUN, RECOVERY_PREFIX

@@ -289,3 +289,26 @@ def test_side_hover_prefers_an_admissible_retreat_only_on_zero_intent(monkeypatc
     chosen = option.choose_side_hover_retreat(torch.empty(3, 1), state, retreat, tangent.clone(), None)
     assert torch.equal(chosen[0], retreat[0])
     assert torch.equal(chosen[1:], tangent[1:])
+
+
+def test_clear_pass_keeps_the_intercept_and_cannot_use_stale_or_moving_history():
+    import torch
+    from instinctlab.control.escape_passage import clear_hover_passage
+    from instinctlab.control.ics import mounted_mid360_rays_body
+    from instinctlab.observations.moving_sphere import sphere_range
+
+    rays = mounted_mid360_rays_body()
+    lanes = 4
+    directions = rays[None].expand(lanes, -1, -1)
+    centres = torch.tensor([[1.28, -1.82, .10], [.31, -1.50, .10], [1.28, -1.82, .10], [1.28, -1.82, .10]])
+    history = []
+    for index in range(4):
+        centres_frame = centres+torch.tensor([0., -.058*(3-index), 0.])
+        distance = sphere_range(torch.zeros_like(centres), directions, centres_frame)
+        valid = distance.isfinite()
+        history.append(torch.stack((torch.where(valid, distance, 40.), valid, valid), dim=1))
+    scan = torch.cat(history, dim=1).reshape(lanes, 12, 59, 360)
+    state = torch.zeros(lanes, 4, 13)
+    state[2, 1, 12] = .20
+    state[3, 1, 9] = .10
+    assert clear_hover_passage(scan, state.reshape(lanes, 52), rays).tolist() == [True, False, False, False]

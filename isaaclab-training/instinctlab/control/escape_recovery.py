@@ -25,11 +25,13 @@ BRAKE_TUBE_CONFIRM_25_VERSION = 'm4-escape-brake-tube-p25-v2'
 RECOVERY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
 EARLY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-early-retreat-v1'
 SIDE_HOVER_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-side-hover-v1'
+CLEAR_PASS_25_VERSION = 'm4-escape-brake-tube-p25-clear-pass-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
                        BRAKE_FORWARD_25_VERSION: 25, BRAKE_TUBE_25_VERSION: 25, BRAKE_TUBE_CONFIRM_25_VERSION: 25,
-                       RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25, SIDE_HOVER_RETREAT_25_VERSION: 25}
+                       RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25,
+                       SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -38,7 +40,8 @@ RECOVERY_LIMIT = 65
 class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
-                 brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False):
+                 brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
+                 clear_pass=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -55,6 +58,9 @@ class EscapeRecovery(EscapeOption):
         self.recovery_retreat = recovery_retreat
         self.early_retreat = early_retreat
         self.side_hover_retreat = side_hover_retreat
+        self.clear_pass = clear_pass
+        if clear_pass:
+            self.holding = torch.zeros_like(self.applied)
         self.retreat_hold_steps = torch.zeros_like(self.remaining)
         self.retreat_hold_direction = torch.zeros_like(self.direction)
         self.retreating = torch.zeros_like(self.applied)
@@ -310,10 +316,29 @@ class EscapeRecovery(EscapeOption):
             self.start_recovery_retreat(lidar, state, selected, config, lanes[oblique], heading[oblique],
                                         brake_when_blocked=False)
 
+    def hold_during_clear_pass(self, lidar, state, selected):
+        from .escape_passage import clear_hover_passage
+
+        self.holding.zero_()
+        onset = (self.applied & (self.remaining == DURATION_STEPS-1) & (state[:, 45:48].norm(dim=1) <= .001)
+                 & (self.retreat_hold_steps == 0))
+        lanes = onset.nonzero().flatten()
+        if not len(lanes):
+            return
+        clear = clear_hover_passage(lidar[lanes], state[lanes], self.detector._full_rays)
+        held = lanes[clear]
+        self.holding[held] = True
+        self.applied[held] = False
+        self.remaining[held] = 0
+        self.cooldown[held] = 0
+        selected[held] = selected.new_tensor([0., .5, .5, .5])
+
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
         lidar, state = policy['lidar_grid'], policy['state_vec']
+        if self.clear_pass:
+            self.hold_during_clear_pass(lidar, state, selected)
         if self.lateral:
             self.select_lateral(lidar, state, selected, config)
         if self.fast_lateral:

@@ -19,6 +19,7 @@ ENDURANCE_PREFIX = PREFIX + 'ENDURANCE-'
 RETURN_PREFIX = PREFIX + 'RETURN-'
 EARLY_PREFIX = PREFIX + 'EARLY-'
 HOVER_PREFIX = PREFIX + 'HOVER-'
+PASSAGE_PREFIX = PREFIX + 'PASSAGE-'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 RETURN_DURATION_MS = 36000
@@ -44,6 +45,7 @@ TUBE_CONFIRM_EXECUTION = 'm4-escape-brake-tube-p25-v2'
 RECOVERY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
 EARLY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-early-retreat-v1'
 SIDE_HOVER_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-side-hover-v1'
+CLEAR_PASS_EXECUTION = 'm4-escape-brake-tube-p25-clear-pass-v1'
 EXECUTION_PAIRS = {
     GUARD_PREFIX: (EXECUTION, BRAKE_EXECUTION),
     CRAZY_PREFIX: (BRAKE_EXECUTION, TUBE_EXECUTION),
@@ -51,6 +53,7 @@ EXECUTION_PAIRS = {
     RETURN_PREFIX: (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION),
     EARLY_PREFIX: (TUBE_CONFIRM_EXECUTION, EARLY_RETREAT_EXECUTION),
     HOVER_PREFIX: (EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION),
+    PASSAGE_PREFIX: (EARLY_RETREAT_EXECUTION, CLEAR_PASS_EXECUTION),
     CORNER_PREFIX: (EARLY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION),
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
@@ -58,12 +61,12 @@ CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|CORNER|LONG)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|CORNER|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
     return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX, EARLY_PREFIX,
-                              HOVER_PREFIX, CORNER_PREFIX, LONG_PREFIX))
+                              HOVER_PREFIX, PASSAGE_PREFIX, CORNER_PREFIX, LONG_PREFIX))
 
 
 def arm_execution(params, label):
@@ -296,7 +299,7 @@ def contract(params):
         return long_contract(params)
     guard = run_id.startswith(GUARD_PREFIX)
     crazy = run_id.startswith(CRAZY_PREFIX)
-    endurance = run_id.startswith((ENDURANCE_PREFIX, HOVER_PREFIX))
+    endurance = run_id.startswith((ENDURANCE_PREFIX, HOVER_PREFIX, PASSAGE_PREFIX))
     returns = run_id.startswith((RETURN_PREFIX, EARLY_PREFIX))
     routes = route_layouts(run_id)
     selected_pair = next((pair for prefix, pair in EXECUTION_PAIRS.items() if run_id.startswith(prefix)), None)
@@ -310,7 +313,8 @@ def contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
     if guard or routes:
         fields.add('candidate_execution')
-    if run_id == CLEARANCE_ID:
+    captures_clearance = run_id == CLEARANCE_ID or run_id.startswith(PASSAGE_PREFIX)
+    if captures_clearance:
         fields.add('clearance_envelope')
     if run_id.startswith(CORNER_PREFIX):
         fields.add('candidate_stream')
@@ -322,7 +326,7 @@ def contract(params):
             or type(params['wall_seconds']) is not int or not 120 <= params['wall_seconds'] <= 1800
             or type(params['output_cap_bytes']) is not int or not 256*2**20 <= params['output_cap_bytes'] <= 2**30):
         raise ValueError('COMMAND_REPLAY_PARAMETERS')
-    if run_id == CLEARANCE_ID:
+    if captures_clearance:
         clearance_radii(params['clearance_envelope'])
     if run_id.startswith(CORNER_PREFIX):
         check_corner_pair(params)
@@ -380,7 +384,7 @@ def run(backend, params):
     block = dict(id='continuous-replay-pair', task='stop', speed_m_s=.25,
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     output = Path(backend.output)
-    endurance = params['experiment_id'].startswith((ENDURANCE_PREFIX, HOVER_PREFIX))
+    endurance = params['experiment_id'].startswith((ENDURANCE_PREFIX, HOVER_PREFIX, PASSAGE_PREFIX))
     returns = params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX))
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
     timed_crossings = endurance or returns or long_run or params['experiment_id'].startswith(CORNER_PREFIX)
@@ -421,7 +425,7 @@ def run(backend, params):
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure)
                              for p in env._control_pipelines}
             confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION,
-                                    SIDE_HOVER_RETREAT_EXECUTION)
+                                    SIDE_HOVER_RETREAT_EXECUTION, CLEAR_PASS_EXECUTION)
             if configuration != {(.60, confirm)}:
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
@@ -508,6 +512,8 @@ def run(backend, params):
                         tensors['escape_braking'] = option['braking']
                     if 'retreating' in option:
                         tensors['recovery_retreating'] = option['retreating']
+                    if 'holding' in option:
+                        tensors['escape_clear_pass_hold'] = option['holding']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,

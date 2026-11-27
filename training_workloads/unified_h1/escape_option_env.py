@@ -8,7 +8,7 @@ import torch
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
     BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION,
-    EARLY_RETREAT_25_VERSION, EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
+    CLEAR_PASS_25_VERSION, EARLY_RETREAT_25_VERSION, EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
     REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_RETREAT_25_VERSION, RECOVERY_VERSION, REDIRECT_25_VERSION,
@@ -59,7 +59,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         elif version == METHOD_VERSION:
             self.escape_option = EscapeOption(**kwargs)
         elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
-            early_retreat = version in (EARLY_RETREAT_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION)
+            early_retreat = version in (EARLY_RETREAT_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, CLEAR_PASS_25_VERSION)
             brake_forward = early_retreat or version in (
                 BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
             )
@@ -78,7 +78,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 brake_forward_escape=brake_forward,
                                                 recovery_retreat=version == RECOVERY_RETREAT_25_VERSION,
                                                 early_retreat=early_retreat,
-                                                side_hover_retreat=version == SIDE_HOVER_RETREAT_25_VERSION)
+                                                side_hover_retreat=version == SIDE_HOVER_RETREAT_25_VERSION,
+                                                clear_pass=version == CLEAR_PASS_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -90,7 +91,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         super().set_h1_ics_clearance_margin(margin_m)
         version = getattr(self, 'escape_option_version', None)
         confirm = version in (BRAKE_TUBE_CONFIRM_25_VERSION, RECOVERY_RETREAT_25_VERSION, EARLY_RETREAT_25_VERSION,
-                              SIDE_HOVER_RETREAT_25_VERSION)
+                              SIDE_HOVER_RETREAT_25_VERSION, CLEAR_PASS_25_VERSION)
         radius = .60 if confirm or version == BRAKE_TUBE_25_VERSION else 0.
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
@@ -148,6 +149,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             if isinstance(self.escape_option, EscapeRecovery):
                 self.extras['pre_reset']['escape_option']['recovery'] = self.escape_option.recovering.detach().clone()
                 self.extras['pre_reset']['escape_option']['redirected'] = self.escape_option.redirected.detach().clone()
+                if self.escape_option.clear_pass:
+                    self.extras['pre_reset']['escape_option']['holding'] = self.escape_option.holding.detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:
