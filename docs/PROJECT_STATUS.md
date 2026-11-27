@@ -16,6 +16,8 @@
 
 严格区分真零令后的同输入复验恢复 32/32 首飞完整、零接触和重置、松杆 32/32。上一轮新增接触窗口净空恢复至 0.423 米，原街道近距窗口仍仅 0.051 米。独立复验尚未发车。 [最新逐类结果](experiments/instinct-continuous-command/crossing_stop_continuation/REPORT.md)
 
+同侧五度复核将原街道近距窗口提高到 0.108 米，仍未达到 0.15 米。五场景首飞完整、无接触和中途重置、室内过门过角各 8/8、松杆 32/32。 [五度复核正式记录](experiments/instinct-continuous-command/crossing_stop_shallow/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
