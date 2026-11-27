@@ -106,7 +106,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.escape_option_version = version if enabled else None
         self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
         for pipeline in self._control_pipelines:
-            pipeline.allow_bilateral_stopping = False
+            if hasattr(pipeline, 'allow_bilateral_stopping'):
+                pipeline.allow_bilateral_stopping = False
         kwargs = dict(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
         if not enabled:
             self.escape_option = None
@@ -237,10 +238,16 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         if isinstance(self.escape_option, EscapeRecovery):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
             if self.bilateral_stopping:
+                from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
+
                 option = self.escape_option
                 protected = (option.applied | option.retreating | option.braking | option.ranked | option.holding
                              | option.intercepted | option.recovering)
-                for pipeline, allowed in zip(self._control_pipelines, (~protected).tolist(), strict=True):
+                for index, allowed in enumerate((~protected).tolist()):
+                    pipeline = self._control_pipelines[index]
+                    if not isinstance(pipeline, BilateralStoppingPipeline):
+                        pipeline = BilateralStoppingPipeline(pipeline)
+                        self._control_pipelines[index] = pipeline
                     pipeline.allow_bilateral_stopping = allowed
         elif self.escape_option is not None:
             actions = self.escape_option.apply(self._policy, actions)
@@ -300,8 +307,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['settled_crossing'] = self.escape_option.settled_crossing_verified.detach().clone()
                 if self.bilateral_stopping:
                     used = [pipeline.bilateral_stopping_used for pipeline in self._control_pipelines]
-                    self.extras['pre_reset']['escape_option']['bilateral_stopping'] = torch.cat([
-                        value if value is not None else self.escape_option.applied.new_zeros(1) for value in used])
+                    self.extras['pre_reset']['escape_option']['bilateral_stopping'] = self.escape_option.applied.new_tensor(used)
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:

@@ -89,7 +89,9 @@ def test_tracked_resume_is_reproved_without_canceling_the_held_escape():
 
 def test_bilateral_stopping_retains_unknown_near_and_emergency_constraints():
     import torch
+    from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline, apply_bilateral_stopping
     from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+    from instinctlab.control.pipeline import ControlCoreConfig, ControlCorePipeline
 
     rays = mounted_mid360_rays_body()
     lateral = rays[:, 1]
@@ -107,14 +109,22 @@ def test_bilateral_stopping_retains_unknown_near_and_emergency_constraints():
     target = history[:, -1, 6:9]
     config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, confirmed_tube_radius_m=.41)
     ordinary = attenuate_command(lidar, rays, target, .1, config, state_vec=history.flatten(1))
-    certified = attenuate_command(lidar, rays, target, .1, config, state_vec=history.flatten(1),
-                                  allow_bilateral_stopping=True)
+    certified = apply_bilateral_stopping(lidar, history.flatten(1), rays, target, .1, config, ordinary)
 
     assert not ordinary.v_final_b.any()
-    assert certified.bilateral_stopping.tolist() == [True, False, False, False, False]
     assert certified.v_final_b[0, 1] > .25
     assert torch.equal(certified.v_final_b[1:], ordinary.v_final_b[1:])
     assert torch.equal(certified.metrics['emergency'], ordinary.metrics['emergency'])
+    assert torch.equal(certified.cache['active_mask'][1:], ordinary.cache['active_mask'][1:])
+
+    pipeline = BilateralStoppingPipeline(ControlCorePipeline(ControlCoreConfig(ics=config)))
+    reset = torch.zeros(1, dtype=torch.bool)
+    args = (lidar[:1], history[:1].flatten(1), torch.tensor([[1., .5, .5, .5]]), .1,
+            reset, reset, torch.tensor([[1., 0., 0., 0.]]))
+    assert not pipeline(*args).v_final_b.any()
+    pipeline.allow_bilateral_stopping = True
+    assert pipeline(*args).v_final_b[0, 1] > .25
+    assert pipeline.bilateral_stopping_used
 
 
 def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():

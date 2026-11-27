@@ -1,10 +1,15 @@
 """Identify observed wall constraints that leave room for a finite motion and brake."""
 
+from dataclasses import replace
+
 import torch
 from torch.nn import functional as F
 
+from .command_adapter import rotate_body_to_world
 from .escape_passage import moving_intercepts
-from .ics import AZIMUTH_SAMPLES, _fresh_history
+from .governor import clip_vector_norm
+from .ics import AZIMUTH_SAMPLES, ICSResult, _fresh_history, mounted_mid360_rays_body
+from .pipeline import ControlCorePipeline
 
 
 _LONGITUDINAL_BANDS = ((-1.15, -.70), (-.70, -.25), (-.25, .25), (.25, .70), (.70, 1.15))
@@ -108,3 +113,64 @@ def clear_bilateral_constraints(lidar, state, rays, governed, active, ratios, in
         if bool((fit & blocked[lane]).any() and ratios[lane].masked_fill(~active[lane] | fit, 1.).amin() >= .90):
             cleared[lane] = fit & active[lane]
     return cleared
+
+
+def apply_bilateral_stopping(lidar, state, rays, governed, interval, config, baseline):
+    """Recompute the final bound after removing only certified wall constraints."""
+    cache = baseline.cache
+    active = cache['active_mask']
+    closing = cache['approach_speed_m_s']
+    if config.range_rate_filter:
+        closing = torch.maximum(closing, (-cache['range_rate_m_s']).clamp_min(0.))
+    safe = cache['v_safe_m_s']
+    ratios = (safe/closing.clamp_min(torch.finfo(governed.dtype).tiny)).clamp(0., 1.)
+    emergency = baseline.metrics['emergency'] != 0.
+    cleared = clear_bilateral_constraints(lidar, state, rays, governed, active & ~emergency, ratios, interval)
+    changed = cleared.any(dim=1, keepdim=True)
+    if not bool(changed.any()):
+        return baseline
+    remaining = active & ~cleared
+    count = remaining.sum(dim=1, keepdim=True)
+    beta = ratios.masked_fill(~remaining, 1.).amin(dim=1, keepdim=True)
+    beta = torch.where(count > 0, beta, torch.full_like(beta, config.empty_active_set_beta))
+    worst = (safe-closing).masked_fill(~remaining, torch.inf).amin(dim=1, keepdim=True)
+    worst = torch.where(count > 0, worst, torch.zeros_like(worst))
+    metrics = dict(baseline.metrics)
+    metrics['beta'] = torch.where(changed, beta, metrics['beta'])
+    metrics['active_beam_count'] = torch.where(changed, count.to(governed.dtype), metrics['active_beam_count'])
+    metrics['worst_margin_m_s'] = torch.where(changed, worst, metrics['worst_margin_m_s'])
+    issued = clip_vector_norm(governed*metrics['beta'], config.velocity_limit_m_s)
+    velocity = torch.where(changed, issued, baseline.v_final_b)
+    return ICSResult(velocity, metrics, dict(cache, active_mask=remaining))
+
+
+class BilateralStoppingPipeline(ControlCorePipeline):
+    """Opt-in execution after the unchanged control pipeline and emergency decision."""
+
+    def __init__(self, baseline):
+        super().__init__(baseline.config)
+        self.lidar_rays_body = baseline.lidar_rays_body
+        self._anchor = baseline._anchor
+        self._last_ics_cache = baseline._last_ics_cache
+        self.allow_bilateral_stopping = False
+        self.bilateral_stopping_used = False
+
+    def __call__(self, lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                 explicit_reset, controller_quaternion_wxyz):
+        result = super().__call__(lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                                  explicit_reset, controller_quaternion_wxyz)
+        self.bilateral_stopping_used = False
+        if not self.allow_bilateral_stopping:
+            return result
+        rays = self.lidar_rays_body
+        if rays is None:
+            rays = mounted_mid360_rays_body(device=lidar_grid.device, dtype=lidar_grid.dtype)
+        baseline = ICSResult(result.v_final_b, result.ics_metrics, self._last_ics_cache)
+        certified = apply_bilateral_stopping(lidar_grid, state_vec, rays, result.v_gov_b,
+                                            history_dt_s, self.config.ics, baseline)
+        if certified is baseline:
+            return result
+        self.bilateral_stopping_used = True
+        self._last_ics_cache = certified.cache
+        world = rotate_body_to_world(certified.v_final_b, controller_quaternion_wxyz)
+        return replace(result, v_final_b=certified.v_final_b, v_final_w=world, ics_metrics=certified.metrics)
