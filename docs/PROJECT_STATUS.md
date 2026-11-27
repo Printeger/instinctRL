@@ -52,6 +52,8 @@
 
 独立折返停驻复验的 32 个松杆全部达标。街道轨迹 20 在零令时向来物轨迹启动普通避让，随后接触并重置，31/32 条首飞完整。已保留原件，按实测来物和建筑边缘验证同侧斜向撤离。 [独立失败回执](experiments/instinct-continuous-command/independent_sampled_turn/REPORT.md)
 
+零令同侧斜向避让的同输入复验完成 32/32 条首飞及预设松杆，零接触与重置。原接触窗口动态净空从 −0.05805 米升至 0.21621 米。同条街道轨迹在 114.375 秒降至 0.05257 米，短程净空门槛未过，原件已保存。后续独立验收使用仿真中的 Crazy Command Generator。 [同输入失败回执](experiments/instinct-continuous-command/hover_escape_own_side/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)

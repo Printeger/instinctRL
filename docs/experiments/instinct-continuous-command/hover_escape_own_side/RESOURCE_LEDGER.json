@@ -1,1 +1,116 @@
-{"caps":{"allocated_gpu_seconds":1390,"live_starts":1,"live_wall_seconds":1390,"major_scientific_candidates":1,"nontraining_transitions":38400,"output_actual_plus_unreleased_reservations_bytes":805306368,"queue_seconds":180,"simulator_initializations":1,"training_checkpoint_writes":1,"training_transitions":1},"historical_charged":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"new_reservations":[{"id":"ROUND-SYSTEM","resources":{"output_actual_plus_unreleased_reservations_bytes":0},"status":"UNRELEASED","storage_plan":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/hover_escape_own_side/STORAGE.json","sha256":"4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"}}],"new_used":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"protected_confirmation_delivery_repair":{"allocated_gpu_seconds":0,"live_starts":0,"live_wall_seconds":0,"major_scientific_candidates":0,"nontraining_transitions":0,"output_actual_plus_unreleased_reservations_bytes":0,"queue_seconds":0,"simulator_initializations":0,"training_checkpoint_writes":0,"training_transitions":0},"resource_policy":{"path":"/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/hover_escape_own_side/RESOURCE_POLICY.json","sha256":"5ed0a8e5d7133c1b64148dfbb2dc7f1bbc5ab165820bd020d76e69c852dde9f7"},"status":"FROZEN"}
+{
+  "caps": {
+    "allocated_gpu_seconds": 1390,
+    "live_starts": 1,
+    "live_wall_seconds": 1390,
+    "major_scientific_candidates": 1,
+    "nontraining_transitions": 38400,
+    "output_actual_plus_unreleased_reservations_bytes": 805306368,
+    "queue_seconds": 180,
+    "simulator_initializations": 1,
+    "training_checkpoint_writes": 1,
+    "training_transitions": 1
+  },
+  "first_live_unix": 1795813549,
+  "historical_charged": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "new_reservations": [
+    {
+      "id": "ROUND-SYSTEM",
+      "resources": {
+        "output_actual_plus_unreleased_reservations_bytes": 0
+      },
+      "status": "UNRELEASED",
+      "storage_plan": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/hover_escape_own_side/STORAGE.json",
+        "sha256": "4f9598711bc296f2edf522e01727bc57d240c9c56cd4579f558fe5aadbd7d729"
+      }
+    },
+    {
+      "closed_evidence_bytes": 113967104,
+      "id": "R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-55",
+      "purpose": "development",
+      "receipt": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-55/control/receipt.json",
+        "sha256": "f8b0aa0d5f80286f73aa2055a888ce19b1047bd99ac95d98aabe73110fbd033a"
+      },
+      "resource_policy": {
+        "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/hover_escape_own_side/RESOURCE_POLICY.json",
+        "sha256": "5ed0a8e5d7133c1b64148dfbb2dc7f1bbc5ab165820bd020d76e69c852dde9f7"
+      },
+      "resources": {
+        "allocated_gpu_seconds": 460,
+        "live_starts": 1,
+        "live_wall_seconds": 460,
+        "nontraining_transitions": 38400,
+        "output_actual_plus_unreleased_reservations_bytes": 113967104,
+        "queue_seconds": 180,
+        "simulator_initializations": 1,
+        "training_transitions": 0
+      },
+      "settlement": {
+        "charged_seconds": 460,
+        "original_resources": {
+          "allocated_gpu_seconds": 1390,
+          "live_starts": 1,
+          "live_wall_seconds": 1390,
+          "nontraining_transitions": 38400,
+          "output_actual_plus_unreleased_reservations_bytes": 805306368,
+          "queue_seconds": 180,
+          "simulator_initializations": 1,
+          "training_transitions": 0
+        },
+        "policy": "Ceiling of entire supervised lifetime including gate and cleanup; all other resources remain reserved. No move to new_used or historical refund.",
+        "receipt": {
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-55/control/receipt.json",
+          "sha256": "f8b0aa0d5f80286f73aa2055a888ce19b1047bd99ac95d98aabe73110fbd033a"
+        }
+      },
+      "status": "TIME_SETTLED_OTHER_RESOURCES_UNRELEASED",
+      "storage_new_binding": {
+        "attempt_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-55",
+        "native_dir": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-55/native"
+      },
+      "storage_reservation_id": "ROUND-SYSTEM"
+    }
+  ],
+  "new_used": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "protected_confirmation_delivery_repair": {
+    "allocated_gpu_seconds": 0,
+    "live_starts": 0,
+    "live_wall_seconds": 0,
+    "major_scientific_candidates": 0,
+    "nontraining_transitions": 0,
+    "output_actual_plus_unreleased_reservations_bytes": 0,
+    "queue_seconds": 0,
+    "simulator_initializations": 0,
+    "training_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "resource_policy": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/hover_escape_own_side/RESOURCE_POLICY.json",
+    "sha256": "5ed0a8e5d7133c1b64148dfbb2dc7f1bbc5ab165820bd020d76e69c852dde9f7"
+  },
+  "status": "DEVELOPMENT_HOVER_OWN_SIDE_CLEARANCE_FAILED"
+}
