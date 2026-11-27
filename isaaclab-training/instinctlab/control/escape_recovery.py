@@ -61,6 +61,7 @@ CROSSING_STOP_25_VERSION = 'm4-escape-brake-tube-p25-crossing-stop-v1'
 CROSSING_STOP_25_V2 = 'm4-escape-brake-tube-p25-crossing-stop-v2'
 CROSSING_STOP_25_V3 = 'm4-escape-brake-tube-p25-crossing-stop-v3'
 CROSSING_STOP_25_V4 = 'm4-escape-brake-tube-p25-crossing-stop-v4'
+CROSSING_STOP_25_V5 = 'm4-escape-brake-tube-p25-crossing-stop-v5'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -80,7 +81,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25,
                        OPENING_STEERING_25_VERSION: 25, ALONG_INTERCEPT_25_VERSION: 25,
                        FINITE_INTERCEPT_25_VERSION: 25, CROSSING_STOP_25_VERSION: 25,
-                       CROSSING_STOP_25_V2: 25, CROSSING_STOP_25_V3: 25, CROSSING_STOP_25_V4: 25}
+                       CROSSING_STOP_25_V2: 25, CROSSING_STOP_25_V3: 25,
+                       CROSSING_STOP_25_V4: 25, CROSSING_STOP_25_V5: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -99,7 +101,7 @@ class EscapeRecovery(EscapeOption):
                  intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
                  zero_recheck=False, reverse_diagonal=False, opening_steering=False, along_intercept=False,
                  finite_intercept=False, crossing_stop=False, crossing_stop_continuation=False,
-                 crossing_stop_shallow=False, crossing_stop_early=False):
+                 crossing_stop_shallow=False, crossing_stop_early=False, crossing_stop_compatible=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -148,6 +150,9 @@ class EscapeRecovery(EscapeOption):
         self.crossing_stop_continuation = crossing_stop_continuation
         self.crossing_stop_shallow = crossing_stop_shallow
         self.crossing_stop_early = crossing_stop_early
+        self.crossing_stop_compatible = crossing_stop_compatible
+        if crossing_stop_compatible and not crossing_stop_early:
+            raise ValueError('Compatible crossing continuation requires the earlier crossing profile')
         if crossing_stop_early:
             if not crossing_stop_shallow:
                 raise ValueError('Early crossing requires the confirmed crossing fallback')
@@ -1137,6 +1142,29 @@ class EscapeRecovery(EscapeOption):
                             move_on[continuation], checked_on[continuation], direction_on[continuation])
                 accepted = witness[use]
                 move[accepted], issued[accepted], direction[accepted] = action[use], checked[use], escape[use]
+                change[accepted] = True
+                renewed[accepted] = True
+        if self.crossing_stop_compatible:
+            request = history[:, 45:48]
+            speed = request.norm(dim=1)
+            nominal = original.v_final_b[consider]
+            prior_motion = (velocity[:, 3]*self.intercept_direction[lanes]).sum(dim=1)
+            blocked = (nominal.norm(dim=1) <= .02) & (prior_motion < .12)
+            compatible = ((speed >= .08) & (speed <= .30) & blocked & ~known_retreat & ~change
+                          & previously_confirmed[lanes] & (stopping[consider] < .36)).nonzero().flatten()
+            if len(compatible):
+                previous = self.intercept_direction[lanes[compatible]]
+                across = side[compatible]
+                retained = torch.where((previous*across).sum(dim=1, keepdim=True) >= 0., across, -across)
+                target = torch.nn.functional.normalize(retained-.22*along[compatible], dim=1)
+                use, action, checked, heading, _ = self.crossing_stop_trial(
+                    scans[compatible], history[compatible], config, position[compatible], motion[compatible],
+                    coast[compatible], radius[compatible], target[:, None], previous, nominal[compatible], minimum_beta=.9)
+                progress = (checked*request[compatible]).sum(dim=1)
+                required = .60*speed[compatible]*torch.maximum(speed[compatible], checked.norm(dim=1))
+                use &= progress >= required
+                accepted = compatible[use]
+                move[accepted], issued[accepted], direction[accepted] = action[use], checked[use], heading[use]
                 change[accepted] = True
                 renewed[accepted] = True
         selected[lanes[change]] = move[change]
