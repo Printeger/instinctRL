@@ -26,12 +26,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
-    CROSSING_STOP_25_V22, CROSSING_STOP_25_V23,
+    CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V22, CROSSING_STOP_25_V23)
+CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V22, CROSSING_STOP_25_V23,
+                             CROSSING_STOP_25_V24)
 HOVER_REFERENCE_RESERVE_VERSIONS = (CROSSING_STOP_25_V20, *CROSSING_RESTART_VERSIONS)
 CLIPPED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V18, *HOVER_REFERENCE_RESERVE_VERSIONS)
 VERIFIED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V17, *CLIPPED_RETREAT_ONSET_VERSIONS)
@@ -202,7 +203,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 retain_only_clipped_retreat=version in CLIPPED_RETREAT_ONSET_VERSIONS,
                                                 verify_hover_reference_reserve=version in HOVER_REFERENCE_RESERVE_VERSIONS,
                                                 verify_crossing_restart=version in CROSSING_RESTART_VERSIONS,
-                                                verify_overlapping_stop=version == CROSSING_STOP_25_V23)
+                                                verify_overlapping_stop=version == CROSSING_STOP_25_V23,
+                                                verify_brake_recovery=version == CROSSING_STOP_25_V24)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -352,6 +354,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if self.escape_option.verify_overlapping_stop:
                     self.extras['pre_reset']['escape_option']['overlapping_stop_verified'] = (
                         self.escape_option.overlapping_stop_verified.detach().clone())
+                if self.escape_option.verify_brake_recovery:
+                    option = self.extras['pre_reset']['escape_option']
+                    option['brake_recovery_verified'] = self.escape_option.brake_recovery_verified.detach().clone()
+                    option['brake_recovery_bounds'] = self.escape_option.brake_recovery_bounds.detach().clone()
                 if self.bilateral_stopping:
                     used = [pipeline.bilateral_stopping_used for pipeline in self._control_pipelines]
                     self.extras['pre_reset']['escape_option']['bilateral_stopping'] = self.escape_option.applied.new_tensor(used)

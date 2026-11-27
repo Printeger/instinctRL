@@ -15,7 +15,7 @@ from .command_replay import (
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
-    LOCAL_WALL_STOPPING_EXECUTION, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTION,
+    LOCAL_WALL_STOPPING_EXECUTION, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTION, BRAKE_RECOVERY_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -368,6 +368,9 @@ def audit(output, params, counters):
         overlapping_stop_profile = model['execution'] == OVERLAPPING_STOP_EXECUTION
         if model.get('verify_overlapping_stop', False) is not overlapping_stop_profile:
             raise ValueError('COMMAND_REPLAY_OVERLAPPING_STOP_PROFILE')
+        brake_recovery_profile = model['execution'] == BRAKE_RECOVERY_EXECUTION
+        if model.get('verify_brake_recovery', False) is not brake_recovery_profile:
+            raise ValueError('COMMAND_REPLAY_BRAKE_RECOVERY_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -519,6 +522,16 @@ def audit(output, params, counters):
                 if (('escape_overlapping_stop_verified' in row) != overlapping_stop_profile or len(overlap) != LANES
                         or any(type(used) is not bool for used in overlap)):
                     raise ValueError('COMMAND_REPLAY_OVERLAPPING_STOP_BINDING')
+                brake_recovery = row.get('escape_brake_recovery_verified', [False]*LANES)
+                brake_bounds = row.get('escape_brake_recovery_bounds', [[0., 0.]]*LANES)
+                if (('escape_brake_recovery_verified' in row) != brake_recovery_profile
+                        or ('escape_brake_recovery_bounds' in row) != brake_recovery_profile
+                        or len(brake_recovery) != LANES or len(brake_bounds) != LANES
+                        or any(type(used) is not bool or len(bounds) != 2
+                               or any(type(x) not in (int, float) or not math.isfinite(x) for x in bounds)
+                               or (not used and any(bounds))
+                               for used, bounds in zip(brake_recovery, brake_bounds, strict=True))):
+                    raise ValueError('COMMAND_REPLAY_BRAKE_RECOVERY_BINDING')
                 if any(((field in row) != tube_stopping_profile) or (field in row and len(row[field]) != LANES)
                        for field in TUBE_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BINDING')
@@ -582,6 +595,15 @@ def audit(output, params, counters):
                                     and math.hypot(*old['actor_state'][lane][-1][6:9]) >= .079999
                                     for old in rows[max(0, step-8):step]))):
                             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_BEHAVIOR')
+                    if brake_recovery[lane] and (not row['escape_active'][lane] or not row['escape_braking'][lane]
+                            or ranked[lane] or held[lane] or row['recovery_retreating'][lane] or tracked[lane]
+                            or restart[lane] or intercepted[lane] or continued[lane] or row['ics_emergency'][lane]
+                            or brake_bounds[lane][0] < .389999 or brake_bounds[lane][1] < .429999
+                            or row['ics_beta'][lane] < .89999 or row['selected_action'][lane] != row['action'][lane]
+                            or not .079999 <= math.hypot(*observed) <= .300001
+                            or any(frame[12] > .040001 for frame in actor)
+                            or dot(observed,row['v_final_w'][lane]) < .5999*dot(observed,observed)):
+                        raise ValueError('COMMAND_REPLAY_BRAKE_RECOVERY_BEHAVIOR')
                     if continued_edge[lane] and (not detour[lane]
                             or any(math.dist(old[6:9], actor[-1][6:9]) > .040001 for old in actor[:-1])
                             or not any(old['escape_finite_edge'][lane] and not old['escape_edge_continued'][lane]

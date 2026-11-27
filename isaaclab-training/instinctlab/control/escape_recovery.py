@@ -82,6 +82,7 @@ CROSSING_STOP_25_V20 = 'm4-escape-brake-tube-p25-crossing-stop-v20'
 CROSSING_STOP_25_V21 = 'm4-escape-brake-tube-p25-crossing-stop-v21'
 CROSSING_STOP_25_V22 = 'm4-escape-brake-tube-p25-crossing-stop-v22'
 CROSSING_STOP_25_V23 = 'm4-escape-brake-tube-p25-crossing-stop-v23'
+CROSSING_STOP_25_V24 = 'm4-escape-brake-tube-p25-crossing-stop-v24'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -108,7 +109,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V13: 25, CROSSING_STOP_25_V14: 25, CROSSING_STOP_25_V15: 25,
                        CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25, CROSSING_STOP_25_V18: 25,
                        CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25, CROSSING_STOP_25_V21: 25,
-                       CROSSING_STOP_25_V22: 25, CROSSING_STOP_25_V23: 25}
+                       CROSSING_STOP_25_V22: 25, CROSSING_STOP_25_V23: 25, CROSSING_STOP_25_V24: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -134,7 +135,7 @@ class EscapeRecovery(EscapeOption):
                  observed_heading_steering=False, tracked_resume=False, crossing_turn_between_samples=False,
                  hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
                  retain_only_clipped_retreat=False, verify_hover_reference_reserve=False,
-                 verify_crossing_restart=False, verify_overlapping_stop=False):
+                 verify_crossing_restart=False, verify_overlapping_stop=False, verify_brake_recovery=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -208,6 +209,12 @@ class EscapeRecovery(EscapeOption):
             self.crossing_restart_verified = torch.zeros_like(self.applied)
             self.crossing_restart_previous_b = torch.zeros_like(self.direction)
             self.crossing_restart_steps = torch.zeros_like(self.remaining)
+        self.verify_brake_recovery = verify_brake_recovery
+        if verify_brake_recovery:
+            if not verify_crossing_restart:
+                raise ValueError('Brake recovery requires verified crossing restart')
+            self.brake_recovery_verified = torch.zeros_like(self.applied)
+            self.brake_recovery_bounds = self.direction.new_zeros((lanes, 2))
         self.hover_escape_own_side = hover_escape_own_side
         if hover_escape_own_side:
             if not (crossing_turn_between_samples and crossing_stop and rank_return):
@@ -355,6 +362,9 @@ class EscapeRecovery(EscapeOption):
             self.crossing_restart_verified[lanes] = False
             self.crossing_restart_previous_b[lanes] = 0.
             self.crossing_restart_steps[lanes] = 0
+        if self.verify_brake_recovery:
+            self.brake_recovery_verified[lanes] = False
+            self.brake_recovery_bounds[lanes] = 0.
         if self.recenter_rearm:
             self.rearm_steps[lanes] = 0
         if self.rank_return:
@@ -1189,6 +1199,50 @@ class EscapeRecovery(EscapeOption):
         self.reserve_direction_seen[accepted] = False
         self.tracked_resume_used[accepted] = False
         self.tracked_resume_witness[accepted] = False
+
+    def verify_request_during_braking(self, lidar, state, selected, actor_action, config):
+        from .escape_passage import braking_recovery_clearance, moving_intercepts
+
+        self.brake_recovery_verified.zero_()
+        self.brake_recovery_bounds.zero_()
+        history = state.reshape(-1, 4, 13)
+        request = history[:, -1, 6:9]
+        speed = request.norm(dim=1)
+        age = history[:, :, 12]
+        fresh = (age <= .04).all(dim=1) & (age.diff(dim=1).abs() <= .03).all(dim=1)
+        fresh &= (history[:, :, :3].norm(dim=2).amax(dim=1) <= .50)
+        protected = (self.intercepted | self.intercept_continued | self.retreating | self.ranked | self.holding
+                     | self.static_stop_verified | self.handed_off | self.offset_stopped | self.crossing_restart_verified)
+        eligible = self.applied & self.braking & ~protected & fresh & (speed >= .08) & (speed <= .30)
+        trials = eligible.nonzero().flatten()
+        if not len(trials):
+            return
+        scans, observed = lidar[trials], state[trials]
+        actor = self.issued(scans, observed, actor_action[trials], config)
+        guarded = self.issued(scans, observed, selected[trials], config)
+        target = actor.v_final_b
+        progress = (target*request[trials]).sum(dim=1)
+        gain = ((target-guarded.v_final_b)*request[trials]).sum(dim=1)
+        magnitude = speed[trials].square()
+        suitable = ((actor.metrics['beta'][:, 0] >= .90) & (progress >= .60*magnitude) & (gain >= .30*magnitude)
+                    & (actor.metrics['emergency'][:, 0] == 0.) & (guarded.metrics['emergency'][:, 0] == 0.))
+        if not bool(suitable.any()):
+            return
+        lanes = trials[suitable]
+        rays = self.detector._full_rays
+        fitted, position, motion, coast, radius = moving_intercepts(lidar[lanes], state[lanes], rays, fresh[lanes],
+            command_response=(self.command_offsets[lanes], self.command_coast[lanes]), maximum_range_m=2.65)
+        if not len(fitted):
+            return
+        observed = lanes[fitted]
+        floor = braking_recovery_clearance(lidar[observed], rays, state[observed], position, motion,
+                                           coast, radius, target[suitable][fitted])
+        verified = (floor[:, 0] >= .39) & (floor[:, 1] >= .43)
+        accepted = observed[verified]
+        # This command is independent of how the braking option evolves next tick.
+        selected[accepted] = actor_action[accepted]
+        self.brake_recovery_verified[accepted] = True
+        self.brake_recovery_bounds[accepted] = floor[verified]
 
     def crossing_stop_trial(self, scans, history, config, position, motion, coast, radius,
                             directions, previous_direction, current, *, minimum_beta=0.):
@@ -2034,6 +2088,8 @@ class EscapeRecovery(EscapeOption):
                 self.resume_after_interception(selected, action)
             if self.verify_crossing_restart:
                 self.keep_request_at_crossing_restart(policy['lidar_grid'], state, selected, action, config)
+            if self.verify_brake_recovery:
+                self.verify_request_during_braking(policy['lidar_grid'], state, selected, action, config)
             if self.wall_tangent:
                 self.tangent_used &= ~self.intercepted
             if self.finite_edge:

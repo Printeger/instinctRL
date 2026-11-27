@@ -621,6 +621,33 @@ def crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued
     return torch.minimum(swept, settled)
 
 
+def braking_recovery_clearance(lidar, rays, state, position, motion, coast, radius, velocity):
+    """Check continuing or stopping the newly issued request across the measured path."""
+    mover_speed = motion.norm(dim=1, keepdim=True)
+    along = motion/mover_speed
+    across = torch.stack((-along[:, 1], along[:, 0]), dim=1)
+    parked = position-.35*coast
+    queued = .10*state[:, 48:51].norm(dim=1)
+    target = velocity[:, None]
+    witness = []
+    for hold in (.60, 2.4):
+        wall = observed_path_clearance(lidar, rays, torch.zeros_like(coast), target, hold_s=hold)[:, 0]
+        minimum = wall-.35*coast.norm(dim=1)-.003
+        for angle in (-.04, 0., .04):
+            direction = F.normalize(along+angle*across, dim=1)
+            normal = torch.stack((-direction[:, 1], direction[:, 0]), dim=1)
+            start = (parked*normal).sum(dim=1)
+            end = start-hold*(velocity[:, :2]*normal).sum(dim=1)
+            minimum = torch.minimum(minimum, torch.minimum(start.abs(), start.sign()*end)-radius)
+            for difference in (-.12, 0., .12):
+                varied = direction*(mover_speed+difference).clamp_min(.20)
+                sweep = intercept_scores(position, varied, coast, radius, target, hold_s=hold,
+                                         preview_steps=121, release_early=True)[:, 0]
+                minimum = torch.minimum(minimum, sweep)
+        witness.append(minimum-queued)
+    return torch.stack(witness, dim=1)
+
+
 def approach_scores(lidar, state, rays, issued):
     """Estimate separation for admissible escape commands after a nearby reversal."""
     accepted, history, elapsed, _ = track_nearby_return(lidar, state, rays)
