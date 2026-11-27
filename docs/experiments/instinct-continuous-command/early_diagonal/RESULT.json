@@ -1,0 +1,233 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "0": 4,
+          "1": 1,
+          "18": 1,
+          "19": 1,
+          "21": 1,
+          "22": 1,
+          "24": 2,
+          "25": 1,
+          "26": 3,
+          "27": 1,
+          "28": 1,
+          "29": 1,
+          "30": 4,
+          "31": 1,
+          "4": 2,
+          "6": 2
+        },
+        "escape_finite_edge": {
+          "0": 37,
+          "1": 54,
+          "10": 7,
+          "11": 19,
+          "12": 1,
+          "13": 13,
+          "14": 6,
+          "15": 28,
+          "16": 11,
+          "17": 1,
+          "18": 1,
+          "19": 9,
+          "2": 51,
+          "20": 2,
+          "21": 3,
+          "22": 5,
+          "23": 1,
+          "24": 43,
+          "25": 19,
+          "26": 34,
+          "27": 1,
+          "28": 5,
+          "29": 17,
+          "3": 20,
+          "30": 15,
+          "31": 8,
+          "4": 46,
+          "5": 14,
+          "6": 38,
+          "7": 17,
+          "8": 29,
+          "9": 3
+        },
+        "escape_intercept_continued": {
+          "16": 20,
+          "18": 4,
+          "19": 4,
+          "20": 4
+        },
+        "escape_intercepted": {
+          "16": 56,
+          "17": 8,
+          "18": 65,
+          "19": 30,
+          "20": 27,
+          "21": 28,
+          "22": 81,
+          "23": 12
+        },
+        "escape_offset_stop": {
+          "16": 5,
+          "17": 6,
+          "18": 18,
+          "19": 21,
+          "20": 19,
+          "21": 2,
+          "22": 4,
+          "23": 5
+        },
+        "escape_wall_tangent": {
+          "0": 5,
+          "1": 14,
+          "12": 1,
+          "13": 18,
+          "14": 18,
+          "15": 18,
+          "24": 100,
+          "25": 101,
+          "26": 71,
+          "27": 119,
+          "29": 2,
+          "30": 5,
+          "31": 27,
+          "7": 9,
+          "8": 15,
+          "9": 8
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-26/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "efe8df5f966e9c37907e78759feff154e3542ec610e50b923d27178fdce80e40"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 26,
+            "m": 0.4883604496717453,
+            "time_s": 79.06
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 31,
+            "m": 0.5346203756689225,
+            "time_s": 83.61
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 5,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 1,
+            "m": 0.3121943639555348,
+            "time_s": 36.34
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 7,
+          "contacts": [
+            {
+              "lane": 16,
+              "step": 102
+            }
+          ],
+          "first_flight_s": 850.3,
+          "fixed_stops_failed": [
+            {
+              "id": "lane16-first-stop",
+              "lane": 16
+            },
+            {
+              "id": "lane20-first-stop",
+              "lane": 20
+            }
+          ],
+          "minimum": {
+            "lane": 16,
+            "m": -0.07876242929227079,
+            "time_s": 10.3
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 15,
+            "m": 0.4787661112970696,
+            "time_s": 13.045
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-26/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-26/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "99177f3e020be272435278c570468b2b45c6b284ab87ad297ad244ce8cc4c2c9"
+      },
+      "windows": []
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-26/analysis/binding.json",
+    "sha256": "3736afc68db086f87c57fc2be1ef456262e4074cdb80f4065ecd66ee860b9e67"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-26/analysis/clearance-and-progress.json",
+    "sha256": "0f908756618c1f0c81e2389ba924b21ff4967d197cd223153d1162357df1fb51"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 1,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "fbf845b23ba5f2b173f20c695588ae739d31f429",
+  "status": "DEVELOPMENT_MATCHED_SAFETY_AND_STOP_FAILED_CLOSED"
+}
