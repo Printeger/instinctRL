@@ -59,6 +59,7 @@ ALONG_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-along-intercept-v1'
 FINITE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-finite-intercept-v1'
 CROSSING_STOP_25_VERSION = 'm4-escape-brake-tube-p25-crossing-stop-v1'
 CROSSING_STOP_25_V2 = 'm4-escape-brake-tube-p25-crossing-stop-v2'
+CROSSING_STOP_25_V3 = 'm4-escape-brake-tube-p25-crossing-stop-v3'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -77,7 +78,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
                        RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25,
                        OPENING_STEERING_25_VERSION: 25, ALONG_INTERCEPT_25_VERSION: 25,
-                       FINITE_INTERCEPT_25_VERSION: 25, CROSSING_STOP_25_VERSION: 25, CROSSING_STOP_25_V2: 25}
+                       FINITE_INTERCEPT_25_VERSION: 25, CROSSING_STOP_25_VERSION: 25,
+                       CROSSING_STOP_25_V2: 25, CROSSING_STOP_25_V3: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -95,7 +97,8 @@ class EscapeRecovery(EscapeOption):
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
                  intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
                  zero_recheck=False, reverse_diagonal=False, opening_steering=False, along_intercept=False,
-                 finite_intercept=False, crossing_stop=False, crossing_stop_continuation=False):
+                 finite_intercept=False, crossing_stop=False, crossing_stop_continuation=False,
+                 crossing_stop_shallow=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -142,6 +145,9 @@ class EscapeRecovery(EscapeOption):
         self.finite_intercept = finite_intercept
         self.crossing_stop = crossing_stop
         self.crossing_stop_continuation = crossing_stop_continuation
+        self.crossing_stop_shallow = crossing_stop_shallow
+        if crossing_stop_shallow and not crossing_stop_continuation:
+            raise ValueError('Crossing stop shallow retry requires same-side continuation')
         if crossing_stop_continuation and not crossing_stop:
             raise ValueError('Crossing stop continuation requires crossing stop')
         if crossing_stop and not finite_intercept:
@@ -796,24 +802,30 @@ class EscapeRecovery(EscapeOption):
         self.resumed[release] = True
 
     def crossing_stop_trial(self, scans, history, config, position, motion, coast, radius,
-                            directions, previous_direction, current):
+                            directions, previous_direction, current, *, minimum_beta=0.):
         from .escape_passage import crossing_stop_clearance
 
         actions = torch.cat((history.new_zeros((*directions.shape[:2], 1)),
                              .5+(SPEED_M_S-.0001)*directions), dim=2)
-        checked = torch.stack([self.issued(scans, history, a, config).v_final_b
-                               for a in actions.unbind(dim=1)], dim=1)
+        velocities, betas = [], []
+        for action in actions.unbind(dim=1):
+            result = self.issued(scans, history, action, config)
+            velocities.append(result.v_final_b)
+            betas.append(result.metrics['beta'])
+        checked = torch.stack(velocities, dim=1)
+        beta = torch.cat(betas, dim=1)
         velocities = torch.cat((current[:, None], checked), dim=1)
         clearance = crossing_stop_clearance(scans, self.detector._full_rays, position, motion, coast, radius,
                                             velocities, hold_s=2.6)
-        feasible = ((checked*directions).sum(dim=2) >= .12) & (clearance[:, 1:] >= .39)
+        available = (checked*directions).sum(dim=2) >= .12
+        feasible = available & (beta >= minimum_beta) & (clearance[:, 1:] >= .39)
         confirmed = (directions*previous_direction[:, None]).sum(dim=2) >= .95
         ranking = clearance[:, 1:]+.025*confirmed
         choice = ranking.masked_fill(~feasible, -torch.inf).argmax(dim=1)
         rows = torch.arange(len(history), device=history.device)
         gain = clearance[rows, choice+1]-clearance[:, 0]
         use = feasible[rows, choice] & (clearance[:, 0] < .39) & (gain >= .075)
-        return use, actions[rows, choice], checked[rows, choice], directions[rows, choice]
+        return use, actions[rows, choice], checked[rows, choice], directions[rows, choice], available
 
     def continue_crossing_stop(self, scans, history, config, position, motion, coast, radius,
                                across, along, previous, current):
@@ -1007,12 +1019,26 @@ class EscapeRecovery(EscapeOption):
                 options = torch.stack((across-reverse, -across-reverse, previous), dim=1)
                 options = torch.nn.functional.normalize(options, dim=2)
                 current = torch.where(change[witness, None], issued[witness], original.v_final_b[consider][witness])
-                use, action, checked, escape = self.crossing_stop_trial(
+                use, action, checked, escape, available = self.crossing_stop_trial(
                     scans[witness], history[witness], config, position[witness], motion[witness],
                     coast[witness], radius[witness], options, previous, current)
                 if self.crossing_stop_continuation:
                     prior = previously_confirmed[pending]
                     use &= ~prior | ((previous*escape).sum(dim=1) >= 0.)
+                    if self.crossing_stop_shallow:
+                        retry = (prior & ~use & ~available[:, 2]).nonzero().flatten()
+                        if len(retry):
+                            subset = witness[retry]
+                            same_side = torch.where((previous[retry]*side[subset]).sum(dim=1, keepdim=True) >= 0.,
+                                                    side[subset], -side[subset])
+                            offset = .08749*along[subset]  # tangent of five degrees
+                            options = torch.nn.functional.normalize(torch.stack((same_side-offset, same_side+offset), dim=1), dim=2)
+                            confirmed, shifted, sent, bearing, _ = self.crossing_stop_trial(
+                                scans[subset], history[subset], config, position[subset], motion[subset], coast[subset],
+                                radius[subset], options, previous[retry], current[retry], minimum_beta=.9)
+                            chosen = retry[confirmed]
+                            use[chosen] = True
+                            action[chosen], checked[chosen], escape[chosen] = shifted[confirmed], sent[confirmed], bearing[confirmed]
                     continued = (prior & ~use).nonzero().flatten()
                     if len(continued):
                         subset = witness[continued]
