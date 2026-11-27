@@ -86,7 +86,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
                     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
                     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
-                    OBSERVED_HEADING_EXECUTION, SHALLOW_STEERING_EXECUTIONS,
+                    CROSSING_SAMPLED_TURN_EXECUTION, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -158,8 +158,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected.update(static_scan_stop=True, crossing_reference=True)
                     if override in SHALLOW_STEERING_EXECUTIONS:
                         expected['shallow_steering'] = True
-                    if override == OBSERVED_HEADING_EXECUTION:
+                    if override in OBSERVED_HEADING_EXECUTIONS:
                         expected.update(observed_heading_steering=True, tracked_resume=True)
+                    if override == CROSSING_SAMPLED_TURN_EXECUTION:
+                        expected['crossing_turn_between_samples'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

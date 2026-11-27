@@ -236,7 +236,7 @@ def clear_opening_crossing_at_stop(lidar, state, rays, command_response, emergen
 
 
 def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, mount_offset, emergency_m,
-                                     previously_verified):
+                                     previously_verified, *, ordinary_onset=None):
     """Bound clearance from every observed segment of a reversing mover's line."""
     history = state.reshape(-1, 4, 13)
     ages = history[:, :, 12]
@@ -263,6 +263,8 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
     agreement = (axis*axis[:, -1:]).sum(dim=2)
     reversal = (agreement[:, 0] <= -.995) & (agreement[:, 1] >= .995)
     straight = (agreement[:, :2] >= .995).all(dim=1) & previously_verified[lanes]
+    traveling = (speed >= .20) & (speed <= 1.5)
+    established = (reversal | straight) & traveling.all(dim=1)
 
     # Ranges start at the calibrated LiDAR, while the clearance envelope is
     # centered on the vehicle. Use the full perpendicular distance to the line.
@@ -272,9 +274,22 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
     radius = radii.amax(dim=1)
     drift = .35*coast.norm(dim=1)+.10*local_history[:, 48:51].norm(dim=1)
     separation = lateral.norm(dim=2).amin(dim=1)-radius-drift-.002
+    clears_line = established & (separation >= .45)
+    if ordinary_onset is not None:
+        # A reversal within a scan interval can leave little net displacement.
+        # Require the two moving intervals to witness the line independently.
+        small = speed <= .08
+        transverse = segments-(segments*axis[:, -1:]).sum(dim=2, keepdim=True)*axis[:, -1:]
+        aligned_pause = transverse.norm(dim=2)*local_times.diff(dim=1) <= .005
+        turn = (ordinary_onset[lanes] & traveling[:, 0] & traveling[:, 2]
+                & small[:, 1] & aligned_pause[:, 1] & (agreement[:, 0] <= -.995))
+        supported_distance = lateral.norm(dim=2).masked_fill(~traveling, torch.inf).amin(dim=1)
+        supported_distance -= radius+drift+.002
+        clears_line &= ~ordinary_onset[lanes] | previously_verified[lanes]
+        clears_line |= turn & (supported_distance >= .50)
     nearest, others, on_mover = fitted_sphere_returns(scans, rays, centers[:, -1], radii[:, -1])
-    clear[lanes] = (supported & valid.all(dim=1) & (reversal | straight) & ((speed >= .20) & (speed <= 1.5)).all(dim=1)
-                    & (along[:, -1] < 0.) & (radius-radii.amin(dim=1) <= .04) & (separation >= .45)
+    clear[lanes] = (supported & valid.all(dim=1) & clears_line
+                    & (along[:, -1] < 0.) & (radius-radii.amin(dim=1) <= .04)
                     & (nearest >= emergency_m) & (others >= .85) & others.isfinite() & on_mover)
     return clear
 
