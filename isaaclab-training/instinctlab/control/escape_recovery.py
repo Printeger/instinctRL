@@ -35,6 +35,7 @@ TURN_FIT_25_VERSION = 'm4-escape-brake-tube-p25-turn-fit-v1'
 INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v1'
 ALIGNED_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v2'
 RESERVE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v3'
+COMMAND_HANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-command-handoff-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -43,7 +44,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25,
                        RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25,
                        STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25, INTERCEPT_25_VERSION: 25,
-                       ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25}
+                       ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25,
+                       COMMAND_HANDOFF_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -56,7 +58,7 @@ class EscapeRecovery(EscapeOption):
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
-                 intercept_reserve=False):
+                 intercept_reserve=False, command_handoff=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -80,6 +82,9 @@ class EscapeRecovery(EscapeOption):
         self.intercept = intercept
         self.align_intercept = align_intercept
         self.intercept_reserve = intercept_reserve
+        self.command_handoff = command_handoff
+        if command_handoff:
+            self.handed_off = torch.zeros_like(self.applied)
         if intercept:
             self.intercepted = torch.zeros_like(self.applied)
         if align_intercept:
@@ -132,6 +137,8 @@ class EscapeRecovery(EscapeOption):
         if self.align_intercept:
             self.command_offsets[lanes] = 0.
             self.command_coast[lanes] = 0.
+        if self.command_handoff:
+            self.handed_off[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -465,6 +472,42 @@ class EscapeRecovery(EscapeOption):
         emergency = ((depth < threshold) & (valid > .5) & (reliability >= config.ics.min_reliability)).flatten(1).any(dim=1)
         self.rearm_steps = torch.where(emergency, RECENTER_REARM_STEPS, (self.rearm_steps-1).clamp_min(0))
 
+    def handoff_changed_command(self, lidar, state, selected, action, config):
+        from .escape_passage import clear_to_end_escape
+
+        self.handed_off.zero_()
+        recent = torch.stack((state[:, 32:35], state[:, 45:48]), dim=1)
+        speed = recent.norm(dim=2)
+        older, latest = (recent/speed[:, :, None].clamp_min(.001)).unbind(dim=1)
+        changed = (older*latest).sum(dim=1) <= .25
+        basis = self.retreat_basis
+        moved_away = ((basis*older).sum(dim=1) <= -.35) & ((basis*latest).sum(dim=1) >= -.15)
+        ordinary = (self.applied & (self.remaining < DURATION_STEPS-1) & ~self.ranked
+                    & ~self.braking & ~self.retreating)
+        lanes = (changed & moved_away & ordinary & (speed >= .08).all(dim=1)).nonzero().flatten()
+        if not len(lanes):
+            return
+        scans, history, heading = lidar[lanes], state[lanes], latest[lanes]
+        observed = ((scans[:, 1::3] > .5) & (scans[:, 2::3] > .55)).all(dim=1).flatten(1)
+        forward = (heading @ self.detector._full_rays.T) >= .70
+        coverage = (forward & observed).sum(dim=1)/forward.sum(dim=1).clamp_min(1)
+        clear = (coverage >= .45) & clear_to_end_escape(scans, history, minimum_coverage=.50)
+        lanes, scans, history, heading = lanes[clear], scans[clear], history[clear], heading[clear]
+        if not len(lanes):
+            return
+        actor = self.issued(scans, history, action[lanes], config)
+        held = self.issued(scans, history, selected[lanes], config)
+        progress = (actor.v_final_b*heading).sum(dim=1)
+        old_progress = (held.v_final_b*heading).sum(dim=1)
+        usable = (actor.metrics['beta'].flatten() >= .90) & (actor.metrics['emergency'].flatten() == 0.)
+        release = lanes[usable & (progress >= .60*speed[lanes, 1]) & (progress-old_progress >= .12)]
+        selected[release] = action[release]
+        self.applied[release] = False
+        self.remaining[release] = 0
+        self.cooldown[release] = 0
+        self.since_escape[release] = RECOVERY_LIMIT
+        self.handed_off[release] = True
+
     def avoid_interception(self, lidar, state, selected, config):
         from .escape_passage import intercept_scores, moving_intercepts
 
@@ -515,6 +558,8 @@ class EscapeRecovery(EscapeOption):
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
         selected = self._apply_recovery(policy, action, config)
+        if self.command_handoff:
+            self.handoff_changed_command(policy['lidar_grid'], policy['state_vec'], selected, action, config)
         if self.intercept:
             state = policy['state_vec']
             if self.align_intercept:

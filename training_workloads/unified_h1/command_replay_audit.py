@@ -5,7 +5,8 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S, CROSSING_START_M, LANES, LAYOUTS,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTION, CONDITIONS, CROSSING_SPEED_M_S,
+    CROSSING_START_M, LANES, LAYOUTS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
 )
@@ -322,6 +323,11 @@ def audit(output, params, counters):
                 intercepted = row.get('escape_intercepted', [False]*LANES)
                 if len(intercepted) != LANES or any(type(value) is not bool for value in intercepted):
                     raise ValueError('COMMAND_REPLAY_INTERCEPT_LANES')
+                if ('escape_command_handoff' in row) != (model['execution'] == COMMAND_HANDOFF_EXECUTION):
+                    raise ValueError('COMMAND_REPLAY_HANDOFF_BINDING')
+                handoff = row.get('escape_command_handoff', [False]*LANES)
+                if len(handoff) != LANES or any(type(value) is not bool for value in handoff):
+                    raise ValueError('COMMAND_REPLAY_HANDOFF_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -342,6 +348,9 @@ def audit(output, params, counters):
                         if (held[lane] or row['ics_emergency'][lane] or abs(alpha) > 1.e-6 or abs(z-.5) > 1.e-6
                                 or min(planar_speed, abs(planar_speed-.30)) > 1.e-6):
                             raise ValueError('COMMAND_REPLAY_INTERCEPT_BEHAVIOR')
+                    if handoff[lane] and (row['escape_active'][lane] or math.hypot(*observed) < .079999
+                                          or (not intercepted[lane] and row['selected_action'][lane] != row['action'][lane])):
+                        raise ValueError('COMMAND_REPLAY_HANDOFF_BEHAVIOR')
                     if step and not rows[step-1]['reset'][lane]:
                         if actor[:-1] != rows[step-1]['actor_state'][lane][1:]:
                             raise ValueError('COMMAND_REPLAY_ACTOR_HISTORY')

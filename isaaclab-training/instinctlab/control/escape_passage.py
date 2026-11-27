@@ -19,7 +19,7 @@ def _closing_seed(ranges, reliable, elapsed):
     return best > .005, seed
 
 
-def clear_to_end_escape(lidar, state):
+def clear_to_end_escape(lidar, state, *, minimum_coverage=.60):
     """Use overlapping fresh scan support before ending an older escape at zero stick."""
     history = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
@@ -29,7 +29,7 @@ def clear_to_end_escape(lidar, state):
     gap = elapsed.diff(dim=1)
     fresh = (ages <= .04).all(dim=1) & ((gap >= .07) & (gap <= .13)).all(dim=1)
     stable = history[:, :, :3].norm(dim=2).amax(dim=1) <= .50
-    coverage = reliable.all(dim=1).to(ranges.dtype).flatten(1).mean(dim=1) >= .60
+    coverage = reliable.all(dim=1).to(ranges.dtype).flatten(1).mean(dim=1) >= minimum_coverage
     nearest = ranges[:, -1].masked_fill(~reliable[:, -1], torch.inf).flatten(1).amin(dim=1)
     closing, _ = _closing_seed(ranges, reliable, elapsed)
     return fresh & stable & coverage & (nearest >= .85) & ~closing

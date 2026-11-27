@@ -525,6 +525,38 @@ def test_stopping_reserve_only_strengthens_withdrawal_that_is_already_underway()
     assert action[1, 1].item() == pytest.approx(.30)
 
 
+def test_command_handoff_ends_obsolete_escape_and_preserves_current_threat(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=True,
+                            rank_return=True, command_handoff=True)
+    option.remaining[:] = 12
+    option.cooldown[:] = 10
+    option.applied[:] = True
+    option.retreat_basis[:, 0] = -1.
+    state = torch.zeros(3, 52)
+    state[:, 32] = .25
+    state[:, 46] = .25
+    scans = torch.ones(3, 12, 59, 360)
+    scans[:, 0::3] = 1.2
+    scans[1, 9, 30, 180] = .70
+    actor = torch.tensor([[0., .5, .73, .5]]*3)
+    held = torch.tensor([[0., .5, .20, .5]]*3)
+    held[2] = actor[2]
+    monkeypatch.setattr(option, 'issued', lambda scan, history, action, config: SimpleNamespace(
+        v_final_b=action[:, 1:]-.5, metrics={'beta': torch.ones(len(action), 1),
+                                           'emergency': torch.zeros(len(action), 1)}))
+
+    option.handoff_changed_command(scans, state, held, actor, None)
+    assert option.handed_off.tolist() == [True, False, False]
+    assert option.cooldown.tolist() == [0, 10, 10]
+    assert option.applied.tolist() == [False, True, True]
+    assert torch.equal(held[0], actor[0])
+    assert held[1, 2].item() == pytest.approx(.20)
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing
