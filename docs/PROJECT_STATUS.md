@@ -10,7 +10,7 @@ B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8
 
 近险后的回中暂缓消除了折返接触。按测距预测选向进一步将同一折返窗口的最小净空从 −0.051 m 提升到 +0.171 m，两臂 64 次完整首飞均零接触。随后比较原零令逃逸路径与其他可下发动作，110 s 整段 5 ms 净空从 −0.018 m 提升至 +0.157 m，32/32 条候选首飞零接触、零重置，其他四类布局下发与冻结推进窗口逐拍一致。直接曲面保持的两条新增首飞接触仍保留。松杆脱离旧逃逸的配对将走廊和室内窗口漂移降至 0.105 m 和 0.130 m，110 s 整段最小净空保持 +0.157 m。 [折返选向](experiments/instinct-continuous-command/rank/REPORT.md) · [曲面保持失败](experiments/instinct-continuous-command/curved/REPORT.md) · [110 秒正净空](experiments/instinct-continuous-command/hover_path/REPORT.md) · [松杆对照](experiments/instinct-continuous-command/stop_release/REPORT.md)
 
-120 秒独立 Crazy 指令复验完成 30/32 条首飞。两次街道接触分别出现在零令逃逸选向与非零令逃逸后，5 ms 净空下界最差 −0.087 m。相同权重的最近两段测距折返选向配对已启动，并继续追查非零令首拍。 [独立复验](experiments/instinct-continuous-command/novel/REPORT.md) · [折返配对](experiments/instinct-continuous-command/novel_turn/PLAN.md)
+120 秒独立 Crazy 指令复验完成 30/32 条首飞。两次街道接触分别出现在零令逃逸选向与非零令逃逸后，5 ms 净空下界最差 −0.087 m。最近两段测距的同权重折返配对消除了原两处接触，同两条街道首飞在较晚横穿再发生接触。两处均在原 ICS 裁零前出现可拟合的收近回波，继续验证提前横向撤离。 [独立复验](experiments/instinct-continuous-command/novel/REPORT.md) · [折返配对](experiments/instinct-continuous-command/novel_turn/REPORT.md) · [提前撤离验证](experiments/instinct-continuous-command/intercept/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
