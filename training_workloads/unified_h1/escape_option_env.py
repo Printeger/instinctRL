@@ -12,7 +12,7 @@ from instinctlab.control.escape_recovery import (
     CONFIRMED_TUBE_25_VERSION,
     CURVED_PASS_25_VERSION,
     EARLY_RETREAT_25_VERSION, EscapeRecovery,
-    FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
+    FALLBACK_25_VERSION, FAST_LATERAL_VERSION, FINITE_EDGE_25_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, NEIGHBOR_HISTORY_25_VERSION,
     OFFSET_STOP_25_VERSION,
@@ -25,7 +25,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, CONFIRMED_TUBE_25_VERSION)
+CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, FINITE_EDGE_25_VERSION)
+WALL_TANGENT_VERSIONS = (WALL_TANGENT_25_VERSION, *CONFIRMED_TUBE_VERSIONS)
 SETTLED_OFFSET_STOP_VERSIONS = (SETTLED_OFFSET_STOP_25_VERSION, *WALL_TANGENT_VERSIONS)
 NEIGHBOR_HISTORY_VERSIONS = (NEIGHBOR_HISTORY_25_VERSION, CONFIRMED_STANDOFF_25_VERSION, *SETTLED_OFFSET_STOP_VERSIONS)
 OFFSET_STOPS = (OFFSET_STOP_25_VERSION, *NEIGHBOR_HISTORY_VERSIONS)
@@ -116,7 +117,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 retreat_priority=version in PRIORITY_INTERCEPTS,
                                                 offset_stop=version in OFFSET_STOPS,
                                                 settled_offset_stop=version in SETTLED_OFFSET_STOP_VERSIONS,
-                                                wall_tangent=version in WALL_TANGENT_VERSIONS)
+                                                wall_tangent=version in WALL_TANGENT_VERSIONS,
+                                                finite_edge=version == FINITE_EDGE_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -134,7 +136,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         radius = .60 if confirm or version == BRAKE_TUBE_25_VERSION else 0.
         neighbor_history = version in NEIGHBOR_HISTORY_VERSIONS
         standoff = .45 if version == CONFIRMED_STANDOFF_25_VERSION else 0.
-        inner = .41 if version == CONFIRMED_TUBE_25_VERSION else 0.
+        inner = .41 if version in CONFIRMED_TUBE_VERSIONS else 0.
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
             actual = (ics.motion_tube_radius_m, ics.motion_tube_confirm_closure,
@@ -215,6 +217,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['offset_stop'] = self.escape_option.offset_stopped.detach().clone()
                 if self.escape_option.wall_tangent:
                     self.extras['pre_reset']['escape_option']['wall_tangent'] = self.escape_option.tangent_used.detach().clone()
+                if self.escape_option.finite_edge:
+                    self.extras['pre_reset']['escape_option']['finite_edge'] = self.escape_option.detour_used.detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:

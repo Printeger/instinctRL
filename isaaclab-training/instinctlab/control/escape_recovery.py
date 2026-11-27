@@ -44,6 +44,7 @@ CONFIRMED_STANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
 SETTLED_OFFSET_STOP_25_VERSION = 'm4-escape-brake-tube-p25-settled-offset-stop-v1'
 WALL_TANGENT_25_VERSION = 'm4-escape-brake-tube-p25-wall-tangent-v1'
 CONFIRMED_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
+FINITE_EDGE_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -57,7 +58,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        COMMAND_HANDOFF_25_VERSION: 25, OFFSET_STOP_25_VERSION: 25,
                        NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
-                       CONFIRMED_TUBE_25_VERSION: 25}
+                       CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -71,7 +72,7 @@ class EscapeRecovery(EscapeOption):
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
-                 offset_stop=False, settled_offset_stop=False, wall_tangent=False):
+                 offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -105,8 +106,11 @@ class EscapeRecovery(EscapeOption):
         self.offset_stop = offset_stop
         self.settled_offset_stop = settled_offset_stop
         self.wall_tangent = wall_tangent
+        self.finite_edge = finite_edge
         if wall_tangent:
             self.tangent_used = torch.zeros_like(self.applied)
+        if finite_edge:
+            self.detour_used = torch.zeros_like(self.applied)
         if offset_stop:
             self.offset_stopped = torch.zeros_like(self.applied)
         if command_handoff:
@@ -173,6 +177,8 @@ class EscapeRecovery(EscapeOption):
             self.offset_stopped[lanes] = False
         if self.wall_tangent:
             self.tangent_used[lanes] = False
+        if self.finite_edge:
+            self.detour_used[lanes] = False
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -679,6 +685,13 @@ class EscapeRecovery(EscapeOption):
             self.intercept_steps[lanes[commit]] = 4
             self.intercept_direction[lanes[commit]] = directions[commit, choice[commit]]
 
+    @staticmethod
+    def action_for_velocity(target, previous, governor):
+        smoothing = governor.smoothing
+        correction = (target-smoothing*previous)/(1.-smoothing)
+        scale = 2.*governor.v_corr_limit
+        return torch.cat((torch.zeros_like(correction[:, :1]), (.5+correction/scale).clamp(0., 1.)), dim=1)
+
     def retain_wall_tangent(self, lidar, state, action, config):
         from .escape_tangent import surface_tangent
 
@@ -702,17 +715,53 @@ class EscapeRecovery(EscapeOption):
         if not bool(confirmed.any()):
             return
         selected = lanes[blocked[confirmed]]
-        target = target[confirmed]
-        smoothing = config.governor.smoothing
-        correction = (target-smoothing*previous[selected])/(1.-smoothing)
-        scale = 2.*config.governor.v_corr_limit
-        trial = torch.cat((torch.zeros_like(correction[:, :1]), (.5+correction/scale).clamp(0., 1.)), dim=1)
+        trial = self.action_for_velocity(target[confirmed], previous[selected], config.governor)
         issued = self.issued(lidar[selected], state[selected], trial, config)
         head = command[selected]/speed[selected, None]
         progress = ((issued.v_final_b-original.v_final_b[blocked[confirmed]])*head).sum(dim=1)
         use = (issued.metrics['beta'][:, 0] >= .9) & (progress >= .055)
         action[selected[use]] = trial[use]
         self.tangent_used[selected[use]] = True
+
+    def progress_around_edge(self, lidar, state, action, config):
+        from .escape_tangent import finite_edge_targets
+
+        self.detour_used.zero_()
+        if config.governor.v_corr_limit <= 0.:
+            return
+        command, previous = extract_latest_commands(state)
+        speed = command.norm(dim=1)
+        ordinary = ~self.applied & ~self.retreating & ~self.recovering & ~self.braking
+        if self.wall_tangent:
+            ordinary &= ~self.tangent_used
+        lanes = (ordinary & (speed >= .10) & (speed <= .30) & (state[:, -1] <= .04)).nonzero().flatten()
+        if not len(lanes):
+            return
+        scans, history = lidar[lanes], state[lanes]
+        original = self.issued(scans, history, action[lanes], config)
+        blocked = ((original.metrics['beta'][:, 0] <= .25) & (original.metrics['emergency'][:, 0] == 0.)).nonzero().flatten()
+        if not len(blocked):
+            return
+        limiting = original.cache['active_mask'][blocked] & (original.cache['v_safe_m_s'][blocked] < .09)
+        targets, available = finite_edge_targets(scans[blocked], history[blocked], self.detector._full_rays, limiting)
+        indices, choices = available.nonzero(as_tuple=True)
+        if not len(indices):
+            return
+        checked = lanes[blocked[indices]]
+        trial = self.action_for_velocity(targets[indices, choices], previous[checked], config.governor)
+        issued = self.issued(lidar[checked], state[checked], trial, config)
+        head = command[checked]/speed[checked, None]
+        projection = (issued.v_final_b*head).sum(dim=1)
+        previous_projection = (original.v_final_b[blocked[indices]]*head).sum(dim=1)
+        usable = (issued.metrics['beta'][:, 0] >= .90) & (projection >= .6*speed[checked])
+        usable &= projection-previous_projection >= .075
+        scores = targets.new_full(available.shape, -torch.inf)
+        scores[indices, choices] = projection.masked_fill(~usable, -torch.inf)
+        gain, best = scores.max(dim=1)
+        row = best[indices] == choices
+        selected = row & gain[indices].isfinite()
+        action[checked[selected]] = trial[selected]
+        self.detour_used[checked[selected]] = True
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
@@ -721,6 +770,8 @@ class EscapeRecovery(EscapeOption):
             self.handoff_changed_command(policy['lidar_grid'], policy['state_vec'], selected, action, config)
         if self.wall_tangent:
             self.retain_wall_tangent(policy['lidar_grid'], policy['state_vec'], selected, config)
+        if self.finite_edge:
+            self.progress_around_edge(policy['lidar_grid'], policy['state_vec'], selected, config)
         if self.intercept:
             state = policy['state_vec']
             if self.align_intercept:
@@ -731,6 +782,8 @@ class EscapeRecovery(EscapeOption):
             self.avoid_interception(policy['lidar_grid'], state, selected, config)
             if self.wall_tangent:
                 self.tangent_used &= ~self.intercepted
+            if self.finite_edge:
+                self.detour_used &= ~self.intercepted
         return selected
 
     def _apply_recovery(self, policy, action, config):

@@ -40,6 +40,8 @@ NOVEL_STANDOFF_ID = NOVEL_PREFIX+'12'
 NOVEL_SETTLED_STOP_ID = NOVEL_PREFIX+'13'
 NOVEL_WALL_TANGENT_ID = NOVEL_PREFIX+'14'
 NOVEL_CONFIRMED_TUBE_ID = NOVEL_PREFIX+'15'
+NOVEL_FINITE_EDGE_ID = NOVEL_PREFIX+'16'
+NOVEL_REVALIDATE_ID = NOVEL_PREFIX+'17'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -47,6 +49,8 @@ ENDURANCE_PREFIXES = (ENDURANCE_PREFIX, HOVER_PREFIX, *PHYSICS_CLEARANCE_PREFIXE
 RETURN_DURATION_MS = 36000
 CLEARANCE_ID = EARLY_PREFIX + '02'
 REGRESSION_ID = PREFIX + 'R6-01'
+REGRESSION_RETRY_ID = PREFIX + 'R6-02'
+REGRESSION_IDS = (REGRESSION_ID, REGRESSION_RETRY_ID)
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -86,7 +90,9 @@ CONFIRMED_STANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-standoff-v1'
 SETTLED_OFFSET_STOP_EXECUTION = 'm4-escape-brake-tube-p25-settled-offset-stop-v1'
 WALL_TANGENT_EXECUTION = 'm4-escape-brake-tube-p25-wall-tangent-v1'
 CONFIRMED_TUBE_EXECUTION = 'm4-escape-brake-tube-p25-confirmed-inner-tube-v1'
-WALL_TANGENT_EXECUTIONS = (WALL_TANGENT_EXECUTION, CONFIRMED_TUBE_EXECUTION)
+FINITE_EDGE_EXECUTION = 'm4-escape-brake-tube-p25-finite-edge-v1'
+CONFIRMED_TUBE_EXECUTIONS = (CONFIRMED_TUBE_EXECUTION, FINITE_EDGE_EXECUTION)
+WALL_TANGENT_EXECUTIONS = (WALL_TANGENT_EXECUTION, *CONFIRMED_TUBE_EXECUTIONS)
 SETTLED_OFFSET_STOP_EXECUTIONS = (SETTLED_OFFSET_STOP_EXECUTION, *WALL_TANGENT_EXECUTIONS)
 NEIGHBOR_HISTORY_EXECUTIONS = (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, *SETTLED_OFFSET_STOP_EXECUTIONS)
 OFFSET_STOP_EXECUTIONS = (OFFSET_STOP_EXECUTION, *NEIGHBOR_HISTORY_EXECUTIONS)
@@ -345,13 +351,14 @@ def novel_contract(params):
                   NOVEL_STANDOFF_ID: (NEIGHBOR_HISTORY_EXECUTION, CONFIRMED_STANDOFF_EXECUTION),
                   NOVEL_SETTLED_STOP_ID: (NEIGHBOR_HISTORY_EXECUTION, SETTLED_OFFSET_STOP_EXECUTION),
                   NOVEL_WALL_TANGENT_ID: (SETTLED_OFFSET_STOP_EXECUTION, WALL_TANGENT_EXECUTION),
-                  NOVEL_CONFIRMED_TUBE_ID: WALL_TANGENT_EXECUTIONS}.get(params['experiment_id'])
+                  NOVEL_CONFIRMED_TUBE_ID: (WALL_TANGENT_EXECUTION, CONFIRMED_TUBE_EXECUTION),
+                  NOVEL_FINITE_EDGE_ID: CONFIRMED_TUBE_EXECUTIONS}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
     if paired:
         execution = (comparison[0],)
-    elif params['experiment_id'] == NOVEL_CONFIRM_ID:
+    elif params['experiment_id'] in (NOVEL_CONFIRM_ID, NOVEL_REVALIDATE_ID):
         execution = (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION, *COMMITTED_INTERCEPT_EXECUTIONS)
     wall = 1800 if paired else 1200
     if paired:
@@ -614,11 +621,13 @@ def run(backend, params):
                                     SIDE_HOVER_RETREAT_EXECUTION, *CLEAR_PASS_EXECUTIONS)
             neighbors = execution in NEIGHBOR_HISTORY_EXECUTIONS
             standoff = .45 if execution == CONFIRMED_STANDOFF_EXECUTION else 0.
-            inner_tube = .41 if execution == CONFIRMED_TUBE_EXECUTION else 0.
+            inner_tube = .41 if execution in CONFIRMED_TUBE_EXECUTIONS else 0.
             settled_stop = execution in SETTLED_OFFSET_STOP_EXECUTIONS
             tangent = execution in WALL_TANGENT_EXECUTIONS
+            detour = execution == FINITE_EDGE_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube)}
-                    or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent):
+                    or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
+                    or env.escape_option.finite_edge != detour):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -631,6 +640,8 @@ def run(backend, params):
                 model['settled_offset_stop'] = True
             if tangent:
                 model['wall_tangent'] = True
+            if detour:
+                model['finite_edge'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -744,6 +755,8 @@ def run(backend, params):
                         tensors['escape_offset_stop'] = option['offset_stop']
                     if 'wall_tangent' in option:
                         tensors['escape_wall_tangent'] = option['wall_tangent']
+                    if 'finite_edge' in option:
+                        tensors['escape_finite_edge'] = option['finite_edge']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,

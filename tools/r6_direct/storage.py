@@ -15,11 +15,11 @@ SYSTEM_STORAGE_SCHEMA = 'instinctrl-system-storage/1'
 
 
 def system_paths(plan, *, diagnostic=False):
-    from training_workloads.unified_h1.command_replay import REGRESSION_ID, matches as command_replay
+    from training_workloads.unified_h1.command_replay import REGRESSION_IDS, matches as command_replay
 
     run_id = plan['run_id']
     legacy_run = re.fullmatch(r'R6-DIRECT-(THIRD|INSTINCT-CYCLE1|INSTINCT-NEXT-R[23]|INSTINCT-GPU-R[1-5])-[A-Z0-9-]+', run_id)
-    if not legacy_run and (diagnostic or not (command_replay(run_id) or run_id == REGRESSION_ID)):
+    if not legacy_run and (diagnostic or not (command_replay(run_id) or run_id in REGRESSION_IDS)):
         raise ValueError('DIRECT_SYSTEM_RUN_ID')
     root = SYSTEM_ROOT / run_id
     if (Path(plan['output_root']) != root / 'control'

@@ -6,7 +6,7 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
-    CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTION, CROSSING_START_M, LANES, LAYOUTS,
+    CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, FINITE_EDGE_EXECUTION, LANES, LAYOUTS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -258,7 +258,7 @@ def audit(output, params, counters):
         standoff = model.get('ics_profile', {}).get('confirmed_standoff_m', 0.)
         expected_standoff = .45 if model['execution'] == CONFIRMED_STANDOFF_EXECUTION else 0.
         inner_tube = model.get('ics_profile', {}).get('confirmed_tube_radius_m', 0.)
-        expected_inner_tube = .41 if model['execution'] == CONFIRMED_TUBE_EXECUTION else 0.
+        expected_inner_tube = .41 if model['execution'] in CONFIRMED_TUBE_EXECUTIONS else 0.
         if (uses_neighbors != (model['execution'] in NEIGHBOR_HISTORY_EXECUTIONS)
                 or standoff != expected_standoff or inner_tube != expected_inner_tube):
             raise ValueError('COMMAND_REPLAY_NEIGHBOR_HISTORY_PROFILE')
@@ -267,6 +267,9 @@ def audit(output, params, counters):
         tangent_profile = model['execution'] in WALL_TANGENT_EXECUTIONS
         if model.get('wall_tangent', False) is not tangent_profile:
             raise ValueError('COMMAND_REPLAY_WALL_TANGENT_PROFILE')
+        detour_profile = model['execution'] == FINITE_EDGE_EXECUTION
+        if model.get('finite_edge', False) is not detour_profile:
+            raise ValueError('COMMAND_REPLAY_FINITE_EDGE_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
         active_starts = []
@@ -358,6 +361,11 @@ def audit(output, params, counters):
                 tangent = row.get('escape_wall_tangent', [False]*LANES)
                 if len(tangent) != LANES or any(type(value) is not bool for value in tangent):
                     raise ValueError('COMMAND_REPLAY_WALL_TANGENT_LANES')
+                if ('escape_finite_edge' in row) != detour_profile:
+                    raise ValueError('COMMAND_REPLAY_FINITE_EDGE_BINDING')
+                detour = row.get('escape_finite_edge', [False]*LANES)
+                if len(detour) != LANES or any(type(value) is not bool for value in detour):
+                    raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -367,6 +375,11 @@ def audit(output, params, counters):
                             or row['escape_active'][lane] or intercepted[lane] or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) <= 0.):
                         raise ValueError('COMMAND_REPLAY_WALL_TANGENT_BEHAVIOR')
+                    if detour[lane] and (not .09999 <= math.hypot(*observed) <= .30001
+                            or tangent[lane] or row['escape_active'][lane] or intercepted[lane]
+                            or row['ics_emergency'][lane] != 0.
+                            or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
+                        raise ValueError('COMMAND_REPLAY_FINITE_EDGE_BEHAVIOR')
                     if held[lane] and (math.hypot(*observed) > .001001 or math.hypot(*row['v_final_w'][lane]) > 1.e-6
                                        or row['escape_active'][lane]):
                         raise ValueError('COMMAND_REPLAY_HOLD_BEHAVIOR')

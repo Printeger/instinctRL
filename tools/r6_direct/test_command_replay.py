@@ -840,6 +840,37 @@ def test_narrow_tube_needs_clear_axis_and_return_support_on_both_sides():
     assert candidate.metrics['beta'].flatten().tolist() == [1.,0.,0.,0.]
 
 
+def test_finite_edge_advances_only_toward_an_observed_flank():
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.ics import ICSConfig
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False, finite_edge=True)
+    rays = guard.detector._full_rays
+    forward = rays[:, 0] > 0.
+    near = .80/rays[:, 0].clamp_min(.001)
+    far = 2.25/rays[:, 0].clamp_min(.001)
+    jamb = near*rays[:, 1] <= -.08
+    side = torch.where(jamb, near, far)
+    missing = torch.where(jamb, near, torch.inf)
+    ranges = torch.stack((side, near, missing)).masked_fill(~forward, torch.inf)
+    valid = ranges <= 40.
+    lidar = torch.stack((ranges.clamp_max(40.), valid, valid), dim=1).reshape(3, 3, 59, 360).repeat(1, 4, 1, 1)
+    state = torch.zeros(3, 4, 13)
+    state[:, :, 5] = -1.
+    state[:, :, 6] = .25
+    state = state.reshape(3, 52)
+    config = ControlCoreConfig(ics=ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60,
+        motion_tube_confirm_closure=True, confirmed_tube_radius_m=.41))
+    action = torch.tensor([[1., .5, .5, .5]]*3)
+    guard.progress_around_edge(lidar, state, action, config)
+    actual = guard.issued(lidar, state, action, config).v_final_b
+    assert guard.detour_used.tolist() == [True, False, False]
+    assert actual[0, 0] >= .15 and actual[0, 1] > 0.
+    assert actual[1:].tolist() == [[0.,0.,0.], [0.,0.,0.]]
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing
