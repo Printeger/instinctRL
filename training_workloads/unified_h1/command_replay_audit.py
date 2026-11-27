@@ -112,6 +112,8 @@ def score_lane(rows, initial, lane, crossing):
         first_intervention_step=next((row['step'] for row in flight if intervened(row)), None),
         first_escape_brake_step=next((row['step'] for row in flight
             if 'escape_braking' in row and read(row, 'escape_braking')), None),
+        first_recovery_retreat_step=next((row['step'] for row in flight
+            if 'recovery_retreating' in row and read(row, 'recovery_retreating')), None),
         average_tracking_error_m_s=fmean(math.dist(actual(row), command(row)) for row in active) if active else None,
         average_intent_progress_m_s=fmean(progress(row, actual(row)) for row in active) if active else None,
     )

@@ -140,3 +140,5 @@ Crazy command generator 使用确定种子和一至四秒的持久状态，在�
 python3 -m tools.r6_direct.generate_crazy_commands --prefix ROUTE_STREAMS.json \
   --seed 725 --duration-ms 62000 --output CRAZY_STREAMS.json
 ```
+
+使用 `--independent-lanes` 为每条仿真轨迹派生不同的生成子种子，并保留对应的布局标签。

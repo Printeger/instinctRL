@@ -99,7 +99,7 @@ def test_crazy_generator_preserves_prefix_and_freezes_all_modes(tmp_path):
     from pathlib import Path
     from tools.r6_direct.generate_crazy_commands import generate
     from tools.r6_evidence import file_pin
-    from training_workloads.unified_h1.command_replay import CRAZY_MODES, load_route_streams
+    from training_workloads.unified_h1.command_replay import CRAZY_MODES, LANES, load_lane_streams, load_route_streams
 
     root = Path(__file__).resolve().parents[2]
     prefix = file_pin(root/'docs/experiments/instinct-continuous-command/routes/STREAMS.json')
@@ -111,6 +111,11 @@ def test_crazy_generator_preserves_prefix_and_freezes_all_modes(tmp_path):
     readback = load_route_streams(file_pin(path))
     for stream in readback.values():
         assert {e['mode'] for e in stream['events'] if 'mode' in e} == set(CRAZY_MODES)
+    independent = generate(prefix, 725, 62000, independent_lanes=True)
+    assert len({row['seed'] for row in independent['lanes']}) == LANES
+    path.write_text(json.dumps(independent))
+    layouts, lanes = load_lane_streams(file_pin(path))
+    assert layouts[0] == layouts[1] and lanes[0] != lanes[1]
 
 
 def test_motion_tube_keeps_forward_hazards_and_unexplained_closure():
@@ -151,6 +156,21 @@ def test_clearance_uses_the_nearest_finite_wall_surface():
     assert triangle_distance_squared(queries, triangle).tolist() == pytest.approx([1., .5, 2.])
 
 
+def test_mover_clock_preserves_three_decimal_places_at_thirty_minutes():
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.observations.moving_sphere import MovingSphere
+
+    asset = SimpleNamespace(root_physx_view=SimpleNamespace(get_transforms=lambda: torch.zeros(1, 7)),
+                            write_root_velocity_to_sim=lambda value: None)
+    mover = MovingSphere(asset, torch.zeros(1, 3))
+    mover.enabled = True
+    mover.start = mover.velocity = torch.zeros(1, 3)
+    mover.motion_ticks = torch.tensor([359999])
+    mover.push(.005)
+    assert mover.age.item() == pytest.approx(1800., abs=.0002)
+
+
 def test_early_brake_replaces_only_an_accelerating_escape_at_its_trigger(monkeypatch):
     from types import SimpleNamespace
     import torch
@@ -182,3 +202,33 @@ def test_early_brake_replaces_only_an_accelerating_escape_at_its_trigger(monkeyp
     option.applied.zero_()
     assert torch.equal(selected(), action)
     assert not option.braking.any()
+
+
+def test_recovery_retreat_uses_the_existing_limiter_and_holds_briefly(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_option import EscapeOption
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    policy = {'lidar_grid': torch.empty(1, 1), 'state_vec': torch.zeros(1, 52)}
+    policy['state_vec'][0, 45] = .26
+    action = torch.tensor([[.8, .5, .5, .5]])
+    option = EscapeRecovery(lanes=1, device='cpu', dtype=torch.float32, recenter=True, recovery_retreat=True)
+    option.since_escape.fill_(30)
+    monkeypatch.setattr(EscapeOption, 'apply', lambda self, policy, action: action.clone())
+    monkeypatch.setattr(option.detector, 'retreat_direction', lambda *args, **kw: torch.tensor([[-.2, .98, 0.]]))
+
+    def issued(lidar, state, action, cfg):
+        reverse = action[:, 1] < .4
+        final = torch.zeros_like(action[:, 1:])
+        final[reverse, 0] = -.24
+        return SimpleNamespace(v_final_b=final, metrics={'emergency': torch.zeros(len(action), 1)})
+
+    monkeypatch.setattr(option, 'issued', issued)
+    result = option.apply_recovery(policy, action, None)
+    assert result[0].tolist() == pytest.approx([0., .2, .5, .5])
+    assert option.retreating.item()
+    assert not option.recovering.item()
+    assert torch.equal(option.apply_recovery(policy, action, None), result)
+    option.reset(torch.tensor([0]))
+    assert not option.retreat_hold_steps.any()

@@ -69,6 +69,7 @@ class MovingSphere:
         self.parked[:, 2] += PARK_HEIGHT_M
         self.indices = torch.arange(len(origins), device=origins.device, dtype=torch.long)
         self.age = torch.zeros(len(origins), device=origins.device, dtype=torch.float32)
+        self.motion_ticks = None
         self.end_travel_s = torch.full_like(self.age, torch.inf)
         self.servo_velocity = torch.zeros_like(origins)
         self.enabled = False
@@ -81,7 +82,7 @@ class MovingSphere:
         self.contact = torch.zeros(len(origins), 1, device=origins.device, dtype=torch.bool)
         self.contact_samples = 0
 
-    def configure(self, sensor_origins, axis, modes, *, half_period_s=None, departure_delay_s=None):
+    def configure(self, sensor_origins, axis, modes, *, half_period_s=None, departure_delay_s=None, exact_clock=False):
         if self.enabled:
             raise RuntimeError('Existing moving-sphere block is active')
         if not self.verified_order:
@@ -103,6 +104,7 @@ class MovingSphere:
         self.end_travel_s = torch.where(modes == 5, 8.7, torch.where(modes == 1, 10., torch.inf))
         self.half_period_s = half_period_s
         self.departure_delay_s = departure_delay_s
+        self.motion_ticks = torch.zeros_like(self.indices) if exact_clock else None
         self.enabled = True
         self.reset(self.indices)
 
@@ -120,6 +122,8 @@ class MovingSphere:
     def reset(self, indices):
         if self.enabled and len(indices):
             self.age[indices] = 0.
+            if self.motion_ticks is not None:
+                self.motion_ticks[indices] = 0
             self.servo_velocity[indices] = 0.
             self._place(self._pose()[indices], indices)
 
@@ -132,7 +136,11 @@ class MovingSphere:
     def push(self, dt):
         if not self.enabled:
             return
-        self.age.add_(dt)
+        if self.motion_ticks is None:
+            self.age.add_(dt)
+        else:
+            self.motion_ticks.add_(1)
+            self.age.copy_(self.motion_ticks * dt)
         center = self.asset.root_physx_view.get_transforms()[:, :3]
         required_velocity = (self._pose() - center) / dt
         scale = (MAX_SPEED_M_S / required_velocity.norm(dim=1, keepdim=True).clamp_min(.01)).clamp_max(1.)

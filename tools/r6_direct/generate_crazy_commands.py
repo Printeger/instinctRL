@@ -7,7 +7,10 @@ import random
 
 from tools.r6_direct.import_legacy import stop_paths
 from tools.r6_evidence import file_pin
-from training_workloads.unified_h1.command_replay import CRAZY_MODES, CRAZY_SCHEMA, STEP_MS, load_route_streams
+from training_workloads.unified_h1.command_replay import (
+    CRAZY_MODES, CRAZY_SCHEMA, LANES, STEP_MS, lane_seed_for, load_route_streams,
+)
+from training_workloads.unified_h1.escape_holdout_scene import command_layout
 
 
 MAX_SPEED_M_S = .299
@@ -54,17 +57,27 @@ def challenges(seed, layout, start_ms, duration_ms):
                 current_ms += STEP_MS
 
 
-def generate(prefix, seed, duration_ms):
+def generate(prefix, seed, duration_ms, *, independent_lanes=False):
     streams = load_route_streams(prefix)
     start = next(iter(streams.values()))['duration_ms']
     if (type(seed) is not int or not 0 <= seed < 2**31 or type(duration_ms) is not int
             or duration_ms < start+len(CRAZY_MODES)*4000 or duration_ms > 3_600_000 or duration_ms % STEP_MS):
         raise ValueError('duration must leave one complete cycle after the route prefix')
+    generator = dict(schema_version=CRAZY_SCHEMA, seed=seed, prefix=prefix, prefix_duration_ms=start)
+    if independent_lanes:
+        cases = []
+        for lane in range(LANES):
+            layout = command_layout(lane)
+            lane_seed = lane_seed_for(seed, lane, layout)
+            events = [*streams[layout]['events'], *challenges(lane_seed, layout, start, duration_ms)]
+            cases.append(dict(lane=lane, layout=layout, seed=lane_seed, events=events))
+        return dict(schema_version='instinctrl-command-lane-streams/1', duration_ms=duration_ms,
+                    generator=generator, lanes=cases)
     layouts = {}
     for layout, stream in streams.items():
         layouts[layout] = [*stream['events'], *challenges(seed, layout, start, duration_ms)]
     return dict(schema_version='instinctrl-command-route-streams/1', duration_ms=duration_ms, layouts=layouts,
-                generator=dict(schema_version=CRAZY_SCHEMA, seed=seed, prefix=prefix, prefix_duration_ms=start))
+                generator=generator)
 
 
 def main():
@@ -73,10 +86,11 @@ def main():
     parser.add_argument('--seed', type=int, required=True)
     parser.add_argument('--duration-ms', type=int, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--independent-lanes', action='store_true')
     args = parser.parse_args()
     if stop_paths():
         raise RuntimeError('STOP')
-    result = generate(file_pin(args.prefix), args.seed, args.duration_ms)
+    result = generate(file_pin(args.prefix), args.seed, args.duration_ms, independent_lanes=args.independent_lanes)
     with args.output.open('x', encoding='utf-8') as handle:
         json.dump(result, handle, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
         handle.write('\n')

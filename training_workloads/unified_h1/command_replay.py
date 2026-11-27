@@ -1,5 +1,6 @@
 """Continuous, development-only command replay on the frozen B/C plant."""
 from bisect import bisect_right
+from hashlib import sha256
 import json
 import math
 from pathlib import Path
@@ -14,6 +15,8 @@ GUARD_PREFIX = PREFIX + 'GUARD-'
 ROUTE_PREFIX = PREFIX + 'ROUTE-'
 CRAZY_PREFIX = PREFIX + 'CRAZY-'
 ENDURANCE_PREFIX = PREFIX + 'ENDURANCE-'
+RETURN_PREFIX = PREFIX + 'RETURN-'
+RETURN_DURATION_MS = 36000
 REGRESSION_ID = PREFIX + 'R6-01'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
@@ -31,16 +34,23 @@ EXECUTION = 'm4-escape-rear-clearance-p25-v1'
 BRAKE_EXECUTION = 'm4-escape-brake-forward-p25-v1'
 TUBE_EXECUTION = 'm4-escape-brake-tube-p25-v1'
 TUBE_CONFIRM_EXECUTION = 'm4-escape-brake-tube-p25-v2'
+RECOVERY_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
+EXECUTION_PAIRS = {
+    GUARD_PREFIX: (EXECUTION, BRAKE_EXECUTION),
+    CRAZY_PREFIX: (BRAKE_EXECUTION, TUBE_EXECUTION),
+    ENDURANCE_PREFIX: (TUBE_EXECUTION, TUBE_CONFIRM_EXECUTION),
+    RETURN_PREFIX: (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION),
+}
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
 CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
-    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX))
+    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX, RETURN_PREFIX))
 
 
 def arm_execution(params, label):
@@ -82,8 +92,37 @@ def load_stream(pin):
     return validate_stream(json.loads(checked(pin).read_bytes()))
 
 
-def load_route_streams(pin):
-    value = json.loads(checked(pin).read_bytes())
+def lane_seed_for(seed, lane, layout):
+    digest = sha256(f'{CRAZY_SCHEMA}/{seed}/{lane}/{layout}'.encode()).digest()
+    return int.from_bytes(digest[:4], 'big') % 2**31
+
+
+def layout_stream(duration_ms, events, *, generated):
+    return validate_stream(dict(schema_version='instinctrl-world-command-stream/1',
+                    source='crazy_command_generator' if generated else 'scripted_development',
+                    duration_ms=duration_ms, events=events))
+
+
+def generator_prefix(generator):
+    if (set(generator) != {'schema_version', 'seed', 'prefix', 'prefix_duration_ms'}
+            or generator['schema_version'] != CRAZY_SCHEMA or type(generator['seed']) is not int
+            or not 0 <= generator['seed'] < 2**31 or type(generator['prefix_duration_ms']) is not int):
+        raise ValueError('COMMAND_REPLAY_GENERATOR_METADATA')
+    template = json.loads(checked(generator['prefix']).read_bytes())
+    if (set(template) != {'schema_version', 'duration_ms', 'layouts'}
+            or template['duration_ms'] != generator['prefix_duration_ms']):
+        raise ValueError('COMMAND_REPLAY_GENERATOR_PREFIX')
+    return template
+
+
+def check_generated(stream, prefix, prefix_duration):
+    extension = stream['events'][len(prefix):]
+    if (stream['events'][:len(prefix)] != prefix or not extension or extension[0]['t_ms'] != prefix_duration
+            or {event.get('mode') for event in extension} != set(CRAZY_MODES)):
+        raise ValueError('COMMAND_REPLAY_GENERATOR_COVERAGE')
+
+
+def route_streams(value):
     fields = {'schema_version', 'duration_ms', 'layouts'}
     generated = 'generator' in value
     if generated:
@@ -92,27 +131,40 @@ def load_route_streams(pin):
             or value['schema_version'] != 'instinctrl-command-route-streams/1'
             or not isinstance(value['layouts'], dict) or set(value['layouts']) != set(COMMAND_LAYOUTS)):
         raise ValueError('COMMAND_REPLAY_ROUTES')
-    streams = {layout: validate_stream(dict(schema_version='instinctrl-world-command-stream/1',
-                    source='crazy_command_generator' if generated else 'scripted_development',
-                    duration_ms=value['duration_ms'], events=events)) for layout, events in value['layouts'].items()}
+    streams = {layout: layout_stream(value['duration_ms'], events, generated=generated)
+               for layout, events in value['layouts'].items()}
     if generated:
-        generator = value['generator']
-        if (set(generator) != {'schema_version', 'seed', 'prefix', 'prefix_duration_ms'}
-                or generator['schema_version'] != CRAZY_SCHEMA or type(generator['seed']) is not int
-                or not 0 <= generator['seed'] < 2**31 or type(generator['prefix_duration_ms']) is not int):
-            raise ValueError('COMMAND_REPLAY_GENERATOR_METADATA')
-        template = json.loads(checked(generator['prefix']).read_bytes())
-        if (set(template) != {'schema_version', 'duration_ms', 'layouts'}
-                or template['duration_ms'] != generator['prefix_duration_ms']):
-            raise ValueError('COMMAND_REPLAY_GENERATOR_PREFIX')
+        template = generator_prefix(value['generator'])
         for layout, stream in streams.items():
-            prefix = template['layouts'][layout]
-            extension = stream['events'][len(prefix):]
-            if (stream['events'][:len(prefix)] != prefix or not extension
-                    or extension[0]['t_ms'] != template['duration_ms']
-                    or {event.get('mode') for event in extension} != set(CRAZY_MODES)):
-                raise ValueError('COMMAND_REPLAY_GENERATOR_COVERAGE')
+            check_generated(stream, template['layouts'][layout], template['duration_ms'])
     return streams
+
+
+def load_route_streams(pin):
+    return route_streams(json.loads(checked(pin).read_bytes()))
+
+
+def load_lane_streams(pin):
+    value = json.loads(checked(pin).read_bytes())
+    layouts = [command_layout(lane) for lane in range(LANES)]
+    if value.get('schema_version') != 'instinctrl-command-lane-streams/1':
+        streams = route_streams(value)
+        return layouts, [streams[name] for name in layouts]
+    if set(value) != {'schema_version', 'duration_ms', 'generator', 'lanes'} or len(value['lanes']) != LANES:
+        raise ValueError('COMMAND_REPLAY_LANE_STREAMS')
+    generator = value['generator']
+    template = generator_prefix(generator)
+    streams = []
+    for lane, (layout, row) in enumerate(zip(layouts, value['lanes'], strict=True)):
+        if (set(row) != {'lane', 'layout', 'seed', 'events'} or row['lane'] != lane or row['layout'] != layout
+                or row['seed'] != lane_seed_for(generator['seed'], lane, layout)):
+            raise ValueError('COMMAND_REPLAY_LANE_SEED')
+        stream = layout_stream(value['duration_ms'], row['events'], generated=True)
+        check_generated(stream, template['layouts'][layout], template['duration_ms'])
+        streams.append(stream)
+    if len({row['seed'] for row in value['lanes']}) != LANES:
+        raise ValueError('COMMAND_REPLAY_NONINDEPENDENT_SEED')
+    return layouts, streams
 
 
 def conditions(params):
@@ -124,10 +176,9 @@ def conditions(params):
 def event_schedule(params):
     """Keep single-stream pair rows stable and expand route inputs by lane."""
     if route_layouts(params['experiment_id']):
-        streams = load_route_streams(params['stream'])
-        layouts = [command_layout(lane) for lane in range(LANES)]
-        by_lane = [streams[layout] for layout in layouts]
-        indices = list(zip(*(sampled_events(stream) for stream in by_lane), strict=True))
+        layouts, by_lane = load_lane_streams(params['stream'])
+        limit = RETURN_DURATION_MS//STEP_MS+1 if params['experiment_id'].startswith(RETURN_PREFIX) else None
+        indices = list(zip(*(sampled_events(stream)[:limit] for stream in by_lane), strict=True))
         events = [[stream['events'][index] for stream, index in zip(by_lane, row, strict=True)] for row in indices]
         return layouts, [list(row) for row in indices], events
     stream = load_stream(params['stream'])
@@ -147,10 +198,11 @@ def contract(params):
     guard = run_id.startswith(GUARD_PREFIX)
     crazy = run_id.startswith(CRAZY_PREFIX)
     endurance = run_id.startswith(ENDURANCE_PREFIX)
+    returns = run_id.startswith(RETURN_PREFIX)
     routes = route_layouts(run_id)
-    control_execution = TUBE_EXECUTION if endurance else BRAKE_EXECUTION if crazy else EXECUTION
-    candidate_execution = TUBE_CONFIRM_EXECUTION if endurance else TUBE_EXECUTION if crazy else BRAKE_EXECUTION
-    paired_weights = guard or crazy or endurance
+    selected_pair = next((pair for prefix, pair in EXECUTION_PAIRS.items() if run_id.startswith(prefix)), None)
+    control_execution, candidate_execution = selected_pair or (EXECUTION, BRAKE_EXECUTION)
+    paired_weights = selected_pair is not None
     expected_models = MODELS
     if paired_weights:
         expected_models = {'control': MODELS['b'], 'candidate': MODELS['b']}
@@ -175,10 +227,10 @@ def contract(params):
         raise ValueError('COMMAND_REPLAY_GUARD_SAME_WEIGHTS')
     if routes and not paired_weights and params['models']['b'] != params['models']['candidate']:
         raise ValueError('COMMAND_REPLAY_ROUTES_SAME_WEIGHTS')
-    stream = load_route_streams(params['stream'])['street_gap'] if routes else load_stream(params['stream'])
+    stream = load_lane_streams(params['stream'])[1][16] if routes else load_stream(params['stream'])
     duration = stream['duration_ms']
-    valid_duration = 101000 <= duration <= 125000 if endurance else duration <= 90000
-    if not valid_duration or ((crazy or endurance) and stream['source'] != 'crazy_command_generator'):
+    valid_duration = 101000 <= duration <= 125000 if endurance or returns else duration <= 90000
+    if not valid_duration or ((crazy or endurance or returns) and stream['source'] != 'crazy_command_generator'):
         raise ValueError('COMMAND_REPLAY_DEVELOPMENT_DURATION')
     events = {event['t_ms']: event['velocity_w_m_s'] for event in stream['events']}
     reversal = CONDITIONS['crossing_at_reversal']
@@ -186,7 +238,7 @@ def contract(params):
     if events.get(reversal, [0.])[0] >= 0 or previous[0] <= 0 or stream['duration_ms'] <= reversal + 4000:
         raise ValueError('COMMAND_REPLAY_PAIRED_REVERSAL')
     trials = len(params['models']) * len(conditions(params))
-    transitions = trials * LANES * (stream['duration_ms']//STEP_MS)
+    transitions = trials * LANES * ((RETURN_DURATION_MS if returns else duration)//STEP_MS)
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct',
                 operation='dynamic', mode=MODE, parameters=params,
                 budgets=dict(wall_seconds=params['wall_seconds'], live_process_starts=1,
@@ -225,7 +277,8 @@ def run(backend, params):
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     output = Path(backend.output)
     endurance = params['experiment_id'].startswith(ENDURANCE_PREFIX)
-    env.capture_ics_limiter = endurance or params['experiment_id'].startswith(CRAZY_PREFIX)
+    returns = params['experiment_id'].startswith(RETURN_PREFIX)
+    env.capture_ics_limiter = endurance or returns or params['experiment_id'].startswith(CRAZY_PREFIX)
 
     def save_row(handle, row):
         data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
@@ -246,10 +299,10 @@ def run(backend, params):
         env.set_escape_option(True, version=execution)
         env.set_h1_ics_clearance_margin(.15)
         model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
-        if endurance:
+        if endurance or returns:
             configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure)
                              for p in env._control_pipelines}
-            confirm = execution == TUBE_CONFIRM_EXECUTION
+            confirm = execution in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION)
             if configuration != {(.60, confirm)}:
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
@@ -266,7 +319,7 @@ def run(backend, params):
                 modes[street] = 2 + ids[street].remainder(2)
                 delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
-                               half_period_s=CROSSING_TRAVEL_S if endurance else None)
+                               half_period_s=CROSSING_TRAVEL_S if endurance or returns else None)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])
@@ -330,6 +383,8 @@ def run(backend, params):
                         episode_length=pre['episode_length'])
                     if 'braking' in option:
                         tensors['escape_braking'] = option['braking']
+                    if 'retreating' in option:
+                        tensors['recovery_retreating'] = option['retreating']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
