@@ -4,23 +4,11 @@
 
 # 连续指令仿真开发
 
-B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，带风险实际换向 8/8，无横穿时运动与下发不变。五布局闭环仍复现门洞、走廊 ICS 归零。按用户更新，当前仿真使用 crazy command generator，独立生成替代真人序列。62 秒同权重对照两臂均零接触，候选过门 8/8、过角 1/8，走廊平均最远轴向 4.98 m。正式逐类长时留出与完整 R6 尚未验收。 [基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动结果](experiments/instinct-continuous-command/guard/REPORT.md) · [五布局复核](experiments/instinct-continuous-command/routes/REPORT.md) · [生成指令评价](experiments/instinct-continuous-command/crazy/REPORT.md)
+全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
-同 B 权重的提前撤离在 36 秒回程将街道接触从 2/8 降至 0/8，在 110 秒同配置对照的 32 条首飞中零接触、零重置。逐 5 ms 复算的街道最小包络净空为 −0.042 m，最大零令漂移 0.805 m。零令换侧与零令保持各因新增接触拒绝。36 秒重复验证显示增加净空采集后策略拍原件逐字节一致。室内延后横移把 62 秒过角从 0/8 提升到 5/8，零接触。正式 30 分钟留出和同配置完整 R6 仍待验收。 [110 秒对照](experiments/instinct-continuous-command/hover/REPORT.md) · [净空采集](experiments/instinct-continuous-command/clearance/REPORT.md) · [转角时序](experiments/instinct-continuous-command/corner/REPORT.md) · [零令保持结果](experiments/instinct-continuous-command/passage/REPORT.md) · [回中配对](experiments/instinct-continuous-command/rearm/PLAN.md)
+独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
 
-近险后的回中暂缓消除了折返接触。按测距预测选向进一步将同一折返窗口的最小净空从 −0.051 m 提升到 +0.171 m，两臂 64 次完整首飞均零接触。随后比较原零令逃逸路径与其他可下发动作，110 s 整段 5 ms 净空从 −0.018 m 提升至 +0.157 m，32/32 条候选首飞零接触、零重置，其他四类布局下发与冻结推进窗口逐拍一致。直接曲面保持的两条新增首飞接触仍保留。松杆脱离旧逃逸的配对将走廊和室内窗口漂移降至 0.105 m 和 0.130 m，110 s 整段最小净空保持 +0.157 m。 [折返选向](experiments/instinct-continuous-command/rank/REPORT.md) · [曲面保持失败](experiments/instinct-continuous-command/curved/REPORT.md) · [110 秒正净空](experiments/instinct-continuous-command/hover_path/REPORT.md) · [松杆对照](experiments/instinct-continuous-command/stop_release/REPORT.md)
-
-120 秒独立 Crazy 指令复验完成 30/32 条首飞。两次街道接触分别出现在零令逃逸选向与非零令逃逸后，5 ms 净空下界最差 −0.087 m。最近两段测距的同权重折返配对消除了原两处接触，同两条街道首飞在较晚横穿再发生接触。两处均在原 ICS 裁零前出现可拟合的收近回波，继续验证提前横向撤离。 [独立复验](experiments/instinct-continuous-command/novel/REPORT.md) · [折返配对](experiments/instinct-continuous-command/novel_turn/REPORT.md) · [提前撤离验证](experiments/instinct-continuous-command/intercept/PLAN.md)
-
-预测横穿撤离将原两处较晚接触窗口的净空下界提高至 +0.634 m 和 +0.529 m，新增一次更早的换向接触。已定位三段测距与最新响应补偿的时间错配，开始同权重时间对齐配对。30 分钟评分器和完整 R6 配置完成 CPU 检查，正式评价等待短配对及新种子复验。 [撤离结果](experiments/instinct-continuous-command/intercept/REPORT.md) · [时间对齐配对](experiments/instinct-continuous-command/intercept_aligned/PLAN.md)
-
-按历史测距时刻补偿后，匹配集的 32 条候选首飞 120 s 全部零接触、零重置。最小 5 ms 净空下界 0.096 m，低于 0.15 m，已开始检验提前获得停留余量。 [时间对齐结果](experiments/instinct-continuous-command/intercept_aligned/REPORT.md) · [净空余量配对](experiments/instinct-continuous-command/intercept_reserve/PLAN.md)
-
-加强同向撤离把原 0.096 m 窗口提高至 0.254 m，候选在后续横穿新增一次接触，归因为换向角速度令测距预测暂时失效后重新下发反向旧动作。四处各四拍同状态重检都允许原撤离，已启动物理配对。 [停留余量结果](experiments/instinct-continuous-command/intercept_reserve/REPORT.md) · [连续撤离配对](experiments/instinct-continuous-command/intercept_committed/PLAN.md)
-
-短时延续将原接触窗提高至至少 +0.338 m，同批另一条街道轨迹中与仍可下发的旧撤离产生反向冲突并接触。已锁定到四拍延续和可下发反例，启动优先级配对。长时方案新增生成指令的计划位置限制，32 路同钟 CPU 检查通过。 [连续撤离结果](experiments/instinct-continuous-command/intercept_committed/REPORT.md) · [优先级配对](experiments/instinct-continuous-command/intercept_priority/PLAN.md)
-
-撤离优先级候选完成 32/32 条 120 秒匹配首飞，五类零接触、零重置，最小 5 ms 净空 +0.228 m。原冲突窗改善到 +0.249 m，其余两个危险窗不变。室内仍 5/8 过角，已启动可行新指令交接配对，正式留出尚未运行。 [优先级结果](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [交接配对](experiments/instinct-continuous-command/command_handoff/PLAN.md)
+下一轮验证街道安全擦肩时停驻。室内剩余两条沿门框反复裁零，CPU 同状态重放中相邻回波补充历史可释放 49 拍。32 路新独立短程输入及窗口已预登记。30 分钟契约和完整 R6 已做 CPU 准备，正式评价尚未启动。 [零令停驻](experiments/instinct-continuous-command/offset_stop/PLAN.md) · [相邻回波](experiments/instinct-continuous-command/neighbor_history/PLAN.md) · [新独立输入](experiments/instinct-continuous-command/independent/PLAN.md) · [30 分钟方案](experiments/instinct-continuous-command/ACCEPTANCE-DRAFT.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
