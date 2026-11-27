@@ -1,13 +1,16 @@
 """Check a finite braking path beside observed stationary surfaces."""
 
+from dataclasses import replace
 import math
 
 import numpy as np
 import torch
 
-from .escape_passage import _return_seed
+from .command_adapter import rotate_body_to_world
+from .escape_option import DURATION_STEPS
+from .escape_passage import _return_seed, _supported_closing_returns, moving_intercepts
 from .governor import clip_vector_norm
-from .ics import AZIMUTH_SAMPLES, ELEVATION_SAMPLES, ICSResult, attenuate_command
+from .ics import AZIMUTH_SAMPLES, ELEVATION_SAMPLES, ICSResult, attenuate_command, mounted_mid360_rays_body
 from .tube_stopping import (
     TubeStoppingDecision, TubeStoppingPipeline, _align_scans, _remaining_ratio, _surface_normals,
 )
@@ -73,6 +76,66 @@ def _local_planes(scans, history, rays, mounted, valid, up):
     return planes
 
 
+def _braking_capsule(points, valid, prior, heading, travel, tail):
+    axial = prior @ heading
+    lateral = np.linalg.norm(prior-axial[:, None]*heading, axis=1)
+    lower = -.35*max(0., -axial.min())-.10*max(0., -axial[-1])
+    upper = travel+.35*max(0., axial.max())+.10*max(0., axial[-1])
+    required = .41+.015+.008+tail+.35*lateral.max()+.10*lateral[-1]
+    along = points @ heading
+    transverse = np.linalg.norm(points-along[..., None]*heading, axis=2)
+    gap = float(np.hypot(along-along.clip(lower, upper), transverse).min(initial=np.inf, where=valid))
+    return lower, upper, float(required), along, gap
+
+
+def _forward_coverage(valid, aligned, along, heading, up, upper, required):
+    visible = valid & (aligned @ heading >= .99) & (along > upper+required+.025)
+    bearing = aligned @ np.cross(up, heading)
+    shape = (3, ELEVATION_SAMPLES, AZIMUTH_SAMPLES)
+    return all(((visible & (sign*bearing > 0.)).reshape(shape).any(axis=1).sum(axis=1) >= 3).all()
+               for sign in (-1., 1.))
+
+
+def certify_stop_at_front_wall(lidar, state, rays, *, previous_speed_bound, require_closing):
+    """Attribute supported closing returns to the same observed wall before stopping."""
+    history = state.reshape(4, 13)
+    speed = float(history[-1, 6:9].norm())
+    age = history[:, 12]
+    if (not .03 < speed <= .30 or bool((age > .04).any() or (age.diff().abs() > .03).any()
+            or history[-3:, :3].norm(dim=1).max() > .38)):
+        return None
+    rays_fresh = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
+    elapsed = age.new_tensor([-.3, -.2, -.1, 0.])-age+age[-1]
+    supported = _supported_closing_returns(lidar[:, 0::3], rays_fresh, elapsed[None], maximum_range_m=2.65)[0]
+    closing = (supported > .005).detach().cpu().numpy()
+    if require_closing and not closing.any():
+        return None
+    moving, *_ = moving_intercepts(lidar, state, rays, torch.ones(1, dtype=torch.bool, device=state.device),
+                                  maximum_range_m=2.65)
+    if len(moving):
+        return None
+
+    up = (-history[-1, 3:6]).detach().cpu().numpy()
+    if abs(up[1]) > .80:
+        return None
+    scans = lidar.reshape(4, 3, -1)[-3:].detach().cpu().numpy()
+    aligned, mounts, prior = _align_scans(rays, history)
+    valid = (scans[:, 1] > .5) & (scans[:, 2] >= .65)
+    points = scans[:, 0, :, None]*aligned+mounts
+    heading = history[-1, 6:9].detach().cpu().numpy()/speed
+    tail = .35*max(.30, previous_speed_bound)*math.exp(-.30/.35)
+    lower, upper, required, along, gap = _braking_capsule(points, valid, prior, heading, 0., tail)
+    if gap < required or not _forward_coverage(valid, aligned, along, heading, up, upper, required):
+        return None
+    planes = _local_planes(scans, history, rays.detach().cpu().numpy(), points, valid, up)
+    for normal, distance, associated in planes:
+        forward = float(heading @ normal)
+        if (forward >= .70 and distance-max(lower*forward, upper*forward) >= required
+                and int(associated.sum()) >= 24 and not (closing & ~associated).any()):
+            return gap, required, int(closing.sum())
+    return None
+
+
 def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *, previous_speed_bound):
     """Re-evaluate a bounded heading without removing unidentified restrictions."""
     history = state.reshape(4, 13)
@@ -110,21 +173,8 @@ def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *
         if projection < .60*speed**2 or magnitude > .30:
             continue
         heading = target/magnitude
-        axial = prior @ heading
-        lateral = np.linalg.norm(prior-axial[:, None]*heading, axis=1)
-        lower = -.35*max(0., -axial.min())-.10*max(0., -axial[-1])
-        upper = _HOLD_S*magnitude+.35*max(0., axial.max())+.10*max(0., axial[-1])
-        required = .41+.015+.008+tail+.35*lateral.max()+.10*lateral[-1]
-        along = points @ heading
-        transverse = np.linalg.norm(points-along[..., None]*heading, axis=2)
-        gap = float(np.hypot(along-along.clip(lower, upper), transverse).min(initial=np.inf, where=valid))
-        if gap < required:
-            continue
-        visible = valid & (aligned @ heading >= .99) & (along > upper+required+.025)
-        bearing = aligned @ np.cross(up, heading)
-        if any(((visible & (sign*bearing > 0.)).reshape(3, ELEVATION_SAMPLES, AZIMUTH_SAMPLES)
-                .any(axis=1).sum(axis=1) < 3).any()
-               for sign in (-1., 1.)):
+        lower, upper, required, along, gap = _braking_capsule(points, valid, prior, heading, _HOLD_S*magnitude, tail)
+        if gap < required or not _forward_coverage(valid, aligned, along, heading, up, upper, required):
             continue
 
         proposed = governed.new_tensor(target)[None]
@@ -163,3 +213,47 @@ def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *
 
 class LocalWallStoppingPipeline(TubeStoppingPipeline):
     certify = staticmethod(certify_local_wall_request)
+
+
+class FrontWallBrakingPipeline(LocalWallStoppingPipeline):
+    """Use a newly verified stop when a static front wall triggers an opposing option."""
+
+    def __init__(self, baseline):
+        super().__init__(baseline)
+        self.allow_front_wall_brake = False
+        self.front_wall_brake = None
+        self._front_wall_ticks = 0
+
+    def __call__(self, lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                 explicit_reset, controller_quaternion_wxyz):
+        last_local_motion = self.tube_stopping is not None
+        result = super().__call__(lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                                  explicit_reset, controller_quaternion_wxyz)
+        self.front_wall_brake = None
+        if (not self.allow_front_wall_brake or bool(episode_reset[0] or explicit_reset[0])
+                or not math.isclose(history_dt_s, .10, abs_tol=1.e-6)):
+            self._front_wall_ticks = 0
+            return result
+        continuing = self._front_wall_ticks > 0
+        self._front_wall_ticks = max(0, self._front_wall_ticks-1)
+        request = state_vec[0, 45:48]
+        if (not (last_local_motion or continuing) or bool(result.ics_metrics['emergency'][0, 0])
+                or float(result.v_final_b[0] @ request) >= -.08*float(request.norm())):
+            return result
+        rays = self.lidar_rays_body
+        if rays is None:
+            rays = mounted_mid360_rays_body(device=lidar_grid.device, dtype=lidar_grid.dtype)
+        proof = certify_stop_at_front_wall(lidar_grid, state_vec, rays,
+            previous_speed_bound=self._speed_at_oldest_scan, require_closing=not continuing)
+        if proof is None:
+            return result
+        neutral = torch.zeros_like(result.v_final_b)
+        checked = attenuate_command(lidar_grid, rays, neutral, history_dt_s, self.config.ics, state_vec=state_vec)
+        if bool(checked.metrics['emergency'][0, 0]):
+            return result
+        if not continuing:
+            self._front_wall_ticks = DURATION_STEPS-1
+        self.front_wall_brake = (*proof, result.v_final_b)
+        self._last_ics_cache = checked.cache
+        world = rotate_body_to_world(checked.v_final_b, controller_quaternion_wxyz)
+        return replace(result, v_final_b=checked.v_final_b, v_final_w=world, ics_metrics=checked.metrics)

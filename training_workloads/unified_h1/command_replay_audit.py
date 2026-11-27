@@ -15,7 +15,8 @@ from .command_replay import (
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
-    LOCAL_WALL_STOPPING_EXECUTION, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTION, BRAKE_RECOVERY_EXECUTION,
+    LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTION, BRAKE_RECOVERY_EXECUTION,
+    FRONT_WALL_BRAKING_EXECUTION, FRONT_WALL_BRAKING_TRACE_FIELDS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -362,7 +363,7 @@ def audit(output, params, counters):
         if model.get('verify_hover_reference_reserve', False) is not (model['execution'] in HOVER_REFERENCE_RESERVE_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_HOVER_REFERENCE_PROFILE')
         crossing_restart_profile = model['execution'] in CROSSING_RESTART_EXECUTIONS
-        local_wall_stopping_profile = model['execution'] == LOCAL_WALL_STOPPING_EXECUTION
+        local_wall_stopping_profile = model['execution'] in LOCAL_WALL_STOPPING_EXECUTIONS
         if model.get('local_wall_stopping', False) is not local_wall_stopping_profile:
             raise ValueError('COMMAND_REPLAY_LOCAL_WALL_PROFILE')
         overlapping_stop_profile = model['execution'] == OVERLAPPING_STOP_EXECUTION
@@ -371,6 +372,9 @@ def audit(output, params, counters):
         brake_recovery_profile = model['execution'] == BRAKE_RECOVERY_EXECUTION
         if model.get('verify_brake_recovery', False) is not brake_recovery_profile:
             raise ValueError('COMMAND_REPLAY_BRAKE_RECOVERY_PROFILE')
+        front_wall_profile = model['execution'] == FRONT_WALL_BRAKING_EXECUTION
+        if model.get('front_wall_braking', False) is not front_wall_profile:
+            raise ValueError('COMMAND_REPLAY_FRONT_WALL_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -538,6 +542,9 @@ def audit(output, params, counters):
                 if any(((field in row) != local_wall_stopping_profile) or (field in row and len(row[field]) != LANES)
                        for field in LOCAL_WALL_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_LOCAL_WALL_BINDING')
+                if any(((field in row) != front_wall_profile) or (field in row and len(row[field]) != LANES)
+                       for field in FRONT_WALL_BRAKING_TRACE_FIELDS):
+                    raise ValueError('COMMAND_REPLAY_FRONT_WALL_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -657,6 +664,26 @@ def audit(output, params, counters):
                                 or dot(actor[-1][6:9],target) <= 0.
                                 or math.dist(row['v_final_b'][lane],[v*row['ics_beta'][lane] for v in target]) > 2.e-6):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BEHAVIOR')
+                    if front_wall_profile:
+                        verified_wall, before_wall, wall_gap, wall_required, closing_beams = (
+                            row[field][lane] for field in FRONT_WALL_BRAKING_TRACE_FIELDS)
+                        if (type(verified_wall) is not bool or len(before_wall) != 3 or type(closing_beams) is not int
+                                or closing_beams < 0 or not all(math.isfinite(x) for x in (*before_wall, wall_gap, wall_required))
+                                or (not verified_wall and any((*before_wall, wall_gap, wall_required, closing_beams)))):
+                            raise ValueError('COMMAND_REPLAY_FRONT_WALL_RECEIPT')
+                        if verified_wall:
+                            earlier = rows[max(0, step-24):step]
+                            armed = any(old['front_wall_brake_verified'][lane] and old['front_wall_brake_attributed_beams'][lane]
+                                        for old in earlier)
+                            onset = step and rows[step-1]['local_wall_stopping_hold_s'][lane] > 0. and closing_beams > 0
+                            if (not (armed or onset) or not row['escape_active'][lane] or row['escape_braking'][lane]
+                                    or row['recovery_retreating'][lane] or row['escape_recovering'][lane] or ranked[lane]
+                                    or held[lane] or intercepted[lane] or continued[lane] or handoff[lane] or restart[lane]
+                                    or row['local_wall_stopping_hold_s'][lane] or row['ics_emergency'][lane]
+                                    or math.hypot(*row['v_final_b'][lane]) > 1.e-6 or wall_gap < wall_required
+                                    or wall_required < .41 or not .02999 <= math.hypot(*observed) <= .300001
+                                    or dot(actor[-1][6:9], before_wall) > -.079999*math.hypot(*observed)):
+                                raise ValueError('COMMAND_REPLAY_FRONT_WALL_BEHAVIOR')
                     if hover_own_side[lane] and (not intercepted[lane] or row['escape_active'][lane]
                             or row['ics_beta'][lane] < .89999 or any(math.hypot(*frame[6:9]) > 1.e-6 for frame in actor)):
                         raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_BEHAVIOR')

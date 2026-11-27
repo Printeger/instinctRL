@@ -26,13 +26,14 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
-    CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24,
+    CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V22, CROSSING_STOP_25_V23,
-                             CROSSING_STOP_25_V24)
+LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, CROSSING_STOP_25_V25)
+CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24,
+                             *LOCAL_WALL_STOPPING_VERSIONS)
 HOVER_REFERENCE_RESERVE_VERSIONS = (CROSSING_STOP_25_V20, *CROSSING_RESTART_VERSIONS)
 CLIPPED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V18, *HOVER_REFERENCE_RESERVE_VERSIONS)
 VERIFIED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V17, *CLIPPED_RETREAT_ONSET_VERSIONS)
@@ -81,6 +82,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
     bilateral_stopping = False
     tube_stopping = False
     local_wall_stopping = False
+    front_wall_braking = False
     lidar_mount_pitch_degrees = 30
     lidar_rays_body = None
 
@@ -117,12 +119,15 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.escape_option_version = version if enabled else None
         self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
         self.tube_stopping = enabled and version == CROSSING_STOP_25_V19
-        self.local_wall_stopping = enabled and version == CROSSING_STOP_25_V22
+        self.local_wall_stopping = enabled and version in LOCAL_WALL_STOPPING_VERSIONS
+        self.front_wall_braking = enabled and version == CROSSING_STOP_25_V25
         for pipeline in self._control_pipelines:
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
             if hasattr(pipeline, 'allow_tube_stopping'):
                 pipeline.allow_tube_stopping = False
+            if hasattr(pipeline, 'allow_front_wall_brake'):
+                pipeline.allow_front_wall_brake = False
         kwargs = dict(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
         if not enabled:
             self.escape_option = None
@@ -262,7 +267,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
             if self.bilateral_stopping or self.tube_stopping or self.local_wall_stopping:
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
-                from instinctlab.control.local_wall_stopping import LocalWallStoppingPipeline
+                from instinctlab.control.local_wall_stopping import FrontWallBrakingPipeline, LocalWallStoppingPipeline
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
                 option = self.escape_option
@@ -273,9 +278,14 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.intercept_continued
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
-                    pipeline_type = LocalWallStoppingPipeline
+                    pipeline_type = FrontWallBrakingPipeline if self.front_wall_braking else LocalWallStoppingPipeline
                 else:
                     pipeline_type = TubeStoppingPipeline if self.tube_stopping else BilateralStoppingPipeline
+                if self.front_wall_braking:
+                    ordinary = (option.applied & ~option.retreating & ~option.braking & ~option.ranked & ~option.holding
+                                & ~option.intercepted & ~option.intercept_continued & ~option.recovering
+                                & ~option.handed_off & ~option.static_stop_verified & ~option.crossing_restart_verified)
+                    front_wall = ordinary.tolist()
                 for index, allowed in enumerate((~protected).tolist()):
                     pipeline = self._control_pipelines[index]
                     if type(pipeline) is not pipeline_type:
@@ -285,6 +295,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                         pipeline.allow_tube_stopping = allowed
                     else:
                         pipeline.allow_bilateral_stopping = allowed
+                    if self.front_wall_braking:
+                        pipeline.allow_front_wall_brake = front_wall[index]
         elif self.escape_option is not None:
             actions = self.escape_option.apply(self._policy, actions)
         super()._pre_physics_step(actions)
@@ -384,6 +396,21 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                    baseline_velocity_b=baseline_velocity, baseline_beta=baseline_beta,
                                    gap_m=gap, required_gap_m=required_gap, cleared_limiting_beams=cleared)
                     self.extras['pre_reset']['escape_option'].update({prefix+'_'+key:value for key,value in receipt.items()})
+                if self.front_wall_braking:
+                    baseline_velocity = torch.zeros_like(self.escape_option.direction)
+                    gap = baseline_velocity.new_zeros((self.num_envs,))
+                    required = torch.zeros_like(gap)
+                    attributed = gap.new_zeros((self.num_envs,), dtype=torch.long)
+                    verified = self.escape_option.applied.new_zeros((self.num_envs,))
+                    for lane, pipeline in enumerate(self._control_pipelines):
+                        if pipeline.front_wall_brake is not None:
+                            observed, needed, closing, original = pipeline.front_wall_brake
+                            baseline_velocity[lane] = original[0]
+                            gap[lane], required[lane], attributed[lane] = observed, needed, closing
+                            verified[lane] = True
+                    self.extras['pre_reset']['escape_option'].update(front_wall_brake_verified=verified,
+                        front_wall_brake_previous_b=baseline_velocity, front_wall_brake_gap_m=gap,
+                        front_wall_brake_required_m=required, front_wall_brake_attributed_beams=attributed)
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:

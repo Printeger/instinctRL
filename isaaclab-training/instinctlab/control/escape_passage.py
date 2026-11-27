@@ -4,7 +4,7 @@ import torch
 from torch.nn import functional as F
 
 
-def _closing_seed(ranges, reliable, elapsed, *, minimum_range_m=0., maximum_range_m=1.9):
+def _supported_closing_returns(ranges, reliable, elapsed, *, minimum_range_m=0., maximum_range_m=1.9):
     old = -torch.where(reliable[:, :3], ranges[:, :3], torch.inf)
     old = F.max_pool2d(F.pad(old, (8, 8, 0, 0), mode='circular'), (1, 17), stride=1)
     nearby = -F.max_pool2d(old, (17, 1), stride=1, padding=(8, 0))
@@ -16,7 +16,13 @@ def _closing_seed(ranges, reliable, elapsed, *, minimum_range_m=0., maximum_rang
     supported = support.clone()
     for offset in (-2, -1, 1, 2):
         supported &= support.roll(offset, dims=-1)
-    best, seed = torch.where(supported, closing, 0.).amax(dim=1).flatten(1).max(dim=1)
+    return torch.where(supported, closing, 0.).amax(dim=1).flatten(1)
+
+
+def _closing_seed(ranges, reliable, elapsed, *, minimum_range_m=0., maximum_range_m=1.9):
+    closing = _supported_closing_returns(ranges, reliable, elapsed, minimum_range_m=minimum_range_m,
+                                         maximum_range_m=maximum_range_m)
+    best, seed = closing.max(dim=1)
     return best > .005, seed
 
 

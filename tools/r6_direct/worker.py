@@ -177,7 +177,7 @@ def run(plan, input_pin):
             BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
             FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
             CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
-            CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTION,
+            CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTION,
             OVERLAPPING_STOP_EXECUTION, BRAKE_RECOVERY_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
@@ -369,7 +369,8 @@ def run(plan, input_pin):
                     tube_stopping = option_version == TUBE_STOPPING_EXECUTION
                     hover_reference_reserve = option_version in HOVER_REFERENCE_RESERVE_EXECUTIONS
                     crossing_restart = option_version in CROSSING_RESTART_EXECUTIONS
-                    local_wall_stopping = option_version == LOCAL_WALL_STOPPING_EXECUTION
+                    local_wall_stopping = option_version in LOCAL_WALL_STOPPING_EXECUTIONS
+                    front_wall_braking = option_version == FRONT_WALL_BRAKING_EXECUTION
                     overlapping_stop = option_version == OVERLAPPING_STOP_EXECUTION
                     brake_recovery = option_version == BRAKE_RECOVERY_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
@@ -419,7 +420,8 @@ def run(plan, input_pin):
                             or env.escape_option.verify_crossing_restart != crossing_restart
                             or env.local_wall_stopping != local_wall_stopping
                             or env.escape_option.verify_overlapping_stop != overlapping_stop
-                            or env.escape_option.verify_brake_recovery != brake_recovery):
+                            or env.escape_option.verify_brake_recovery != brake_recovery
+                            or env.front_wall_braking != front_wall_braking):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -508,6 +510,8 @@ def run(plan, input_pin):
                         execution['verify_overlapping_stop'] = True
                     if brake_recovery:
                         execution['verify_brake_recovery'] = True
+                    if front_wall_braking:
+                        execution['front_wall_braking'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:
