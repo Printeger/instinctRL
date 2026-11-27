@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。首判 6/6。本阶段只用仿真的 Crazy Command Generator。B/C 三臂复现街道 8/8 接触，提前制动后两个种子均 0/8。B 同权重提前撤离在 110 s 五布局对照 32/32 首飞零接触、零重置。5 ms 包络净空最差 −0.042 m，零令最大漂移 0.805 m。零令换侧和零令保持均新增接触，拒绝。36 s 物理采集与旧策略拍逐字节一致。室内延后横移让 62 s 过角从 0/8 到 5/8，零接触。当前同权重对照隔离近险后的回中补偿，30 分钟留出与完整 R6 未验收。 [项目状态](../docs/PROJECT_STATUS.md) · [物理净空](../docs/experiments/instinct-continuous-command/clearance/REPORT.md) · [当前试验](../docs/experiments/instinct-continuous-command/rearm/PLAN.md)
+任务 `instinctrl-continuous-command`。首判 6/6。只用仿真的 Crazy Command Generator。B/C 基线街道 8/8 接触，提前制动两个种子均 0/8。回中暂缓去掉晚段接触，折返选向 64 条完整首飞零接触，该折返最小 5 ms 净空由 −0.051 m 提到 +0.171 m，整段仍有更早的 −0.018 m。直接按曲面保持新增街道两条首飞接触并拒绝。HOVERPATH 正在比较原零令逃逸和更有净空的替代。室内延后横移过角 0/8 到 5/8，36 s 净空采集前后策略拍原件逐字节一致。正式 30 分钟留出、停止与进展门槛、同配置完整 R6 仍待验收。 [项目状态](../docs/PROJECT_STATUS.md) · [折返结果](../docs/experiments/instinct-continuous-command/rank/REPORT.md) · [当前方案](../docs/experiments/instinct-continuous-command/hover_path/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
