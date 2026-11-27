@@ -37,6 +37,16 @@ def lane_value(value, lane):
     return value[lane] if isinstance(value, list) else value
 
 
+def contiguous_windows(steps):
+    windows = []
+    for step in steps:
+        if windows and step == windows[-1][1]+1:
+            windows[-1][1] = step
+        else:
+            windows.append([step, step])
+    return windows
+
+
 def score_lane(rows, initial, lane, crossing):
     def read(row, name):
         return row[name][lane]
@@ -81,6 +91,8 @@ def score_lane(rows, initial, lane, crossing):
     centre_y = initial['path_reference_w'][lane][1]
     exposed = [row['step'] for row in flight
                if crossing and abs(read(row, 'mover_position_w')[1]-centre_y) <= CORRIDOR_HALF_WIDTH_M]
+    exposure_windows = contiguous_windows(exposed)
+    reversal = CONDITIONS['crossing_at_reversal']//STEP_MS
     clearance = [math.dist(position(row), read(row, 'mover_position_after_w'))-.34
                  for row in flight] if crossing else []
     layout = initial['layouts'][lane] if 'layouts' in initial else LAYOUTS[lane//8]
@@ -93,7 +105,8 @@ def score_lane(rows, initial, lane, crossing):
         minimum_root_to_mover_surface_m=min(clearance) if clearance else None,
         exposure_first_step=exposed[0] if exposed else None,
         exposure_last_step=exposed[-1] if exposed else None,
-        reversal_in_corridor=CONDITIONS['crossing_at_reversal']//STEP_MS in exposed,
+        exposure_windows=exposure_windows,
+        reversal_in_corridor=reversal in exposed,
         earliest_delivered_mover_step=next((row['step'] for row in flight
             if crossing and read(row, 'mover_winning_beams') and read(row, 'actor_witness')[-1][1] > .5), None),
         first_intervention_step=next((row['step'] for row in flight if intervened(row)), None),
@@ -102,9 +115,9 @@ def score_lane(rows, initial, lane, crossing):
         average_tracking_error_m_s=fmean(math.dist(actual(row), command(row)) for row in active) if active else None,
         average_intent_progress_m_s=fmean(progress(row, actual(row)) for row in active) if active else None,
     )
-    release = exposed[-1]+1 if exposed else None
+    # Pair the first commanded reversal only with the first mover event.
+    release = exposure_windows[0][1]+1 if exposure_windows else None
     reported['after_corridor'] = recovery_window(release) if release is not None and release < len(flight) else None
-    reversal = CONDITIONS['crossing_at_reversal']//STEP_MS
     compare_start = max(reversal, release or 0)
     reported['after_reversal'] = None
     if ((not isinstance(flight[0]['event_index'], list) or layout == 'street_gap')

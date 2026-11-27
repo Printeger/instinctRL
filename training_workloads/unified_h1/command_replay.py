@@ -13,6 +13,7 @@ PREFIX = 'R6-DIRECT-INSTINCT-GPU-COMMAND-'
 GUARD_PREFIX = PREFIX + 'GUARD-'
 ROUTE_PREFIX = PREFIX + 'ROUTE-'
 CRAZY_PREFIX = PREFIX + 'CRAZY-'
+ENDURANCE_PREFIX = PREFIX + 'ENDURANCE-'
 REGRESSION_ID = PREFIX + 'R6-01'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
@@ -29,16 +30,17 @@ MODELS = {
 EXECUTION = 'm4-escape-rear-clearance-p25-v1'
 BRAKE_EXECUTION = 'm4-escape-brake-forward-p25-v1'
 TUBE_EXECUTION = 'm4-escape-brake-tube-p25-v1'
+TUBE_CONFIRM_EXECUTION = 'm4-escape-brake-tube-p25-v2'
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
 CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
-    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX))
+    return run_id.startswith((ROUTE_PREFIX, CRAZY_PREFIX, ENDURANCE_PREFIX))
 
 
 def arm_execution(params, label):
@@ -141,11 +143,16 @@ def sampled_events(stream):
 
 
 def contract(params):
-    guard = params['experiment_id'].startswith(GUARD_PREFIX)
-    crazy = params['experiment_id'].startswith(CRAZY_PREFIX)
-    routes = route_layouts(params['experiment_id'])
+    run_id = params['experiment_id']
+    guard = run_id.startswith(GUARD_PREFIX)
+    crazy = run_id.startswith(CRAZY_PREFIX)
+    endurance = run_id.startswith(ENDURANCE_PREFIX)
+    routes = route_layouts(run_id)
+    control_execution = TUBE_EXECUTION if endurance else BRAKE_EXECUTION if crazy else EXECUTION
+    candidate_execution = TUBE_CONFIRM_EXECUTION if endurance else TUBE_EXECUTION if crazy else BRAKE_EXECUTION
+    paired_weights = guard or crazy or endurance
     expected_models = MODELS
-    if guard or crazy:
+    if paired_weights:
         expected_models = {'control': MODELS['b'], 'candidate': MODELS['b']}
     elif routes:
         expected_models = dict(MODELS, candidate=MODELS['b'])
@@ -153,9 +160,9 @@ def contract(params):
     if guard or routes:
         fields.add('candidate_execution')
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
-            or ((guard or routes) and params['candidate_execution'] != (TUBE_EXECUTION if crazy else BRAKE_EXECUTION))
+            or ((guard or routes) and params['candidate_execution'] != candidate_execution)
             or type(params['seed']) is not int
-            or not 0 <= params['seed'] < 2**31 or params['execution'] != (BRAKE_EXECUTION if crazy else EXECUTION)
+            or not 0 <= params['seed'] < 2**31 or params['execution'] != control_execution
             or not isinstance(params['models'], dict) or set(params['models']) != set(expected_models)
             or type(params['wall_seconds']) is not int or not 120 <= params['wall_seconds'] <= 1800
             or type(params['output_cap_bytes']) is not int or not 256*2**20 <= params['output_cap_bytes'] <= 2**30):
@@ -164,12 +171,14 @@ def contract(params):
         if checkpoint['sha256'] != expected_models[label]:
             raise ValueError('COMMAND_REPLAY_FROZEN_CHECKPOINT')
         checked(checkpoint)
-    if (guard or crazy) and params['models']['control'] != params['models']['candidate']:
+    if paired_weights and params['models']['control'] != params['models']['candidate']:
         raise ValueError('COMMAND_REPLAY_GUARD_SAME_WEIGHTS')
-    if routes and not crazy and params['models']['b'] != params['models']['candidate']:
+    if routes and not paired_weights and params['models']['b'] != params['models']['candidate']:
         raise ValueError('COMMAND_REPLAY_ROUTES_SAME_WEIGHTS')
     stream = load_route_streams(params['stream'])['street_gap'] if routes else load_stream(params['stream'])
-    if stream['duration_ms'] > 90000 or (crazy and stream['source'] != 'crazy_command_generator'):
+    duration = stream['duration_ms']
+    valid_duration = 101000 <= duration <= 125000 if endurance else duration <= 90000
+    if not valid_duration or ((crazy or endurance) and stream['source'] != 'crazy_command_generator'):
         raise ValueError('COMMAND_REPLAY_DEVELOPMENT_DURATION')
     events = {event['t_ms']: event['velocity_w_m_s'] for event in stream['events']}
     reversal = CONDITIONS['crossing_at_reversal']
@@ -210,10 +219,13 @@ def run(backend, params):
     steps = len(event_ids)-1
     if not math.isclose(env.step_dt, STEP_MS/1000., abs_tol=1e-8):
         raise ValueError('COMMAND_REPLAY_CLOCK')
+    if env.max_episode_length <= steps:
+        raise ValueError('COMMAND_REPLAY_EPISODE_HORIZON')
     block = dict(id='continuous-replay-pair', task='stop', speed_m_s=.25,
                  pulse_acceleration_m_s2=0., sensor_to_wall_distance_m=None, steps=steps)
     output = Path(backend.output)
-    env.capture_ics_limiter = params['experiment_id'].startswith(CRAZY_PREFIX)
+    endurance = params['experiment_id'].startswith(ENDURANCE_PREFIX)
+    env.capture_ics_limiter = endurance or params['experiment_id'].startswith(CRAZY_PREFIX)
 
     def save_row(handle, row):
         data = (json.dumps(row, allow_nan=False, separators=(',', ':')) + '\n').encode()
@@ -234,6 +246,13 @@ def run(backend, params):
         env.set_escape_option(True, version=execution)
         env.set_h1_ics_clearance_margin(.15)
         model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
+        if endurance:
+            configuration = {(p.config.ics.motion_tube_radius_m, p.config.ics.motion_tube_confirm_closure)
+                             for p in env._control_pipelines}
+            confirm = execution == TUBE_CONFIRM_EXECUTION
+            if configuration != {(.60, confirm)}:
+                raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
+            model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
         for name, crossing_ms in conditions(params).items():
             env.configure_r6_physics(block=block, seed=params['seed'], split='development',
                                      reset_sink=lambda row: None, force_sink=lambda row: None,
@@ -246,7 +265,8 @@ def run(backend, params):
                 ids = obstacle.indices
                 modes[street] = 2 + ids[street].remainder(2)
                 delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
-            obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay)
+            obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
+                               half_period_s=CROSSING_TRAVEL_S if endurance else None)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])

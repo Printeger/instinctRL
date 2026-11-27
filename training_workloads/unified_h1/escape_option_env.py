@@ -7,7 +7,8 @@ import torch
 
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
-    BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
+    BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION,
+    EscapeRecovery, FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
     REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_VERSION, REDIRECT_25_VERSION,
@@ -57,7 +58,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         elif version == METHOD_VERSION:
             self.escape_option = EscapeOption(**kwargs)
         elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
-            brake_forward = version in (BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION)
+            brake_forward = version in (BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION)
             rear_clearance = brake_forward or version in (REAR_CLEARANCE_25_VERSION, FRONT_CLEARANCE_25_VERSION)
             self.escape_option = EscapeRecovery(**kwargs, recenter=version != MIXED_VERSION,
                                                 lateral=version in (LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES),
@@ -80,10 +81,14 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
 
     def set_h1_ics_clearance_margin(self, margin_m):
         super().set_h1_ics_clearance_margin(margin_m)
-        radius = .60 if getattr(self, 'escape_option_version', None) == BRAKE_TUBE_25_VERSION else 0.
+        version = getattr(self, 'escape_option_version', None)
+        radius = .60 if version in (BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION) else 0.
+        confirm = version == BRAKE_TUBE_CONFIRM_25_VERSION
         for pipeline in self._control_pipelines:
-            if pipeline.config.ics.motion_tube_radius_m != radius:
-                pipeline.config = replace(pipeline.config, ics=replace(pipeline.config.ics, motion_tube_radius_m=radius))
+            ics = pipeline.config.ics
+            if (ics.motion_tube_radius_m, ics.motion_tube_confirm_closure) != (radius, confirm):
+                pipeline.config = replace(pipeline.config, ics=replace(ics, motion_tube_radius_m=radius,
+                                                                      motion_tube_confirm_closure=confirm))
 
     def _pre_physics_step(self, actions):
         if isinstance(self.escape_option, EscapeRecovery):

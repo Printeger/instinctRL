@@ -36,6 +36,7 @@ class ICSConfig:
     range_rate_filter: bool = False
     empty_active_set_beta: float = 1.0
     motion_tube_radius_m: float = 0.0
+    motion_tube_confirm_closure: bool = False
 
     def __post_init__(self) -> None:
         for name in (
@@ -64,6 +65,8 @@ class ICSConfig:
             raise ValueError("motion tube radius must be in [0, d_safe_m]")
         if not isinstance(self.range_rate_filter, bool):
             raise TypeError("range_rate_filter must be boolean")
+        if not isinstance(self.motion_tube_confirm_closure, bool):
+            raise TypeError("motion_tube_confirm_closure must be boolean")
 
 
 @dataclass(frozen=True)
@@ -214,7 +217,9 @@ def attenuate_command(
         across_m = (latest_range.square() - parallel_m.square()).clamp_min(0.).sqrt()
         last_two_rates = rates[:, -2:].flatten(2)
         last_two_valid = usable_rates[:, -2:].flatten(2).all(dim=1)
-        unexplained_closure = -last_two_rates.amin(dim=1) > approach + .18
+        closure = -last_two_rates
+        measured_closure = closure.amin(dim=1) if config.motion_tube_confirm_closure else closure.amax(dim=1)
+        unexplained_closure = measured_closure > approach + .18
         outside = ((across_m > config.motion_tube_radius_m) & last_two_valid & ~unexplained_closure
                    & (latest_reliability >= .65) & (speed <= .30))
         active = active & ~outside

@@ -123,6 +123,7 @@ def test_motion_tube_keeps_forward_hazards_and_unexplained_closure():
     cmd = torch.tensor([[.24, 0., 0.]])
     radial = ICSConfig(clearance_margin_m=.15)
     tube = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60)
+    confirms = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True)
 
     def output(beam, history, config):
         grid = torch.zeros(1, 4, 3, len(rays))
@@ -135,6 +136,19 @@ def test_motion_tube_keeps_forward_hazards_and_unexplained_closure():
     assert output(side, [.92]*4, tube) == pytest.approx(.24)
     assert output(ahead, [.92]*4, tube) == 0.
     assert output(side, [1.1, 1.00, .94, .88], tube) == 0.
+    assert output(side, [1.1, 1.00, .94, .88], confirms) == 0.
+    one_spike = [1.10, .99, .94, .93]
+    assert output(side, one_spike, tube) == 0.
+    assert output(side, one_spike, confirms) == pytest.approx(.24)
+
+
+def test_clearance_uses_the_nearest_finite_wall_surface():
+    import numpy as np
+    from tools.r6_direct.replay_clearance import triangle_distance_squared
+
+    triangle = np.array([[0., 0., 0.], [2., 0., 0.], [0., 2., 0.]])
+    queries = np.array([[.5,.5,1.], [1.5,1.5,0.], [-1.,-1.,0.]])
+    assert triangle_distance_squared(queries, triangle).tolist() == pytest.approx([1., .5, 2.])
 
 
 def test_early_brake_replaces_only_an_accelerating_escape_at_its_trigger(monkeypatch):

@@ -167,7 +167,9 @@ def run(plan, input_pin):
             JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
-        from training_workloads.unified_h1.command_replay import REGRESSION_ID, matches as command_replay, route_layouts
+        from training_workloads.unified_h1.command_replay import (
+            ENDURANCE_PREFIX, REGRESSION_ID, STEP_MS, load_route_streams, matches as command_replay, route_layouts,
+        )
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
@@ -223,6 +225,9 @@ def run(plan, input_pin):
                     if candidate in RECOVERY_CANDIDATES:
                         option_version = action_option_version(candidate)
             cfg = UnifiedH1DirectEnvCfg(h1_moving_sphere=moving)
+            if plan['run_id'].startswith(ENDURANCE_PREFIX):
+                duration = load_route_streams(params['stream'])['street_gap']['duration_ms']
+                cfg.episode_length_s = (duration + 2*STEP_MS)/1000.
             from training_workloads.unified_h1.dynamic_assay import physical_layout, three_case, OPTION_RUN, RECOVERY_PREFIX
             holdout = operation == 'dynamic' and physical_layout(plan['run_id'])
             recovery_training = operation == 'train' and recipe['candidate_id'] in RECOVERY_CANDIDATES

@@ -1,0 +1,118 @@
+{
+  "schema_version": "instinctrl-collider-envelope-study/1",
+  "asset": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/isaaclab-training/instinctlab/assets/taslab_uav/taslab_uav.usd",
+    "sha256": "3e733ca1008b1a3620941a8c1cc2e82bd7006a6a4c441c921a292bf11d2aee99"
+  },
+  "asset_meters_per_unit": 1.0,
+  "root": "/taslab_uav/base_link",
+  "maximum_rest_pose_rotation_envelope_m": 0.20980707251692354,
+  "shapes": [
+    {
+      "prim": "/taslab_uav/base_link/collisions",
+      "body": "/taslab_uav/base_link",
+      "translation_from_root_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "local_bbox_min": [
+        -0.10506733506917953,
+        -0.10218703001737595,
+        -0.0909683108329773
+      ],
+      "local_bbox_max": [
+        0.09882409125566483,
+        0.10170438885688782,
+        0.10535414516925812
+      ],
+      "link_bound_radius_m": 0.18050160638248194,
+      "rest_pose_rotation_envelope_m": 0.18050160638248194
+    },
+    {
+      "prim": "/taslab_uav/rotor_0/collisions",
+      "body": "/taslab_uav/rotor_0",
+      "translation_from_root_m": [
+        0.08187799900770187,
+        -0.08524099737405777,
+        0.018907999619841576
+      ],
+      "local_bbox_min": [
+        -0.03454701974987984,
+        -0.05510538443922998,
+        -5.819285320285421e-07
+      ],
+      "local_bbox_max": [
+        0.0639161765575409,
+        0.05658716708421706,
+        0.0081930598244071
+      ],
+      "link_bound_radius_m": 0.08575844759344792,
+      "rest_pose_rotation_envelope_m": 0.2054561785846964
+    },
+    {
+      "prim": "/taslab_uav/rotor_1/collisions",
+      "body": "/taslab_uav/rotor_1",
+      "translation_from_root_m": [
+        0.08187799900770187,
+        0.08475899696350098,
+        0.018907999619841576
+      ],
+      "local_bbox_min": [
+        -0.034547481685876846,
+        -0.056587256491184235,
+        6.556510889765832e-11
+      ],
+      "local_bbox_max": [
+        0.06391105055809021,
+        0.05510527640581131,
+        0.008191671222448349
+      ],
+      "link_bound_radius_m": 0.08575455357037622,
+      "rest_pose_rotation_envelope_m": 0.20510951466285837
+    },
+    {
+      "prim": "/taslab_uav/rotor_2/collisions",
+      "body": "/taslab_uav/rotor_2",
+      "translation_from_root_m": [
+        -0.08812200278043747,
+        0.08475899696350098,
+        0.018907999619841576
+      ],
+      "local_bbox_min": [
+        -0.03454732149839401,
+        -0.055105384439229965,
+        -6.556511583655222e-11
+      ],
+      "local_bbox_max": [
+        0.06391584128141403,
+        0.05658716708421707,
+        0.008191671222448349
+      ],
+      "link_bound_radius_m": 0.08575806505947238,
+      "rest_pose_rotation_envelope_m": 0.209479879586734
+    },
+    {
+      "prim": "/taslab_uav/rotor_3/collisions",
+      "body": "/taslab_uav/rotor_3",
+      "translation_from_root_m": [
+        -0.08812200278043747,
+        -0.08524099737405777,
+        0.018907999619841576
+      ],
+      "local_bbox_min": [
+        -0.034547481685876846,
+        -0.056587256491184235,
+        6.556510889765832e-11
+      ],
+      "local_bbox_max": [
+        0.06391105055809021,
+        0.05510527640581131,
+        0.008191671222448349
+      ],
+      "link_bound_radius_m": 0.08575455357037622,
+      "rest_pose_rotation_envelope_m": 0.20980707251692354
+    }
+  ],
+  "status": "USD_COLLIDER_BOUND_REQUIRES_LIVE_JOINT_RADIUS_VERIFICATION"
+}
