@@ -74,6 +74,8 @@
 
 新指令横穿恢复的独立 Crazy 复验，五类 32/32 条首飞完整且净空通过，零接触和重置。室内一条停令漂移 0.391 米且 1.5 秒停稳，停车 31/32。保留原输入及原件进行停驻配对，正式验收未开始。 [独立结果](experiments/instinct-continuous-command/independent_crossing_restart/REPORT.md)
 
+局部墙面限幅的 Crazy 配对完成 32/32 条首飞和停车，零接触与重置，整体最低净空 0.22244 米。室内固定窗实测进展从 0/42 增至 31/42。走廊从 0/76 增至 29/76，但出现 22 个明显反向拍，跟踪误差增加。保留同输入证据用于区分局部放行与原避让启动。 [局部墙面配对](experiments/instinct-continuous-command/local_wall_stopping/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
