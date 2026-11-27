@@ -20,6 +20,8 @@ B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8
 
 短时延续将原接触窗提高至至少 +0.338 m，同批另一条街道轨迹中与仍可下发的旧撤离产生反向冲突并接触。已锁定到四拍延续和可下发反例，启动优先级配对。长时方案新增生成指令的计划位置限制，32 路同钟 CPU 检查通过。 [连续撤离结果](experiments/instinct-continuous-command/intercept_committed/REPORT.md) · [优先级配对](experiments/instinct-continuous-command/intercept_priority/PLAN.md)
 
+撤离优先级候选完成 32/32 条 120 秒匹配首飞，五类零接触、零重置，最小 5 ms 净空 +0.228 m。原冲突窗改善到 +0.249 m，其余两个危险窗不变。室内仍 5/8 过角，已启动可行新指令交接配对，正式留出尚未运行。 [优先级结果](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [交接配对](experiments/instinct-continuous-command/command_handoff/PLAN.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
