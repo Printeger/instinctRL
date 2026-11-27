@@ -51,6 +51,21 @@ def test_replay_causally_holds_timestamped_events():
     assert sampled_events(stream) == [0, 1, 2, 3, 3, 3]
 
 
+def test_route_schedule_selects_the_lane_layout_stream():
+    from pathlib import Path
+    from tools.r6_evidence import file_pin
+    from training_workloads.unified_h1.command_replay import ROUTE_PREFIX, event_schedule
+
+    root = Path(__file__).resolve().parents[2]
+    stream = file_pin(root/'docs/experiments/instinct-continuous-command/routes/STREAMS.json')
+    layouts, ids, events = event_schedule({'experiment_id': ROUTE_PREFIX+'01', 'stream': stream})
+    assert len(ids) == len(events) == 421
+    assert [layouts[i] for i in (0, 8, 16, 24, 28)] == ['room_corner', 'trunk_aisle', 'street_gap', 'corridor', 'open_tube']
+    assert events[64][16]['velocity_w_m_s'] == [-.25, 0., 0.]
+    assert events[64][0]['velocity_w_m_s'] == [.28, 0., 0.]
+    assert events[100][24]['velocity_w_m_s'] == [.15, .19, 0.]
+
+
 def test_audit_projects_actor_command_to_world():
     half = 2**-.5
     assert body_to_world([half, 0, 0, half], [0, -1, 0]) == pytest.approx([1, 0, 0])

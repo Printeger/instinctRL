@@ -167,7 +167,7 @@ def run(plan, input_pin):
             JournaledRuntimeResourceGuard, RuntimeResourceGuard, validate_graceful_shutdown_configuration,
         )
         from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, U1792_STUDY_PREFIX
-        from training_workloads.unified_h1.command_replay import matches as command_replay
+        from training_workloads.unified_h1.command_replay import ROUTE_PREFIX, matches as command_replay
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
         import carb.settings
@@ -228,7 +228,8 @@ def run(plan, input_pin):
             if holdout:
                 from training_workloads.unified_h1.escape_option_env import EscapeHoldoutEnv
                 env = EscapeHoldoutEnv(cfg, layout_seed=params['seed'], mirrored_pipe_pairs=pipe_probe,
-                                       mirrored_trunk_pairs=three_case(plan['run_id']) == 'FRONT-CLEARANCE')
+                                       mirrored_trunk_pairs=three_case(plan['run_id']) == 'FRONT-CLEARANCE',
+                                       command_routes=plan['run_id'].startswith(ROUTE_PREFIX))
             elif recovery_training:
                 from training_workloads.unified_h1.escape_option_env import EscapeRecoveryTrainingEnv
                 env = EscapeRecoveryTrainingEnv(cfg)
@@ -251,7 +252,10 @@ def run(plan, input_pin):
                 counter_source=env.h1_initialization_tick_source,fresh_physical_reset=True)
             from training_workloads.unified_h1.robustness_contract import baseline,evaluate_baseline
             if holdout:
-                env.holdout_preflight(backend.output)
+                if plan['run_id'].startswith(ROUTE_PREFIX):
+                    env.holdout_preflight(backend.output, scene='room-corner-trunks-street-corridor-tube')
+                else:
+                    env.holdout_preflight(backend.output)
             elif recovery_training:
                 env.holdout_preflight(backend.output, scene='training-tubes-and-combined-walls')
             else:

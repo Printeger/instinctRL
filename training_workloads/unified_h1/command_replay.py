@@ -6,11 +6,12 @@ from pathlib import Path
 import re
 
 from tools.r6_evidence import checked, file_pin
-from .escape_holdout_scene import LAYOUTS
+from .escape_holdout_scene import COMMAND_LAYOUTS, LAYOUTS, command_layout
 
 
 PREFIX = 'R6-DIRECT-INSTINCT-GPU-COMMAND-'
 GUARD_PREFIX = PREFIX + 'GUARD-'
+ROUTE_PREFIX = PREFIX + 'ROUTE-'
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -28,15 +29,14 @@ BRAKE_EXECUTION = 'm4-escape-brake-forward-p25-v1'
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE)-[0-9]{2}', run_id) is not None
 
 
 def arm_execution(params, label):
     return params.get('candidate_execution', params['execution']) if label == 'candidate' else params['execution']
 
 
-def load_stream(pin):
-    stream = json.loads(checked(pin).read_bytes())
+def validate_stream(stream):
     if (set(stream) != {'schema_version', 'source', 'duration_ms', 'events'}
             or stream['schema_version'] != 'instinctrl-world-command-stream/1'
             or stream['source'] != 'scripted_development'
@@ -61,6 +61,41 @@ def load_stream(pin):
     return stream
 
 
+def load_stream(pin):
+    return validate_stream(json.loads(checked(pin).read_bytes()))
+
+
+def load_route_streams(pin):
+    value = json.loads(checked(pin).read_bytes())
+    if (set(value) != {'schema_version', 'duration_ms', 'layouts'}
+            or value['schema_version'] != 'instinctrl-command-route-streams/1'
+            or not isinstance(value['layouts'], dict) or set(value['layouts']) != set(COMMAND_LAYOUTS)):
+        raise ValueError('COMMAND_REPLAY_ROUTES')
+    return {layout: validate_stream(dict(schema_version='instinctrl-world-command-stream/1',
+                                         source='scripted_development', duration_ms=value['duration_ms'], events=events))
+            for layout, events in value['layouts'].items()}
+
+
+def conditions(params):
+    if params['experiment_id'].startswith(ROUTE_PREFIX):
+        return {'layout_routes': CONDITIONS['crossing_at_reversal']}
+    return CONDITIONS
+
+
+def event_schedule(params):
+    """Keep single-stream pair rows stable and expand route inputs by lane."""
+    if params['experiment_id'].startswith(ROUTE_PREFIX):
+        streams = load_route_streams(params['stream'])
+        layouts = [command_layout(lane) for lane in range(LANES)]
+        by_lane = [streams[layout] for layout in layouts]
+        indices = list(zip(*(sampled_events(stream) for stream in by_lane), strict=True))
+        events = [[stream['events'][index] for stream, index in zip(by_lane, row, strict=True)] for row in indices]
+        return layouts, [list(row) for row in indices], events
+    stream = load_stream(params['stream'])
+    indices = sampled_events(stream)
+    return [LAYOUTS[lane//8] for lane in range(LANES)], indices, [stream['events'][i] for i in indices]
+
+
 def sampled_events(stream):
     """Sample the latest event at each boundary, including the final observation."""
     events = stream['events']
@@ -70,12 +105,17 @@ def sampled_events(stream):
 
 def contract(params):
     guard = params['experiment_id'].startswith(GUARD_PREFIX)
-    expected_models = {'control': MODELS['b'], 'candidate': MODELS['b']} if guard else MODELS
-    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
+    routes = params['experiment_id'].startswith(ROUTE_PREFIX)
+    expected_models = MODELS
     if guard:
+        expected_models = {'control': MODELS['b'], 'candidate': MODELS['b']}
+    elif routes:
+        expected_models = dict(MODELS, candidate=MODELS['b'])
+    fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
+    if guard or routes:
         fields.add('candidate_execution')
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
-            or (guard and params['candidate_execution'] != BRAKE_EXECUTION)
+            or ((guard or routes) and params['candidate_execution'] != BRAKE_EXECUTION)
             or type(params['seed']) is not int
             or not 0 <= params['seed'] < 2**31 or params['execution'] != EXECUTION
             or not isinstance(params['models'], dict) or set(params['models']) != set(expected_models)
@@ -88,13 +128,15 @@ def contract(params):
         checked(checkpoint)
     if guard and params['models']['control'] != params['models']['candidate']:
         raise ValueError('COMMAND_REPLAY_GUARD_SAME_WEIGHTS')
-    stream = load_stream(params['stream'])
+    if routes and params['models']['b'] != params['models']['candidate']:
+        raise ValueError('COMMAND_REPLAY_ROUTES_SAME_WEIGHTS')
+    stream = load_route_streams(params['stream'])['street_gap'] if routes else load_stream(params['stream'])
     events = {event['t_ms']: event['velocity_w_m_s'] for event in stream['events']}
     reversal = CONDITIONS['crossing_at_reversal']
     previous = next(event['velocity_w_m_s'] for event in reversed(stream['events']) if event['t_ms'] < reversal)
     if events.get(reversal, [0.])[0] >= 0 or previous[0] <= 0 or stream['duration_ms'] <= reversal + 4000:
         raise ValueError('COMMAND_REPLAY_PAIRED_REVERSAL')
-    trials = len(params['models']) * len(CONDITIONS)
+    trials = len(params['models']) * len(conditions(params))
     transitions = trials * LANES * (stream['duration_ms']//STEP_MS)
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct',
                 operation='dynamic', mode=MODE, parameters=params,
@@ -113,17 +155,18 @@ def run(backend, params):
     from training_workloads.scale_003.persistence import atomic_json_replace, reserve_output_bytes
     from .lidar_calibration import record as record_mount
 
-    stream = load_stream(params['stream'])
-    events = stream['events']
-    event_ids = sampled_events(stream)
+    layouts, event_ids, events = event_schedule(params)
     env, counters = backend.environment, backend.counters
     budgets = backend.runtime_contract['budgets']
-    commands = env._command_b.new_tensor([events[i]['velocity_w_m_s'] for i in event_ids])
-    commands = commands[:, None, :].expand(-1, LANES, -1)
+    if params['experiment_id'].startswith(ROUTE_PREFIX):
+        commands = env._command_b.new_tensor([[event['velocity_w_m_s'] for event in row] for row in events])
+    else:
+        commands = env._command_b.new_tensor([event['velocity_w_m_s'] for event in events])
+        commands = commands[:, None, :].expand(-1, LANES, -1)
     obstacle = env._h1_moving_sphere
     axis = env._command_b.new_zeros((LANES, 3))
     axis[:, 0] = 1.
-    street = torch.tensor([LAYOUTS[i//8] == 'street_gap' for i in range(LANES)], device=env.device)
+    street = torch.tensor([layout == 'street_gap' for layout in layouts], device=env.device)
     steps = len(event_ids)-1
     if not math.isclose(env.step_dt, STEP_MS/1000., abs_tol=1e-8):
         raise ValueError('COMMAND_REPLAY_CLOCK')
@@ -150,7 +193,7 @@ def run(backend, params):
         env.set_escape_option(True, version=execution)
         env.set_h1_ics_clearance_margin(.15)
         model = dict(checkpoint=checkpoint, execution=execution, lidar_mount=record_mount(env, output, label), trials={})
-        for name, crossing_ms in CONDITIONS.items():
+        for name, crossing_ms in conditions(params).items():
             env.configure_r6_physics(block=block, seed=params['seed'], split='development',
                                      reset_sink=lambda row: None, force_sink=lambda row: None,
                                      expected_mass_kg=1.181517923)
@@ -173,8 +216,9 @@ def run(backend, params):
             with trace.open('xb') as handle:
                 save_row(handle, dict(kind='initial', mover_start_w=obstacle.start.cpu().tolist(),
                                       path_reference_w=sensor_origins.cpu().tolist(),
+                                      scene_origins_w=env.scene.env_origins.cpu().tolist(),
                                       root_state_w=env._robot.data.root_state_w.cpu().tolist(),
-                                      departure_delay_s=delay))
+                                      departure_delay_s=delay, layouts=layouts))
                 for step in range(steps):
                     backend.resource_check('before_command_replay_step', step)
                     counters.require_step_capacity(kind='nontraining', lanes=LANES,
@@ -226,7 +270,7 @@ def run(backend, params):
                     if 'braking' in option:
                         tensors['escape_braking'] = option['braking']
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,
-                                          event_index=event_ids[step], raw_event=events[event_ids[step]],
+                                          event_index=event_ids[step], raw_event=events[step],
                                           physics_tick=int(before['tick']), after_tick=int(post['tick']),
                                           contact_samples=post['contact_samples'],
                                           **{key: value.detach().cpu().tolist() for key, value in tensors.items()}))

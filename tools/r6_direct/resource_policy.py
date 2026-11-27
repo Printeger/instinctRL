@@ -3,7 +3,9 @@ import json
 import time
 
 from tools.r6_evidence import checked
-from training_workloads.unified_h1.command_replay import GUARD_PREFIX as COMMAND_GUARD_PREFIX, PREFIX as COMMAND_REPLAY_PREFIX
+from training_workloads.unified_h1.command_replay import (
+    GUARD_PREFIX as COMMAND_GUARD_PREFIX, PREFIX as COMMAND_REPLAY_PREFIX, ROUTE_PREFIX as COMMAND_ROUTE_PREFIX,
+)
 from training_workloads.unified_h1.dynamic_assay import FRONT_STUDY_PREFIX, NEXT_LONG_PREFIX, THREE_PREFIX, U1792_STUDY_PREFIX
 from training_workloads.unified_h1.pipe_authority_probe import PIPE_CLEARANCE_RUN, PIPE_PROBE_RUN, PIPE_SWITCH_RUN
 
@@ -26,6 +28,7 @@ FRONT_STUDY_SCHEMA = 'instinctrl-post-u1792-front-study-resources/1'
 COMMAND_REPLAY_SCHEMA = 'instinctrl-continuous-command-resources/1'
 BOUNDED_SCOPES = {
     COMMAND_GUARD_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/guard/RESOURCE_LEDGER.json'),
+    COMMAND_ROUTE_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/routes/RESOURCE_LEDGER.json'),
     COMMAND_REPLAY_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/RESOURCE_LEDGER.json'),
     PIPE_PROBE_RUN: (PIPE_PROBE_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/RESOURCE_LEDGER.json'),
     PIPE_SWITCH_RUN: (PIPE_PROBE_SCHEMA, 'docs/experiments/instinct-post-u1792-two-long/rear-switch/RESOURCE_LEDGER.json'),

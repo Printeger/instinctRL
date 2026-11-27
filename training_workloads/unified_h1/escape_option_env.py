@@ -110,10 +110,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
 
 
 class EscapeHoldoutEnv(EscapeOptionEnv):
-    def __init__(self, cfg, *, layout_seed, mirrored_pipe_pairs=False, mirrored_trunk_pairs=False):
+    def __init__(self, cfg, *, layout_seed, mirrored_pipe_pairs=False, mirrored_trunk_pairs=False, command_routes=False):
         self.layout_seed = layout_seed
         self.mirrored_pipe_pairs = mirrored_pipe_pairs
         self.mirrored_trunk_pairs = mirrored_trunk_pairs
+        self.command_routes = command_routes
         super().__init__(cfg)
 
     def _setup_scene(self):
@@ -122,7 +123,8 @@ class EscapeHoldoutEnv(EscapeOptionEnv):
         super()._setup_scene()
         self._replace_mesh(scene_geometry(self.scene.env_origins.detach().cpu(), self.layout_seed,
                                           mirrored_pipe_pairs=self.mirrored_pipe_pairs,
-                                          mirrored_trunk_pairs=self.mirrored_trunk_pairs))
+                                          mirrored_trunk_pairs=self.mirrored_trunk_pairs,
+                                          command_routes=self.command_routes))
 
     def _replace_mesh(self, geometry):
         from instinctlab.envs.unified_h1_direct_env import _define_triangle_mesh

@@ -4,7 +4,7 @@ import math
 from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
-from .command_replay import CONDITIONS, GUARD_PREFIX, LANES, LAYOUTS, STEP_MS, arm_execution, load_stream, sampled_events
+from .command_replay import CONDITIONS, LANES, LAYOUTS, STEP_MS, arm_execution, conditions, event_schedule
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
 CORRIDOR_HALF_WIDTH_M = .58
@@ -33,12 +33,19 @@ def first_stable(rows, predicate):
     return None
 
 
+def lane_value(value, lane):
+    return value[lane] if isinstance(value, list) else value
+
+
 def score_lane(rows, initial, lane, crossing):
     def read(row, name):
         return row[name][lane]
 
     def command(row):
-        return row['raw_event']['velocity_w_m_s']
+        return lane_value(row['raw_event'], lane)['velocity_w_m_s']
+
+    def event_index(row):
+        return lane_value(row['event_index'], lane)
 
     def progress(row, vector):
         intent = command(row)
@@ -55,10 +62,10 @@ def score_lane(rows, initial, lane, crossing):
                 or read(row, 'escape_active') or read(row, 'escape_recovering'))
 
     def recovery_window(start):
-        latest = flight[start]['event_index']
+        latest = event_index(flight[start])
         window = []
         for row in flight[start:]:
-            if row['event_index'] != latest or not math.hypot(*command(row)[:2]) or read(row, 'reset'):
+            if event_index(row) != latest or not math.hypot(*command(row)[:2]) or read(row, 'reset'):
                 break
             window.append(row)
         times = {'event_index': latest, 'observation_s': len(window)*STEP_MS/1000.}
@@ -76,8 +83,9 @@ def score_lane(rows, initial, lane, crossing):
                if crossing and abs(read(row, 'mover_position_w')[1]-centre_y) <= CORRIDOR_HALF_WIDTH_M]
     clearance = [math.dist(position(row), read(row, 'mover_position_after_w'))-.34
                  for row in flight] if crossing else []
+    layout = initial['layouts'][lane] if 'layouts' in initial else LAYOUTS[lane//8]
     reported = dict(
-        layout=LAYOUTS[lane//8], elapsed_s=len(flight)*STEP_MS/1000.,
+        layout=layout, elapsed_s=len(flight)*STEP_MS/1000.,
         first_reset_step=first_reset, first_contact_step=next(
             (row['step'] for row in flight if read(row, 'collision')), None),
         initial_termination_reason=None if first_reset is None else read(flight[-1], 'termination_reason'),
@@ -99,18 +107,27 @@ def score_lane(rows, initial, lane, crossing):
     reversal = CONDITIONS['crossing_at_reversal']//STEP_MS
     compare_start = max(reversal, release or 0)
     reported['after_reversal'] = None
-    if (not crossing or release is not None) and compare_start < len(flight) and flight[compare_start]['event_index'] == flight[reversal]['event_index']:
+    if ((not isinstance(flight[0]['event_index'], list) or layout == 'street_gap')
+            and (not crossing or release is not None) and compare_start < len(flight)
+            and event_index(flight[compare_start]) == event_index(flight[reversal])):
         reported['after_reversal'] = dict(start_s=compare_start*STEP_MS/1000., **recovery_window(compare_start))
+    if isinstance(flight[0]['event_index'], list):
+        origin = initial['scene_origins_w'][lane]
+        local = [[value-offset for value, offset in zip(position(row), origin, strict=True)] for row in flight]
+        reported['route_progress'] = dict(maximum_x_m=max(p[0] for p in local), maximum_y_m=max(p[1] for p in local),
+            minimum_y_m=min(p[1] for p in local),
+            indoor_door_passed=any(p[0] > 2.1 and abs(p[1]) < .87 for p in local) if layout == 'room_corner' else None,
+            indoor_corner_passed=any(p[0] > 4.1 and p[1] > .55 for p in local) if layout == 'room_corner' else None)
     stops = []
     last_event = None
     for i, row in enumerate(flight):
-        new_event = row['event_index'] != last_event
-        last_event = row['event_index']
+        new_event = event_index(row) != last_event
+        last_event = event_index(row)
         if i == 0 or not new_event or any(command(row)) or not any(command(flight[i-1])):
             continue
         stop_rows = []
         for item in flight[i:]:
-            if item['event_index'] != last_event or read(item, 'reset'):
+            if event_index(item) != last_event or read(item, 'reset'):
                 break
             stop_rows.append(item)
         start = position(flight[i-1])
@@ -129,15 +146,15 @@ def audit(output, params, counters):
     saved = json.loads(path.read_bytes())
     if saved['counters'] != counters or set(saved['models']) != set(params['models']):
         raise ValueError('COMMAND_REPLAY_COUNTERS')
-    stream = load_stream(params['stream'])
-    event_ids = sampled_events(stream)[:-1]
+    layouts, event_ids, events = event_schedule(params)
+    trial_conditions = conditions(params)
     sources = [file_pin(path), params['stream']]
     resets = 0
     results = {}
     first_pose = None
     for label, model in saved['models'].items():
-        if (model['checkpoint'] != params['models'][label] or set(model['trials']) != set(CONDITIONS)
-                or (params['experiment_id'].startswith(GUARD_PREFIX) and model['execution'] != arm_execution(params, label))):
+        if (model['checkpoint'] != params['models'][label] or set(model['trials']) != set(trial_conditions)
+                or ('candidate_execution' in params and model['execution'] != arm_execution(params, label))):
             raise ValueError('COMMAND_REPLAY_MODEL_BINDING')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -150,26 +167,28 @@ def audit(output, params, counters):
             with trace.open() as handle:
                 initial = json.loads(next(handle))
                 rows = [json.loads(row) for row in handle]
-            if (initial['kind'] != 'initial' or len(rows) != len(event_ids)
+            if (initial['kind'] != 'initial' or len(rows) != len(event_ids)-1
+                    or initial.get('layouts', layouts) != layouts
                     or trial['physics']['block_ticks'] != 20*len(rows)):
                 raise ValueError('COMMAND_REPLAY_TRANSITIONS')
             if first_pose is None:
                 first_pose = initial['root_state_w']
             if any(math.dist(a, b) > .001 for a, b in zip(first_pose, initial['root_state_w'], strict=True)):
                 raise ValueError('COMMAND_REPLAY_PAIRED_START')
-            if CONDITIONS[name] is not None:
+            if trial_conditions[name] is not None:
                 active_starts.append(initial['mover_start_w'])
-            for step, (row, event_id) in enumerate(zip(rows, event_ids, strict=True)):
+            for step, row in enumerate(rows):
                 if (row['kind'] != 'transition' or row['step'] != step or row['t_ms'] != step*STEP_MS
-                        or row['event_index'] != event_id or row['raw_event'] != stream['events'][event_id]
+                        or row['event_index'] != event_ids[step] or row['raw_event'] != events[step]
                         or row['after_tick']-row['physics_tick'] != 20 or row['contact_samples'] != 20
+                        or (step > 0 and row['physics_tick'] != rows[step-1]['after_tick'])
                         or len(row['reset']) != LANES):
                     raise ValueError(f'COMMAND_REPLAY_TRANSITION_BINDING {label}/{name}/{step}')
                 resets += sum(row['reset'])
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
-                    if math.dist(observed, row['raw_event']['velocity_w_m_s']) > 2e-6:
+                    if math.dist(observed, lane_value(row['raw_event'], lane)['velocity_w_m_s']) > 2e-6:
                         raise ValueError('COMMAND_REPLAY_ACTOR_INPUT')
                     if step and not rows[step-1]['reset'][lane]:
                         if actor[:-1] != rows[step-1]['actor_state'][lane][1:]:
@@ -181,9 +200,9 @@ def audit(output, params, counters):
                         if valid != 1 or abs(distance-row['mover_witness_range_m'][lane]) > .002:
                             raise ValueError('COMMAND_REPLAY_MOVER_WITNESS')
             results[label][name] = dict(trace=trial['trace'], lanes=[
-                score_lane(rows, initial, lane, CONDITIONS[name] is not None and LAYOUTS[lane//8] == 'street_gap')
+                score_lane(rows, initial, lane, trial_conditions[name] is not None and layouts[lane] == 'street_gap')
                 for lane in range(LANES)])
-        if active_starts[0] != active_starts[1]:
+        if active_starts and any(start != active_starts[0] for start in active_starts[1:]):
             raise ValueError('COMMAND_REPLAY_MOVER_START')
     if resets != counters['automatic_resets']:
         raise ValueError('COMMAND_REPLAY_RESET_COUNT')
