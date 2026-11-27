@@ -8,7 +8,7 @@
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
 
-安全擦肩停驻使街道首次松杆从 3/8 增至 6/8，双确认进一步达到街道 8/8、五类 32/32。沿墙切向配对两臂各 32 条完整首飞，全部零接触、零中途重置，最低 +0.254 m，32 个松杆窗均通过。走廊同一五秒斜向窗四条轴向位移增至约 0.72–0.76 m。室内过角仍 6/8，正在实测有远端回波支持的门框轴芯。已淘汰统一缩短正向停止距离。新独立 32 路短程输入已登记，正式 30 分钟与完整 R6 尚未启动。 [双确认停驻](experiments/instinct-continuous-command/settled_offset_stop/REPORT.md) · [切向推进](experiments/instinct-continuous-command/wall_tangent/REPORT.md) · [门框轴芯](experiments/instinct-continuous-command/confirmed_tube/PLAN.md) · [30 分钟方案](experiments/instinct-continuous-command/long/PLAN.md)
+安全擦肩停驻使街道首次松杆从 3/8 增至 6/8，双确认进一步达到街道 8/8、五类 32/32。沿墙切向配对保留走廊轴向推进，一个五秒斜向窗四条实际推进约 0.72–0.76 m。有远端回波支持的侧门框让一条原卡点多推进约 0.50 m，室内过角仍 6/8。该配置 32/32 完整首飞、零接触和中途重置、松杆 32/32，最低 +0.254 m。新几何、新 Crazy 指令和独立横穿时序的 32 路短程已启动。正式 30 分钟与完整 R6 尚未启动。 [双确认停驻](experiments/instinct-continuous-command/settled_offset_stop/REPORT.md) · [切向推进](experiments/instinct-continuous-command/wall_tangent/REPORT.md) · [门框轴芯](experiments/instinct-continuous-command/confirmed_tube/REPORT.md) · [独立复验](experiments/instinct-continuous-command/independent/PLAN.md) · [30 分钟方案](experiments/instinct-continuous-command/long/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
