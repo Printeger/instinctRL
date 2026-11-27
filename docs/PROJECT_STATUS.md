@@ -78,6 +78,8 @@
 
 相邻测距支持的首拍停驻完成 32/32 条首飞和停车，零接触与重置，最小净空 0.19375 米。原室内停令当拍下发零，实测停稳由 1.5 降至 0.7 秒、漂移由 0.391 降至 0.152 米。原跟踪和恢复缺口继续保留，用相同配置复验独立 Crazy 输入。 [同输入结果](experiments/instinct-continuous-command/overlapping_stop/REPORT.md)
 
+相邻测距停驻的独立 Crazy 回放 32 个停车窗达标。街道 20 在避让换边后接触并重置，31/32 条首飞完整，接触窗最低 −0.07716 米。保留原件，按同输入复核同侧撤离和回到横穿线的分岔。 [独立结果](experiments/instinct-continuous-command/independent_overlapping_stop/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
