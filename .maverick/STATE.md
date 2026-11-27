@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。六方首判齐全，使用仿真 Crazy 指令。IMU 对齐配对的两臂五类均安全、停杆32/32，候选室内过角8/8、最小0.311 m，代表卡点进展0.541→1.159 m。NOVEL-21街道恢复试验出现一次松杆退化，记录拒绝。已冻结源码4fd7e75f 的 IMU 对齐版本，NOVEL-17 使用新预登记场景和指令。累计已关闭2,274,848个实际评价转换，训练为零。完整 R6 与正式 30 分钟仍待完成。 [项目状态](../docs/PROJECT_STATUS.md) · [拒绝结果](../docs/experiments/instinct-continuous-command/verified_resume/REPORT.md) · [独立复验](../docs/experiments/instinct-continuous-command/independent_second/PLAN.md)
+任务 `instinctrl-continuous-command`。六方首判齐全，使用仿真 Crazy 指令。冻结 IMU 对齐版本的第二次独立短程 32/32 完整、零接触及重置、最小 0.176 m，室内过角 7/8。街道两条松杆失败，放行规则问题已用原件重现。NOVEL-22 执行同输入松杆修复，下一份独立输入已提前登记。已关闭累计2,313,248个实际评价转换，训练为零。完整 R6 和正式 30 分钟未通过。 [状态](../docs/PROJECT_STATUS.md) · [独立结果](../docs/experiments/instinct-continuous-command/independent_second/REPORT.md) · [松杆修复](../docs/experiments/instinct-continuous-command/verified_zero/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
