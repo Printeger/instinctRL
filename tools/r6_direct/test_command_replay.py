@@ -497,6 +497,34 @@ def test_displacement_is_time_aligned_during_a_command_reversal():
     assert 0. < latest[0, 0] < .2
 
 
+def test_stopping_reserve_only_strengthens_withdrawal_that_is_already_underway():
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.governor import GovernorConfig
+    from instinctlab.control.ics import ICSConfig
+    from instinctlab.observations.moving_sphere import sphere_range
+
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False,
+                            intercept=True, align_intercept=True, intercept_reserve=True)
+    rays = option.detector._full_rays[None].expand(2, -1, -1)
+    center = torch.tensor([[.38, -1.62, .1], [1.28, -1.62, .1]])
+    history = []
+    for offset in (.174, .116, .058, 0.):
+        distance = sphere_range(torch.zeros_like(center), rays, center-torch.tensor([0., offset, 0.]))
+        valid = distance.isfinite()
+        history.append(torch.stack((torch.where(valid, distance, 40.), valid, valid), dim=1))
+    lidar = torch.cat(history, dim=1).reshape(2, 12, 59, 360)
+    action = torch.tensor([[0., .30, .50, .50]]*2)
+    config = SimpleNamespace(governor=GovernorConfig(), ics=ICSConfig(
+        clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True))
+
+    option.avoid_interception(lidar, torch.zeros(2, 52), action, config)
+    assert option.intercepted.tolist() == [True, False]
+    assert action[0].tolist() == pytest.approx([0., .20, .50, .50], abs=2.e-5)
+    assert action[1, 1].item() == pytest.approx(.30)
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing

@@ -34,6 +34,7 @@ STOP_RELEASE_25_VERSION = 'm4-escape-brake-tube-p25-stop-release-v1'
 TURN_FIT_25_VERSION = 'm4-escape-brake-tube-p25-turn-fit-v1'
 INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v1'
 ALIGNED_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v2'
+RESERVE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v3'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -42,7 +43,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25,
                        RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25,
                        STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25, INTERCEPT_25_VERSION: 25,
-                       ALIGNED_INTERCEPT_25_VERSION: 25}
+                       ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -54,7 +55,8 @@ class EscapeRecovery(EscapeOption):
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
-                 stop_release=False, turn_fallback=False, intercept=False, align_intercept=False):
+                 stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
+                 intercept_reserve=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -77,6 +79,7 @@ class EscapeRecovery(EscapeOption):
         self.turn_fallback = turn_fallback
         self.intercept = intercept
         self.align_intercept = align_intercept
+        self.intercept_reserve = intercept_reserve
         if intercept:
             self.intercepted = torch.zeros_like(self.applied)
         if align_intercept:
@@ -477,11 +480,16 @@ class EscapeRecovery(EscapeOption):
         scans, history = lidar[lanes], state[lanes]
         original = self.issued(scans, history, selected[lanes], config)
         score = intercept_scores(position, motion, coast, radius, original.v_final_b[:, None])[:, 0]
-        exposed = (score < .36) & (original.metrics['emergency'].flatten() == 0.)
-        if not bool(exposed.any()):
+        exposed = score < .36
+        consider = exposed.clone()
+        if self.intercept_reserve:
+            stopping = intercept_scores(position, motion, coast, radius, torch.zeros_like(original.v_final_b[:, None]))[:, 0]
+            consider |= stopping < .36
+        consider &= original.metrics['emergency'].flatten() == 0.
+        if not bool(consider.any()):
             return
-        lanes, scans, history = lanes[exposed], scans[exposed], history[exposed]
-        position, motion, coast, radius, score = (x[exposed] for x in (position, motion, coast, radius, score))
+        lanes, scans, history, exposed = lanes[consider], scans[consider], history[consider], exposed[consider]
+        position, motion, coast, radius, score = (x[consider] for x in (position, motion, coast, radius, score))
         side = torch.stack((-motion[:, 1], motion[:, 0], torch.zeros_like(radius)), dim=1)
         side /= side.norm(dim=1, keepdim=True)
         zero = torch.zeros_like(side)
@@ -490,10 +498,16 @@ class EscapeRecovery(EscapeOption):
         velocity = torch.stack([self.issued(scans, history, a, config).v_final_b
                                 for a in trials.unbind(dim=1)], dim=1)
         scores = intercept_scores(position, motion, coast, radius, velocity)
-        hold = (scores[:, 0] >= .42) & (scores[:, 0]-score >= .12)
-        admissible = (velocity[:, 1:]*directions[:, 1:]).sum(dim=2) >= .12
+        hold = exposed & (scores[:, 0] >= .42) & (scores[:, 0]-score >= .12)
+        transverse = (velocity[:, 1:]*directions[:, 1:]).sum(dim=2)
+        admissible = transverse >= .12
+        if self.intercept_reserve:
+            current = (original.v_final_b[consider, None]*directions[:, 1:]).sum(dim=2)
+            continues = (current >= .12) & (transverse-current >= .04)
+            admissible &= exposed[:, None] | continues
         best, side_id = scores[:, 1:].masked_fill(~admissible, -torch.inf).max(dim=1)
-        change = hold | ((best >= .28) & (best-score >= .15))
+        gain = torch.where(exposed, .15, .04)
+        change = hold | ((best >= .28) & (best-score >= gain))
         choice = torch.where(hold, 0, side_id+1)
         selected[lanes[change]] = trials[change, choice[change]]
         self.intercepted[lanes[change]] = True

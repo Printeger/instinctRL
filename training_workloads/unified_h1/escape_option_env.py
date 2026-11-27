@@ -13,10 +13,15 @@ from instinctlab.control.escape_recovery import (
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
     RANKED_RETURN_25_VERSION, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION, RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
-    RECOVERY_VERSION, REDIRECT_25_VERSION,
+    RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION,
     SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
+
+
+ALIGNED_INTERCEPTS = (ALIGNED_INTERCEPT_25_VERSION, RESERVE_INTERCEPT_25_VERSION)
+INTERCEPTS = (INTERCEPT_25_VERSION, *ALIGNED_INTERCEPTS)
+STOP_RELEASE_VERSIONS = (STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION, *INTERCEPTS)
 
 
 class EscapeOptionEnv(UnifiedH1DirectEnv):
@@ -62,8 +67,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self.escape_option = EscapeOption(**kwargs)
         elif version in (MIXED_VERSION, RECOVERY_VERSION, LATERAL_VERSION, FAST_LATERAL_VERSION, *MOUNT_PITCH_DEGREES):
             rank_return = version in (RANKED_RETURN_25_VERSION, CURVED_PASS_25_VERSION, HOVER_PATH_25_VERSION,
-                                       STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION, INTERCEPT_25_VERSION,
-                                       ALIGNED_INTERCEPT_25_VERSION)
+                                       *STOP_RELEASE_VERSIONS)
             recenter_rearm = rank_return or version == RECOVERY_REARM_25_VERSION
             clear_pass = recenter_rearm or version == CLEAR_PASS_25_VERSION
             early_retreat = clear_pass or version in (EARLY_RETREAT_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION)
@@ -88,15 +92,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 side_hover_retreat=version == SIDE_HOVER_RETREAT_25_VERSION,
                                                 clear_pass=clear_pass, recenter_rearm=recenter_rearm,
                                                 rank_return=rank_return, curved_pass=version == CURVED_PASS_25_VERSION,
-                                                hover_path=version in (HOVER_PATH_25_VERSION, STOP_RELEASE_25_VERSION,
-                                                                       TURN_FIT_25_VERSION, INTERCEPT_25_VERSION,
-                                                                       ALIGNED_INTERCEPT_25_VERSION),
-                                                stop_release=version in (STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION,
-                                                                         INTERCEPT_25_VERSION, ALIGNED_INTERCEPT_25_VERSION),
-                                                turn_fallback=version in (TURN_FIT_25_VERSION, INTERCEPT_25_VERSION,
-                                                                          ALIGNED_INTERCEPT_25_VERSION),
-                                                intercept=version in (INTERCEPT_25_VERSION, ALIGNED_INTERCEPT_25_VERSION),
-                                                align_intercept=version == ALIGNED_INTERCEPT_25_VERSION)
+                                                hover_path=version in (HOVER_PATH_25_VERSION, *STOP_RELEASE_VERSIONS),
+                                                stop_release=version in STOP_RELEASE_VERSIONS,
+                                                turn_fallback=version in (TURN_FIT_25_VERSION, *INTERCEPTS),
+                                                intercept=version in INTERCEPTS, align_intercept=version in ALIGNED_INTERCEPTS,
+                                                intercept_reserve=version == RESERVE_INTERCEPT_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -110,8 +110,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         confirm = version in (BRAKE_TUBE_CONFIRM_25_VERSION, RECOVERY_RETREAT_25_VERSION, EARLY_RETREAT_25_VERSION,
                               SIDE_HOVER_RETREAT_25_VERSION, CLEAR_PASS_25_VERSION, RECOVERY_REARM_25_VERSION,
                               RANKED_RETURN_25_VERSION, CURVED_PASS_25_VERSION, HOVER_PATH_25_VERSION,
-                              STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION, INTERCEPT_25_VERSION,
-                              ALIGNED_INTERCEPT_25_VERSION)
+                              *STOP_RELEASE_VERSIONS)
         radius = .60 if confirm or version == BRAKE_TUBE_25_VERSION else 0.
         for pipeline in self._control_pipelines:
             ics = pipeline.config.ics
