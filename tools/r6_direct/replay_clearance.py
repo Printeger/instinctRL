@@ -51,26 +51,28 @@ def static_distance(positions, triangles):
     return np.sqrt(squared)
 
 
-def feasible_tracking(before, measured, commands, mover, triangles, body_radius, *, floor=.15):
-    """Diagnostic straight-line swept clearance from the measured start state."""
-    # Estimate whether the requested motion fits over the next six policy
-    # boundaries. The extra half-interval of possible travel is conservative
-    # for the sampled straight-line segment, with no missing future samples.
-    sample_steps = np.arange(0, 7, 2)
-    steps = np.arange(len(before))[:, None]+sample_steps[None, :]
-    horizon_complete = steps[:, -1] < len(before)
-    points = before[:, None, :]+commands[:, None, :]*(sample_steps[None, :, None]*.1)
+def feasible_tracking(before, measured, commands, mover, triangles, body_radius, *, floor=.15,
+                      stop_path_clearance=None):
+    """Score moving commands with an independently calculated safe progress window."""
     speed = np.linalg.norm(commands, axis=1)
-    static = static_distance(points.reshape(-1, 3), triangles).reshape(points.shape[:2]).min(axis=1)-.1*speed
-    if mover is None:
+    if stop_path_clearance is None:
+        # Short development diagnostic. Formal scoring supplies the measured
+        # initial response followed by braking, with the same registered margin.
+        sample_steps = np.arange(0, 7, 2)
+        steps = np.arange(len(before))[:, None]+sample_steps[None, :]
+        points = before[:, None, :]+commands[:, None, :]*(sample_steps[None, :, None]*.1)
+        static = static_distance(points.reshape(-1, 3), triangles).reshape(points.shape[:2]).min(axis=1)-.1*speed
         clearance = static
+        if mover is not None:
+            samples = mover[steps.clip(max=len(before)-1)]
+            speed_bound = np.max(np.linalg.norm(np.diff(mover, axis=0), axis=1), initial=0.)/.1
+            moving = np.linalg.norm(points-samples, axis=2).min(axis=1)-.34-.1*(speed+speed_bound)
+            clearance = np.minimum(static, moving)
+        safe = (steps[:, -1] < len(before)) & (clearance >= body_radius+floor)
     else:
-        samples = mover[steps.clip(max=len(before)-1)]
-        speed_bound = np.max(np.linalg.norm(np.diff(mover, axis=0), axis=1), initial=0.)/.1
-        moving = np.linalg.norm(points-samples, axis=2).min(axis=1)-.34-.1*(speed+speed_bound)
-        clearance = np.minimum(static, moving)
+        safe = stop_path_clearance >= floor
     moving_intent = speed > .03
-    feasible = moving_intent & horizon_complete & (clearance >= body_radius+floor)
+    feasible = moving_intent & safe
     projection = (commands*measured).sum(axis=1)/np.maximum(speed, .001)
     error = np.linalg.norm(commands-measured, axis=1)
     slow = feasible & (projection < .6*speed)
@@ -125,15 +127,19 @@ def frozen_stop(before, after, velocities, commands, first_flight_steps, start, 
                 max_drift_m=float(drift.max()))
 
 
-def projected_clearance(before, measured_before, targets, mover, triangles, body_radius):
-    """Score a held request over 2.4 seconds with a fixed velocity response model."""
+def projected_clearance(before, measured_before, targets, mover, triangles, body_radius, *, hold_s=None):
+    """Sweep a request over 2.4 seconds with an optional braking phase."""
     offsets = np.arange(0, 25, 2)
     time = offsets*.1
     ticks = np.arange(len(before))[:, None]+offsets
     complete = ticks[:, -1] < len(before)
     lag = .35*(1.-np.exp(-time/.35))
-    path = before[:, None]+time[None, :, None]*targets[:, None]
-    path += lag[None, :, None]*(measured_before-targets)[:, None]
+    target_distance = time-lag
+    if hold_s is not None:
+        hold = time.clip(max=hold_s)
+        target_distance = hold-.35*(1.-np.exp(-hold/.35))*np.exp(-(time-hold)/.35)
+    path = before[:, None]+target_distance[None, :, None]*targets[:, None]
+    path += lag[None, :, None]*measured_before[:, None]
     speed = np.maximum(np.linalg.norm(measured_before, axis=1), np.linalg.norm(targets, axis=1))
     nearest = static_distance(path.reshape(-1, 3), triangles).reshape(ticks.shape).min(axis=1)-.1*speed
     mover_limited = np.zeros(len(before), dtype=bool)
@@ -361,9 +367,18 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                 nearest = static if mover is None else np.minimum(static, mover)
                 step = int(nearest.argmin())
                 floor = gates[score['layout']]['minimum_clearance_m'] if long_run else .15
+                path_mover = None if mover is None else movers_before[:end, lane]
+                dense_measure = None
+                if dense is not None:
+                    dense_measure = dict(source=dense_pin, sample_period_ms=5,
+                        **measured_clearance(dense, lane, end, triangles, crossing=mover is not None))
+                collider = dense_measure['maximum_measured_link_envelope_m'] if dense_measure else radius
+                stop_path = None
+                if long_run:
+                    stop_path, _ = projected_clearance(before[:end, lane], velocity_before[:end, lane],
+                        commands[:end, lane], path_mover, triangles, collider, hold_s=.6)
                 tracking = feasible_tracking(before[:end, lane], velocities[:end, lane], commands[:end, lane],
-                                             None if mover is None else movers_before[:end, lane], triangles, radius,
-                                             floor=floor)
+                                             path_mover, triangles, radius, floor=floor, stop_path_clearance=stop_path)
                 fixed = {}
                 for row in opportunities:
                     if row['layout'] == score['layout'] and row.get('lane', lane) == lane:
@@ -382,13 +397,9 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                         row['id']: frozen_stop(before[:, lane], roots[:, lane], velocities[:, lane], commands[:, lane],
                                                end, row['start_step'], row['end_step'])
                         for row in stop_windows if row['lane'] == lane}
-                if dense is not None:
-                    values[-1]['physics_tick_clearance'] = dict(
-                        source=dense_pin, sample_period_ms=5,
-                        **measured_clearance(dense, lane, end, triangles, crossing=mover is not None))
+                if dense_measure is not None:
+                    values[-1]['physics_tick_clearance'] = dense_measure
                 if hazard_preview:
-                    collider = values[-1].get('physics_tick_clearance', {}).get('maximum_measured_link_envelope_m', radius)
-                    path_mover = None if mover is None else movers_before[:end, lane]
                     nominal, mover_limited = projected_clearance(before[:end, lane], velocity_before[:end, lane],
                                                                  commands[:end, lane], path_mover, triangles, collider)
                     physical, _ = projected_clearance(before[:end, lane], velocity_before[:end, lane],
@@ -405,6 +416,7 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
         metrics = models['candidate']['layout_routes']
         flights = report['summary']['models']['candidate']['layout_routes']['lanes']
         result['long_replay'] = dict(protocol=params['protocol'], scorer=pin(Path(__file__)),
+                                     feasible_motion=dict(hold_s=.6, response_s=.35, horizon_s=2.4),
                                      **long_gate_results(metrics, flights, gates))
     return result
 

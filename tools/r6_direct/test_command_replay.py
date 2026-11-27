@@ -890,3 +890,18 @@ def test_long_gates_fail_lost_exposure_and_unrecovered_latest_command():
     logs[2]['hazard_response_preview']['events'][0]['visible_moving_hazard_steps'] = 0
     assert long_gate_results(logs, lanes, {'street_gap': gate})['by_layout']['street_gap']['lanes'][2]['failed'] == [
         'intervention']
+
+
+def test_safe_progress_can_brake_before_a_sustained_request_would_reach_a_wall():
+    import numpy as np
+    from tools.r6_direct.replay_clearance import projected_clearance
+
+    wall = np.array([[[.63,-2.,0.], [.63,2.,0.], [.63,-2.,4.]],
+                     [[.63,2.,4.], [.63,2.,0.], [.63,-2.,4.]]])
+    initial = np.tile([0.,0.,2.], (30, 1))
+    velocity = np.zeros((30, 3))
+    target = np.tile([.28,0.,0.], (30, 1))
+    held, _ = projected_clearance(initial, velocity, target, None, wall, .21)
+    braking, _ = projected_clearance(initial, velocity, target, None, wall, .21, hold_s=.6)
+    assert held[0] < .15 < braking[0]
+    assert np.isnan(braking[-1])
