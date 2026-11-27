@@ -88,6 +88,7 @@ class ICSResult:
     v_final_b: torch.Tensor
     metrics: dict[str, torch.Tensor]
     cache: dict[str, torch.Tensor]
+    bilateral_stopping: torch.Tensor | None = None
 
 
 def _quat_rotate_wxyz(quaternion: torch.Tensor, vectors: torch.Tensor) -> torch.Tensor:
@@ -273,6 +274,7 @@ def attenuate_command(
     config: ICSConfig = ICSConfig(),
     *,
     state_vec: torch.Tensor | None = None,
+    allow_bilateral_stopping: bool = False,
 ) -> ICSResult:
     """Apply bounded scalar attenuation and zero-command emergency braking."""
     ranges, validity, reliability = _validate(lidar_grid, rays_body, v_gov_b, history_dt_s, config)
@@ -356,10 +358,20 @@ def attenuate_command(
                     outside[lanes[clear]] |= shoulder[lanes[clear]]
         active = active & ~outside
     ratios = (v_safe / closing.clamp_min(torch.finfo(v_gov_b.dtype).tiny)).clamp(0.0, 1.0)
+    emergency = (reliable & (effective < config.emergency_clearance_m)).any(dim=1, keepdim=True)
+    bilateral = None
+    if allow_bilateral_stopping:
+        from .bilateral_stopping import clear_bilateral_constraints
+
+        if state_vec is None:
+            raise ValueError('Bilateral stopping requires the approved command and IMU history')
+        cleared = clear_bilateral_constraints(lidar_grid, state_vec, rays_body, v_gov_b,
+                                              active & ~emergency, ratios, history_dt_s)
+        active &= ~cleared
+        bilateral = cleared.any(dim=1)
     beta = torch.where(active, ratios, torch.ones_like(ratios)).min(dim=1, keepdim=True).values
     active_count = active.sum(dim=1, keepdim=True)
     beta = torch.where(active_count > 0, beta, torch.full_like(beta, config.empty_active_set_beta))
-    emergency = (reliable & (effective < config.emergency_clearance_m)).any(dim=1, keepdim=True)
     beta = torch.where(emergency, torch.zeros_like(beta), beta).clamp(0.0, 1.0)
     final = clip_vector_norm(beta * v_gov_b, config.velocity_limit_m_s)
     minimum = torch.where(reliable, effective, torch.full_like(effective, float("inf"))).min(dim=1, keepdim=True).values
@@ -381,7 +393,7 @@ def attenuate_command(
         "effective_clearance_m": effective,
         "v_safe_m_s": v_safe,
     }
-    return ICSResult(final, metrics, cache)
+    return ICSResult(final, metrics, cache, bilateral)
 
 
 __all__ = [

@@ -24,12 +24,13 @@ from instinctlab.control.escape_recovery import (
     TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
-    CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13,
+    CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-OBSERVED_HEADING_VERSIONS = (CROSSING_STOP_25_V12, CROSSING_STOP_25_V13)
+SAMPLED_TURN_VERSIONS = (CROSSING_STOP_25_V13, CROSSING_STOP_25_V14)
+OBSERVED_HEADING_VERSIONS = (CROSSING_STOP_25_V12, *SAMPLED_TURN_VERSIONS)
 SHALLOW_STEERING_VERSIONS = (CROSSING_STOP_25_V11, *OBSERVED_HEADING_VERSIONS)
 CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V10, *SHALLOW_STEERING_VERSIONS)
 CROSSING_SETTLED_VERSIONS = (CROSSING_STOP_25_V9, *CROSSING_REFERENCE_VERSIONS)
@@ -68,6 +69,7 @@ STOP_RELEASE_VERSIONS = (STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION, *INTERCEP
 
 class EscapeOptionEnv(UnifiedH1DirectEnv):
     escape_option = None
+    bilateral_stopping = False
     lidar_mount_pitch_degrees = 30
     lidar_rays_body = None
 
@@ -102,6 +104,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         pitch = MOUNT_PITCH_DEGREES.get(version, 30) if enabled else 30
         self._set_lidar_mount(pitch)
         self.escape_option_version = version if enabled else None
+        self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
+        for pipeline in self._control_pipelines:
+            pipeline.allow_bilateral_stopping = False
         kwargs = dict(lanes=self.num_envs, device=self.device, dtype=self._actions.dtype)
         if not enabled:
             self.escape_option = None
@@ -175,7 +180,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 shallow_steering=version in SHALLOW_STEERING_VERSIONS,
                                                 observed_heading_steering=version in OBSERVED_HEADING_VERSIONS,
                                                 tracked_resume=version in OBSERVED_HEADING_VERSIONS,
-                                                crossing_turn_between_samples=version == CROSSING_STOP_25_V13)
+                                                crossing_turn_between_samples=version in SAMPLED_TURN_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -231,6 +236,12 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self._captured = 0
         if isinstance(self.escape_option, EscapeRecovery):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
+            if self.bilateral_stopping:
+                option = self.escape_option
+                protected = (option.applied | option.retreating | option.braking | option.ranked | option.holding
+                             | option.intercepted | option.recovering)
+                for pipeline, allowed in zip(self._control_pipelines, (~protected).tolist(), strict=True):
+                    pipeline.allow_bilateral_stopping = allowed
         elif self.escape_option is not None:
             actions = self.escape_option.apply(self._policy, actions)
         super()._pre_physics_step(actions)
@@ -287,6 +298,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['tracked_resume'] = self.escape_option.tracked_resume_used.detach().clone()
                 if self.escape_option.crossing_turn_between_samples:
                     self.extras['pre_reset']['escape_option']['settled_crossing'] = self.escape_option.settled_crossing_verified.detach().clone()
+                if self.bilateral_stopping:
+                    used = [pipeline.bilateral_stopping_used for pipeline in self._control_pipelines]
+                    self.extras['pre_reset']['escape_option']['bilateral_stopping'] = torch.cat([
+                        value if value is not None else self.escape_option.applied.new_zeros(1) for value in used])
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:

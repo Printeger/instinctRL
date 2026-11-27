@@ -78,6 +78,8 @@ NOVEL_OBSERVED_HEADING_ID = NOVEL_PREFIX+'49'
 NOVEL_OBSERVED_HEADING_CONFIRM_ID = NOVEL_PREFIX+'50'
 NOVEL_CROSSING_SAMPLED_TURN_ID = NOVEL_PREFIX+'51'
 NOVEL_CROSSING_SAMPLED_TURN_CONFIRM_ID = NOVEL_PREFIX+'52'
+NOVEL_BILATERAL_STOPPING_ID = NOVEL_PREFIX+'53'
+NOVEL_BILATERAL_STOPPING_CONFIRM_ID = NOVEL_PREFIX+'54'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -153,7 +155,9 @@ CROSSING_REFERENCE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v10'
 SHALLOW_STEERING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v11'
 OBSERVED_HEADING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v12'
 CROSSING_SAMPLED_TURN_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v13'
-OBSERVED_HEADING_EXECUTIONS = (OBSERVED_HEADING_EXECUTION, CROSSING_SAMPLED_TURN_EXECUTION)
+BILATERAL_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v14'
+SAMPLED_TURN_EXECUTIONS = (CROSSING_SAMPLED_TURN_EXECUTION, BILATERAL_STOPPING_EXECUTION)
+OBSERVED_HEADING_EXECUTIONS = (OBSERVED_HEADING_EXECUTION, *SAMPLED_TURN_EXECUTIONS)
 SHALLOW_STEERING_EXECUTIONS = (SHALLOW_STEERING_EXECUTION, *OBSERVED_HEADING_EXECUTIONS)
 CROSSING_REFERENCE_EXECUTIONS = (CROSSING_REFERENCE_EXECUTION, *SHALLOW_STEERING_EXECUTIONS)
 CROSSING_SETTLED_EXECUTIONS = (CROSSING_SETTLED_REVERSAL_EXECUTION, *CROSSING_REFERENCE_EXECUTIONS)
@@ -245,7 +249,8 @@ def compress_trace(run_id):
                                                        NOVEL_CROSSING_SETTLED_CONFIRM_ID, NOVEL_CROSSING_REFERENCE_ID,
                                                        NOVEL_CROSSING_REFERENCE_CONFIRM_ID, NOVEL_SHALLOW_STEERING_ID,
                                                        NOVEL_OBSERVED_HEADING_ID, NOVEL_OBSERVED_HEADING_CONFIRM_ID,
-                                                       NOVEL_CROSSING_SAMPLED_TURN_ID, NOVEL_CROSSING_SAMPLED_TURN_CONFIRM_ID)
+                                                       NOVEL_CROSSING_SAMPLED_TURN_ID, NOVEL_CROSSING_SAMPLED_TURN_CONFIRM_ID,
+                                                       NOVEL_BILATERAL_STOPPING_ID, NOVEL_BILATERAL_STOPPING_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -529,6 +534,8 @@ def novel_contract(params):
         execution = (OBSERVED_HEADING_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_CROSSING_SAMPLED_TURN_ID, NOVEL_CROSSING_SAMPLED_TURN_CONFIRM_ID):
         execution = (CROSSING_SAMPLED_TURN_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_BILATERAL_STOPPING_ID, NOVEL_BILATERAL_STOPPING_CONFIRM_ID):
+        execution = (BILATERAL_STOPPING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -821,7 +828,8 @@ def run(backend, params):
             crossing_reference = execution in CROSSING_REFERENCE_EXECUTIONS
             shallow_steering = execution in SHALLOW_STEERING_EXECUTIONS
             observed_heading = execution in OBSERVED_HEADING_EXECUTIONS
-            sampled_turn = execution == CROSSING_SAMPLED_TURN_EXECUTION
+            sampled_turn = execution in SAMPLED_TURN_EXECUTIONS
+            bilateral_stopping = execution == BILATERAL_STOPPING_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -851,7 +859,8 @@ def run(backend, params):
                     or env.escape_option.shallow_steering != shallow_steering
                     or env.escape_option.observed_heading_steering != observed_heading
                     or env.escape_option.tracked_resume != observed_heading
-                    or env.escape_option.crossing_turn_between_samples != sampled_turn):
+                    or env.escape_option.crossing_turn_between_samples != sampled_turn
+                    or env.bilateral_stopping != bilateral_stopping):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -916,6 +925,8 @@ def run(backend, params):
                 model.update(observed_heading_steering=True, tracked_resume=True)
             if sampled_turn:
                 model['crossing_turn_between_samples'] = True
+            if bilateral_stopping:
+                model['bilateral_stopping'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -1039,6 +1050,8 @@ def run(backend, params):
                         tensors['escape_tracked_resume'] = option['tracked_resume']
                     if 'settled_crossing' in option:
                         tensors['escape_settled_crossing'] = option['settled_crossing']
+                    if 'bilateral_stopping' in option:
+                        tensors['bilateral_stopping'] = option['bilateral_stopping']
                     if 'edge_continued' in option:
                         tensors['escape_edge_continued'] = option['edge_continued']
                     if 'verified_resume' in option:

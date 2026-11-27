@@ -11,7 +11,7 @@ from .command_replay import (
     ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
     CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
     CROSSING_REFERENCE_EXECUTIONS, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
-    CROSSING_SAMPLED_TURN_EXECUTION, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
+    BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -334,9 +334,12 @@ def audit(output, params, counters):
         if (model.get('observed_heading_steering', False) is not observed_profile
                 or model.get('tracked_resume', False) is not observed_profile):
             raise ValueError('COMMAND_REPLAY_OBSERVED_HEADING_PROFILE')
-        sampled_turn_profile = model['execution'] == CROSSING_SAMPLED_TURN_EXECUTION
+        sampled_turn_profile = model['execution'] in SAMPLED_TURN_EXECUTIONS
         if model.get('crossing_turn_between_samples', False) is not sampled_turn_profile:
             raise ValueError('COMMAND_REPLAY_SAMPLED_TURN_PROFILE')
+        bilateral_profile = model['execution'] == BILATERAL_STOPPING_EXECUTION
+        if model.get('bilateral_stopping', False) is not bilateral_profile:
+            raise ValueError('COMMAND_REPLAY_BILATERAL_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_ALONG_INTERCEPT_PROFILE')
         opening_profile = model['execution'] in OPENING_STEERING_EXECUTIONS
@@ -457,6 +460,10 @@ def audit(output, params, counters):
                 if (('escape_settled_crossing' in row) != sampled_turn_profile or len(settled_crossing) != LANES
                         or any(type(value) is not bool for value in settled_crossing)):
                     raise ValueError('COMMAND_REPLAY_SAMPLED_TURN_BINDING')
+                bilateral = row.get('bilateral_stopping', [False]*LANES)
+                if (('bilateral_stopping' in row) != bilateral_profile or len(bilateral) != LANES
+                        or any(type(value) is not bool for value in bilateral)):
+                    raise ValueError('COMMAND_REPLAY_BILATERAL_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -520,6 +527,11 @@ def audit(output, params, counters):
                             or any(math.hypot(*frame[6:9]) > 1.e-6 or math.hypot(*frame[9:12]) > .020001
                                    for frame in actor)):
                         raise ValueError('COMMAND_REPLAY_SAMPLED_TURN_BEHAVIOR')
+                    if bilateral[lane] and (not .02999 <= math.hypot(*observed) <= .30001
+                            or row['escape_active'][lane] or row['recovery_retreating'][lane] or held[lane]
+                            or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                            or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
+                        raise ValueError('COMMAND_REPLAY_BILATERAL_BEHAVIOR')
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)

@@ -87,6 +87,36 @@ def test_tracked_resume_is_reproved_without_canceling_the_held_escape():
     assert selected[:, 0].tolist() == [1., 0., 0.]
 
 
+def test_bilateral_stopping_retains_unknown_near_and_emergency_constraints():
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    lateral = rays[:, 1]
+    front = torch.tensor([.82, .50, .82, .82, .82])[:, None]
+    behind = torch.tensor([1.16, 1.48, 8., 1.16, 1.16])[:, None]
+    distance = torch.where(lateral > 0., front, behind)/lateral.abs().clamp_min(1.e-6)
+    depth = distance.clamp_max(8.)[:, None].expand(-1, 4, -1).clone()
+    closest = (rays-torch.tensor([0., 1., 0.])).square().sum(dim=1).argmin()
+    depth[3, :, closest] = .43
+    depth[4, :, closest] = .30
+    lidar = torch.stack((depth, torch.ones_like(depth), torch.ones_like(depth)), dim=2).reshape(5, 12, 59, 360)
+    history = torch.zeros(5, 4, 13)
+    history[:, :, 5] = -1.
+    history[:, :, 7] = .28
+    target = history[:, -1, 6:9]
+    config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, confirmed_tube_radius_m=.41)
+    ordinary = attenuate_command(lidar, rays, target, .1, config, state_vec=history.flatten(1))
+    certified = attenuate_command(lidar, rays, target, .1, config, state_vec=history.flatten(1),
+                                  allow_bilateral_stopping=True)
+
+    assert not ordinary.v_final_b.any()
+    assert certified.bilateral_stopping.tolist() == [True, False, False, False, False]
+    assert certified.v_final_b[0, 1] > .25
+    assert torch.equal(certified.v_final_b[1:], ordinary.v_final_b[1:])
+    assert torch.equal(certified.metrics['emergency'], ordinary.metrics['emergency'])
+
+
 def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     import torch
     from instinctlab.control.escape_passage import crossing_stop_clearance
