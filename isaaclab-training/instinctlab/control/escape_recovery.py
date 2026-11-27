@@ -26,22 +26,24 @@ RECOVERY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-recovery-retreat-v1'
 EARLY_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-early-retreat-v1'
 SIDE_HOVER_RETREAT_25_VERSION = 'm4-escape-brake-tube-p25-side-hover-v1'
 CLEAR_PASS_25_VERSION = 'm4-escape-brake-tube-p25-clear-pass-v1'
+RECOVERY_REARM_25_VERSION = 'm4-escape-brake-tube-p25-recovery-rearm-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
                        BRAKE_FORWARD_25_VERSION: 25, BRAKE_TUBE_25_VERSION: 25, BRAKE_TUBE_CONFIRM_25_VERSION: 25,
                        RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25,
-                       SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25}
+                       SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
+RECENTER_REARM_STEPS = 10
 
 
 class EscapeRecovery(EscapeOption):
     def __init__(self, *, lanes, device, dtype, recenter, lateral=False, fast_lateral=False, redirect=False,
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
-                 clear_pass=False):
+                 clear_pass=False, recenter_rearm=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -61,6 +63,9 @@ class EscapeRecovery(EscapeOption):
         self.clear_pass = clear_pass
         if clear_pass:
             self.holding = torch.zeros_like(self.applied)
+        self.recenter_rearm = recenter_rearm
+        if recenter_rearm:
+            self.rearm_steps = torch.zeros_like(self.remaining)
         self.retreat_hold_steps = torch.zeros_like(self.remaining)
         self.retreat_hold_direction = torch.zeros_like(self.direction)
         self.retreating = torch.zeros_like(self.applied)
@@ -84,6 +89,8 @@ class EscapeRecovery(EscapeOption):
         self.retreat_hold_steps[lanes] = 0
         self.retreat_hold_direction[lanes] = 0.
         self.retreating[lanes] = False
+        if self.recenter_rearm:
+            self.rearm_steps[lanes] = 0
 
     def issued(self, lidar, state, action, config):
         request = decode_governor(action, state, config.governor).v_gov_b
@@ -333,6 +340,12 @@ class EscapeRecovery(EscapeOption):
         self.cooldown[held] = 0
         selected[held] = selected.new_tensor([0., .5, .5, .5])
 
+    def update_recenter_rearm(self, lidar, config):
+        depth, valid, reliability = lidar[:, -3], lidar[:, -2], lidar[:, -1]
+        threshold = config.ics.emergency_clearance_m+config.ics.clearance_margin_m
+        emergency = ((depth < threshold) & (valid > .5) & (reliability >= config.ics.min_reliability)).flatten(1).any(dim=1)
+        self.rearm_steps = torch.where(emergency, RECENTER_REARM_STEPS, (self.rearm_steps-1).clamp_min(0))
+
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
@@ -381,8 +394,12 @@ class EscapeRecovery(EscapeOption):
         if not self.recenter:
             return selected
 
-        lanes = (moving & ~self.retreating & (state[:, -1] <= .22) & (self.since_escape >= RECOVERY_DELAY)
-                 & (self.since_escape < RECOVERY_LIMIT)).nonzero().flatten()
+        recovery = (moving & ~self.retreating & (state[:, -1] <= .22) & (self.since_escape >= RECOVERY_DELAY)
+                    & (self.since_escape < RECOVERY_LIMIT))
+        if self.recenter_rearm:
+            self.update_recenter_rearm(lidar, config)
+            recovery &= self.rearm_steps == 0
+        lanes = recovery.nonzero().flatten()
         if not len(lanes):
             return selected
 

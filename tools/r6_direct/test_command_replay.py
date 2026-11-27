@@ -312,3 +312,23 @@ def test_clear_pass_keeps_the_intercept_and_cannot_use_stale_or_moving_history()
     state[2, 1, 12] = .20
     state[3, 1, 9] = .10
     assert clear_hover_passage(scan, state.reshape(lanes, 52), rays).tolist() == [True, False, False, False]
+
+
+def test_recenter_rearms_one_second_after_credible_emergency():
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery, RECENTER_REARM_STEPS
+    from instinctlab.control.ics import ICSConfig
+
+    option = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=True, recenter_rearm=True)
+    config = SimpleNamespace(ics=ICSConfig(clearance_margin_m=.15))
+    lidar = torch.zeros(2, 12, 1, 1)
+    lidar[:, -3] = .38
+    lidar[:, -2] = 1.
+    lidar[0, -1] = 1.
+    option.update_recenter_rearm(lidar, config)
+    assert option.rearm_steps.tolist() == [RECENTER_REARM_STEPS, 0]
+    lidar[:, -3] = .42
+    for remaining in range(RECENTER_REARM_STEPS-1, -1, -1):
+        option.update_recenter_rearm(lidar, config)
+        assert option.rearm_steps.tolist() == [remaining, 0]

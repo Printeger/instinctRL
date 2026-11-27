@@ -5,7 +5,8 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTION, CONDITIONS, LANES, LAYOUTS, STEP_MS, arm_execution, conditions, event_schedule,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RECOVERY_REARM_EXECUTION,
+    STEP_MS, arm_execution, conditions, event_schedule,
 )
 
 # Development diagnostics. The corridor is fixed to the authored crossing centre.
@@ -243,11 +244,16 @@ def audit(output, params, counters):
                         or len(row['reset']) != LANES):
                     raise ValueError(f'COMMAND_REPLAY_TRANSITION_BINDING {label}/{name}/{step}')
                 resets += sum(row['reset'])
-                if ('escape_clear_pass_hold' in row) != (model['execution'] == CLEAR_PASS_EXECUTION):
+                if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
                 if len(held) != LANES or any(type(value) is not bool for value in held):
                     raise ValueError('COMMAND_REPLAY_HOLD_LANES')
+                if ('recovery_rearm_steps' in row) != (model['execution'] == RECOVERY_REARM_EXECUTION):
+                    raise ValueError('COMMAND_REPLAY_REARM_BINDING')
+                rearm = row.get('recovery_rearm_steps', [0]*LANES)
+                if len(rearm) != LANES or any(type(value) is not int or not 0 <= value <= 10 for value in rearm):
+                    raise ValueError('COMMAND_REPLAY_REARM_TIMER')
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
@@ -256,6 +262,8 @@ def audit(output, params, counters):
                     if held[lane] and (math.hypot(*observed) > .001001 or math.hypot(*row['v_final_w'][lane]) > 1.e-6
                                        or row['escape_active'][lane]):
                         raise ValueError('COMMAND_REPLAY_HOLD_BEHAVIOR')
+                    if rearm[lane] and row['escape_recovering'][lane]:
+                        raise ValueError('COMMAND_REPLAY_REARM_BEHAVIOR')
                     if step and not rows[step-1]['reset'][lane]:
                         if actor[:-1] != rows[step-1]['actor_state'][lane][1:]:
                             raise ValueError('COMMAND_REPLAY_ACTOR_HISTORY')

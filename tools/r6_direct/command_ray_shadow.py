@@ -10,7 +10,7 @@ from tools.r6_direct.import_legacy import pin, stop_paths
 from tools.r6_direct.instinct_cycle import save
 from tools.r6_evidence import checked
 from training_workloads.unified_h1.command_replay import (
-    CLEAR_PASS_EXECUTION, EARLY_RETREAT_EXECUTION, RECOVERY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION,
+    CLEAR_PASS_EXECUTIONS, EARLY_RETREAT_EXECUTION, RECOVERY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION,
     TUBE_CONFIRM_EXECUTION, arm_execution, route_layouts,
 )
 from training_workloads.unified_h1.command_replay_audit import body_to_world
@@ -101,7 +101,7 @@ def audit(binding, arm, lane, start, end):
     reflex._rays.copy_(ray_tensor.reshape(59, 360, 3)[::3].reshape(-1,3))
     execution = arm_execution(params, arm)
     if execution not in (TUBE_CONFIRM_EXECUTION, RECOVERY_RETREAT_EXECUTION,
-                         EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION, CLEAR_PASS_EXECUTION):
+                         EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION, *CLEAR_PASS_EXECUTIONS):
         raise ValueError('shadow audit is registered only for the v2 sweep settings')
     config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True)
     results = []
