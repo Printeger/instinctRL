@@ -62,6 +62,8 @@
 
 受限反向撤离的同输入复验只在目标街道触发一次，保留 0.50562 米的改善和两条必要撤离。原恶化街道回到 3.4 秒，五类 32/32 首飞和松杆通过，最低净空 0.21481 米，短程跟踪和恢复仍有缺口。 [同输入结果](experiments/instinct-continuous-command/clipped_retreat_onset/REPORT.md)
 
+独立受限撤离复验完成 32/32 条首飞，五类净空均过，最低 0.19824 米，零接触和重置。街道 22 已停稳后因来物折返再启动普通避让，预设松杆 31/32。已保存原件，优先复核折返时的持续停驻和恢复新指令。 [独立停车失败回执](experiments/instinct-continuous-command/independent_clipped_retreat_onset/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
