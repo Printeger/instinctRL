@@ -1,0 +1,17 @@
+{
+  "actual_released_bytes": 2342862848,
+  "plan": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-STORAGE-CHECK-02/PLAN.json",
+    "sha256": "5d763885d749864f46cac639c5d84ce55df264b7c97f8b966eb50b6db18a6e24"
+  },
+  "result": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-STORAGE-CHECK-02/RESULT.json",
+    "sha256": "2a392a919b2cf0ae5bb8012ad039d8b5cfc1e44ab4244b88f3e8cc328a4c16dd"
+  },
+  "scope": "Only matching tracked bytes in isaac-training, ros1 and ros2 in closed SOURCE-25 through SOURCE-32. Retained original paths, bytes and commit identity.",
+  "tool": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-STORAGE-CHECK-02/share-identical-snapshot-files.py",
+    "sha256": "0ba0bcc1c1a11daf889c4bd6734ae6ec74d5c30165a4bbeca4ad73678583d550"
+  },
+  "verified_paths": 23880
+}
