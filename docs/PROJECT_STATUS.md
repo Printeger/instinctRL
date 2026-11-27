@@ -28,6 +28,8 @@
 
 第七份独立 Crazy 回放 32/32 首飞完整，零接触和中途重置，室内过门过角各 8/8。街道最小净空 0.0152 米低于门槛，另一条轨迹松杆漂移 0.477 米、停稳 2.0 秒。短程独立复验失败，原件保留作配对开发。 [独立结果](experiments/instinct-continuous-command/independent_verified_hover/REPORT.md)
 
+同输入修复使 32/32 预设松杆均达标，但一条街道首飞在后段横穿发生接触。该处的同侧撤离经 ICS 放行，1.5 秒动作预测没有足够余量。保留接触原件，继续验证通过同一净空门槛的有限撤离时长。 [同输入结果](experiments/instinct-continuous-command/crossing_stop_receding_hover/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
