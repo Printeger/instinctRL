@@ -19,7 +19,27 @@ def _closing_seed(ranges, reliable, elapsed):
     return best > .005, seed
 
 
-def track_nearby_return(lidar, state, rays):
+def _fit_curvature(points, patch):
+    weights = patch.to(points.dtype)
+    count = weights.sum(dim=1, keepdim=True).clamp_min(1.)
+    mean = (points*weights[:, :, None]).sum(dim=1)/count
+    offsets = points-mean[:, None]
+    weighted = offsets*weights[:, :, None]
+    covariance = offsets.transpose(1,2)@weighted/count[:, :, None]
+    powers = offsets.square().sum(dim=2, keepdim=True)
+    right = (weighted.transpose(1,2)@powers)/(2.*count[:, :, None])
+    identity = torch.eye(3, device=points.device, dtype=points.dtype)
+    local, info = torch.linalg.solve_ex(covariance+1.e-8*identity, right)
+    centers = mean+local.squeeze(-1)
+    radii = (points-centers[:, None]).norm(dim=-1)
+    radius = (radii*weights).sum(dim=1)/count[:, 0]
+    residual = (((radii-radius[:, None]).square()*weights).sum(dim=1)/count[:, 0]).sqrt()
+    supported = (info == 0) & (torch.linalg.eigvalsh(covariance)[:, 0] >= 1.e-5)
+    supported &= (radius >= .14) & (radius <= .9) & (residual <= .008)
+    return centers[:, :2], radius, supported
+
+
+def track_nearby_return(lidar, state, rays, *, curved=False):
     """Associate a supported closing return across four delivered scans."""
     histories = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
@@ -33,6 +53,7 @@ def track_nearby_return(lidar, state, rays):
     rays = rays[None].expand(len(lidar), -1, -1)
     aligned = rays
     medians = []
+    shapes = []
     anchor = None
     for frame in (3, 2, 1, 0):
         if frame < 3:
@@ -55,13 +76,14 @@ def track_nearby_return(lidar, state, rays):
         accepted &= patch.sum(dim=1) >= 20
         coords = points[:, :, :2].masked_fill(~patch[:, :, None], torch.nan)
         medians.append(coords.nanmedian(dim=1).values)
+        if curved:
+            shapes.append(_fit_curvature(points, patch))
     path = torch.stack(medians[::-1], dim=1)
-    return accepted, path, elapsed
+    return accepted, path, elapsed, shapes[::-1]
 
 
-def clear_hover_passage(lidar, state, rays):
+def _closest_passage(path, elapsed):
     """Recognize a clear pass before the vehicle leaves its stopped position."""
-    accepted, path, elapsed = track_nearby_return(lidar, state, rays)
     mean = path.mean(dim=1)
     t = elapsed-elapsed.mean(dim=1, keepdim=True)
     velocity = (path*t[:, :, None]).sum(dim=1)/(t.square().sum(dim=1, keepdim=True).clamp_min(.001))
@@ -71,12 +93,28 @@ def clear_hover_passage(lidar, state, rays):
     speed_sq = velocity.square().sum(dim=1)
     moment = -(now*velocity).sum(dim=1)/speed_sq.clamp_min(.001)
     closest = (now+moment.clamp(0., 5.)[:, None]*velocity).norm(dim=1)
-    return accepted & (rms <= .02) & (speed_sq >= .04) & (speed_sq <= 2.25) & (moment > 0.) & (closest >= .85)
+    fit = (rms <= .02) & (speed_sq >= .04) & (speed_sq <= 2.25) & (moment > 0.)
+    return fit, closest
+
+
+def clear_hover_passage(lidar, state, rays, *, curved=False):
+    """Recognize a clear pass before the vehicle leaves its stopped position."""
+    accepted, path, elapsed, shapes = track_nearby_return(lidar, state, rays, curved=curved)
+    fit, closest = _closest_passage(path, elapsed)
+    clear = fit & (closest >= .85)
+    if curved:
+        centers, radii, viable = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
+        fitted, center_distance = _closest_passage(centers, elapsed)
+        outer = radii.amax(dim=1)
+        supported = viable.all(dim=1) & fitted & ((outer-radii.amin(dim=1)) <= .04)
+        # Allocate .21 m to the vehicle and .15 m to clearance, with a .09 m observation margin.
+        clear = torch.where(supported, center_distance-outer >= .45, clear)
+    return accepted & clear
 
 
 def approach_scores(lidar, state, rays, issued):
     """Estimate separation for admissible escape commands after a nearby reversal."""
-    accepted, history, elapsed = track_nearby_return(lidar, state, rays)
+    accepted, history, elapsed, _ = track_nearby_return(lidar, state, rays)
     recent = history.diff(dim=1)[:, -2:] / elapsed.diff(dim=1)[:, -2:, None].clamp_min(.001)
     speed = recent.norm(dim=2)
     agreement = (recent[:, 0]*recent[:, 1]).sum(dim=1)/speed.prod(dim=1).clamp_min(.001)

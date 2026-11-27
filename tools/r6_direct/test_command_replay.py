@@ -312,6 +312,7 @@ def test_clear_pass_keeps_the_intercept_and_cannot_use_stale_or_moving_history()
     state[2, 1, 12] = .20
     state[3, 1, 9] = .10
     assert clear_hover_passage(scan, state.reshape(lanes, 52), rays).tolist() == [True, False, False, False]
+    assert clear_hover_passage(scan, state.reshape(lanes, 52), rays, curved=True).tolist() == [True, False, False, False]
 
 
 def test_recenter_rearms_one_second_after_credible_emergency():

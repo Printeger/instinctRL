@@ -6,6 +6,7 @@ from tools.r6_evidence import checked
 from training_workloads.unified_h1.command_replay import (
     CLEARANCE_ID as COMMAND_CLEARANCE_ID,
     CORNER_PREFIX as COMMAND_CORNER_PREFIX,
+    CURVED_PREFIX as COMMAND_CURVED_PREFIX,
     CRAZY_PREFIX as COMMAND_CRAZY_PREFIX, GUARD_PREFIX as COMMAND_GUARD_PREFIX, PREFIX as COMMAND_REPLAY_PREFIX,
     EARLY_PREFIX as COMMAND_EARLY_PREFIX, ENDURANCE_PREFIX as COMMAND_ENDURANCE_PREFIX,
     HOVER_PREFIX as COMMAND_HOVER_PREFIX, LONG_PREFIX as COMMAND_LONG_PREFIX,
@@ -40,6 +41,7 @@ BOUNDED_SCOPES = {
     COMMAND_PASSAGE_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/passage/RESOURCE_LEDGER.json'),
     COMMAND_REARM_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/rearm/RESOURCE_LEDGER.json'),
     COMMAND_RANK_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/rank/RESOURCE_LEDGER.json'),
+    COMMAND_CURVED_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/curved/RESOURCE_LEDGER.json'),
     COMMAND_CORNER_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/corner/RESOURCE_LEDGER.json'),
     COMMAND_CLEARANCE_ID: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/clearance/RESOURCE_LEDGER.json'),
     COMMAND_EARLY_PREFIX: (COMMAND_REPLAY_SCHEMA, 'docs/experiments/instinct-continuous-command/early/RESOURCE_LEDGER.json'),

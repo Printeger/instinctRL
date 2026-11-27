@@ -5,7 +5,7 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RANKED_RETURN_EXECUTION, REARM_EXECUTIONS,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, LANES, LAYOUTS, RANK_EXECUTIONS, REARM_EXECUTIONS,
     STEP_MS, arm_execution, conditions, event_schedule,
 )
 
@@ -254,7 +254,7 @@ def audit(output, params, counters):
                 rearm = row.get('recovery_rearm_steps', [0]*LANES)
                 if len(rearm) != LANES or any(type(value) is not int or not 0 <= value <= 10 for value in rearm):
                     raise ValueError('COMMAND_REPLAY_REARM_TIMER')
-                if ('escape_ranked_direction' in row) != (model['execution'] == RANKED_RETURN_EXECUTION):
+                if ('escape_ranked_direction' in row) != (model['execution'] in RANK_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_BINDING')
                 ranked = row.get('escape_ranked_direction', [False]*LANES)
                 if len(ranked) != LANES or any(type(value) is not bool for value in ranked):

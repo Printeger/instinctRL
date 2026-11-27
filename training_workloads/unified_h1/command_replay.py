@@ -22,9 +22,11 @@ HOVER_PREFIX = PREFIX + 'HOVER-'
 PASSAGE_PREFIX = PREFIX + 'PASSAGE-'
 REARM_PREFIX = PREFIX + 'REARM-'
 RANK_PREFIX = PREFIX + 'RANK-'
+CURVED_PREFIX = PREFIX + 'CURVED-'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
-ENDURANCE_PREFIXES = (ENDURANCE_PREFIX, HOVER_PREFIX, PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX)
+PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX)
+ENDURANCE_PREFIXES = (ENDURANCE_PREFIX, HOVER_PREFIX, *PHYSICS_CLEARANCE_PREFIXES)
 RETURN_DURATION_MS = 36000
 CLEARANCE_ID = EARLY_PREFIX + '02'
 REGRESSION_ID = PREFIX + 'R6-01'
@@ -51,7 +53,9 @@ SIDE_HOVER_RETREAT_EXECUTION = 'm4-escape-brake-tube-p25-side-hover-v1'
 CLEAR_PASS_EXECUTION = 'm4-escape-brake-tube-p25-clear-pass-v1'
 RECOVERY_REARM_EXECUTION = 'm4-escape-brake-tube-p25-recovery-rearm-v1'
 RANKED_RETURN_EXECUTION = 'm4-escape-brake-tube-p25-ranked-return-v1'
-REARM_EXECUTIONS = (RECOVERY_REARM_EXECUTION, RANKED_RETURN_EXECUTION)
+CURVED_PASS_EXECUTION = 'm4-escape-brake-tube-p25-curved-pass-v1'
+RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION)
+REARM_EXECUTIONS = (RECOVERY_REARM_EXECUTION, *RANK_EXECUTIONS)
 CLEAR_PASS_EXECUTIONS = (CLEAR_PASS_EXECUTION, *REARM_EXECUTIONS)
 EXECUTION_PAIRS = {
     GUARD_PREFIX: (EXECUTION, BRAKE_EXECUTION),
@@ -62,7 +66,8 @@ EXECUTION_PAIRS = {
     HOVER_PREFIX: (EARLY_RETREAT_EXECUTION, SIDE_HOVER_RETREAT_EXECUTION),
     PASSAGE_PREFIX: (EARLY_RETREAT_EXECUTION, CLEAR_PASS_EXECUTION),
     REARM_PREFIX: (CLEAR_PASS_EXECUTION, RECOVERY_REARM_EXECUTION),
-    RANK_PREFIX: REARM_EXECUTIONS,
+    RANK_PREFIX: (RECOVERY_REARM_EXECUTION, RANKED_RETURN_EXECUTION),
+    CURVED_PREFIX: RANK_EXECUTIONS,
     CORNER_PREFIX: (EARLY_RETREAT_EXECUTION, EARLY_RETREAT_EXECUTION),
 }
 CRAZY_SCHEMA = 'instinctrl-crazy-command-generator/1'
@@ -70,7 +75,7 @@ CRAZY_MODES = ('normal', 'aggressive', 'obstacleward', 'oscillation', 'stop')
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CORNER|LONG)-[0-9]{2}', run_id) is not None
+    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|CORNER|LONG)-[0-9]{2}', run_id) is not None
 
 
 def route_layouts(run_id):
@@ -322,7 +327,7 @@ def contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'wall_seconds', 'output_cap_bytes'}
     if guard or routes:
         fields.add('candidate_execution')
-    captures_clearance = run_id == CLEARANCE_ID or run_id.startswith((PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX))
+    captures_clearance = run_id == CLEARANCE_ID or run_id.startswith(PHYSICS_CLEARANCE_PREFIXES)
     if captures_clearance:
         fields.add('clearance_envelope')
     if run_id.startswith(CORNER_PREFIX):
