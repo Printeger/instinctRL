@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。首判 6/6，仿真 Crazy 指令。13 双确认令街道首个松杆达到 8/8，五类 32/32。14 保留走廊斜令的轴向推进。15 侧门框确认使一条室内轨迹多推进约 0.50 m，仍过角 6/8。15 的 32 条首飞完整、零接触和重置，最小 0.25353 m，32 个松杆窗全通过。以同配置启动 05 的独立几何和 32 路新指令复验，源码 95db110c，CPU 209 项通过。30 分钟契约冻结前准备就绪，完整 R6 尚未启动。 [项目状态](../docs/PROJECT_STATUS.md) · [门框结果](../docs/experiments/instinct-continuous-command/confirmed_tube/REPORT.md)
+任务 `instinctrl-continuous-command`。六方首判齐全，使用仿真 Crazy 指令。首份独立 120 秒 32/32 零接触，室内过角 6/8。有限边缘配对过角 8/8、32/32 松杆，全组最低 0.225 m。短续绕仍安全，但树林最差连续低速增加，后续回到有限边缘。NOVEL-19 已开始切向幅值配对，准确源码 ff2843d7。已关闭累计 2,082,848 个真实评价转换，训练为零。完整 R6 和正式 30 分钟仍待完成。 [项目状态](../docs/PROJECT_STATUS.md) · [限边结果](../docs/experiments/instinct-continuous-command/finite_edge/REPORT.md) · [续绕结果](../docs/experiments/instinct-continuous-command/edge_continuation/REPORT.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
