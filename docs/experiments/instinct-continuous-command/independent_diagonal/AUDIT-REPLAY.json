@@ -1,0 +1,16 @@
+{
+  "corrected_audit": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-SOURCE-52/training_workloads/unified_h1/command_replay_audit.py",
+    "sha256": "c83a5153d93a3096ab61db354f8c817906c3cb6e03e01eacfcdf12463bdbf1c3"
+  },
+  "corrected_cpu_only_commit": "0d97d782",
+  "initial_failure": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/novel-27-original-analysis-failure.stderr",
+    "sha256": "4cae67b41c82ff7428593e7680a60f667ddae8d5fccb89010fa07452e36deea6"
+  },
+  "native_source_commit": "2bd54aa45522ab035eb6d777e9dc8d6cb32988e0",
+  "output": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-27/analysis/binding.json",
+    "sha256": "b1717efd7b86e8da9d4472f43992d61e5b2742f487ebe470b1e890a92572ffaa"
+  }
+}
