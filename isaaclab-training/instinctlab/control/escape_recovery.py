@@ -829,7 +829,9 @@ class EscapeRecovery(EscapeOption):
                 reverse = .22*along[fallback]
                 options = torch.stack((side[fallback]-reverse, -side[fallback]-reverse), dim=1)
                 options /= options.norm(dim=2, keepdim=True)
-                actions = torch.cat((history.new_zeros((len(fallback), 2, 1)), .5+SPEED_M_S*options), dim=2)
+                # Leave room below the ICS threshold after action encoding.
+                speed = SPEED_M_S-.0001
+                actions = torch.cat((history.new_zeros((len(fallback), 2, 1)), .5+speed*options), dim=2)
                 checked = torch.stack([self.issued(scans[fallback], history[fallback], a, config).v_final_b
                                        for a in actions.unbind(dim=1)], dim=1)
                 predicted = intercept_scores(position[fallback], motion[fallback], coast[fallback], radius[fallback],
