@@ -606,6 +606,54 @@ def test_intercept_continues_only_during_four_fresh_unobserved_frames(monkeypatc
     assert not option.intercept_continued.any()
 
 
+def test_recovery_retreat_takes_priority_only_while_ics_issues_it(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=4, device='cpu', dtype=torch.float32, recenter=False, retreat_priority=True)
+    option.retreating[:] = torch.tensor([True, True, True, False])
+    option.retreat_hold_direction[:, 0] = -1.
+    selected = torch.tensor([[0., .20, .50, .50], [0., .50, .50, .50],
+                            [0., .20, .50, .50], [0., .20, .50, .50]])
+    state = torch.zeros(4, 52)
+    state[2, 0] = 1.
+    monkeypatch.setattr(option, 'issued', lambda scan, history, action, cfg: SimpleNamespace(
+        v_final_b=action[:, 1:]-.5, metrics={'emergency': history[:, :1]}))
+    assert option.usable_recovery_retreat(torch.zeros(4, 1), state, selected, None).tolist() == [0]
+
+
+def test_intercept_protects_retreat_direction_without_hiding_a_blocked_retreat(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False,
+                            intercept=True, retreat_priority=True)
+    option.retreating[:] = True
+    option.retreat_hold_direction[:, 0] = -1.
+    state = torch.zeros(3, 52)
+    state[1, 0] = .1
+    selected = torch.tensor([[0., .30, .50, .50]]*3)
+
+    def issued(scan, history, action, cfg):
+        velocity = action[:, 1:]-.5
+        blocked = (history[:, 0] > .0) & torch.isclose(velocity[:, 0], velocity.new_tensor(-.20))
+        return SimpleNamespace(v_final_b=velocity.masked_fill(blocked[:, None], 0.),
+                               metrics={'emergency': torch.zeros(len(action), 1)})
+
+    monkeypatch.setattr(option, 'issued', issued)
+    monkeypatch.setattr(escape_passage, 'moving_intercepts', lambda *args, **kwargs: (
+        torch.arange(3), torch.zeros(3, 2), torch.tensor([[0., .58]]*3), torch.zeros(3, 2), torch.full((3,), .34)))
+    monkeypatch.setattr(escape_passage, 'intercept_scores', lambda pos, motion, coast, radius, velocity:
+        torch.tensor([[.328], [.328], [.14]]) if velocity.shape[1] == 1 else torch.tensor([[.49, .51, .70]]*3))
+    option.avoid_interception(torch.zeros(3, 1), state, selected, None)
+    assert selected[0].tolist() == pytest.approx([0., .20, .50, .50])
+    assert selected[1].tolist() == pytest.approx([0., .50, .50, .50])
+    assert selected[2].tolist() == pytest.approx([0., .50, .50, .50])
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing

@@ -36,6 +36,7 @@ INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v1'
 ALIGNED_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v2'
 RESERVE_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v3'
 COMMITTED_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v4'
+PRIORITY_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-intercept-v5'
 COMMAND_HANDOFF_25_VERSION = 'm4-escape-brake-tube-p25-command-handoff-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
@@ -46,7 +47,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25,
                        STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25, INTERCEPT_25_VERSION: 25,
                        ALIGNED_INTERCEPT_25_VERSION: 25, RESERVE_INTERCEPT_25_VERSION: 25,
-                       COMMITTED_INTERCEPT_25_VERSION: 25,
+                       COMMITTED_INTERCEPT_25_VERSION: 25, PRIORITY_INTERCEPT_25_VERSION: 25,
                        COMMAND_HANDOFF_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
@@ -60,7 +61,7 @@ class EscapeRecovery(EscapeOption):
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
-                 intercept_reserve=False, command_handoff=False, commit_intercept=False):
+                 intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -85,6 +86,7 @@ class EscapeRecovery(EscapeOption):
         self.align_intercept = align_intercept
         self.intercept_reserve = intercept_reserve
         self.commit_intercept = commit_intercept
+        self.retreat_priority = retreat_priority
         if commit_intercept:
             self.intercept_steps = torch.zeros_like(self.remaining)
             self.intercept_direction = torch.zeros_like(self.direction)
@@ -542,6 +544,15 @@ class EscapeRecovery(EscapeOption):
         self.intercepted[kept] = True
         self.intercept_continued[kept] = True
 
+    def usable_recovery_retreat(self, lidar, state, selected, config):
+        lanes = self.retreating.nonzero().flatten()
+        if not len(lanes):
+            return lanes
+        current = self.issued(lidar[lanes], state[lanes], selected[lanes], config)
+        along_retreat = (current.v_final_b*self.retreat_hold_direction[lanes]).sum(dim=1)
+        usable = (along_retreat >= .12) & (current.metrics['emergency'].flatten() == 0.)
+        return lanes[usable]
+
     def avoid_interception(self, lidar, state, selected, config):
         from .escape_passage import intercept_scores, moving_intercepts
 
@@ -549,11 +560,18 @@ class EscapeRecovery(EscapeOption):
         eligible = (state[:, -1] <= .04) & (state.reshape(-1, 4, 13)[:, :, :3].norm(dim=2).amax(dim=1) <= .50)
         if self.clear_pass:
             eligible &= ~self.holding
+        protected_retreat = torch.zeros_like(self.applied)
+        if self.retreat_priority:
+            protected_retreat[self.usable_recovery_retreat(lidar, state, selected, config)] = True
         response = (self.command_offsets, self.command_coast) if self.align_intercept else None
         lanes, position, motion, coast, radius = moving_intercepts(
             lidar, state, self.detector._full_rays, eligible, command_response=response)
         if self.commit_intercept:
-            self.continue_intercept(lidar, state, selected, config, lanes)
+            observed = lanes
+            if self.retreat_priority:
+                conflicting = (self.intercept_direction*self.retreat_hold_direction).sum(dim=1) < .4
+                observed = torch.cat((lanes, (protected_retreat & conflicting).nonzero().flatten()))
+            self.continue_intercept(lidar, state, selected, config, observed)
         if not len(lanes):
             return
         scans, history = lidar[lanes], state[lanes]
@@ -584,6 +602,13 @@ class EscapeRecovery(EscapeOption):
             current = (original.v_final_b[consider, None]*directions[:, 1:]).sum(dim=2)
             continues = (current >= .12) & (transverse-current >= .04)
             admissible &= exposed[:, None] | continues
+        if self.retreat_priority:
+            # A fresh forecast can override an existing withdrawal when it
+            # predicts contact within the vehicle envelope.
+            keep = protected_retreat[lanes] & (score >= .21)
+            aligned = (velocity[:, 1:]*self.retreat_hold_direction[lanes, None]).sum(dim=2) >= .12
+            admissible &= ~keep[:, None] | aligned
+            hold &= ~keep
         best, side_id = scores[:, 1:].masked_fill(~admissible, -torch.inf).max(dim=1)
         gain = torch.where(exposed, .15, .04)
         change = hold | ((best >= .28) & (best-score >= gain))
