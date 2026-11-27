@@ -31,6 +31,7 @@ RANKED_RETURN_25_VERSION = 'm4-escape-brake-tube-p25-ranked-return-v1'
 CURVED_PASS_25_VERSION = 'm4-escape-brake-tube-p25-curved-pass-v1'
 HOVER_PATH_25_VERSION = 'm4-escape-brake-tube-p25-hover-path-v1'
 STOP_RELEASE_25_VERSION = 'm4-escape-brake-tube-p25-stop-release-v1'
+TURN_FIT_25_VERSION = 'm4-escape-brake-tube-p25-turn-fit-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -38,7 +39,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        RECOVERY_RETREAT_25_VERSION: 25, EARLY_RETREAT_25_VERSION: 25,
                        SIDE_HOVER_RETREAT_25_VERSION: 25, CLEAR_PASS_25_VERSION: 25, RECOVERY_REARM_25_VERSION: 25,
                        RANKED_RETURN_25_VERSION: 25, CURVED_PASS_25_VERSION: 25, HOVER_PATH_25_VERSION: 25,
-                       STOP_RELEASE_25_VERSION: 25}
+                       STOP_RELEASE_25_VERSION: 25, TURN_FIT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -50,7 +51,7 @@ class EscapeRecovery(EscapeOption):
                  fallback=False, front_switch=False, rear_switch=False, rear_clearance=False, front_clearance=False,
                  brake_forward_escape=False, recovery_retreat=False, early_retreat=False, side_hover_retreat=False,
                  clear_pass=False, recenter_rearm=False, rank_return=False, curved_pass=False, hover_path=False,
-                 stop_release=False):
+                 stop_release=False, turn_fallback=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -70,6 +71,7 @@ class EscapeRecovery(EscapeOption):
         self.clear_pass = clear_pass
         self.curved_pass = curved_pass
         self.hover_path = hover_path
+        self.turn_fallback = turn_fallback
         self.stop_release = stop_release
         if stop_release:
             self.release_checks = torch.zeros_like(self.remaining)
@@ -407,7 +409,8 @@ class EscapeRecovery(EscapeOption):
         alternatives = torch.stack([self.issued(scans, history, action, config).v_final_b
                                     for action in trials.unbind(dim=1)], dim=1)
         issued = torch.cat((original[:, None], torch.zeros_like(original[:, None]), alternatives), dim=1)
-        supported, scores = hover_escape_scores(scans, history, self.detector._full_rays, issued)
+        supported, scores = hover_escape_scores(scans, history, self.detector._full_rays, issued,
+                                               turn_fallback=self.turn_fallback)
         improves = supported & (scores[:, 0] < .45)
         hold = improves & (scores[:, 1] >= .45) & (scores[:, 1]-scores[:, 0] >= .08)
         self.hold_neutral(lanes[hold], selected)

@@ -26,6 +26,7 @@ CURVED_PREFIX = PREFIX + 'CURVED-'
 HOVER_PATH_PREFIX = PREFIX + 'HOVERPATH-'
 STOP_RELEASE_PREFIX = PREFIX + 'RELEASE-'
 NOVEL_PREFIX = PREFIX + 'NOVEL-'
+NOVEL_TURN_ID = NOVEL_PREFIX+'02'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -59,7 +60,9 @@ RANKED_RETURN_EXECUTION = 'm4-escape-brake-tube-p25-ranked-return-v1'
 CURVED_PASS_EXECUTION = 'm4-escape-brake-tube-p25-curved-pass-v1'
 HOVER_PATH_EXECUTION = 'm4-escape-brake-tube-p25-hover-path-v1'
 STOP_RELEASE_EXECUTION = 'm4-escape-brake-tube-p25-stop-release-v1'
-RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION, HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
+TURN_FIT_EXECUTION = 'm4-escape-brake-tube-p25-turn-fit-v1'
+STOP_RELEASE_EXECUTIONS = (STOP_RELEASE_EXECUTION, TURN_FIT_EXECUTION)
+RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION, HOVER_PATH_EXECUTION, *STOP_RELEASE_EXECUTIONS)
 REARM_EXECUTIONS = (RECOVERY_REARM_EXECUTION, *RANK_EXECUTIONS)
 CLEAR_PASS_EXECUTIONS = (CLEAR_PASS_EXECUTION, *REARM_EXECUTIONS)
 EXECUTION_PAIRS = {
@@ -269,11 +272,18 @@ def check_corner_pair(params):
 def novel_contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'clearance_envelope',
               'street_center_ms', 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
+    paired = params['experiment_id'] == NOVEL_TURN_ID
+    labels = {'control', 'candidate'} if paired else {'candidate'}
+    execution = (STOP_RELEASE_EXECUTION,) if paired else (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
+    wall = 1800 if paired else 1200
+    if paired:
+        fields.add('candidate_execution')
     if (set(params) != fields or not matches(params['experiment_id']) or params['training_seed'] != 20260908
             or type(params['seed']) is not int or not 0 <= params['seed'] < 2**31 or params['seed'] in (167149835, 185193671)
-            or params['execution'] not in (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
-            or set(params['models']) != {'candidate'} or params['models']['candidate']['sha256'] != MODELS['b']
-            or params['wall_seconds'] != 1200 or params['output_cap_bytes'] != 512*2**20
+            or params['execution'] not in execution or (paired and params['candidate_execution'] != TURN_FIT_EXECUTION)
+            or set(params['models']) != labels or any(pin['sha256'] != MODELS['b'] for pin in params['models'].values())
+            or (paired and params['models']['candidate'] != params['models']['control'])
+            or params['wall_seconds'] != wall or params['output_cap_bytes'] != 512*2**20
             or params['pulse_acceleration_m_s2'] != .5):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
     centers = params['street_center_ms']
@@ -285,12 +295,12 @@ def novel_contract(params):
     _, streams = load_lane_streams(params['stream'], require_independent=True)
     if any(stream['duration_ms'] != 120000 for stream in streams):
         raise ValueError('COMMAND_REPLAY_NOVEL_DURATION')
-    transitions = LANES*1200
+    transitions = LANES*1200*len(labels)
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct', operation='dynamic',
-                mode=MODE, parameters=params, budgets=dict(wall_seconds=1200, live_process_starts=1,
+                mode=MODE, parameters=params, budgets=dict(wall_seconds=wall, live_process_starts=1,
                     simulator_initializations=1, initialization_ticks=10, training_transitions=0,
                     nontraining_transitions=transitions, optimizer_updates=0, checkpoint_writes=0,
-                    explicit_resets=1, automatic_resets=transitions))
+                    explicit_resets=len(labels), automatic_resets=transitions))
 
 
 def long_contract(params):

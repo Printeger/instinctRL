@@ -214,6 +214,26 @@ def test_frozen_stop_rejects_a_short_stationary_spell_and_a_reset():
     assert failed['stopped_after_s'] is None
 
 
+def test_hazard_recovery_tracks_the_latest_direction():
+    import numpy as np
+    from tools.r6_direct.replay_clearance import hazard_responses
+
+    nominal = np.full(20, .6)
+    nominal[2:5] = .1
+    protected = nominal.copy()
+    protected[3:5] = .6
+    intent = np.zeros((20, 3))
+    intent[5:, 0] = -.25
+    observed = intent.copy()
+    observed[5:8, 0] = .25
+    result = hazard_responses(nominal, protected, intent, observed)
+    assert result['risk_windows'] == 1
+    event, = result['events']
+    assert event['intervention_after_s'] == pytest.approx(.1)
+    assert event['first_feasible_request_step'] == 5
+    assert event['recovery_after_s'] == pytest.approx(.4)
+
+
 def test_mover_clock_preserves_three_decimal_places_at_thirty_minutes():
     from types import SimpleNamespace
     import torch
@@ -388,7 +408,7 @@ def test_hover_path_stops_only_when_the_legacy_projection_loses_clearance(monkey
     option.remaining.fill_(DURATION_STEPS-1)
     option.applied.fill_(True)
     monkeypatch.setattr(option.detector, 'retreat_direction', lambda *args, **kw: torch.tensor([[0., 1., 0.]]*2))
-    monkeypatch.setattr(escape_passage, 'hover_escape_scores', lambda *args: (
+    monkeypatch.setattr(escape_passage, 'hover_escape_scores', lambda *args, **kwargs: (
         torch.tensor([True, True]), torch.tensor([[0., .66, .7, .8, .2], [.69, .68, .7, .7, .7]])))
     monkeypatch.setattr(option, 'issued', lambda scan, history, action, config:
         SimpleNamespace(v_final_b=action[:, 1:]-.5))
@@ -410,3 +430,15 @@ def test_releasing_old_escape_requires_clear_fresh_scan_evidence():
     lidar[2, 11] = 0.
     lidar[3, 9] = .95
     assert clear_to_end_escape(lidar, torch.zeros(4, 52)).tolist() == [True, False, False, False]
+
+
+def test_turn_fit_requires_two_agreeing_intervals_after_reversal():
+    import torch
+    from instinctlab.control.escape_passage import _latest_turn
+
+    elapsed = torch.tensor([[-.3, -.2, -.1, 0.]]*2)
+    centers = torch.tensor([[[0., 2.15], [0., 2.20], [0., 2.16], [0., 2.11]],
+                            [[0., 2.15], [0., 2.20], [0., 2.16], [0., 2.21]]])
+    valid, velocity = _latest_turn(centers, elapsed)
+    assert valid.tolist() == [True, False]
+    assert velocity[0].tolist() == pytest.approx([0., -.47], abs=2.e-6)

@@ -125,6 +125,49 @@ def frozen_stop(before, after, velocities, commands, first_flight_steps, start, 
                 max_drift_m=float(drift.max()))
 
 
+def projected_clearance(before, measured_before, targets, mover, triangles, body_radius):
+    """Score a held request over 2.4 seconds with a fixed velocity response model."""
+    offsets = np.arange(0, 25, 2)
+    time = offsets*.1
+    ticks = np.arange(len(before))[:, None]+offsets
+    complete = ticks[:, -1] < len(before)
+    lag = .35*(1.-np.exp(-time/.35))
+    path = before[:, None]+time[None, :, None]*targets[:, None]
+    path += lag[None, :, None]*(measured_before-targets)[:, None]
+    speed = np.maximum(np.linalg.norm(measured_before, axis=1), np.linalg.norm(targets, axis=1))
+    nearest = static_distance(path.reshape(-1, 3), triangles).reshape(ticks.shape).min(axis=1)-.1*speed
+    if mover is not None:
+        centers = mover[ticks.clip(max=len(before)-1)]
+        mover_speed = np.linalg.norm(np.diff(mover, axis=0), axis=1).max(initial=0.)/.1
+        moving = np.linalg.norm(path-centers, axis=2).min(axis=1)-.34-.1*(speed+mover_speed)
+        nearest = np.minimum(nearest, moving)
+    return np.where(complete, nearest-body_radius, np.nan)
+
+
+def hazard_responses(nominal, protected, commands, measured, *, floor=.15):
+    """Audit intervention and recovery against the current request at each boundary."""
+    risky = np.isfinite(nominal) & (nominal < floor)
+    edges = np.diff(np.r_[False, risky, False].astype(np.int8))
+    starts, ends = np.flatnonzero(edges == 1), np.flatnonzero(edges == -1)
+    events = []
+    for i, (start, end) in enumerate(zip(starts, ends, strict=True)):
+        improved = np.flatnonzero(protected[start:end]-nominal[start:end] >= .04)
+        next_start = int(starts[i+1]) if i+1 < len(starts) else len(nominal)
+        intent = commands[end:next_start]
+        speed = np.linalg.norm(intent, axis=1)
+        feasible = (speed > .03) & (nominal[end:next_start] >= floor)
+        eligible = np.flatnonzero(feasible)
+        projected = (intent*measured[end:next_start]).sum(axis=1)/np.maximum(speed,.001)
+        tracking = feasible & (projected >= .6*speed)
+        stable = np.convolve(tracking.astype(np.int8), np.ones(5, dtype=np.int8), mode='valid') if len(tracking) >= 5 else []
+        recovered = np.flatnonzero(np.asarray(stable) == 5)
+        events.append(dict(start_step=int(start), first_clear_step=int(end),
+                           intervention_after_s=float(improved[0]*.1) if len(improved) else None,
+                           first_feasible_request_step=int(end+eligible[0]) if len(eligible) else None,
+                           recovery_after_s=float((recovered[0]+1-eligible[0])*.1) if len(recovered) else None))
+    return dict(risk_windows=len(events), events=events)
+
+
 def measured_clearance(samples, lane, end, triangles, *, crossing):
     # Neighboring intervals share endpoints throughout the first flight.
     starts = samples[:end, :-1, lane].reshape(-1, samples.shape[-1])
@@ -145,7 +188,7 @@ def measured_clearance(samples, lane, end, triangles, *, crossing):
                 maximum_measured_link_envelope_m=float(points[:, 6].max()))
 
 
-def summarize(binding, envelope_pin, opportunity_pin=None):
+def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=False):
     import torch
 
     bound, ctx, report = validate_binding(binding)
@@ -218,6 +261,9 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
                                    else [row['raw_event']['velocity_w_m_s']]*LANES for row in rows])
             movers = np.asarray([row['mover_position_after_w'] for row in rows], dtype=np.float64)
             movers_before = np.asarray([row['mover_position_w'] for row in rows], dtype=np.float64)
+            if hazard_preview:
+                velocity_before = np.concatenate((np.asarray(initial['root_state_w'])[None, :, 7:10], velocities[:-1]), axis=0)
+                issued = np.asarray([row['v_final_w'] for row in rows], dtype=np.float64)
             values = []
             for lane, (end, score) in enumerate(zip(contact_or_end, item['lanes'], strict=True)):
                 static = static_distance(roots[:end, lane], triangles)
@@ -250,6 +296,14 @@ def summarize(binding, envelope_pin, opportunity_pin=None):
                     values[-1]['physics_tick_clearance'] = dict(
                         source=dense_pin, sample_period_ms=5,
                         **measured_clearance(dense, lane, end, triangles, crossing=mover is not None))
+                if hazard_preview:
+                    collider = values[-1].get('physics_tick_clearance', {}).get('maximum_measured_link_envelope_m', radius)
+                    path_mover = None if mover is None else movers_before[:end, lane]
+                    nominal = projected_clearance(before[:end, lane], velocity_before[:end, lane],
+                                                  commands[:end, lane], path_mover, triangles, collider)
+                    physical = projected_clearance(before[:end, lane], velocity_before[:end, lane],
+                                                   issued[:end, lane], path_mover, triangles, collider)
+                    values[-1]['hazard_response_preview'] = hazard_responses(nominal, physical, commands[:end, lane], velocities[:end, lane])
             models[name][trial] = values
     return dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
                 envelope=envelope_pin, sample_period_ms=100, diagnostic_clearance_m=.15, sweep_horizon_s=.6,
@@ -261,13 +315,15 @@ def main():
     parser.add_argument('--binding', type=Path, required=True)
     parser.add_argument('--envelope', type=Path, required=True)
     parser.add_argument('--opportunities', type=Path)
+    parser.add_argument('--hazard-preview', action='store_true')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     if stop_paths():
         raise RuntimeError('STOP')
     if args.output.exists():
         raise FileExistsError(args.output)
-    result = summarize(pin(args.binding), pin(args.envelope), pin(args.opportunities) if args.opportunities else None)
+    result = summarize(pin(args.binding), pin(args.envelope), pin(args.opportunities) if args.opportunities else None,
+                       hazard_preview=args.hazard_preview)
     if stop_paths():
         raise RuntimeError('STOP')
     print(save(args.output, result))

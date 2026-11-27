@@ -6,7 +6,7 @@ from statistics import fmean
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S, CROSSING_START_M, LANES, LAYOUTS,
-    NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTION, arm_execution, conditions,
+    NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS, arm_execution, conditions,
     event_schedule,
 )
 
@@ -299,7 +299,7 @@ def audit(output, params, counters):
                 ranked = row.get('escape_ranked_direction', [False]*LANES)
                 if len(ranked) != LANES or any(type(value) is not bool for value in ranked):
                     raise ValueError('COMMAND_REPLAY_DIRECTION_RANK_LANES')
-                if ('escape_stop_release' in row) != (model['execution'] == STOP_RELEASE_EXECUTION):
+                if ('escape_stop_release' in row) != (model['execution'] in STOP_RELEASE_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_STOP_RELEASE_BINDING')
                 released = row.get('escape_stop_release', [False]*LANES)
                 if len(released) != LANES or any(type(value) is not bool for value in released):

@@ -132,17 +132,33 @@ def clear_hover_passage(lidar, state, rays, *, curved=False):
     return accepted & clear
 
 
-def hover_escape_scores(lidar, state, rays, issued):
+def _latest_turn(centers, elapsed):
+    velocity = centers.diff(dim=1)/elapsed.diff(dim=1)[:, :, None].clamp_min(.001)
+    speed = velocity.norm(dim=2)
+    agreement = (velocity[:, 1]*velocity[:, 2]).sum(dim=1)/(speed[:, 1]*speed[:, 2]).clamp_min(.001)
+    reversal = (velocity[:, 0]*velocity[:, 2]).sum(dim=1)/(speed[:, 0]*speed[:, 2]).clamp_min(.001)
+    valid = (reversal <= -.5) & (agreement >= .85) & (speed >= .2).all(dim=1) & (speed <= 1.5).all(dim=1)
+    return valid, .3*velocity[:, 1]+.7*velocity[:, 2]
+
+
+def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
     """Compare the held escape directions and zero across a fitted curved return."""
     supported, _, elapsed, shapes = track_nearby_return(lidar, state, rays, curved=True, maximum_previous_command=.30001)
     centers, radii, viable = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
     position, relative, error = _fit_motion(centers, elapsed)
+    fit = error <= .02
+    if turn_fallback:
+        reversing, latest = _latest_turn(centers, elapsed)
+        use_latest = reversing & ~fit & (error <= .055)
+        position = torch.where(use_latest[:, None], centers[:, -1], position)
+        relative = torch.where(use_latest[:, None], latest, relative)
+        fit |= use_latest
     previous = state.reshape(-1, 4, 13)[:, :, 9:12]
     stable = (previous-previous[:, -1:]).norm(dim=2).amax(dim=1) <= .035
     last = previous[:, -1, :2]
     motion = relative+last
     radius = radii.amax(dim=1)
-    supported &= stable & viable.all(dim=1) & (error <= .02) & ((radius-radii.amin(dim=1)) <= .04)
+    supported &= stable & viable.all(dim=1) & fit & ((radius-radii.amin(dim=1)) <= .04)
     supported &= (motion.norm(dim=1) >= .2) & (motion.norm(dim=1) <= 1.5) & ((position*relative).sum(dim=1) < 0.)
     time = torch.arange(81, device=position.device, dtype=position.dtype)*.05
     hold = time.clamp_max(2.5)
