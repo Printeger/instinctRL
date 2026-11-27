@@ -55,6 +55,7 @@ NOVEL_EARLY_DIAGONAL_ID = NOVEL_PREFIX+'26'
 NOVEL_DIAGONAL_CONFIRM_ID = NOVEL_PREFIX+'27'
 NOVEL_RESERVE_DIRECTION_ID = NOVEL_PREFIX+'28'
 NOVEL_CROSSING_FALLBACK_ID = NOVEL_PREFIX+'29'
+NOVEL_OPENING_STEERING_ID = NOVEL_PREFIX+'30'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -113,7 +114,9 @@ INTERCEPT_CHOICE_EXECUTION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
 EARLY_DIAGONAL_EXECUTION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
 RESERVE_DIRECTION_EXECUTION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
 CROSSING_FALLBACK_EXECUTION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
-RESERVE_DIRECTION_EXECUTIONS = (RESERVE_DIRECTION_EXECUTION, CROSSING_FALLBACK_EXECUTION)
+OPENING_STEERING_EXECUTION = 'm4-escape-brake-tube-p25-opening-steering-v1'
+CROSSING_FALLBACK_EXECUTIONS = (CROSSING_FALLBACK_EXECUTION, OPENING_STEERING_EXECUTION)
+RESERVE_DIRECTION_EXECUTIONS = (RESERVE_DIRECTION_EXECUTION, *CROSSING_FALLBACK_EXECUTIONS)
 EARLY_DIAGONAL_EXECUTIONS = (EARLY_DIAGONAL_EXECUTION, *RESERVE_DIRECTION_EXECUTIONS)
 INTERCEPT_CHOICE_EXECUTIONS = (INTERCEPT_CHOICE_EXECUTION, *EARLY_DIAGONAL_EXECUTIONS)
 VERIFIED_ZERO_EXECUTIONS = (VERIFIED_ZERO_EXECUTION, *INTERCEPT_CHOICE_EXECUTIONS)
@@ -177,7 +180,8 @@ def arm_execution(params, label):
 def compress_trace(run_id):
     return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
-                                                       NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID)
+                                                       NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
+                                                       NOVEL_OPENING_STEERING_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -425,6 +429,8 @@ def novel_contract(params):
         execution = (RESERVE_DIRECTION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_CROSSING_FALLBACK_ID:
         execution = (CROSSING_FALLBACK_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_OPENING_STEERING_ID:
+        execution = (OPENING_STEERING_EXECUTION,)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
@@ -699,7 +705,8 @@ def run(backend, params):
             intercept_choice = execution in INTERCEPT_CHOICE_EXECUTIONS
             early_diagonal = execution in EARLY_DIAGONAL_EXECUTIONS
             reserve_direction = execution in RESERVE_DIRECTION_EXECUTIONS
-            crossing_fallback = execution == CROSSING_FALLBACK_EXECUTION
+            crossing_fallback = execution in CROSSING_FALLBACK_EXECUTIONS
+            opening_steering = execution == OPENING_STEERING_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -710,7 +717,8 @@ def run(backend, params):
                     or env.escape_option.early_diagonal != early_diagonal
                     or env.escape_option.reserve_direction != reserve_direction
                     or env.escape_option.zero_recheck != crossing_fallback
-                    or env.escape_option.reverse_diagonal != crossing_fallback):
+                    or env.escape_option.reverse_diagonal != crossing_fallback
+                    or env.escape_option.opening_steering != opening_steering):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -743,6 +751,8 @@ def run(backend, params):
                 model['reserve_direction'] = True
             if crossing_fallback:
                 model.update(zero_recheck=True, reverse_diagonal=True)
+            if opening_steering:
+                model['opening_steering'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -862,6 +872,8 @@ def run(backend, params):
                         tensors['escape_edge_continued'] = option['edge_continued']
                     if 'verified_resume' in option:
                         tensors['escape_verified_resume'] = option['verified_resume']
+                    if 'opening_steered' in option:
+                        tensors['escape_opening_steered'] = option['opening_steered']
                     if 'ics_limiter' in pre:
                         tensors.update(pre['ics_limiter'])
                     save_row(handle, dict(kind='transition', step=step, t_ms=step*STEP_MS,

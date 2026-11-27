@@ -6,6 +6,46 @@ import torch
 from .ics import AZIMUTH_SAMPLES, ELEVATION_SAMPLES, _fresh_history
 
 
+def wall_opening_direction(lidar, state, rays):
+    """Find a stable frontal surface with measured depth beyond exactly one flank."""
+    history = state.reshape(-1, 4, 13)[:, -3:]
+    gravity = history[:, -1, 3:6]
+    command = history[:, -1, 6:9]
+    horizontal = command-(command*gravity).sum(dim=1, keepdim=True)*gravity
+    heading = horizontal/horizontal.norm(dim=1, keepdim=True).clamp_min(1.e-6)
+    lateral = torch.cross(-gravity, heading, dim=1)
+    forwards, sideways, upwards = (rays[None] @ torch.stack((heading, lateral, -gravity), dim=2)).unbind(2)
+
+    ranges = lidar[:, 0::3].flatten(2)[:, -3:]
+    measured = ((lidar[:, 1::3] > .5) & (lidar[:, 2::3] >= .65)).flatten(2)[:, -3:].all(dim=1)
+    stable = measured & (ranges.diff(dim=1).abs().amax(dim=1) <= .12) & (forwards > .20)
+    depths = ranges*forwards[:, None]
+    latest = ranges[:, -1]
+    frontal = (stable & (depths[:, -1] >= .55) & (depths[:, -1] <= 2.40)
+               & ((latest*sideways).abs() <= .55) & ((latest*upwards).abs() <= .35))
+    depth_bin = ((depths[:, -1]-.55)/.04).floor().to(torch.long).clamp(0, 46)
+    counts = depth_bin.new_zeros((len(lidar), 47))
+    counts.scatter_add_(1, depth_bin, frontal.to(torch.long))
+    peak = .55+.04*(counts.argmax(dim=1, keepdim=True)+.5)
+    face = frontal & ((depths[:, -1]-peak).abs() <= .05)
+    plane = (depths[:, -1]*face).sum(dim=1, keepdim=True)/face.sum(dim=1, keepdim=True).clamp_min(1)
+
+    def azimuth_count(observed):
+        return observed.reshape(len(lidar), ELEVATION_SAMPLES, AZIMUTH_SAMPLES).any(dim=1).sum(dim=1)
+
+    scale = plane/forwards.clamp_min(.20)
+    offset = scale*sideways
+    beyond = stable & (depths >= plane[:, None]+.30).all(dim=1) & ((scale*upwards).abs() <= .30)
+    right = azimuth_count(beyond & (offset >= .80) & (offset <= 2.40))
+    left = azimuth_count(beyond & (offset <= -.80) & (offset >= -2.40))
+    one_sided = ((right >= 6) & (left <= 1)) | ((left >= 6) & (right <= 1))
+    steady = (history[:, :, 6:9]-command[:, None]).norm(dim=2).amax(dim=1) <= .04
+    confirmed = (one_sided & steady & (azimuth_count(face) >= 12) & (plane[:, 0] >= 1.05)
+                 & (plane[:, 0] <= 1.65) & _fresh_history(state, command, .1)[:, 0])
+    opening = torch.where((right > left)[:, None], lateral, -lateral)
+    return confirmed, heading, opening
+
+
 def surface_tangent(lidar, state, rays, limiting):
     """Fit the horizontal trace of a nearby static surface from delivered scans."""
     history = state.reshape(-1, 4, 13)

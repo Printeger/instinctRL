@@ -1105,6 +1105,31 @@ def test_reverse_diagonal_requires_imminent_contact_and_no_standard_choice(monke
     assert torch.equal(selected[2], actor[2])
 
 
+def test_opening_steering_requires_a_single_repeated_open_flank():
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.escape_tangent import wall_opening_direction
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False)
+    rays = option.detector._full_rays
+    forwards, sides, _ = rays.unbind(dim=1)
+    positive_open = sides*1.4/forwards.clamp_min(.20) > .70
+    negative_open = sides*1.4/forwards.clamp_min(.20) < -.70
+    distant = torch.stack((positive_open, positive_open | negative_open, positive_open))
+    depth = torch.where(distant, 2.2, 1.4)/forwards.clamp_min(.20)
+    scans = torch.ones(3, 12, 59, 360)
+    scans[:, 0::3] = depth.reshape(3, 1, 59, 360)
+    scans[2, 7].flatten()[positive_open] = 0.
+    state = torch.zeros(3, 4, 13)
+    state[:, :, 5] = -1.
+    state[:, :, 6] = .28
+
+    confirmed, heading, opening = wall_opening_direction(scans, state.reshape(3, 52), rays)
+    assert confirmed.tolist() == [True, False, False]
+    assert torch.equal(heading[0], torch.tensor([1., 0., 0.]))
+    assert torch.equal(opening[0], torch.tensor([0., 1., 0.]))
+
+
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
     from instinctlab.control import escape_tangent

@@ -16,7 +16,7 @@ from instinctlab.control.escape_recovery import (
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     INTERCEPT_CHOICE_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES, NEIGHBOR_HISTORY_25_VERSION,
-    OFFSET_STOP_25_VERSION,
+    OFFSET_STOP_25_VERSION, OPENING_STEERING_25_VERSION,
     PRIORITY_INTERCEPT_25_VERSION, RANKED_RETURN_25_VERSION, REAR_CLEARANCE_25_VERSION, REAR_SWITCH_25_VERSION,
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_DIRECTION_25_VERSION, RESERVE_INTERCEPT_25_VERSION, ROTATION_TUBE_25_VERSION,
@@ -27,7 +27,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-RESERVE_DIRECTION_VERSIONS = (RESERVE_DIRECTION_25_VERSION, CROSSING_FALLBACK_25_VERSION)
+CROSSING_FALLBACK_VERSIONS = (CROSSING_FALLBACK_25_VERSION, OPENING_STEERING_25_VERSION)
+RESERVE_DIRECTION_VERSIONS = (RESERVE_DIRECTION_25_VERSION, *CROSSING_FALLBACK_VERSIONS)
 EARLY_DIAGONAL_VERSIONS = (EARLY_DIAGONAL_25_VERSION, *RESERVE_DIRECTION_VERSIONS)
 INTERCEPT_CHOICE_VERSIONS = (INTERCEPT_CHOICE_25_VERSION, *EARLY_DIAGONAL_VERSIONS)
 VERIFIED_ZERO_VERSIONS = (VERIFIED_ZERO_25_VERSION, *INTERCEPT_CHOICE_VERSIONS)
@@ -136,8 +137,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 receding_stop=version in INTERCEPT_CHOICE_VERSIONS,
                                                 early_diagonal=version in EARLY_DIAGONAL_VERSIONS,
                                                 reserve_direction=version in RESERVE_DIRECTION_VERSIONS,
-                                                zero_recheck=version == CROSSING_FALLBACK_25_VERSION,
-                                                reverse_diagonal=version == CROSSING_FALLBACK_25_VERSION)
+                                                zero_recheck=version in CROSSING_FALLBACK_VERSIONS,
+                                                reverse_diagonal=version in CROSSING_FALLBACK_VERSIONS,
+                                                opening_steering=version == OPENING_STEERING_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -245,6 +247,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:
                     self.extras['pre_reset']['escape_option']['verified_resume'] = self.escape_option.resumed.detach().clone()
+                if self.escape_option.opening_steering:
+                    self.extras['pre_reset']['escape_option']['opening_steered'] = (
+                        self.escape_option.opening_steered & self.escape_option.applied & ~self.escape_option.intercepted).detach().clone()
                 if self.escape_option.brake_forward_escape:
                     self.extras['pre_reset']['escape_option']['braking'] = self.escape_option.braking.detach().clone()
                 if self.escape_option.recovery_retreat or self.escape_option.early_retreat:

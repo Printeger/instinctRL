@@ -82,7 +82,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, EDGE_CONTINUATION_EXECUTION,
                     FINITE_EDGE_EXECUTIONS,
                     NEIGHBOR_HISTORY_EXECUTIONS, REGRESSION_IDS, SETTLED_OFFSET_STOP_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
-                    EARLY_DIAGONAL_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS, CROSSING_FALLBACK_EXECUTION,
+                    CROSSING_FALLBACK_EXECUTIONS, EARLY_DIAGONAL_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS,
+                    OPENING_STEERING_EXECUTION, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
                     VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
                 )
@@ -122,8 +123,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['early_diagonal'] = True
                     if override in RESERVE_DIRECTION_EXECUTIONS:
                         expected['reserve_direction'] = True
-                    if override == CROSSING_FALLBACK_EXECUTION:
+                    if override in CROSSING_FALLBACK_EXECUTIONS:
                         expected.update(zero_recheck=True, reverse_diagonal=True)
+                    if override == OPENING_STEERING_EXECUTION:
+                        expected['opening_steering'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

@@ -54,6 +54,7 @@ INTERCEPT_CHOICE_25_VERSION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
 EARLY_DIAGONAL_25_VERSION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
 RESERVE_DIRECTION_25_VERSION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
 CROSSING_FALLBACK_25_VERSION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
+OPENING_STEERING_25_VERSION = 'm4-escape-brake-tube-p25-opening-steering-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -70,7 +71,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
                        VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
-                       RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25}
+                       RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25,
+                       OPENING_STEERING_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -87,7 +89,7 @@ class EscapeRecovery(EscapeOption):
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
                  intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
-                 zero_recheck=False, reverse_diagonal=False):
+                 zero_recheck=False, reverse_diagonal=False, opening_steering=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -130,6 +132,9 @@ class EscapeRecovery(EscapeOption):
         self.receding_stop = receding_stop
         self.early_diagonal = early_diagonal
         self.reverse_diagonal = reverse_diagonal
+        self.opening_steering = opening_steering
+        if opening_steering:
+            self.opening_steered = torch.zeros_like(self.applied)
         self.reserve_direction = reserve_direction
         if reserve_direction:
             self.reserve_direction_seen = torch.zeros_like(self.applied)
@@ -178,6 +183,8 @@ class EscapeRecovery(EscapeOption):
 
     def reset(self, lanes):
         super().reset(lanes)
+        if self.opening_steering:
+            self.opening_steered[lanes] = False
         self.since_escape[lanes] = RECOVERY_LIMIT
         self.recovering[lanes] = False
         self.escape_speed[lanes] = SPEED_M_S
@@ -271,6 +278,46 @@ class EscapeRecovery(EscapeOption):
                 issued = self.issued(local_lidar[rear_hover], local_state[rear_hover], trial[rear_hover], config).v_final_b
                 useful = (issued * side[rear_hover]).sum(1).abs() > best_score[rear_hover] + .035
                 self.escape_speed[lanes[rear_hover][useful]] = FAST_LATERAL_SPEED_M_S
+        if self.opening_steering:
+            self.steer_initial_escape(lidar, state, selected, config, lanes)
+
+    def steer_initial_escape(self, lidar, state, selected, config, lanes):
+        from .escape_tangent import wall_opening_direction
+
+        command, previous = extract_latest_commands(state)
+        speed = command[lanes].norm(dim=1)
+        lanes = lanes[(speed >= .16) & (speed <= .30)]
+        if not len(lanes):
+            return
+        scans, history = lidar[lanes], state[lanes]
+        confirmed, heading, opening = wall_opening_direction(scans, history, self.detector._full_rays)
+        opposite = (self.direction[lanes]*opening).sum(dim=1) <= -.35
+        eligible = (confirmed & opposite).nonzero().flatten()
+        if not len(eligible):
+            return
+        lanes, heading, opening = lanes[eligible], heading[eligible], opening[eligible]
+        speed = command[lanes].norm(dim=1).clamp_max(SPEED_M_S-.0001)
+        direction = (heading+opening)*.5**.5
+        trial = self.action_for_velocity(speed[:, None]*direction, previous[lanes], config.governor)
+        issued = self.issued(lidar[lanes], state[lanes], trial, config)
+        valid = ((issued.metrics['beta'][:, 0] >= .90) & (issued.metrics['emergency'][:, 0] == 0.)
+                 & ((issued.v_final_b*heading).sum(dim=1) >= .60*speed)
+                 & ((issued.v_final_b*opening).sum(dim=1) >= .12))
+        chosen = lanes[valid]
+        self.direction[chosen] = direction[valid]
+        self.escape_speed[chosen] = speed[valid]
+        selected[chosen] = trial[valid]
+        self.opening_steered[chosen] = True
+
+    def release_opening_on_command_change(self, state, selected, actor):
+        self.opening_steered &= self.applied & (self.remaining < DURATION_STEPS-1)
+        recent = state.reshape(-1, 4, 13)[:, -3:, 6:9]
+        changed = (recent[:, :-1]-recent[:, -1:]).norm(dim=2).amax(dim=1) > .04
+        release = self.opening_steered & changed
+        selected[release] = actor[release]
+        self.applied[release] = False
+        self.remaining[release] = 0
+        self.opening_steered[release] = False
 
     def choose_rear_clearance(self, lidar, state, retreat, side, direction, config):
         from .escape_clearance import wider_side
@@ -1010,6 +1057,8 @@ class EscapeRecovery(EscapeOption):
     def _apply_recovery(self, policy, action, config):
         selected = super().apply(policy, action)
         lidar, state = policy['lidar_grid'], policy['state_vec']
+        if self.opening_steering:
+            self.release_opening_on_command_change(state, selected, action)
         if self.clear_pass:
             self.hold_during_clear_pass(lidar, state, selected)
         if self.rank_return:
@@ -1046,6 +1095,8 @@ class EscapeRecovery(EscapeOption):
             use_trial = (preserves_escape & gains_forward)[:, None]
             if self.rank_return:
                 use_trial &= ~self.ranked[mixed, None]
+            if self.opening_steering:
+                use_trial &= ~self.opening_steered[mixed, None]
             selected[mixed] = torch.where(use_trial, trial, base)
             if self.brake_forward_escape:
                 # Compare the admissible escape with the latest human command at its trigger.
