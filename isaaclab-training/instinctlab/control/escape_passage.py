@@ -305,6 +305,27 @@ def intercept_scores(position, motion, coast, radius, issued):
     return paths.norm(dim=-1).amin(dim=2)-radius[:, None]
 
 
+def observed_path_clearance(lidar, rays, coast, issued):
+    """Measure distance from a delayed request path to the currently observed returns."""
+    depth = lidar[:, 9].flatten(1)
+    valid = ((lidar[:, 10] > .5) & (lidar[:, 11] > .55)).flatten(1)
+    points = depth[..., None]*rays
+    time = issued.new_tensor([0., .4, 1.2, 2.4])
+    lag = .35*(1.-torch.exp(-time/.35))
+    coast = torch.nn.functional.pad(coast, (0, 1))
+    paths = lag[None, None, :, None]*coast[:, None, None]
+    paths = paths+(time-lag)[None, None, :, None]*issued[:, :, None]
+    minimum = issued.new_full(issued.shape[:2], torch.inf)
+    for start, end in zip(paths[:, :, :-1].unbind(dim=2), paths[:, :, 1:].unbind(dim=2), strict=True):
+        segment = end-start
+        offset = points[:, None]-start[:, :, None]
+        projection = (offset*segment[:, :, None]).sum(dim=3, keepdim=True)
+        fraction = (projection/segment.square().sum(dim=2)[:, :, None, None].clamp_min(1.e-6)).clamp(0., 1.)
+        distance = (offset-fraction*segment[:, :, None]).norm(dim=3)
+        minimum = torch.minimum(minimum, distance.masked_fill(~valid[:, None], torch.inf).amin(dim=2))
+    return minimum
+
+
 def approach_scores(lidar, state, rays, issued):
     """Estimate separation for admissible escape commands after a nearby reversal."""
     accepted, history, elapsed, _ = track_nearby_return(lidar, state, rays)

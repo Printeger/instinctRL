@@ -1105,6 +1105,43 @@ def test_reverse_diagonal_requires_imminent_contact_and_no_standard_choice(monke
     assert torch.equal(selected[2], actor[2])
 
 
+def test_along_intercept_requires_zero_intent_and_a_measured_clearance_gain(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False, intercept=True,
+                           intercept_reserve=True, commit_intercept=True, intercept_choice=True,
+                           early_diagonal=True, reserve_direction=True, along_intercept=True)
+    scans = torch.ones(3, 12, 59, 360)
+    scans[:, 0::3] = 3.
+    states = torch.zeros(3, 52)
+    states[2, 45] = .24
+    selected = torch.tensor([[0., .74, .5, .5]]*3)
+    tracks = (torch.arange(3), torch.zeros(3, 2), torch.tensor([[0., .58]]*3),
+              torch.zeros(3, 2), torch.full((3,), .34))
+    monkeypatch.setattr(escape_passage, 'moving_intercepts', lambda *args, **kwargs: tracks)
+
+    def closest(pos, velocity, coast, radius, candidates):
+        if candidates.shape[1] == 1:
+            return torch.where(candidates.norm(dim=2) > .01, .40, .10)
+        if candidates.shape[1] == 6:
+            return candidates.new_tensor([.10, .50, .85, .05, .60, .80]).expand(len(pos), -1)
+        return candidates.new_tensor([[.85, .70], [.85, .70]])
+
+    def observed(scan, rays, coast, candidates):
+        assert len(scan) == 2
+        return candidates.new_tensor([[.383, .80], [.70, .80]])
+
+    monkeypatch.setattr(escape_passage, 'intercept_scores', closest)
+    monkeypatch.setattr(escape_passage, 'observed_path_clearance', observed)
+    guard.avoid_interception(scans, states, selected, ControlCoreConfig())
+    torch.testing.assert_close(selected[0, 1:], torch.tensor([.5, .7999, .5]))
+    torch.testing.assert_close(selected[1:, 1:], torch.tensor([[.80, .5, .5]]*2))
+    assert guard.intercept_speed.tolist() == pytest.approx([.2999, .30, .30])
+
+
 def test_opening_steering_requires_a_single_repeated_open_flank():
     import torch
     from instinctlab.control.escape_recovery import EscapeRecovery

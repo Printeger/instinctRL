@@ -55,6 +55,7 @@ EARLY_DIAGONAL_25_VERSION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
 RESERVE_DIRECTION_25_VERSION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
 CROSSING_FALLBACK_25_VERSION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
 OPENING_STEERING_25_VERSION = 'm4-escape-brake-tube-p25-opening-steering-v1'
+ALONG_INTERCEPT_25_VERSION = 'm4-escape-brake-tube-p25-along-intercept-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -72,7 +73,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
                        VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
                        RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25,
-                       OPENING_STEERING_25_VERSION: 25}
+                       OPENING_STEERING_25_VERSION: 25, ALONG_INTERCEPT_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -89,7 +90,7 @@ class EscapeRecovery(EscapeOption):
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
                  intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
-                 zero_recheck=False, reverse_diagonal=False, opening_steering=False):
+                 zero_recheck=False, reverse_diagonal=False, opening_steering=False, along_intercept=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -132,6 +133,11 @@ class EscapeRecovery(EscapeOption):
         self.receding_stop = receding_stop
         self.early_diagonal = early_diagonal
         self.reverse_diagonal = reverse_diagonal
+        self.along_intercept = along_intercept
+        if along_intercept:
+            if not (intercept_choice and commit_intercept and intercept_reserve):
+                raise ValueError('Along-track interception requires ranked and committed reserve actions')
+            self.intercept_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.opening_steering = opening_steering
         if opening_steering:
             self.opening_steered = torch.zeros_like(self.applied)
@@ -209,6 +215,8 @@ class EscapeRecovery(EscapeOption):
             self.intercept_steps[lanes] = 0
             self.intercept_direction[lanes] = 0.
             self.intercept_continued[lanes] = False
+        if self.along_intercept:
+            self.intercept_speed[lanes] = SPEED_M_S
         if self.reserve_direction:
             self.reserve_direction_seen[lanes] = False
         if self.align_intercept:
@@ -670,7 +678,8 @@ class EscapeRecovery(EscapeOption):
         x, y, z = self.intercept_direction[lanes].unbind(dim=1)
         yaw = -.05*(state[lanes, 28]+state[lanes, 41])
         direction = torch.stack((x*yaw.cos()-y*yaw.sin(), x*yaw.sin()+y*yaw.cos(), z), dim=1)
-        trial = torch.cat((state.new_zeros((len(lanes), 1)), .5+SPEED_M_S*direction), dim=1)
+        speed = self.intercept_speed[lanes, None] if self.along_intercept else SPEED_M_S
+        trial = torch.cat((state.new_zeros((len(lanes), 1)), .5+speed*direction), dim=1)
         result = self.issued(lidar[lanes], state[lanes], trial, config)
         usable = ((result.v_final_b*direction).sum(dim=1) >= .12) & (result.metrics['emergency'].flatten() == 0.)
         kept = lanes[usable]
@@ -773,7 +782,7 @@ class EscapeRecovery(EscapeOption):
         self.resumed[release] = True
 
     def avoid_interception(self, lidar, state, selected, config, *, actor_action=None):
-        from .escape_passage import intercept_scores, moving_intercepts
+        from .escape_passage import intercept_scores, moving_intercepts, observed_path_clearance
 
         self.intercepted.zero_()
         if self.offset_stop:
@@ -829,7 +838,10 @@ class EscapeRecovery(EscapeOption):
             diagonal = torch.stack((side+.60*along, -side+.60*along), dim=1)
             diagonal /= diagonal.norm(dim=2, keepdim=True)
             directions = torch.cat((directions, self.intercept_direction[lanes, None], diagonal), dim=1)
-        trials = torch.cat((history.new_zeros((*directions.shape[:2], 1)), .5+SPEED_M_S*directions), dim=2)
+        target = SPEED_M_S*directions
+        if self.along_intercept:
+            target[:, 3] = self.intercept_speed[lanes, None]*directions[:, 3]
+        trials = torch.cat((history.new_zeros((*directions.shape[:2], 1)), .5+target), dim=2)
         velocity = torch.stack([self.issued(scans, history, a, config).v_final_b
                                 for a in trials.unbind(dim=1)], dim=1)
         scores = intercept_scores(position, motion, coast, radius, velocity)
@@ -891,6 +903,31 @@ class EscapeRecovery(EscapeOption):
                 issued[accepted] = checked[proceed, option]
                 direction[accepted] = options[proceed, option]
                 change[accepted] = True
+        if self.along_intercept:
+            zero = history[:, 45:48].norm(dim=1) <= .001
+            known_retreat = protected_retreat[lanes] & (score >= .21)
+            witness = (zero & (stopping[consider] < .21) & ~known_retreat).nonzero().flatten()
+            if len(witness):
+                pace = along[witness]
+                action = torch.cat((history.new_zeros((len(witness), 1)), .5+(SPEED_M_S-.0001)*pace), dim=1)
+                checked = self.issued(scans[witness], history[witness], action, config)
+                current = torch.where(change[witness, None], issued[witness], original.v_final_b[consider][witness])
+                velocities = torch.stack((current, checked.v_final_b), dim=1)
+                tracked = intercept_scores(position[witness], motion[witness], coast[witness], radius[witness], velocities)
+                observed = observed_path_clearance(scans[witness], self.detector._full_rays, coast[witness], velocities)
+                # Vehicle envelope, clearance floor and inter-sample travel.
+                buffered_body = .21+.15+.03
+                threatened = (observed[:, 0] < buffered_body) | (~change[witness] & (score[witness] < .21))
+                combined = torch.minimum(tracked, observed)
+                approved = ((observed[:, 1] >= buffered_body) & (tracked[:, 1] >= .28)
+                            & (combined[:, 1]-combined[:, 0] >= gain[witness])
+                            & ((checked.v_final_b*pace).sum(dim=1) >= .12))
+                use = threatened & approved
+                accepted = witness[use]
+                move[accepted] = action[use]
+                issued[accepted] = checked.v_final_b[use]
+                direction[accepted] = pace[use]
+                change[accepted] = True
         selected[lanes[change]] = move[change]
         self.intercepted[lanes[change]] = True
         if self.commit_intercept:
@@ -902,6 +939,9 @@ class EscapeRecovery(EscapeOption):
                 self.reserve_direction_seen[lanes[reserve]] = True
                 commit |= reserve
             self.intercept_direction[lanes[commit]] = direction[commit]
+            if self.along_intercept:
+                speed = (move[commit, 1:]-.5).norm(dim=1)
+                self.intercept_speed[lanes[commit]] = torch.where(speed < SPEED_M_S-.00005, SPEED_M_S-.0001, SPEED_M_S)
 
     @staticmethod
     def action_for_velocity(target, previous, governor):
