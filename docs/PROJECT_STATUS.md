@@ -12,6 +12,8 @@ B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8
 
 120 秒独立 Crazy 指令复验完成 30/32 条首飞。两次街道接触分别出现在零令逃逸选向与非零令逃逸后，5 ms 净空下界最差 −0.087 m。最近两段测距的同权重折返配对消除了原两处接触，同两条街道首飞在较晚横穿再发生接触。两处均在原 ICS 裁零前出现可拟合的收近回波，继续验证提前横向撤离。 [独立复验](experiments/instinct-continuous-command/novel/REPORT.md) · [折返配对](experiments/instinct-continuous-command/novel_turn/REPORT.md) · [提前撤离验证](experiments/instinct-continuous-command/intercept/PLAN.md)
 
+预测横穿撤离将原两处较晚接触窗口的净空下界提高至 +0.634 m 和 +0.529 m，新增一次更早的换向接触。已定位三段测距与最新响应补偿的时间错配，开始同权重时间对齐配对。30 分钟评分器和完整 R6 配置完成 CPU 检查，正式评价等待短配对及新种子复验。 [撤离结果](experiments/instinct-continuous-command/intercept/REPORT.md) · [时间对齐配对](experiments/instinct-continuous-command/intercept_aligned/PLAN.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)

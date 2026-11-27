@@ -1,0 +1,325 @@
+{
+  "audit_change": "Original center readback attempted after the lane 21 reset. Revised witness checks the last first-flight boundary before the reset, with unchanged raw source.",
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/analysis/binding.json",
+    "sha256": "d68f640093c25b1c92a923b69db4121cef0b7d77f85abcc2ac5b6d2231a468a3"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/analysis/clearance-and-progress.json",
+    "sha256": "9d423b0eccfc68601eb1f1f196854222a24d4007c6165de0a963bc5c95e0e463"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 2400,
+    "attempted_updates": 0,
+    "automatic_resets": 3,
+    "completed_policy_steps": 2400,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 76800,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 76800,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit": -15,
+    "remaining": []
+  },
+  "results": {
+    "candidate": {
+      "first_override": [
+        {
+          "issued": [
+            -0.2901996374130249,
+            -0.07537981867790222,
+            -0.010101458989083767
+          ],
+          "lane": 16,
+          "step": 25
+        },
+        {
+          "issued": [
+            -0.29707247018814087,
+            0.04048191383481026,
+            -0.010448827408254147
+          ],
+          "lane": 17,
+          "step": 29
+        },
+        {
+          "issued": [
+            -0.2971159815788269,
+            -0.040177978575229645,
+            -0.010383798740804195
+          ],
+          "lane": 18,
+          "step": 34
+        },
+        {
+          "issued": [
+            -0.29878318309783936,
+            0.02652951516211033,
+            -0.004979288671165705
+          ],
+          "lane": 19,
+          "step": 38
+        },
+        {
+          "issued": [
+            0.24717530608177185,
+            0.16860045492649078,
+            0.021869132295250893
+          ],
+          "lane": 20,
+          "step": 56
+        },
+        {
+          "issued": [
+            0.2957994341850281,
+            -0.04910905286669731,
+            0.00953921303153038
+          ],
+          "lane": 21,
+          "step": 65
+        },
+        {
+          "issued": [
+            0.2858057916164398,
+            0.09051677584648132,
+            0.011036235839128494
+          ],
+          "lane": 22,
+          "step": 70
+        },
+        {
+          "issued": [
+            -0.295685350894928,
+            0.05026307702064514,
+            -0.006619888357818127
+          ],
+          "lane": 23,
+          "step": 102
+        }
+      ],
+      "layouts": {
+        "corridor": {
+          "complete_first_flights": 4,
+          "contacts": [],
+          "lanes": 4,
+          "minimum": {
+            "lane": 24,
+            "m": 0.555571585893631,
+            "seconds": 62.845
+          },
+          "seconds": 480.0
+        },
+        "open_tube": {
+          "complete_first_flights": 4,
+          "contacts": [],
+          "lanes": 4,
+          "minimum": {
+            "lane": 28,
+            "m": 0.5518662626201912,
+            "seconds": 118.985
+          },
+          "seconds": 480.0
+        },
+        "room_corner": {
+          "complete_first_flights": 8,
+          "contacts": [],
+          "lanes": 8,
+          "minimum": {
+            "lane": 3,
+            "m": 0.5147842655565821,
+            "seconds": 26.225
+          },
+          "seconds": 960.0
+        },
+        "street_gap": {
+          "complete_first_flights": 7,
+          "contacts": [
+            {
+              "lane": 21,
+              "step": 92
+            }
+          ],
+          "lanes": 8,
+          "minimum": {
+            "lane": 21,
+            "m": -0.06307014330449462,
+            "seconds": 9.24
+          },
+          "seconds": 849.3
+        },
+        "trunk_aisle": {
+          "complete_first_flights": 8,
+          "contacts": [],
+          "lanes": 8,
+          "minimum": {
+            "lane": 13,
+            "m": 0.4904675089167426,
+            "seconds": 25.295
+          },
+          "seconds": 960.0
+        }
+      },
+      "override_count": {
+        "16": 65,
+        "17": 35,
+        "18": 41,
+        "19": 19,
+        "20": 45,
+        "21": 59,
+        "22": 57,
+        "23": 29
+      },
+      "physics": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "0e9fe20ffbf1063b211cf18218d12fca0e87e65f5af497e8c4db0e5da5c3d79d"
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl",
+        "sha256": "01ac7a2535fb4fcd53b2cfceebd8e3a5fd6bb6cd685981aadce5bc358ce233fd"
+      },
+      "windows": [
+        {
+          "end_exclusive": 93,
+          "lane": 21,
+          "mover_clearance_lower_m": -0.06307014330449462,
+          "start_step": 64
+        },
+        {
+          "end_exclusive": 707,
+          "lane": 22,
+          "mover_clearance_lower_m": 0.6342382176469494,
+          "start_step": 677
+        },
+        {
+          "end_exclusive": 1139,
+          "lane": 18,
+          "mover_clearance_lower_m": 0.5294008693134984,
+          "start_step": 1108
+        }
+      ]
+    },
+    "control": {
+      "first_override": [],
+      "layouts": {
+        "corridor": {
+          "complete_first_flights": 4,
+          "contacts": [],
+          "lanes": 4,
+          "minimum": {
+            "lane": 24,
+            "m": 0.555571585893631,
+            "seconds": 62.845
+          },
+          "seconds": 480.0
+        },
+        "open_tube": {
+          "complete_first_flights": 4,
+          "contacts": [],
+          "lanes": 4,
+          "minimum": {
+            "lane": 28,
+            "m": 0.5518662626201912,
+            "seconds": 118.985
+          },
+          "seconds": 480.0
+        },
+        "room_corner": {
+          "complete_first_flights": 8,
+          "contacts": [],
+          "lanes": 8,
+          "minimum": {
+            "lane": 3,
+            "m": 0.5147842655565821,
+            "seconds": 26.225
+          },
+          "seconds": 960.0
+        },
+        "street_gap": {
+          "complete_first_flights": 6,
+          "contacts": [
+            {
+              "lane": 18,
+              "step": 1138
+            },
+            {
+              "lane": 22,
+              "step": 706
+            }
+          ],
+          "lanes": 8,
+          "minimum": {
+            "lane": 18,
+            "m": -0.08386036974700622,
+            "seconds": 113.86500000000001
+          },
+          "seconds": 904.6
+        },
+        "trunk_aisle": {
+          "complete_first_flights": 8,
+          "contacts": [],
+          "lanes": 8,
+          "minimum": {
+            "lane": 13,
+            "m": 0.4904675089167426,
+            "seconds": 25.295
+          },
+          "seconds": 960.0
+        }
+      },
+      "override_count": {},
+      "physics": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/results/research-r6-dynamic-assay/control-layout_routes-clearance.f32",
+        "sha256": "259605a6564024772596001ec880f2e561d28dcdc9fb08c22adedab404a8a63e"
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/results/research-r6-dynamic-assay/control-layout_routes-pulse.json",
+        "sha256": "11aa63c938ba7bae4ffb0f3a4768ef7a6395d7e5464df32fa24f0563ce728ba1"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-03/results/research-r6-dynamic-assay/control-layout_routes.jsonl",
+        "sha256": "a640a8d326a99f2b997c159aff3c575a3293a7d72170f79f74e6b00249aa52a2"
+      },
+      "windows": [
+        {
+          "end_exclusive": 93,
+          "lane": 21,
+          "mover_clearance_lower_m": 0.13996489497935655,
+          "start_step": 64
+        },
+        {
+          "end_exclusive": 707,
+          "lane": 22,
+          "mover_clearance_lower_m": -0.048956765520438095,
+          "start_step": 677
+        },
+        {
+          "end_exclusive": 1139,
+          "lane": 18,
+          "mover_clearance_lower_m": -0.08386036974700622,
+          "start_step": 1108
+        }
+      ]
+    }
+  },
+  "scientific_acceptance": false,
+  "source_commit": "74052a0de2e2c0587952237094841a6ae74da97d",
+  "status": "DEVELOPMENT_INTERCEPT_NEW_EARLY_CONTACT"
+}
