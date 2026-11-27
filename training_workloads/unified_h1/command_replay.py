@@ -54,6 +54,7 @@ NOVEL_TRACKING_CONFIRM_ID = NOVEL_PREFIX+'25'
 NOVEL_EARLY_DIAGONAL_ID = NOVEL_PREFIX+'26'
 NOVEL_DIAGONAL_CONFIRM_ID = NOVEL_PREFIX+'27'
 NOVEL_RESERVE_DIRECTION_ID = NOVEL_PREFIX+'28'
+NOVEL_CROSSING_FALLBACK_ID = NOVEL_PREFIX+'29'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -111,7 +112,9 @@ VERIFIED_ZERO_EXECUTION = 'm4-escape-brake-tube-p25-verified-zero-v1'
 INTERCEPT_CHOICE_EXECUTION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
 EARLY_DIAGONAL_EXECUTION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
 RESERVE_DIRECTION_EXECUTION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
-EARLY_DIAGONAL_EXECUTIONS = (EARLY_DIAGONAL_EXECUTION, RESERVE_DIRECTION_EXECUTION)
+CROSSING_FALLBACK_EXECUTION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
+RESERVE_DIRECTION_EXECUTIONS = (RESERVE_DIRECTION_EXECUTION, CROSSING_FALLBACK_EXECUTION)
+EARLY_DIAGONAL_EXECUTIONS = (EARLY_DIAGONAL_EXECUTION, *RESERVE_DIRECTION_EXECUTIONS)
 INTERCEPT_CHOICE_EXECUTIONS = (INTERCEPT_CHOICE_EXECUTION, *EARLY_DIAGONAL_EXECUTIONS)
 VERIFIED_ZERO_EXECUTIONS = (VERIFIED_ZERO_EXECUTION, *INTERCEPT_CHOICE_EXECUTIONS)
 ROTATION_TUBE_EXECUTIONS = (ROTATION_TUBE_EXECUTION, VERIFIED_RESUME_EXECUTION, *VERIFIED_ZERO_EXECUTIONS)
@@ -174,7 +177,7 @@ def arm_execution(params, label):
 def compress_trace(run_id):
     return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
-                                                       NOVEL_RESERVE_DIRECTION_ID)
+                                                       NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -420,6 +423,8 @@ def novel_contract(params):
         execution = (EARLY_DIAGONAL_EXECUTION,)
     elif params['experiment_id'] == NOVEL_RESERVE_DIRECTION_ID:
         execution = (RESERVE_DIRECTION_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_CROSSING_FALLBACK_ID:
+        execution = (CROSSING_FALLBACK_EXECUTION,)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
@@ -693,7 +698,8 @@ def run(backend, params):
             zero_stop = execution in VERIFIED_ZERO_EXECUTIONS
             intercept_choice = execution in INTERCEPT_CHOICE_EXECUTIONS
             early_diagonal = execution in EARLY_DIAGONAL_EXECUTIONS
-            reserve_direction = execution == RESERVE_DIRECTION_EXECUTION
+            reserve_direction = execution in RESERVE_DIRECTION_EXECUTIONS
+            crossing_fallback = execution == CROSSING_FALLBACK_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -702,7 +708,9 @@ def run(backend, params):
                     or env.escape_option.intercept_choice != intercept_choice
                     or env.escape_option.receding_stop != intercept_choice
                     or env.escape_option.early_diagonal != early_diagonal
-                    or env.escape_option.reserve_direction != reserve_direction):
+                    or env.escape_option.reserve_direction != reserve_direction
+                    or env.escape_option.zero_recheck != crossing_fallback
+                    or env.escape_option.reverse_diagonal != crossing_fallback):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -733,6 +741,8 @@ def run(backend, params):
                 model['early_diagonal'] = True
             if reserve_direction:
                 model['reserve_direction'] = True
+            if crossing_fallback:
+                model.update(zero_recheck=True, reverse_diagonal=True)
         for name, crossing_ms in conditions(params).items():
             pulse = []
 

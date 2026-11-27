@@ -53,6 +53,7 @@ VERIFIED_ZERO_25_VERSION = 'm4-escape-brake-tube-p25-verified-zero-v1'
 INTERCEPT_CHOICE_25_VERSION = 'm4-escape-brake-tube-p25-intercept-choice-v1'
 EARLY_DIAGONAL_25_VERSION = 'm4-escape-brake-tube-p25-early-diagonal-v1'
 RESERVE_DIRECTION_25_VERSION = 'm4-escape-brake-tube-p25-reserve-direction-v1'
+CROSSING_FALLBACK_25_VERSION = 'm4-escape-brake-tube-p25-crossing-fallback-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -69,7 +70,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
                        TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
                        VERIFIED_ZERO_25_VERSION: 25, INTERCEPT_CHOICE_25_VERSION: 25, EARLY_DIAGONAL_25_VERSION: 25,
-                       RESERVE_DIRECTION_25_VERSION: 25}
+                       RESERVE_DIRECTION_25_VERSION: 25, CROSSING_FALLBACK_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -85,7 +86,8 @@ class EscapeRecovery(EscapeOption):
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
                  edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False,
-                 intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False):
+                 intercept_choice=False, receding_stop=False, early_diagonal=False, reserve_direction=False,
+                 zero_recheck=False, reverse_diagonal=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -127,6 +129,7 @@ class EscapeRecovery(EscapeOption):
         self.intercept_choice = intercept_choice
         self.receding_stop = receding_stop
         self.early_diagonal = early_diagonal
+        self.reverse_diagonal = reverse_diagonal
         self.reserve_direction = reserve_direction
         if reserve_direction:
             self.reserve_direction_seen = torch.zeros_like(self.applied)
@@ -151,6 +154,7 @@ class EscapeRecovery(EscapeOption):
             self.command_offsets = self.direction.new_zeros((lanes, 4, 2))
             self.command_coast = self.direction.new_zeros((lanes, 2))
         self.stop_release = stop_release
+        self.zero_recheck = zero_recheck
         if stop_release:
             self.release_checks = torch.zeros_like(self.remaining)
             self.released = torch.zeros_like(self.applied)
@@ -534,7 +538,12 @@ class EscapeRecovery(EscapeOption):
         zero = state[:, 45:48].norm(dim=1) <= .001
         continuing = self.applied & (self.remaining < DURATION_STEPS-1)
         eligible = zero & continuing & ~self.ranked & (self.retreat_hold_steps == 0)
-        self.release_checks = torch.where(eligible & previous, 3, (self.release_checks-1).clamp_min(0))
+        if self.zero_recheck:
+            # A sustained zero request can outlast the initial assessment.
+            # Each retry still needs fresh proof before altering the escape.
+            self.release_checks = torch.where(eligible & previous, 1, self.release_checks)
+        else:
+            self.release_checks = torch.where(eligible & previous, 3, (self.release_checks-1).clamp_min(0))
         self.release_checks = torch.where(eligible, self.release_checks, 0)
         self.released.zero_()
         lanes = (self.release_checks > 0).nonzero().flatten()
@@ -810,18 +819,40 @@ class EscapeRecovery(EscapeOption):
             side_id = torch.where(prefer_prior, 2, side_id)
         change = hold | ((best >= .28) & (best-score >= gain))
         choice = torch.where(hold, 0, side_id+1)
-        selected[lanes[change]] = trials[change, choice[change]]
+        rows = torch.arange(len(lanes), device=lanes.device)
+        move = trials[rows, choice]
+        issued = velocity[rows, choice]
+        direction = directions[rows, choice]
+        if self.reverse_diagonal:
+            fallback = ((score < .21) & ~change).nonzero().flatten()
+            if len(fallback):
+                reverse = .22*along[fallback]
+                options = torch.stack((side[fallback]-reverse, -side[fallback]-reverse), dim=1)
+                options /= options.norm(dim=2, keepdim=True)
+                actions = torch.cat((history.new_zeros((len(fallback), 2, 1)), .5+SPEED_M_S*options), dim=2)
+                checked = torch.stack([self.issued(scans[fallback], history[fallback], a, config).v_final_b
+                                       for a in actions.unbind(dim=1)], dim=1)
+                predicted = intercept_scores(position[fallback], motion[fallback], coast[fallback], radius[fallback],
+                                             checked)
+                feasible = (checked*options).sum(dim=2) >= .12
+                separation, option = predicted.masked_fill(~feasible, -torch.inf).max(dim=1)
+                proceed = (separation >= .28) & (separation-score[fallback] >= gain[fallback])
+                accepted, option = fallback[proceed], option[proceed]
+                move[accepted] = actions[proceed, option]
+                issued[accepted] = checked[proceed, option]
+                direction[accepted] = options[proceed, option]
+                change[accepted] = True
+        selected[lanes[change]] = move[change]
         self.intercepted[lanes[change]] = True
         if self.commit_intercept:
-            turn = (velocity[torch.arange(len(lanes), device=lanes.device), choice]
-                    - original.v_final_b[consider]).norm(dim=1)
+            turn = (issued-original.v_final_b[consider]).norm(dim=1)
             commit = change & exposed & ~hold & (turn >= .12)
             self.intercept_steps[lanes[commit]] = 4
             if self.reserve_direction:
                 reserve = change & ~exposed & ~hold & (turn >= .12)
                 self.reserve_direction_seen[lanes[reserve]] = True
                 commit |= reserve
-            self.intercept_direction[lanes[commit]] = directions[commit, choice[commit]]
+            self.intercept_direction[lanes[commit]] = direction[commit]
 
     @staticmethod
     def action_for_velocity(target, previous, governor):

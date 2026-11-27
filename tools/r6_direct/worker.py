@@ -170,7 +170,7 @@ def run(plan, input_pin):
         from training_workloads.unified_h1.command_replay import (
             BRAKE_EXECUTION, CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, ENDURANCE_PREFIXES,
             EDGE_CONTINUATION_EXECUTION, FINITE_EDGE_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS,
-            EARLY_DIAGONAL_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, RESERVE_DIRECTION_EXECUTION,
+            EARLY_DIAGONAL_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS, CROSSING_FALLBACK_EXECUTION,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
             VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
             NOVEL_PREFIX, REGRESSION_IDS,
@@ -333,7 +333,8 @@ def run(plan, input_pin):
                     zero_stop = option_version in VERIFIED_ZERO_EXECUTIONS
                     intercept_choice = option_version in INTERCEPT_CHOICE_EXECUTIONS
                     early_diagonal = option_version in EARLY_DIAGONAL_EXECUTIONS
-                    reserve_direction = option_version == RESERVE_DIRECTION_EXECUTION
+                    reserve_direction = option_version in RESERVE_DIRECTION_EXECUTIONS
+                    crossing_fallback = option_version == CROSSING_FALLBACK_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -349,7 +350,9 @@ def run(plan, input_pin):
                             or env.escape_option.intercept_choice != intercept_choice
                             or env.escape_option.receding_stop != intercept_choice
                             or env.escape_option.early_diagonal != early_diagonal
-                            or env.escape_option.reserve_direction != reserve_direction):
+                            or env.escape_option.reserve_direction != reserve_direction
+                            or env.escape_option.zero_recheck != crossing_fallback
+                            or env.escape_option.reverse_diagonal != crossing_fallback):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -382,6 +385,8 @@ def run(plan, input_pin):
                         execution['early_diagonal'] = True
                     if reserve_direction:
                         execution['reserve_direction'] = True
+                    if crossing_fallback:
+                        execution.update(zero_recheck=True, reverse_diagonal=True)
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

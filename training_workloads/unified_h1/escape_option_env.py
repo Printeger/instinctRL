@@ -22,12 +22,13 @@ from instinctlab.control.escape_recovery import (
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_DIRECTION_25_VERSION, RESERVE_INTERCEPT_25_VERSION, ROTATION_TUBE_25_VERSION,
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
     TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
-    WALL_TANGENT_25_VERSION,
+    WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-EARLY_DIAGONAL_VERSIONS = (EARLY_DIAGONAL_25_VERSION, RESERVE_DIRECTION_25_VERSION)
+RESERVE_DIRECTION_VERSIONS = (RESERVE_DIRECTION_25_VERSION, CROSSING_FALLBACK_25_VERSION)
+EARLY_DIAGONAL_VERSIONS = (EARLY_DIAGONAL_25_VERSION, *RESERVE_DIRECTION_VERSIONS)
 INTERCEPT_CHOICE_VERSIONS = (INTERCEPT_CHOICE_25_VERSION, *EARLY_DIAGONAL_VERSIONS)
 VERIFIED_ZERO_VERSIONS = (VERIFIED_ZERO_25_VERSION, *INTERCEPT_CHOICE_VERSIONS)
 ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION, *VERIFIED_ZERO_VERSIONS)
@@ -134,7 +135,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 intercept_choice=version in INTERCEPT_CHOICE_VERSIONS,
                                                 receding_stop=version in INTERCEPT_CHOICE_VERSIONS,
                                                 early_diagonal=version in EARLY_DIAGONAL_VERSIONS,
-                                                reserve_direction=version == RESERVE_DIRECTION_25_VERSION)
+                                                reserve_direction=version in RESERVE_DIRECTION_VERSIONS,
+                                                zero_recheck=version == CROSSING_FALLBACK_25_VERSION,
+                                                reverse_diagonal=version == CROSSING_FALLBACK_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

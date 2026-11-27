@@ -8,7 +8,7 @@ from .command_replay import (
     CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTIONS, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CONFIRMED_STANDOFF_EXECUTION, CONFIRMED_TUBE_EXECUTIONS, CROSSING_START_M, EDGE_CONTINUATION_EXECUTION,
     EARLY_DIAGONAL_EXECUTIONS, FINITE_EDGE_EXECUTIONS, INTERCEPT_CHOICE_EXECUTIONS, LANES, LAYOUTS,
-    RESERVE_DIRECTION_EXECUTION, ROTATION_TUBE_EXECUTIONS,
+    RESERVE_DIRECTION_EXECUTIONS, ROTATION_TUBE_EXECUTIONS, CROSSING_FALLBACK_EXECUTION,
     TANGENT_MAGNITUDE_EXECUTION, VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
@@ -289,7 +289,10 @@ def audit(output, params, counters):
         choice_profile = model['execution'] in INTERCEPT_CHOICE_EXECUTIONS
         if any(model.get(key, False) is not choice_profile for key in ('intercept_choice', 'receding_stop')):
             raise ValueError('COMMAND_REPLAY_INTERCEPT_CHOICE_PROFILE')
-        if model.get('reserve_direction', False) is not (model['execution'] == RESERVE_DIRECTION_EXECUTION):
+        if any(model.get(flag, False) is not (model['execution'] == CROSSING_FALLBACK_EXECUTION)
+               for flag in ('zero_recheck', 'reverse_diagonal')):
+            raise ValueError('COMMAND_REPLAY_MODEL_EXECUTION')
+        if model.get('reserve_direction', False) is not (model['execution'] in RESERVE_DIRECTION_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_MODEL_EXECUTION')
         if model.get('early_diagonal', False) is not (model['execution'] in EARLY_DIAGONAL_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_EARLY_DIAGONAL_PROFILE')

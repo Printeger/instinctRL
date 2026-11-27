@@ -1037,6 +1037,74 @@ def test_reserve_choice_is_reused_only_on_the_next_fresh_exposure(monkeypatch):
     assert guard.reserve_direction_seen.tolist() == [False, False]
 
 
+@pytest.mark.parametrize('recheck', [False, True])
+def test_zero_release_rechecks_only_while_the_same_stop_continues(monkeypatch, recheck):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import DURATION_STEPS, EscapeRecovery
+
+    guard = EscapeRecovery(lanes=2, device='cpu', dtype=torch.float32, recenter=False,
+                           clear_pass=True, rank_return=True, stop_release=True, zero_recheck=recheck)
+    guard.applied[:] = True
+    guard.remaining[:] = DURATION_STEPS-2
+    lidar = torch.zeros(2, 1)
+    states = torch.zeros(2, 52)
+    states[:, 32] = .20
+    escape = torch.tensor([[0., .8, .5, .5]]*2)
+    selected = escape.clone()
+    proof_available = False
+    monkeypatch.setattr(escape_passage, 'clear_to_end_escape',
+                        lambda scan, *args, **kwargs: torch.full((len(scan),), proof_available))
+
+    guard.release_older_escape(lidar, states, selected)
+    states[:, 32] = 0.
+    for _ in range(8):
+        guard.release_older_escape(lidar, states, selected)
+    states[1, 45] = .20
+    proof_available = True
+    guard.release_older_escape(lidar, states, selected)
+    assert guard.released.tolist() == [recheck, False]
+    assert torch.equal(selected[1], escape[1])
+    assert torch.equal(selected[0], torch.tensor([0., .5, .5, .5]) if recheck else escape[0])
+
+
+def test_reverse_diagonal_requires_imminent_contact_and_no_standard_choice(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+    from instinctlab.control.pipeline import ControlCoreConfig
+
+    guard = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False,
+                           intercept=True, commit_intercept=True, intercept_choice=True,
+                           early_diagonal=True, reverse_diagonal=True)
+    scans = torch.ones(3, 12, 59, 360)
+    scans[:, 0::3] = 3.
+    states = torch.zeros(3, 52)
+    states[:, 45] = .20
+    actor = torch.tensor([[1., .5, .5, .5]]*3)
+    tracks = (torch.arange(3), torch.zeros(3, 2), torch.tensor([[0., .58]]*3),
+              torch.zeros(3, 2), torch.full((3,), .34))
+    monkeypatch.setattr(escape_passage, 'moving_intercepts', lambda *args, **kwargs: tracks)
+
+    def closest(pos, velocity, coast, radius, candidates):
+        if candidates.shape[1] == 1:
+            return torch.tensor([[.10], [.10], [.22]])
+        if candidates.shape[1] == 6:
+            return torch.tensor([[.10, .25, .05, .18, .27, .12],
+                                 [.10, .25, .05, .18, .50, .12],
+                                 [.22, .25, .23, .22, .27, .21]])
+        assert candidates.shape[:2] == (1, 2)
+        return torch.tensor([[.62, .05]])
+
+    monkeypatch.setattr(escape_passage, 'intercept_scores', closest)
+    selected = actor.clone()
+    guard.avoid_interception(scans, states, selected, ControlCoreConfig())
+    assert guard.intercepted.tolist() == [True, True, False]
+    assert selected[0, 1] < .5 and selected[0, 2] < .5
+    assert selected[1, 1] < .5 and selected[1, 2] > .5
+    assert torch.equal(selected[2], actor[2])
+
+
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
     from instinctlab.control import escape_tangent
