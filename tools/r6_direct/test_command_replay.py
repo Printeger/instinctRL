@@ -102,6 +102,25 @@ def test_settled_crossing_requires_a_reversal_before_continuing_that_proof():
     assert clear.tolist() == [True, False, True, False, False, False]
 
 
+def test_static_stop_rejects_shifted_near_returns_at_the_same_clearance():
+    import torch
+    from instinctlab.control.escape_passage import clear_static_scan_at_stop
+    from instinctlab.control.ics import mounted_mid360_rays_body
+
+    rays = mounted_mid360_rays_body()
+    wall = torch.where(rays[:, 0] > 0., 1.8/rays[:, 0], 3.).clamp(max=3.)
+    centers = torch.tensor([[[1.57, value, 0.] for value in (-.24, -.16, -.08, 0.)]]).expand(2, -1, -1).clone()
+    centers[0, :, 1] = 0.
+    projection = centers @ rays.T
+    discriminant = .34**2-centers.square().sum(dim=2, keepdim=True)+projection.square()
+    depth = projection-discriminant.clamp_min(0.).sqrt()
+    depths = torch.where((discriminant >= 0.) & (depth > 0.), torch.minimum(depth, wall), wall)
+    scans = torch.stack((depths, torch.ones_like(depths), torch.ones_like(depths)), dim=2).reshape(2, 12, 59, 360)
+    state = torch.zeros(2, 52)
+    response = torch.zeros(2, 4, 2), torch.zeros(2, 2)
+    assert clear_static_scan_at_stop(scans, state, rays, response).tolist() == [True, False]
+
+
 def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
     from tools.r6_direct import storage
 

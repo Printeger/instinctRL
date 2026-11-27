@@ -23,12 +23,13 @@ from instinctlab.control.escape_recovery import (
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
     TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
     WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2, CROSSING_STOP_25_V3, CROSSING_STOP_25_V4, CROSSING_STOP_25_V5, CROSSING_STOP_25_V6,
-    CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9,
+    CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CROSSING_EXTENDED_RETREAT_VERSIONS = (CROSSING_STOP_25_V8, CROSSING_STOP_25_V9)
+CROSSING_SETTLED_VERSIONS = (CROSSING_STOP_25_V9, CROSSING_STOP_25_V10)
+CROSSING_EXTENDED_RETREAT_VERSIONS = (CROSSING_STOP_25_V8, *CROSSING_SETTLED_VERSIONS)
 CROSSING_RECEDING_HOVER_VERSIONS = (CROSSING_STOP_25_V7, *CROSSING_EXTENDED_RETREAT_VERSIONS)
 CROSSING_VERIFIED_HOVER_VERSIONS = (CROSSING_STOP_25_V6, *CROSSING_RECEDING_HOVER_VERSIONS)
 CROSSING_COMPATIBLE_VERSIONS = (CROSSING_STOP_25_V5, *CROSSING_VERIFIED_HOVER_VERSIONS)
@@ -164,7 +165,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 crossing_retreat_own_side=version in CROSSING_RECEDING_HOVER_VERSIONS,
                                                 crossing_retreat_extended=version in CROSSING_EXTENDED_RETREAT_VERSIONS,
                                                 settled_crossing_mount=tuple(self.cfg.ray_caster.offset.pos)
-                                                if version == CROSSING_STOP_25_V9 else None)
+                                                if version in CROSSING_SETTLED_VERSIONS else None,
+                                                static_scan_stop=version == CROSSING_STOP_25_V10,
+                                                crossing_reference=version == CROSSING_STOP_25_V10)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

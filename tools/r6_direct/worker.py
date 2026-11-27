@@ -173,7 +173,7 @@ def run(plan, input_pin):
             ALONG_INTERCEPT_EXECUTIONS, CROSSING_CONTINUATION_EXECUTIONS, CROSSING_FALLBACK_EXECUTIONS,
             CROSSING_COMPATIBLE_EXECUTIONS, CROSSING_EARLY_EXECUTIONS, CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
             CROSSING_EXTENDED_RETREAT_EXECUTIONS, CROSSING_RECEDING_HOVER_EXECUTIONS, CROSSING_VERIFIED_HOVER_EXECUTIONS,
-            CROSSING_SETTLED_MOUNT, CROSSING_SETTLED_REVERSAL_EXECUTION,
+            CROSSING_REFERENCE_EXECUTION, CROSSING_SETTLED_EXECUTIONS, CROSSING_SETTLED_MOUNT,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -351,7 +351,8 @@ def run(plan, input_pin):
                     crossing_stop_verified_hover = option_version in CROSSING_VERIFIED_HOVER_EXECUTIONS
                     crossing_stop_receding_hover = option_version in CROSSING_RECEDING_HOVER_EXECUTIONS
                     crossing_retreat_extended = option_version in CROSSING_EXTENDED_RETREAT_EXECUTIONS
-                    settled_mount = CROSSING_SETTLED_MOUNT if option_version == CROSSING_SETTLED_REVERSAL_EXECUTION else None
+                    settled_mount = CROSSING_SETTLED_MOUNT if option_version in CROSSING_SETTLED_EXECUTIONS else None
+                    crossing_reference = option_version == CROSSING_REFERENCE_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -382,7 +383,9 @@ def run(plan, input_pin):
                             or env.escape_option.crossing_stop_receding_hover != crossing_stop_receding_hover
                             or env.escape_option.crossing_retreat_own_side != crossing_stop_receding_hover
                             or env.escape_option.crossing_retreat_extended != crossing_retreat_extended
-                            or env.escape_option.settled_crossing_mount != settled_mount):
+                            or env.escape_option.settled_crossing_mount != settled_mount
+                            or env.escape_option.static_scan_stop != crossing_reference
+                            or env.escape_option.crossing_reference != crossing_reference):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -441,6 +444,8 @@ def run(plan, input_pin):
                         execution['crossing_retreat_extended'] = True
                     if settled_mount is not None:
                         execution['settled_crossing_mount_m'] = list(settled_mount)
+                    if crossing_reference:
+                        execution.update(static_scan_stop=True, crossing_reference=True)
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

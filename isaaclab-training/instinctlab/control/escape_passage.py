@@ -39,6 +39,54 @@ def clear_to_end_escape(lidar, state, *, minimum_coverage=.60, allow_distant_ret
     return fresh & stable & observed & ~closing
 
 
+def _near_scan_agrees(source, target, *, limit):
+    source = source[source.norm(dim=1) <= 2.10]
+    if len(source) < 120 or len(target) < 120:
+        return False
+    distant = 0
+    for points in source.split(256):
+        nearest = torch.cdist(points, target).amin(dim=1)
+        if bool((nearest > limit).any()):
+            return False
+        distant += int((nearest > .065).sum())
+    return distant <= .007*len(source)
+
+
+def clear_static_scan_at_stop(lidar, state, rays, command_response):
+    """Check stopping room and consistent nearby surfaces after a zero request."""
+    history = state.reshape(-1, 4, 13)
+    ranges = lidar[:, 0::3].flatten(2)
+    reliable = ((lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)).flatten(2)
+    ages = history[:, :, 12]
+    elapsed = ranges.new_tensor([-.3, -.2, -.1, 0.])-ages+ages[:, -1:]
+    gaps = elapsed.diff(dim=1)
+    nearest = ranges[:, -1].masked_fill(~reliable[:, -1], torch.inf).amin(dim=1)
+    coverage = reliable.all(dim=1).float().mean(dim=1)
+    offsets, coast = command_response
+    previous = history[:, -1, 9:12]
+    drift = .35*coast.norm(dim=1)+.10*previous.norm(dim=1)
+    ready = (ages <= .04).all(dim=1) & ((gaps >= .07) & (gaps <= .13)).all(dim=1)
+    ready &= (history[:, :, :3].norm(dim=2).amax(dim=1) <= .18)
+    ready &= (history[:, :, 9:12].norm(dim=2).amax(dim=1) <= .31) & (history[:, -1, 6:9].norm(dim=1) <= 1.e-6)
+    ready &= nearest.isfinite() & (nearest >= 1.) & (nearest-drift >= .85) & (coverage >= .65)
+    clear = torch.zeros_like(ready)
+    for lane in ready.nonzero().flatten():
+        frame_points = []
+        aligned = rays
+        shifts = offsets[lane]+(ages[lane, -1:]-ages[lane])[:, None]*coast[lane]
+        for frame in (3, 2, 1, 0):
+            if frame < 3:
+                gyro = (history[lane, frame, :3]+history[lane, frame+1, :3])*.5
+                aligned = rotate_scan_rays(aligned, -gyro*gaps[lane, frame])
+            keep = reliable[lane, frame] & (ranges[lane, frame] < 3.5)
+            frame_points.append(ranges[lane, frame, keep, None]*aligned[keep]+F.pad(shifts[frame], (0, 1)))
+        latest, *past = frame_points
+        clear[lane] = all(_near_scan_agrees(latest, earlier, limit=limit)
+                          and _near_scan_agrees(earlier, latest, limit=limit)
+                          for earlier, limit in zip(past, (.055, .085, .115), strict=True))
+    return clear
+
+
 def clear_receding_return_at_stop(lidar, state, rays, command_response):
     """Verify a nearby opening surface with the delayed zero-command path."""
     history = state.reshape(-1, 4, 13)
@@ -282,10 +330,7 @@ def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_co
         if frame < 3:
             gyro = (histories[:, frame, :3]+histories[:, frame+1, :3])*.5
             delta = -gyro*gap[:, frame, None]
-            angle = delta.norm(dim=1, keepdim=True)
-            axis = (delta/angle.clamp_min(1.e-8))[:, None].expand_as(aligned)
-            cross = torch.cross(axis, aligned, dim=-1)
-            aligned = aligned + cross*angle.sin()[:, None] + torch.cross(axis, cross, dim=-1)*(1.-angle.cos())[:, None]
+            aligned = rotate_scan_rays(aligned, delta)
         points = aligned*ranges[:, frame].flatten(1)[:, :, None]
         valid = reliable[:, frame].flatten(1)
         if anchor is not None:
@@ -303,6 +348,13 @@ def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_co
             shapes.append(_fit_curvature(points, patch, full_center=fit_full_center))
     path = torch.stack(medians[::-1], dim=1)
     return accepted, path, elapsed, shapes[::-1]
+
+
+def rotate_scan_rays(rays, delta):
+    angle = delta.norm(dim=-1, keepdim=True)
+    axis = (delta/angle.clamp_min(1.e-8)).unsqueeze(-2).expand_as(rays)
+    cross = torch.cross(axis, rays, dim=-1)
+    return rays+cross*angle.sin().unsqueeze(-2)+torch.cross(axis, cross, dim=-1)*(1.-angle.cos()).unsqueeze(-2)
 
 
 def _fit_motion(path, elapsed):
