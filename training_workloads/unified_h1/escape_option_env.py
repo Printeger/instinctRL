@@ -26,11 +26,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V7, CROSSING_STOP_25_V8, CROSSING_STOP_25_V9, CROSSING_STOP_25_V10,
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
+    CROSSING_STOP_25_V22,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-HOVER_REFERENCE_RESERVE_VERSIONS = (CROSSING_STOP_25_V20, CROSSING_STOP_25_V21)
+CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V22)
+HOVER_REFERENCE_RESERVE_VERSIONS = (CROSSING_STOP_25_V20, *CROSSING_RESTART_VERSIONS)
 CLIPPED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V18, *HOVER_REFERENCE_RESERVE_VERSIONS)
 VERIFIED_RETREAT_ONSET_VERSIONS = (CROSSING_STOP_25_V17, *CLIPPED_RETREAT_ONSET_VERSIONS)
 FAR_CROSSING_REFERENCE_VERSIONS = (CROSSING_STOP_25_V16, CROSSING_STOP_25_V19, *VERIFIED_RETREAT_ONSET_VERSIONS)
@@ -77,6 +79,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
     escape_option = None
     bilateral_stopping = False
     tube_stopping = False
+    local_wall_stopping = False
     lidar_mount_pitch_degrees = 30
     lidar_rays_body = None
 
@@ -113,6 +116,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.escape_option_version = version if enabled else None
         self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
         self.tube_stopping = enabled and version == CROSSING_STOP_25_V19
+        self.local_wall_stopping = enabled and version == CROSSING_STOP_25_V22
         for pipeline in self._control_pipelines:
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
@@ -197,7 +201,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verified_retreat_onset=version in VERIFIED_RETREAT_ONSET_VERSIONS,
                                                 retain_only_clipped_retreat=version in CLIPPED_RETREAT_ONSET_VERSIONS,
                                                 verify_hover_reference_reserve=version in HOVER_REFERENCE_RESERVE_VERSIONS,
-                                                verify_crossing_restart=version == CROSSING_STOP_25_V21)
+                                                verify_crossing_restart=version in CROSSING_RESTART_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -253,22 +257,28 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self._captured = 0
         if isinstance(self.escape_option, EscapeRecovery):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
-            if self.bilateral_stopping or self.tube_stopping:
+            if self.bilateral_stopping or self.tube_stopping or self.local_wall_stopping:
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
+                from instinctlab.control.local_wall_stopping import LocalWallStoppingPipeline
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
                 option = self.escape_option
                 protected = (option.applied | option.retreating | option.braking | option.ranked | option.holding
                              | option.intercepted | option.recovering)
-                if self.tube_stopping:
+                finite_stopping = self.tube_stopping or self.local_wall_stopping
+                if finite_stopping:
                     protected |= option.intercept_continued
-                pipeline_type = TubeStoppingPipeline if self.tube_stopping else BilateralStoppingPipeline
+                if self.local_wall_stopping:
+                    protected |= option.crossing_restart_verified
+                    pipeline_type = LocalWallStoppingPipeline
+                else:
+                    pipeline_type = TubeStoppingPipeline if self.tube_stopping else BilateralStoppingPipeline
                 for index, allowed in enumerate((~protected).tolist()):
                     pipeline = self._control_pipelines[index]
-                    if not isinstance(pipeline, pipeline_type):
+                    if type(pipeline) is not pipeline_type:
                         pipeline = pipeline_type(pipeline)
                         self._control_pipelines[index] = pipeline
-                    if self.tube_stopping:
+                    if finite_stopping:
                         pipeline.allow_tube_stopping = allowed
                     else:
                         pipeline.allow_bilateral_stopping = allowed
@@ -341,7 +351,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if self.bilateral_stopping:
                     used = [pipeline.bilateral_stopping_used for pipeline in self._control_pipelines]
                     self.extras['pre_reset']['escape_option']['bilateral_stopping'] = self.escape_option.applied.new_tensor(used)
-                if self.tube_stopping:
+                if self.tube_stopping or self.local_wall_stopping:
                     target = torch.zeros_like(self.escape_option.direction)
                     hold_seconds = target.new_zeros((self.num_envs,))
                     baseline_velocity = torch.zeros_like(target)
@@ -359,10 +369,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                             gap[lane] = decision.observed_gap_m
                             required_gap[lane] = decision.required_gap_m
                             cleared[lane] = decision.cleared_limiting_beams
-                    self.extras['pre_reset']['escape_option'].update(tube_stopping_target_b=target,
-                        tube_stopping_hold_s=hold_seconds, tube_baseline_velocity_b=baseline_velocity,
-                        tube_baseline_beta=baseline_beta, tube_gap_m=gap, tube_required_gap_m=required_gap,
-                        tube_cleared_limiting_beams=cleared)
+                    prefix = 'local_wall' if self.local_wall_stopping else 'tube'
+                    receipt = dict(stopping_target_b=target, stopping_hold_s=hold_seconds,
+                                   baseline_velocity_b=baseline_velocity, baseline_beta=baseline_beta,
+                                   gap_m=gap, required_gap_m=required_gap, cleared_limiting_beams=cleared)
+                    self.extras['pre_reset']['escape_option'].update({prefix+'_'+key:value for key,value in receipt.items()})
                 if self.escape_option.edge_continuation:
                     self.extras['pre_reset']['escape_option']['edge_continued'] = self.escape_option.edge_continued.detach().clone()
                 if self.escape_option.verified_resume:

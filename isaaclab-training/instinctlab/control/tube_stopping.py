@@ -265,6 +265,8 @@ def certify_tube_request(lidar, state, rays, governed, config, baseline, *, prev
 class TubeStoppingPipeline(ControlCorePipeline):
     """Apply a separately verified finite command after the original pipeline."""
 
+    certify = staticmethod(certify_tube_request)
+
     def __init__(self, baseline):
         super().__init__(baseline.config)
         self.lidar_rays_body = baseline.lidar_rays_body
@@ -292,9 +294,9 @@ class TubeStoppingPipeline(ControlCorePipeline):
         rays = self.lidar_rays_body
         if rays is None:
             rays = mounted_mid360_rays_body(device=lidar_grid.device,dtype=lidar_grid.dtype)
-        checked = certify_tube_request(lidar_grid,state_vec,rays,result.v_gov_b,self.config.ics,
-                                       ICSResult(result.v_final_b,result.ics_metrics,self._last_ics_cache),
-                                       previous_speed_bound=self._speed_at_oldest_scan)
+        checked = self.certify(lidar_grid,state_vec,rays,result.v_gov_b,self.config.ics,
+                               ICSResult(result.v_final_b,result.ics_metrics,self._last_ics_cache),
+                               previous_speed_bound=self._speed_at_oldest_scan)
         if checked is None:
             return result
         certified = checked.result

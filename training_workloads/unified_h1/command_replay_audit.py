@@ -14,7 +14,8 @@ from .command_replay import (
     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
-    CROSSING_RESTART_EXECUTION, HOVER_REFERENCE_RESERVE_EXECUTIONS,
+    CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
+    LOCAL_WALL_STOPPING_EXECUTION, LOCAL_WALL_STOPPING_TRACE_FIELDS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -360,7 +361,10 @@ def audit(output, params, counters):
             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_PROFILE')
         if model.get('verify_hover_reference_reserve', False) is not (model['execution'] in HOVER_REFERENCE_RESERVE_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_HOVER_REFERENCE_PROFILE')
-        crossing_restart_profile = model['execution'] == CROSSING_RESTART_EXECUTION
+        crossing_restart_profile = model['execution'] in CROSSING_RESTART_EXECUTIONS
+        local_wall_stopping_profile = model['execution'] == LOCAL_WALL_STOPPING_EXECUTION
+        if model.get('local_wall_stopping', False) is not local_wall_stopping_profile:
+            raise ValueError('COMMAND_REPLAY_LOCAL_WALL_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -511,6 +515,9 @@ def audit(output, params, counters):
                 if any(((field in row) != tube_stopping_profile) or (field in row and len(row[field]) != LANES)
                        for field in TUBE_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BINDING')
+                if any(((field in row) != local_wall_stopping_profile) or (field in row and len(row[field]) != LANES)
+                       for field in LOCAL_WALL_STOPPING_TRACE_FIELDS):
+                    raise ValueError('COMMAND_REPLAY_LOCAL_WALL_BINDING')
                 if len(detour) != LANES or any(type(value) is not bool for value in detour):
                     raise ValueError('COMMAND_REPLAY_FINITE_EDGE_LANES')
                 if ('escape_edge_continued' in row) != continuation_profile:
@@ -593,9 +600,10 @@ def audit(output, params, counters):
                             or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
                         raise ValueError('COMMAND_REPLAY_BILATERAL_BEHAVIOR')
-                    if tube_stopping_profile:
+                    if tube_stopping_profile or local_wall_stopping_profile:
+                        fields = TUBE_STOPPING_TRACE_FIELDS if tube_stopping_profile else LOCAL_WALL_STOPPING_TRACE_FIELDS
                         hold, target, baseline, before_beta, gap, required, cleared = (
-                            row[field][lane] for field in TUBE_STOPPING_TRACE_FIELDS)
+                            row[field][lane] for field in fields)
                         if (len(target) != 3 or len(baseline) != 3 or type(cleared) is not int
                                 or not all(math.isfinite(x) for x in (hold,before_beta,gap,required,*target,*baseline))):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_TARGET')
@@ -604,13 +612,16 @@ def audit(output, params, counters):
                         if hold and (min(abs(hold-.30),abs(hold-.60)) > 1.e-6
                                 or not .02999 <= math.hypot(*observed) <= .30001
                                 or not 0. < math.hypot(*target) <= .300001
-                                or not 0. <= before_beta <= 1. or cleared <= 0 or gap < required or required < .41
+                                or not 0. <= before_beta <= 1. or cleared < int(tube_stopping_profile) or gap < required or required < .41
                                 or math.dist(baseline,[v*before_beta for v in row['v_gov_b'][lane]]) > 2.e-6
                                 or dot(actor[-1][6:9],baseline) > .60001*dot(observed,observed)
                                 or row['escape_active'][lane] or row['recovery_retreating'][lane] or held[lane]
                                 or row['escape_braking'][lane] or ranked[lane] or row['escape_recovering'][lane]
                                 or intercepted[lane] or continued[lane] or row['ics_emergency'][lane]
-                                or row['ics_beta'][lane] < .89999 or dot(actor[-1][6:9],target) <= 0.
+                                or (row['ics_beta'][lane] < .89999 and (tube_stopping_profile or cleared))
+                                or (local_wall_stopping_profile and (abs(hold-.60) > 1.e-6 or restart[lane]
+                                    or dot(observed,row['v_final_w'][lane]) < .5999*dot(observed,observed)))
+                                or dot(actor[-1][6:9],target) <= 0.
                                 or math.dist(row['v_final_b'][lane],[v*row['ics_beta'][lane] for v in target]) > 2.e-6):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BEHAVIOR')
                     if hover_own_side[lane] and (not intercepted[lane] or row['escape_active'][lane]
