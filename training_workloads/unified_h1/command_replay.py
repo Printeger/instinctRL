@@ -60,6 +60,7 @@ NOVEL_ALONG_INTERCEPT_ID = NOVEL_PREFIX+'31'
 NOVEL_ALONG_CONFIRM_ID = NOVEL_PREFIX+'32'
 NOVEL_FINITE_INTERCEPT_ID = NOVEL_PREFIX+'33'
 NOVEL_CROSSING_STOP_ID = NOVEL_PREFIX+'34'
+NOVEL_CROSSING_STOP_CONTINUATION_ID = NOVEL_PREFIX+'35'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -122,7 +123,9 @@ OPENING_STEERING_EXECUTION = 'm4-escape-brake-tube-p25-opening-steering-v1'
 ALONG_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-along-intercept-v1'
 FINITE_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-finite-intercept-v1'
 CROSSING_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v1'
-FINITE_INTERCEPT_EXECUTIONS = (FINITE_INTERCEPT_EXECUTION, CROSSING_STOP_EXECUTION)
+CROSSING_STOP_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v2'
+CROSSING_STOP_EXECUTIONS = (CROSSING_STOP_EXECUTION, CROSSING_STOP_CONTINUATION_EXECUTION)
+FINITE_INTERCEPT_EXECUTIONS = (FINITE_INTERCEPT_EXECUTION, *CROSSING_STOP_EXECUTIONS)
 ALONG_INTERCEPT_EXECUTIONS = (ALONG_INTERCEPT_EXECUTION, *FINITE_INTERCEPT_EXECUTIONS)
 OPENING_STEERING_EXECUTIONS = (OPENING_STEERING_EXECUTION, *ALONG_INTERCEPT_EXECUTIONS)
 CROSSING_FALLBACK_EXECUTIONS = (CROSSING_FALLBACK_EXECUTION, *OPENING_STEERING_EXECUTIONS)
@@ -193,7 +196,7 @@ def compress_trace(run_id):
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
                                                        NOVEL_OPENING_STEERING_ID, NOVEL_ALONG_INTERCEPT_ID,
                                                        NOVEL_ALONG_CONFIRM_ID, NOVEL_FINITE_INTERCEPT_ID,
-                                                       NOVEL_CROSSING_STOP_ID)
+                                                       NOVEL_CROSSING_STOP_ID, NOVEL_CROSSING_STOP_CONTINUATION_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -451,6 +454,8 @@ def novel_contract(params):
         execution = (FINITE_INTERCEPT_EXECUTION,)
     elif params['experiment_id'] == NOVEL_CROSSING_STOP_ID:
         execution = (CROSSING_STOP_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_CROSSING_STOP_CONTINUATION_ID:
+        execution = (CROSSING_STOP_CONTINUATION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -731,7 +736,8 @@ def run(backend, params):
             opening_steering = execution in OPENING_STEERING_EXECUTIONS
             along_intercept = execution in ALONG_INTERCEPT_EXECUTIONS
             finite_intercept = execution in FINITE_INTERCEPT_EXECUTIONS
-            crossing_stop = execution == CROSSING_STOP_EXECUTION
+            crossing_stop = execution in CROSSING_STOP_EXECUTIONS
+            crossing_stop_continuation = execution == CROSSING_STOP_CONTINUATION_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation
@@ -746,7 +752,8 @@ def run(backend, params):
                     or env.escape_option.opening_steering != opening_steering
                     or env.escape_option.along_intercept != along_intercept
                     or env.escape_option.finite_intercept != finite_intercept
-                    or env.escape_option.crossing_stop != crossing_stop):
+                    or env.escape_option.crossing_stop != crossing_stop
+                    or env.escape_option.crossing_stop_continuation != crossing_stop_continuation):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -787,6 +794,8 @@ def run(backend, params):
                 model['finite_intercept'] = True
             if crossing_stop:
                 model['crossing_stop'] = True
+            if crossing_stop_continuation:
+                model['crossing_stop_continuation'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 

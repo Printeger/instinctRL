@@ -335,7 +335,7 @@ def observed_path_clearance(lidar, rays, coast, issued, *, hold_s=None):
     return minimum
 
 
-def crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued, *, hold_s):
+def crossing_stop_components(lidar, rays, position, motion, coast, radius, issued, *, hold_s):
     """Bound a finite escape and the eventual stationary separation from the crossing line."""
     swept = intercept_scores(position, motion, coast, radius, issued, hold_s=hold_s, preview_steps=101)
     forward = motion/motion.norm(dim=1, keepdim=True)
@@ -344,7 +344,12 @@ def crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued
     settled = resting_offset[:, None]-hold_s*(issued[..., :2]*across[:, None]).sum(dim=2)
     line = resting_offset.sign()[:, None]*settled-radius[:, None]
     observed = observed_path_clearance(lidar, rays, coast, issued, hold_s=hold_s)
-    return torch.minimum(torch.minimum(swept, line), observed)
+    return swept, torch.minimum(line, observed)
+
+
+def crossing_stop_clearance(lidar, rays, position, motion, coast, radius, issued, *, hold_s):
+    swept, settled = crossing_stop_components(lidar, rays, position, motion, coast, radius, issued, hold_s=hold_s)
+    return torch.minimum(swept, settled)
 
 
 def approach_scores(lidar, state, rays, issued):

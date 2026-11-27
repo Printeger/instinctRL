@@ -22,12 +22,13 @@ from instinctlab.control.escape_recovery import (
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_DIRECTION_25_VERSION, RESERVE_INTERCEPT_25_VERSION, ROTATION_TUBE_25_VERSION,
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
     TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
-    WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION,
+    WALL_TANGENT_25_VERSION, CROSSING_FALLBACK_25_VERSION, CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-FINITE_INTERCEPT_VERSIONS = (FINITE_INTERCEPT_25_VERSION, CROSSING_STOP_25_VERSION)
+CROSSING_STOP_VERSIONS = (CROSSING_STOP_25_VERSION, CROSSING_STOP_25_V2)
+FINITE_INTERCEPT_VERSIONS = (FINITE_INTERCEPT_25_VERSION, *CROSSING_STOP_VERSIONS)
 ALONG_INTERCEPT_VERSIONS = (ALONG_INTERCEPT_25_VERSION, *FINITE_INTERCEPT_VERSIONS)
 OPENING_STEERING_VERSIONS = (OPENING_STEERING_25_VERSION, *ALONG_INTERCEPT_VERSIONS)
 CROSSING_FALLBACK_VERSIONS = (CROSSING_FALLBACK_25_VERSION, *OPENING_STEERING_VERSIONS)
@@ -145,7 +146,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 opening_steering=version in OPENING_STEERING_VERSIONS,
                                                 along_intercept=version in ALONG_INTERCEPT_VERSIONS,
                                                 finite_intercept=version in FINITE_INTERCEPT_VERSIONS,
-                                                crossing_stop=version == CROSSING_STOP_25_VERSION)
+                                                crossing_stop=version in CROSSING_STOP_VERSIONS,
+                                                crossing_stop_continuation=version == CROSSING_STOP_25_V2)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
