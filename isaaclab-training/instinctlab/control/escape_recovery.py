@@ -49,6 +49,7 @@ EDGE_CONTINUATION_25_VERSION = 'm4-escape-brake-tube-p25-finite-edge-continued-v
 TANGENT_MAGNITUDE_25_VERSION = 'm4-escape-brake-tube-p25-tangent-magnitude-v1'
 ROTATION_TUBE_25_VERSION = 'm4-escape-brake-tube-p25-rotation-aligned-v1'
 VERIFIED_RESUME_25_VERSION = 'm4-escape-brake-tube-p25-verified-resume-v1'
+VERIFIED_ZERO_25_VERSION = 'm4-escape-brake-tube-p25-verified-zero-v1'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -63,7 +64,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        NEIGHBOR_HISTORY_25_VERSION: 25, CONFIRMED_STANDOFF_25_VERSION: 25,
                        SETTLED_OFFSET_STOP_25_VERSION: 25, WALL_TANGENT_25_VERSION: 25,
                        CONFIRMED_TUBE_25_VERSION: 25, FINITE_EDGE_25_VERSION: 25, EDGE_CONTINUATION_25_VERSION: 25,
-                       TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25}
+                       TANGENT_MAGNITUDE_25_VERSION: 25, ROTATION_TUBE_25_VERSION: 25, VERIFIED_RESUME_25_VERSION: 25,
+                       VERIFIED_ZERO_25_VERSION: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -78,7 +80,7 @@ class EscapeRecovery(EscapeOption):
                  stop_release=False, turn_fallback=False, intercept=False, align_intercept=False,
                  intercept_reserve=False, command_handoff=False, commit_intercept=False, retreat_priority=False,
                  offset_stop=False, settled_offset_stop=False, wall_tangent=False, finite_edge=False,
-                 edge_continuation=False, tangent_magnitude=False, verified_resume=False):
+                 edge_continuation=False, tangent_magnitude=False, verified_resume=False, verified_zero=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -116,6 +118,7 @@ class EscapeRecovery(EscapeOption):
         self.finite_edge = finite_edge
         self.edge_continuation = edge_continuation
         self.verified_resume = verified_resume
+        self.verified_zero = verified_zero
         if verified_resume:
             self.resume_witness = torch.zeros_like(self.applied)
             self.resumed = torch.zeros_like(self.applied)
@@ -524,7 +527,10 @@ class EscapeRecovery(EscapeOption):
         lanes = (self.release_checks > 0).nonzero().flatten()
         if not len(lanes):
             return
-        ended = lanes[clear_to_end_escape(lidar[lanes], state[lanes])]
+        if self.verified_zero:
+            ended = lanes[clear_to_end_escape(lidar[lanes], state[lanes], allow_distant_returns=True)]
+        else:
+            ended = lanes[clear_to_end_escape(lidar[lanes], state[lanes])]
         self.released[ended] = True
         self.release_checks[ended] = 0
         self.hold_neutral(ended, selected)
@@ -626,8 +632,10 @@ class EscapeRecovery(EscapeOption):
             onset = self.remaining[lanes] == DURATION_STEPS-1
             check = (eligible & ~cancel & nearest.isfinite() & onset & settled & (surface >= .45)).nonzero().flatten()
             if len(check):
-                cancel[check] = clear_hover_passage(scans[check], state[lanes[check]], self.detector._full_rays,
-                                                   curved=True, require_curvature=True)
+                proof = dict(curved=True, require_curvature=True)
+                if self.verified_zero:
+                    proof['turn_fallback'] = True
+                cancel[check] = clear_hover_passage(scans[check], state[lanes[check]], self.detector._full_rays, **proof)
         self.hold_neutral(lanes[cancel], selected)
         self.offset_stopped[lanes[cancel]] = True
         return cancel

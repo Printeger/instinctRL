@@ -20,13 +20,13 @@ from instinctlab.control.escape_recovery import (
     RECOVERY_REARM_25_VERSION, RECOVERY_RETREAT_25_VERSION,
     RECOVERY_VERSION, REDIRECT_25_VERSION, RESERVE_INTERCEPT_25_VERSION, ROTATION_TUBE_25_VERSION,
     SETTLED_OFFSET_STOP_25_VERSION, SIDE_HOVER_RETREAT_25_VERSION, STOP_RELEASE_25_VERSION, TANGENT_MAGNITUDE_25_VERSION,
-    TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION,
+    TURN_FIT_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION,
     WALL_TANGENT_25_VERSION,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION)
+ROTATION_TUBE_VERSIONS = (ROTATION_TUBE_25_VERSION, VERIFIED_RESUME_25_VERSION, VERIFIED_ZERO_25_VERSION)
 FINITE_EDGE_VERSIONS = (FINITE_EDGE_25_VERSION, EDGE_CONTINUATION_25_VERSION,
                         TANGENT_MAGNITUDE_25_VERSION, *ROTATION_TUBE_VERSIONS)
 CONFIRMED_TUBE_VERSIONS = (CONFIRMED_TUBE_25_VERSION, *FINITE_EDGE_VERSIONS)
@@ -125,7 +125,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 finite_edge=version in FINITE_EDGE_VERSIONS,
                                                 edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
                                                 tangent_magnitude=version == TANGENT_MAGNITUDE_25_VERSION,
-                                                verified_resume=version == VERIFIED_RESUME_25_VERSION)
+                                                verified_resume=version == VERIFIED_RESUME_25_VERSION,
+                                                verified_zero=version == VERIFIED_ZERO_25_VERSION)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

@@ -922,6 +922,38 @@ def test_verified_resume_requires_two_clear_predictions_for_the_latest_request(m
     assert torch.equal(selected[0], command[0])
 
 
+def test_distant_stop_release_still_needs_reliable_range_and_no_closing_seed():
+    import torch
+    from instinctlab.control.escape_passage import clear_to_end_escape
+
+    lidar = torch.zeros(3,12,59,360)
+    lidar[:, 1::3, :, :213] = 1.
+    lidar[:, 2::3, :, :213] = 1.
+    lidar[:, 0::3] = 1.46
+    lidar[1, 0::3] = .90
+    lidar[2, 0:9:3] = 1.60
+    state = torch.zeros(3,52)
+    assert not bool(clear_to_end_escape(lidar,state).any())
+    assert clear_to_end_escape(lidar,state,allow_distant_returns=True).tolist() == [True,False,False]
+
+
+def test_settled_turn_fallback_requires_the_independent_surface_margin(monkeypatch):
+    import torch
+    from instinctlab.control import escape_passage
+
+    center = torch.tensor([[1.90,.90],[1.87,.958],[1.881,.911],[1.894,.856]])
+    paths = torch.stack((center, center-torch.tensor([1.8,0.])))
+    elapsed = torch.tensor([[-.30,-.20,-.10,0.]]*2)
+    shapes = [(point, torch.full((2,),.34), torch.ones(2,dtype=torch.bool))
+              for point in paths.unbind(dim=1)]
+    monkeypatch.setattr(escape_passage, 'track_nearby_return',
+                        lambda *args, **kwargs:(torch.ones(2,dtype=torch.bool),paths,elapsed,shapes))
+    baseline = escape_passage.clear_hover_passage(None,None,None,curved=True,require_curvature=True)
+    revised = escape_passage.clear_hover_passage(None,None,None,curved=True,require_curvature=True,turn_fallback=True)
+    assert baseline.tolist() == [False,False]
+    assert revised.tolist() == [True,False]
+
+
 def test_finite_edge_advances_only_toward_an_observed_flank(monkeypatch):
     import torch
     from instinctlab.control import escape_tangent

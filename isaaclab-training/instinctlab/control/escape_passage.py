@@ -19,7 +19,7 @@ def _closing_seed(ranges, reliable, elapsed):
     return best > .005, seed
 
 
-def clear_to_end_escape(lidar, state, *, minimum_coverage=.60):
+def clear_to_end_escape(lidar, state, *, minimum_coverage=.60, allow_distant_returns=False):
     """Use overlapping fresh scan support before ending an older escape at zero stick."""
     history = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
@@ -29,10 +29,13 @@ def clear_to_end_escape(lidar, state, *, minimum_coverage=.60):
     gap = elapsed.diff(dim=1)
     fresh = (ages <= .04).all(dim=1) & ((gap >= .07) & (gap <= .13)).all(dim=1)
     stable = history[:, :, :3].norm(dim=2).amax(dim=1) <= .50
-    coverage = reliable.all(dim=1).to(ranges.dtype).flatten(1).mean(dim=1) >= minimum_coverage
+    coverage = reliable.all(dim=1).to(ranges.dtype).flatten(1).mean(dim=1)
     nearest = ranges[:, -1].masked_fill(~reliable[:, -1], torch.inf).flatten(1).amin(dim=1)
     closing, _ = _closing_seed(ranges, reliable, elapsed)
-    return fresh & stable & coverage & (nearest >= .85) & ~closing
+    observed = (coverage >= minimum_coverage) & (nearest >= .85)
+    if allow_distant_returns:
+        observed |= (coverage >= .55) & (nearest >= 1.35)
+    return fresh & stable & observed & ~closing
 
 
 def _fit_curvature(points, patch):
@@ -119,14 +122,19 @@ def _fit_motion(path, elapsed):
 
 def _closest_passage(path, elapsed):
     now, velocity, rms = _fit_motion(path, elapsed)
+    fit, closest = _closest_at_motion(now, velocity)
+    return fit & (rms <= .02), closest
+
+
+def _closest_at_motion(now, velocity):
     speed_sq = velocity.square().sum(dim=1)
     moment = -(now*velocity).sum(dim=1)/speed_sq.clamp_min(.001)
     closest = (now+moment.clamp(0., 5.)[:, None]*velocity).norm(dim=1)
-    fit = (rms <= .02) & (speed_sq >= .04) & (speed_sq <= 2.25) & (moment > 0.)
+    fit = (speed_sq >= .04) & (speed_sq <= 2.25) & (moment > 0.)
     return fit, closest
 
 
-def clear_hover_passage(lidar, state, rays, *, curved=False, require_curvature=False):
+def clear_hover_passage(lidar, state, rays, *, curved=False, require_curvature=False, turn_fallback=False):
     """Recognize a clear pass before the vehicle leaves its stopped position."""
     accepted, path, elapsed, shapes = track_nearby_return(lidar, state, rays, curved=curved)
     fit, closest = _closest_passage(path, elapsed)
@@ -135,11 +143,17 @@ def clear_hover_passage(lidar, state, rays, *, curved=False, require_curvature=F
         centers, radii, viable = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
         fitted, center_distance = _closest_passage(centers, elapsed)
         outer = radii.amax(dim=1)
-        supported = viable.all(dim=1) & fitted & ((outer-radii.amin(dim=1)) <= .04)
+        shape = viable.all(dim=1) & ((outer-radii.amin(dim=1)) <= .04)
+        supported = shape & fitted
         # Allocate .21 m to the vehicle and .15 m to clearance, with a .09 m observation margin.
         clear = torch.where(supported, center_distance-outer >= .45, clear)
         if require_curvature:
             clear &= supported
+            if turn_fallback:
+                reversing, latest = _latest_turn(centers, elapsed)
+                _, _, error = _fit_motion(centers, elapsed)
+                valid, latest_distance = _closest_at_motion(centers[:, -1], latest)
+                clear |= shape & reversing & valid & (error > .020) & (error <= .055) & (latest_distance-outer >= .45)
     return accepted & clear
 
 
