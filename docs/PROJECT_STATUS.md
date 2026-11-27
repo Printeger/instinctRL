@@ -16,6 +16,8 @@ B/C 冻结权重的三臂接触基线已闭合。B、C 在名义重合组各 8/8
 
 按历史测距时刻补偿后，匹配集的 32 条候选首飞 120 s 全部零接触、零重置。最小 5 ms 净空下界 0.096 m，低于 0.15 m，已开始检验提前获得停留余量。 [时间对齐结果](experiments/instinct-continuous-command/intercept_aligned/REPORT.md) · [净空余量配对](experiments/instinct-continuous-command/intercept_reserve/PLAN.md)
 
+加强同向撤离把原 0.096 m 窗口提高至 0.254 m，候选在后续横穿新增一次接触，归因为换向角速度令测距预测暂时失效后重新下发反向旧动作。四处各四拍同状态重检都允许原撤离，已启动物理配对。 [停留余量结果](experiments/instinct-continuous-command/intercept_reserve/REPORT.md) · [连续撤离配对](experiments/instinct-continuous-command/intercept_committed/PLAN.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)

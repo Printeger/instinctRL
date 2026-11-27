@@ -1,0 +1,241 @@
+{
+  "arms": {
+    "candidate": {
+      "layouts": {
+        "corridor": {
+          "contacts": [],
+          "full": 4,
+          "min": {
+            "lane": 24,
+            "m": 0.555571585893631,
+            "seconds": 62.845
+          },
+          "scheduled": 4,
+          "total_s": 480.0
+        },
+        "open_tube": {
+          "contacts": [],
+          "full": 4,
+          "min": {
+            "lane": 28,
+            "m": 0.5518662626201912,
+            "seconds": 118.985
+          },
+          "scheduled": 4,
+          "total_s": 480.0
+        },
+        "room_corner": {
+          "contacts": [],
+          "full": 8,
+          "min": {
+            "lane": 3,
+            "m": 0.5147842655565821,
+            "seconds": 26.225
+          },
+          "scheduled": 8,
+          "total_s": 960.0
+        },
+        "street_gap": {
+          "contacts": [
+            [
+              22,
+              942
+            ]
+          ],
+          "full": 7,
+          "min": {
+            "lane": 22,
+            "m": -0.07999553535117171,
+            "seconds": 94.3
+          },
+          "scheduled": 8,
+          "total_s": 934.3
+        },
+        "trunk_aisle": {
+          "contacts": [],
+          "full": 8,
+          "min": {
+            "lane": 13,
+            "m": 0.4904675089167426,
+            "seconds": 25.295
+          },
+          "scheduled": 8,
+          "total_s": 960.0
+        }
+      },
+      "physics": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "cb4a319a4f6ad294c8eb2ebb2c5168b8273f456f22c94ceda7e0312856ef36d3"
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl",
+        "sha256": "3941ae10f203e566d4631132d5be9110e1b0cd187f7b9f982bfa0b66380d98a4"
+      },
+      "windows": [
+        {
+          "end_exclusive": 108,
+          "lane": 21,
+          "minimum_m": 0.2543631515128006,
+          "start_step": 64
+        },
+        {
+          "end_exclusive": 943,
+          "lane": 22,
+          "minimum_m": -0.07999553535117171,
+          "start_step": 911
+        },
+        {
+          "end_exclusive": 707,
+          "lane": 22,
+          "minimum_m": 0.7533559807201016,
+          "start_step": 677
+        },
+        {
+          "end_exclusive": 1139,
+          "lane": 18,
+          "minimum_m": 0.3893468383208385,
+          "start_step": 1108
+        }
+      ]
+    },
+    "control": {
+      "layouts": {
+        "corridor": {
+          "contacts": [],
+          "full": 4,
+          "min": {
+            "lane": 24,
+            "m": 0.555571585893631,
+            "seconds": 62.845
+          },
+          "scheduled": 4,
+          "total_s": 480.0
+        },
+        "open_tube": {
+          "contacts": [],
+          "full": 4,
+          "min": {
+            "lane": 28,
+            "m": 0.5518662626201912,
+            "seconds": 118.985
+          },
+          "scheduled": 4,
+          "total_s": 480.0
+        },
+        "room_corner": {
+          "contacts": [],
+          "full": 8,
+          "min": {
+            "lane": 3,
+            "m": 0.5147842655565821,
+            "seconds": 26.225
+          },
+          "scheduled": 8,
+          "total_s": 960.0
+        },
+        "street_gap": {
+          "contacts": [],
+          "full": 8,
+          "min": {
+            "lane": 21,
+            "m": 0.09594834216642972,
+            "seconds": 9.825000000000001
+          },
+          "scheduled": 8,
+          "total_s": 960.0
+        },
+        "trunk_aisle": {
+          "contacts": [],
+          "full": 8,
+          "min": {
+            "lane": 13,
+            "m": 0.4904675089167426,
+            "seconds": 25.295
+          },
+          "scheduled": 8,
+          "total_s": 960.0
+        }
+      },
+      "physics": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/results/research-r6-dynamic-assay/control-layout_routes-clearance.f32",
+        "sha256": "d039d627ce21048f40419eff5845ae382b6927168f363a4278eafcbc0cabff61"
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/results/research-r6-dynamic-assay/control-layout_routes-pulse.json",
+        "sha256": "11aa63c938ba7bae4ffb0f3a4768ef7a6395d7e5464df32fa24f0563ce728ba1"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/results/research-r6-dynamic-assay/control-layout_routes.jsonl",
+        "sha256": "8e868137862e709baf4c4273a8a62cb6c5fe7f354d75a6151d633f185f6eb600"
+      },
+      "windows": [
+        {
+          "end_exclusive": 108,
+          "lane": 21,
+          "minimum_m": 0.09594834216642972,
+          "start_step": 64
+        },
+        {
+          "end_exclusive": 943,
+          "lane": 22,
+          "minimum_m": 0.5564600147118866,
+          "start_step": 911
+        },
+        {
+          "end_exclusive": 707,
+          "lane": 22,
+          "minimum_m": 0.5977942350928604,
+          "start_step": 677
+        },
+        {
+          "end_exclusive": 1139,
+          "lane": 18,
+          "minimum_m": 0.3893557035075583,
+          "start_step": 1108
+        }
+      ]
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/analysis/binding.json",
+    "sha256": "8fa9a3ce4aaa74e85300986cfa3398c163b18e88552789ed956202d1757f7f31"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-06/analysis/clearance-and-progress.json",
+    "sha256": "43dc9f197e3f973bbde092c6abba49e0a19dcb7a0e3c686a31ef3139ea2bc86e"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 2400,
+    "attempted_updates": 0,
+    "automatic_resets": 1,
+    "completed_policy_steps": 2400,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 2,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 76800,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 76800,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "819788100add46183b8fb339c5c87dcd0bbdd9f0",
+  "status": "DEVELOPMENT_RESERVE_MARGIN_INCREASE_EARLY_BUT_NEW_LATE_CONTACT"
+}
