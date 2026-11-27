@@ -1,6 +1,6 @@
 # 连续仿真指令开发进行中
 
-任务 `instinctrl-continuous-command`。首判 6/6，使用 32 路仿真 Crazy 指令。独立复验发现两次街道接触。时间对齐后 32/32 条匹配首飞零接触、零重置，最差净空 0.096 m。加强同向撤离将该窗净空提高到 0.254 m，另一次横穿因短时拟合失效重回旧动作发生接触。四组各四拍撤离原 ICS 均准许，已启动连续撤离配对；新独立输入及窗口预登记。正式 30 分钟和完整 R6 尚未运行。 [项目状态](../docs/PROJECT_STATUS.md) · [当前配对](../docs/experiments/instinct-continuous-command/intercept_committed/PLAN.md)
+任务 `instinctrl-continuous-command`。首判 6/6，只用模拟 Crazy 指令。时间对齐 32 条匹配首飞零接触，最差净空 0.096 m。同向撤离把该窗提高到 0.254 m，后续新增一次接触。短时延续救回该处至 0.338 m，另有一次两个保护动作反向冲突接触。实测旧撤离的可下发方向与裁零反例，09 已启动。新独立 32 路与窗口已登记。正式 30 分钟和完整 R6 尚未运行。 [项目状态](../docs/PROJECT_STATUS.md) · [08 结果](../docs/experiments/instinct-continuous-command/intercept_committed/REPORT.md) · [09 配对](../docs/experiments/instinct-continuous-command/intercept_priority/PLAN.md)
 
 # 接续 u1792 的两次有效正式长训完成
 
