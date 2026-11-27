@@ -423,8 +423,10 @@ def novel_contract(params):
         execution = (VERIFIED_ZERO_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID):
         execution = (INTERCEPT_CHOICE_EXECUTION,)
-    elif params['experiment_id'] in (NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID):
+    elif params['experiment_id'] == NOVEL_EARLY_DIAGONAL_ID:
         execution = (EARLY_DIAGONAL_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_DIAGONAL_CONFIRM_ID:
+        execution = (EARLY_DIAGONAL_EXECUTION, OPENING_STEERING_EXECUTION)
     elif params['experiment_id'] == NOVEL_RESERVE_DIRECTION_ID:
         execution = (RESERVE_DIRECTION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_CROSSING_FALLBACK_ID:

@@ -36,13 +36,13 @@ def wall_opening_direction(lidar, state, rays):
     scale = plane/forwards.clamp_min(.20)
     offset = scale*sideways
     beyond = stable & (depths >= plane[:, None]+.30).all(dim=1) & ((scale*upwards).abs() <= .30)
-    right = azimuth_count(beyond & (offset >= .80) & (offset <= 2.40))
-    left = azimuth_count(beyond & (offset <= -.80) & (offset >= -2.40))
-    one_sided = ((right >= 6) & (left <= 1)) | ((left >= 6) & (right <= 1))
+    positive = azimuth_count(beyond & (offset >= .80) & (offset <= 2.40))
+    negative = azimuth_count(beyond & (offset <= -.80) & (offset >= -2.40))
+    one_sided = ((positive >= 6) & (negative <= 1)) | ((negative >= 6) & (positive <= 1))
     steady = (history[:, :, 6:9]-command[:, None]).norm(dim=2).amax(dim=1) <= .04
     confirmed = (one_sided & steady & (azimuth_count(face) >= 12) & (plane[:, 0] >= 1.05)
                  & (plane[:, 0] <= 1.65) & _fresh_history(state, command, .1)[:, 0])
-    opening = torch.where((right > left)[:, None], lateral, -lateral)
+    opening = torch.where((positive > negative)[:, None], lateral, -lateral)
     return confirmed, heading, opening
 
 
