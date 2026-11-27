@@ -6,6 +6,18 @@ from training_workloads.unified_h1.command_replay import sampled_events
 from training_workloads.unified_h1.command_replay_audit import body_to_world, score_lane
 
 
+def test_command_pair_is_admitted_as_normal_system_run(tmp_path, monkeypatch):
+    from tools.r6_direct import storage
+
+    monkeypatch.setattr(storage, 'SYSTEM_ROOT', tmp_path)
+    run_id = 'R6-DIRECT-INSTINCT-GPU-COMMAND-PAIR-01'
+    root = tmp_path/run_id
+    plan = dict(run_id=run_id, attempt_dir=str(root), output_root=str(root/'control'))
+    assert storage.system_paths(plan) == root
+    with pytest.raises(ValueError, match='DIRECT_SYSTEM_RUN_ID'):
+        storage.system_paths(plan, diagnostic=True)
+
+
 def test_replay_causally_holds_timestamped_events():
     stream = {'duration_ms': 500, 'events': [{'t_ms': t} for t in (0, 60, 100, 215)]}
     assert sampled_events(stream) == [0, 2, 2, 3, 3, 3]
