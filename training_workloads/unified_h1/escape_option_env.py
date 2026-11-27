@@ -8,7 +8,8 @@ import torch
 from instinctlab.control.escape_option import EscapeOption, METHOD_VERSION
 from instinctlab.control.escape_recovery import (
     ALIGNED_INTERCEPT_25_VERSION, BRAKE_FORWARD_25_VERSION, BRAKE_TUBE_25_VERSION, BRAKE_TUBE_CONFIRM_25_VERSION,
-    CLEAR_PASS_25_VERSION, COMMAND_HANDOFF_25_VERSION, CURVED_PASS_25_VERSION, EARLY_RETREAT_25_VERSION, EscapeRecovery,
+    CLEAR_PASS_25_VERSION, COMMAND_HANDOFF_25_VERSION, COMMITTED_INTERCEPT_25_VERSION, CURVED_PASS_25_VERSION,
+    EARLY_RETREAT_25_VERSION, EscapeRecovery,
     FALLBACK_25_VERSION, FAST_LATERAL_VERSION,
     FRONT_CLEARANCE_25_VERSION, FRONT_SWITCH_25_VERSION, HOVER_PATH_25_VERSION, INTERCEPT_25_VERSION,
     LATERAL_VERSION, MIXED_VERSION, MOUNT_PITCH_DEGREES,
@@ -19,7 +20,8 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-RESERVE_INTERCEPTS = (RESERVE_INTERCEPT_25_VERSION, COMMAND_HANDOFF_25_VERSION)
+COMMITTED_INTERCEPTS = (COMMITTED_INTERCEPT_25_VERSION, COMMAND_HANDOFF_25_VERSION)
+RESERVE_INTERCEPTS = (RESERVE_INTERCEPT_25_VERSION, *COMMITTED_INTERCEPTS)
 ALIGNED_INTERCEPTS = (ALIGNED_INTERCEPT_25_VERSION, *RESERVE_INTERCEPTS)
 INTERCEPTS = (INTERCEPT_25_VERSION, *ALIGNED_INTERCEPTS)
 STOP_RELEASE_VERSIONS = (STOP_RELEASE_25_VERSION, TURN_FIT_25_VERSION, *INTERCEPTS)
@@ -98,7 +100,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 turn_fallback=version in (TURN_FIT_25_VERSION, *INTERCEPTS),
                                                 intercept=version in INTERCEPTS, align_intercept=version in ALIGNED_INTERCEPTS,
                                                 intercept_reserve=version in RESERVE_INTERCEPTS,
-                                                command_handoff=version == COMMAND_HANDOFF_25_VERSION)
+                                                command_handoff=version == COMMAND_HANDOFF_25_VERSION,
+                                                commit_intercept=version in COMMITTED_INTERCEPTS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -180,6 +183,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     self.extras['pre_reset']['escape_option']['released'] = self.escape_option.released.detach().clone()
                 if self.escape_option.intercept:
                     self.extras['pre_reset']['escape_option']['intercepted'] = self.escape_option.intercepted.detach().clone()
+                if self.escape_option.commit_intercept:
+                    self.extras['pre_reset']['escape_option']['intercept_continued'] = (
+                        self.escape_option.intercept_continued.detach().clone())
                 if self.escape_option.command_handoff:
                     self.extras['pre_reset']['escape_option']['handoff'] = self.escape_option.handed_off.detach().clone()
                 if self.escape_option.brake_forward_escape:

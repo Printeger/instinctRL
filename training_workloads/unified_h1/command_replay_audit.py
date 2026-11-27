@@ -5,7 +5,7 @@ from statistics import fmean
 
 from tools.r6_evidence import checked, file_pin
 from .command_replay import (
-    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTION, CONDITIONS, CROSSING_SPEED_M_S,
+    CLEARANCE_SHAPE, CLEAR_PASS_EXECUTIONS, COMMAND_HANDOFF_EXECUTION, COMMITTED_INTERCEPT_EXECUTIONS, CONDITIONS, CROSSING_SPEED_M_S,
     CROSSING_START_M, LANES, LAYOUTS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NOVEL_PREFIX, RANK_EXECUTIONS, REARM_EXECUTIONS, STEP_MS, STOP_RELEASE_EXECUTIONS,
     arm_execution, conditions, event_schedule,
@@ -323,6 +323,11 @@ def audit(output, params, counters):
                 intercepted = row.get('escape_intercepted', [False]*LANES)
                 if len(intercepted) != LANES or any(type(value) is not bool for value in intercepted):
                     raise ValueError('COMMAND_REPLAY_INTERCEPT_LANES')
+                if ('escape_intercept_continued' in row) != (model['execution'] in COMMITTED_INTERCEPT_EXECUTIONS):
+                    raise ValueError('COMMAND_REPLAY_INTERCEPT_CONTINUATION_BINDING')
+                continued = row.get('escape_intercept_continued', [False]*LANES)
+                if len(continued) != LANES or any(type(value) is not bool for value in continued):
+                    raise ValueError('COMMAND_REPLAY_INTERCEPT_CONTINUATION_LANES')
                 if ('escape_command_handoff' in row) != (model['execution'] == COMMAND_HANDOFF_EXECUTION):
                     raise ValueError('COMMAND_REPLAY_HANDOFF_BINDING')
                 handoff = row.get('escape_command_handoff', [False]*LANES)
@@ -351,6 +356,10 @@ def audit(output, params, counters):
                     if handoff[lane] and (row['escape_active'][lane] or math.hypot(*observed) < .079999
                                           or (not intercepted[lane] and row['selected_action'][lane] != row['action'][lane])):
                         raise ValueError('COMMAND_REPLAY_HANDOFF_BEHAVIOR')
+                    if continued[lane] and (not intercepted[lane] or not step or rows[step-1]['reset'][lane]
+                                            or not rows[step-1]['escape_intercepted'][lane]
+                                            or math.hypot(*row['v_final_b'][lane]) < .119999):
+                        raise ValueError('COMMAND_REPLAY_INTERCEPT_CONTINUATION_BEHAVIOR')
                     if step and not rows[step-1]['reset'][lane]:
                         if actor[:-1] != rows[step-1]['actor_state'][lane][1:]:
                             raise ValueError('COMMAND_REPLAY_ACTOR_HISTORY')

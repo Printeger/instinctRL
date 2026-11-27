@@ -32,6 +32,7 @@ NOVEL_ALIGNED_ID = NOVEL_PREFIX+'04'
 NOVEL_CONFIRM_ID = NOVEL_PREFIX+'05'
 NOVEL_RESERVE_ID = NOVEL_PREFIX+'06'
 NOVEL_HANDOFF_ID = NOVEL_PREFIX+'07'
+NOVEL_COMMITTED_ID = NOVEL_PREFIX+'08'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -69,9 +70,11 @@ TURN_FIT_EXECUTION = 'm4-escape-brake-tube-p25-turn-fit-v1'
 INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v1'
 ALIGNED_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v2'
 RESERVE_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v3'
+COMMITTED_INTERCEPT_EXECUTION = 'm4-escape-brake-tube-p25-intercept-v4'
 COMMAND_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-command-handoff-v1'
+COMMITTED_INTERCEPT_EXECUTIONS = (COMMITTED_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION)
 INTERCEPT_EXECUTIONS = (INTERCEPT_EXECUTION, ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION,
-                        COMMAND_HANDOFF_EXECUTION)
+                        *COMMITTED_INTERCEPT_EXECUTIONS)
 STOP_RELEASE_EXECUTIONS = (STOP_RELEASE_EXECUTION, TURN_FIT_EXECUTION, *INTERCEPT_EXECUTIONS)
 RANK_EXECUTIONS = (RANKED_RETURN_EXECUTION, CURVED_PASS_EXECUTION, HOVER_PATH_EXECUTION, *STOP_RELEASE_EXECUTIONS)
 REARM_EXECUTIONS = (RECOVERY_REARM_EXECUTION, *RANK_EXECUTIONS)
@@ -292,14 +295,15 @@ def novel_contract(params):
                   NOVEL_INTERCEPT_ID: (TURN_FIT_EXECUTION, INTERCEPT_EXECUTION),
                   NOVEL_ALIGNED_ID: (INTERCEPT_EXECUTION, ALIGNED_INTERCEPT_EXECUTION),
                   NOVEL_RESERVE_ID: (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION),
-                  NOVEL_HANDOFF_ID: (RESERVE_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION)}.get(params['experiment_id'])
+                  NOVEL_COMMITTED_ID: (RESERVE_INTERCEPT_EXECUTION, COMMITTED_INTERCEPT_EXECUTION),
+                  NOVEL_HANDOFF_ID: COMMITTED_INTERCEPT_EXECUTIONS}.get(params['experiment_id'])
     paired = comparison is not None
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
     if paired:
         execution = (comparison[0],)
     elif params['experiment_id'] == NOVEL_CONFIRM_ID:
-        execution = (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION, COMMAND_HANDOFF_EXECUTION)
+        execution = (ALIGNED_INTERCEPT_EXECUTION, RESERVE_INTERCEPT_EXECUTION, *COMMITTED_INTERCEPT_EXECUTIONS)
     wall = 1800 if paired else 1200
     if paired:
         fields.add('candidate_execution')
@@ -630,6 +634,8 @@ def run(backend, params):
                         tensors['escape_stop_release'] = option['released']
                     if 'intercepted' in option:
                         tensors['escape_intercepted'] = option['intercepted']
+                    if 'intercept_continued' in option:
+                        tensors['escape_intercept_continued'] = option['intercept_continued']
                     if 'handoff' in option:
                         tensors['escape_command_handoff'] = option['handoff']
                     if 'ics_limiter' in pre:

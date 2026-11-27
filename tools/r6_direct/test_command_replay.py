@@ -557,6 +557,32 @@ def test_command_handoff_ends_obsolete_escape_and_preserves_current_threat(monke
     assert held[1, 2].item() == pytest.approx(.20)
 
 
+def test_intercept_continues_only_during_four_fresh_unobserved_frames(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=False,
+                            intercept=True, commit_intercept=True)
+    option.intercept_steps.fill_(4)
+    option.intercept_direction[:, 0] = -1.
+    state = torch.zeros(3, 52)
+    state[2, 0] = 1.  # Current ICS emergency in the mock, regardless of the previous path.
+    lidar = torch.zeros(3, 12)
+    selected = torch.tensor([[.8, .5, .5, .5]]*3)
+    monkeypatch.setattr(option, 'issued', lambda scan, history, action, cfg: SimpleNamespace(
+        v_final_b=action[:, 1:]-.5, metrics={'emergency': history[:, :1]}))
+    option.continue_intercept(lidar, state, selected, None, torch.tensor([1]))
+    assert option.intercept_steps.tolist() == [3, 0, 0]
+    assert option.intercept_continued.tolist() == [True, False, False]
+    assert selected[0, 1].item() == pytest.approx(.20)
+    for _ in range(3):
+        option.continue_intercept(lidar, state, selected, None, torch.tensor([], dtype=torch.long))
+        assert option.intercept_continued[0]
+    option.continue_intercept(lidar, state, selected, None, torch.tensor([], dtype=torch.long))
+    assert not option.intercept_continued.any()
+
+
 def test_crossing_phase_is_checked_before_a_lanes_early_reset(tmp_path):
     import json
     from training_workloads.unified_h1.command_replay_audit import verify_pulse_and_crossing
