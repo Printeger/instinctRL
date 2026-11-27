@@ -66,6 +66,8 @@
 
 静态平面复核的同输入复验完成 32/32 条首飞和松杆，零接触和重置，五类净空通过。原街道停车失败改为 0.5 秒停稳、漂移 0.06927 米。新非零请求当拍重新避让，窗口最低动态净空从 0.29438 升到 0.36937 米。精确同配置进入独立 Crazy 复验。 [同输入结果](experiments/instinct-continuous-command/hover_reference_reserve/REPORT.md)
 
+静态平面停驻的独立 Crazy 短回放有 32/32 个预设停车窗达标。街道 20 接收新非零指令后，保护先将机体驶向来物轨迹，随后接触并重置，31/32 条首飞完整。保留失败原件用于配对，正式验收尚未开始。 [独立回放结果](experiments/instinct-continuous-command/independent_hover_reference_reserve/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
