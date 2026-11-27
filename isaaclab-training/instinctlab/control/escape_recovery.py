@@ -1085,14 +1085,12 @@ class EscapeRecovery(EscapeOption):
         at_rest &= (history[:, :, 9:12].norm(dim=2) <= .02).all(dim=1)
         angular_rate = history[:, :, :3].norm(dim=2).amax(dim=1)
         at_rest &= angular_rate <= .08
-        steady = (history[:, -2, 6:9]-request).norm(dim=1) <= .04
         recent = self.crossing_restart_steps > 0
         released = recent & (speed <= .001)
-        continuation = recent & (steady | released)
-        self.crossing_restart_steps = torch.where(continuation, self.crossing_restart_steps-1, 0)
+        self.crossing_restart_steps = (self.crossing_restart_steps-1).clamp_min(0)
         ages = history[:, :, 12]
         fresh = (ages <= .04).all(dim=1) & (ages.diff(dim=1).abs() <= .03).all(dim=1) & (angular_rate <= .50)
-        eligible = (self.applied | self.intercepted) & fresh & (at_rest | continuation)
+        eligible = fresh & ((at_rest & (self.applied | self.intercepted)) | recent)
         eligible &= ((speed >= .08) & (speed <= .30)) | released
         eligible &= ~(self.braking | self.ranked | self.retreating | self.holding | self.static_stop_verified
                       | self.settled_crossing_verified | self.handed_off | self.offset_stopped
@@ -1113,7 +1111,7 @@ class EscapeRecovery(EscapeOption):
         own_side = -offset.sign()[:, None]*normal
         original = self.issued(scans, local, selected[lanes], config)
         toward_line = (original.v_final_b[:, :2]*own_side).sum(dim=1) <= -.12
-        blocked = continuation[lanes] & (original.v_final_b.norm(dim=1) <= .03)
+        blocked = recent[lanes] & (original.v_final_b.norm(dim=1) <= .03)
         asks_own_side = (request[lanes, :2]*own_side).sum(dim=1) >= .08
         release = released[lanes]
         possible = ((asks_own_side | release) & (offset.abs() >= .36) & (toward_line | blocked)
@@ -1156,8 +1154,9 @@ class EscapeRecovery(EscapeOption):
         self.crossing_restart_verified[accepted] = True
         self.crossing_restart_previous_b[accepted] = original.v_final_b[use]
         # A fresh departure can be reconsidered for the next eight policy ticks.
-        # Each replacement requires current scans and expires on a changed moving request.
-        self.crossing_restart_steps[accepted] = torch.where(at_rest[accepted], 8, self.crossing_restart_steps[accepted])
+        # Each replacement requires current scans and verifies the latest request.
+        fresh_departure = at_rest[accepted] & ~recent[accepted]
+        self.crossing_restart_steps[accepted] = torch.where(fresh_departure, 8, self.crossing_restart_steps[accepted])
         self.applied[accepted] = False
         self.remaining[accepted] = 0
         self.cooldown[accepted] = 0
