@@ -18,6 +18,8 @@
 
 同侧五度复核将原街道近距窗口提高到 0.108 米，仍未达到 0.15 米。五场景首飞完整、无接触和中途重置、室内过门过角各 8/8、松杆 32/32。 [五度复核正式记录](experiments/instinct-continuous-command/crossing_stop_shallow/REPORT.md)
 
+提前同侧撤离把原后段近距提高到 0.234 米。32/32 首飞完整、无接触或中途重置，松杆 32/32。另一处同类交会为当前最差值 0.122 米，仍低于 0.15 米。 [提前撤离逐类结果](experiments/instinct-continuous-command/crossing_stop_early/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
