@@ -110,6 +110,7 @@ NEUTRAL_RETRY_25 = 'm4-escape-brake-tube-p25-crossing-stop-v48'
 OBSERVED_TURN_BRAKING_25 = 'm4-escape-brake-tube-p25-crossing-stop-v49'
 FRONT_WALL_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v50'
 COLLECTIVE_PROJECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v51'
+STATIC_TURN_ONSET_25 = 'm4-escape-brake-tube-p25-crossing-stop-v52'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -146,7 +147,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25,
                        RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25,
                        TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25,
-                       FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25}
+                       FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25, STATIC_TURN_ONSET_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -181,7 +182,7 @@ class EscapeRecovery(EscapeOption):
                  verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
                  verify_static_retreat_handoff=False, align_planar_protection=False,
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
-                 verify_neutral_retry=False, observed_turn_braking=False):
+                 verify_neutral_retry=False, observed_turn_braking=False, verify_static_turn=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -199,6 +200,11 @@ class EscapeRecovery(EscapeOption):
         self.early_retreat = early_retreat
         self.verified_retreat_onset = verified_retreat_onset
         self.retain_only_clipped_retreat = retain_only_clipped_retreat
+        self.verify_static_turn = verify_static_turn
+        if verify_static_turn:
+            if not verified_retreat_onset:
+                raise ValueError('Static turn recheck requires verified retreat onset')
+            self.static_turn_floor = self.direction.new_zeros(lanes)
         if retain_only_clipped_retreat and not verified_retreat_onset:
             raise ValueError('Clipped retreat handoff requires verified retreat onset')
         if verified_retreat_onset:
@@ -530,6 +536,8 @@ class EscapeRecovery(EscapeOption):
             self.steady_handoff_used[lanes] = False
         if self.verified_retreat_onset:
             self.retreat_request_kept[lanes] = False
+        if self.verify_static_turn:
+            self.static_turn_floor[lanes] = 0.
         if self.verify_crossing_restart:
             self.crossing_restart_verified[lanes] = False
             self.crossing_restart_previous_b[lanes] = 0.
@@ -897,6 +905,8 @@ class EscapeRecovery(EscapeOption):
     def start_early_retreat(self, lidar, state, selected, config, command, speed):
         if self.verified_retreat_onset:
             self.retreat_request_kept.zero_()
+        if self.verify_static_turn:
+            self.static_turn_floor.zero_()
         lanes = ((speed >= .08) & ~self.applied & ~self.retreating & (state[:, -1] <= .22)).nonzero().flatten()
         if not len(lanes):
             return
@@ -911,6 +921,32 @@ class EscapeRecovery(EscapeOption):
             self.start_recovery_retreat(lidar, state, selected, config, candidates, heading[oblique], brake_when_blocked=False)
             if self.verified_retreat_onset:
                 self.keep_request_before_retreat(lidar, state, selected, config, candidates, current, command, speed)
+            if self.verify_static_turn:
+                self.keep_request_on_static_turn(lidar, state, selected, config, candidates, current)
+
+    def keep_request_on_static_turn(self, lidar, state, selected, config, candidates, current):
+        from .escape_passage import advance_command_response
+        from .static_turn_onset import static_turn_margin
+
+        protected = (self.applied | self.braking | self.holding | self.ranked | self.intercepted
+                     | self.intercept_continued | (self.intercept_steps > 0))
+        usable = self.retreating[candidates] & ~protected[candidates]
+        for position in usable.nonzero().flatten().tolist():
+            lane = int(candidates[position])
+            index = slice(lane, lane+1)
+            scans, frames = lidar[index], state[index]
+            original = current[position:position+1]
+            candidate = self.issued(scans, frames, original, config)
+            retreat = self.issued(scans, frames, selected[index], config)
+            response = advance_command_response(self.command_offsets[index], self.command_coast[index], frames)
+            margin = static_turn_margin(self.detector, scans, frames, candidate, retreat, response)
+            if margin:
+                selected[index] = original
+                self.retreating[lane] = False
+                self.retreat_hold_steps[lane] = 0
+                self.retreat_hold_direction[lane] = 0.
+                self.retreat_request_kept[lane] = True
+                self.static_turn_floor[lane] = margin
 
     def keep_request_before_retreat(self, lidar, state, selected, config, candidates, current, command, speed):
         from .escape_passage import advance_command_response, intercept_scores, moving_intercepts, observed_path_clearance

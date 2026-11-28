@@ -24,8 +24,7 @@ class HoverReflex(nn.Module):
         self.register_buffer('_rays', rays.reshape(59, 360, 3)[::3].reshape(-1, 3), persistent=False)
 
     @torch.no_grad()
-    def retreat_direction(self, lidar, state, *, hover_only=True):
-        history = state.reshape(-1, 4, 13)
+    def _closing_weights(self, lidar, history):
         scan = lidar[:, :, ::3]
         latest = scan[:, 9]
         weight = torch.zeros_like(latest)
@@ -47,6 +46,12 @@ class HoverReflex(nn.Module):
             for offset in (-2, -1, 1, 2):
                 supported &= coherent.roll(offset, dims=-1)
             weight = torch.maximum(weight, torch.where(supported, difference, 0.))
+        return weight
+
+    @torch.no_grad()
+    def retreat_direction(self, lidar, state, *, hover_only=True):
+        history = state.reshape(-1, 4, 13)
+        weight = self._closing_weights(lidar, history)
         bearing = weight.flatten(1) @ self._rays
         bearing[:, 2] = 0.
         fresh = history[:, -1, 12] <= .22

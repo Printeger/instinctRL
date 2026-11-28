@@ -23,7 +23,7 @@ from .command_replay import (
     COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTIONS,
     RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
-    COLLECTIVE_PROJECTION_EXECUTION, FRONT_WALL_HANDOFF_EXECUTIONS,
+    COLLECTIVE_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS, STATIC_TURN_ONSET_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -471,7 +471,8 @@ def audit(output, params, counters):
         neutral_retry = model['execution'] in NEUTRAL_RETRY_EXECUTIONS
         observed_turn_braking = model['execution'] in OBSERVED_TURN_BRAKING_EXECUTIONS
         front_wall_handoff = model['execution'] in FRONT_WALL_HANDOFF_EXECUTIONS
-        collective_projection = model['execution'] == COLLECTIVE_PROJECTION_EXECUTION
+        collective_projection = model['execution'] in COLLECTIVE_PROJECTION_EXECUTIONS
+        static_turn_onset = model['execution'] == STATIC_TURN_ONSET_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
                 or model.get('verify_outward_brake', False) is not request_recovery
@@ -484,7 +485,8 @@ def audit(output, params, counters):
                 or model.get('verify_neutral_retry', False) is not neutral_retry
                 or model.get('observed_turn_braking', False) is not observed_turn_braking
                 or model.get('front_wall_handoff', False) is not front_wall_handoff
-                or model.get('collective_projection', False) is not collective_projection):
+                or model.get('collective_projection', False) is not collective_projection
+                or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -681,6 +683,11 @@ def audit(output, params, counters):
                 if (('escape_retreat_request_kept' in row) != verified_retreat_profile or len(retreat_kept) != LANES
                         or any(type(value) is not bool for value in retreat_kept)):
                     raise ValueError('COMMAND_REPLAY_VERIFIED_RETREAT_BINDING')
+                static_floor = row.get('escape_static_turn_floor', [0.]*LANES)
+                if (('escape_static_turn_floor' in row) != static_turn_onset or len(static_floor) != LANES
+                        or any(not math.isfinite(x) or (x != 0. and x < .429999) for x in static_floor)
+                        or any(floor and not kept for floor, kept in zip(static_floor, retreat_kept, strict=True))):
+                    raise ValueError('COMMAND_REPLAY_STATIC_TURN_ONSET_BINDING')
                 restart = row.get('escape_crossing_restart_verified', [False]*LANES)
                 previous = row.get('escape_crossing_restart_previous_b', [[0., 0., 0.]]*LANES)
                 if (('escape_crossing_restart_verified' in row) != crossing_restart_profile
