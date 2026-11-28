@@ -560,8 +560,11 @@ class EscapeRecovery(EscapeOption):
             self.resumed[lanes] = False
 
     def issued(self, lidar, state, action, config):
-        request = decode_governor(action, state, config.governor,
-                                  align_planar_protection=self.align_planar_protection).v_gov_b
+        if self.align_planar_protection:
+            from .escape_passage import align_planar_protective_action
+
+            action = align_planar_protective_action(action, state, config.governor)
+        request = decode_governor(action, state, config.governor).v_gov_b
         return attenuate_command(lidar, self.detector._full_rays, request, .1, config.ics, state_vec=state)
 
     def select_lateral(self, lidar, state, selected, config):

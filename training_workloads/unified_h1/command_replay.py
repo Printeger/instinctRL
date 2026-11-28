@@ -917,10 +917,11 @@ def contract(params):
                              explicit_resets=trials, automatic_resets=transitions))
 
 
-def verify_supported_wall_pipelines(env):
-    from instinctlab.control.local_wall_stopping import SupportedWallEdgeReproofPipeline
+def verify_supported_wall_pipelines(env, *, aligned=False):
+    from instinctlab.control.local_wall_stopping import GravityAlignedWallEdgeReproofPipeline, SupportedWallEdgeReproofPipeline
 
-    if {type(pipeline) for pipeline in env._control_pipelines} != {SupportedWallEdgeReproofPipeline}:
+    expected = GravityAlignedWallEdgeReproofPipeline if aligned else SupportedWallEdgeReproofPipeline
+    if {type(pipeline) for pipeline in env._control_pipelines} != {expected}:
         raise ValueError('COMMAND_SUPPORTED_WALL_PIPELINE')
 
 
@@ -1412,7 +1413,7 @@ def run(backend, params):
                 atomic_json_replace(output, filename, pulse)
                 model['trials'][name]['pulse'] = file_pin(output/filename)
         if execution in SUPPORTED_WALL_EXECUTIONS:
-            verify_supported_wall_pipelines(env)
+            verify_supported_wall_pipelines(env, aligned=execution in GRAVITY_ALIGNED_PROTECTION_EXECUTIONS)
             model['supported_wall_approach'] = True
         if execution in CURRENT_REQUEST_RECOVERY_EXECUTIONS:
             verify_current_request_recovery(env)
@@ -1426,8 +1427,7 @@ def run(backend, params):
                 raise ValueError('COMMAND_STATIC_RETREAT_HANDOFF_PROOF')
             model.update(verify_recent_handoff=True, verify_static_retreat_handoff=True)
         if execution in GRAVITY_ALIGNED_PROTECTION_EXECUTIONS:
-            if not (env.escape_option.align_planar_protection
-                    and all(pipeline.config.align_planar_protection for pipeline in env._control_pipelines)):
+            if not env.escape_option.align_planar_protection:
                 raise ValueError('COMMAND_PLANAR_PROTECTION_PROOF')
             model['align_planar_protection'] = True
         if execution == RELEASE_STOP_CERTIFICATES_EXECUTION:

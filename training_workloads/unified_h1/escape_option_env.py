@@ -149,8 +149,6 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.wall_edge_reproof = enabled and version in WALL_EDGE_REPROOF_VERSIONS
         align_planar = enabled and version in GRAVITY_ALIGNED_PROTECTION_VERSIONS
         for pipeline in self._control_pipelines:
-            if pipeline.config.align_planar_protection != align_planar:
-                pipeline.config = replace(pipeline.config, align_planar_protection=align_planar)
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
             if hasattr(pipeline, 'allow_tube_stopping'):
@@ -323,7 +321,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
                 from instinctlab.control.local_wall_stopping import (
                     FacetedWallBrakingPipeline, FacetedWallEdgeReproofPipeline, FrontWallBrakingPipeline, LocalWallStoppingPipeline,
-                    SupportedWallEdgeReproofPipeline, WallEdgeReproofPipeline,
+                    GravityAlignedWallEdgeReproofPipeline, SupportedWallEdgeReproofPipeline, WallEdgeReproofPipeline,
                 )
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
@@ -336,7 +334,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.composed_crossing_verified
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
-                    if self.escape_option_version in SUPPORTED_WALL_VERSIONS:
+                    if option.align_planar_protection:
+                        pipeline_type = GravityAlignedWallEdgeReproofPipeline
+                    elif self.escape_option_version in SUPPORTED_WALL_VERSIONS:
                         pipeline_type = SupportedWallEdgeReproofPipeline
                     elif self.wall_edge_reproof and self.faceted_wall_stopping:
                         pipeline_type = FacetedWallEdgeReproofPipeline

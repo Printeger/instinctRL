@@ -4,6 +4,24 @@ import torch
 from torch.nn import functional as F
 
 
+def align_planar_protective_action(action, state, governor):
+    """Encode a pure planar protective correction in the measured horizontal plane."""
+    influence = 2. * governor.v_corr_limit * (1.-governor.smoothing)
+    if influence == 0.:
+        return action
+    gravity = state[:, 42:45]
+    gravity_squared = gravity.square().sum(dim=1, keepdim=True)
+    commanded_vertical = (state[:, 45:48] * gravity).sum(dim=1, keepdim=True)
+    correction = action[:, 1:]
+    governed = influence * (correction-.5) + governor.smoothing * state[:, 48:51]
+    vertical = (governed * gravity).sum(dim=1, keepdim=True) / gravity_squared.clamp_min(.9)
+    aligned = correction - vertical * gravity / influence
+    planar = ((action[:, :1] == 0.) & (action[:, 3:4] == .5) & (commanded_vertical.abs() <= 1.e-5)
+              & (gravity_squared >= .9) & (gravity_squared <= 1.1) & (state[:, 51:52] <= .04)
+              & ((aligned >= 0.) & (aligned <= 1.)).all(dim=1, keepdim=True))
+    return torch.cat((action[:, :1], torch.where(planar, aligned, correction)), dim=1)
+
+
 def _supported_closing_returns(ranges, reliable, elapsed, *, minimum_range_m=0., maximum_range_m=1.9):
     old = -torch.where(reliable[:, :3], ranges[:, :3], torch.inf)
     old = F.max_pool2d(F.pad(old, (8, 8, 0, 0), mode='circular'), (1, 17), stride=1)

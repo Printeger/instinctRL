@@ -23,6 +23,7 @@ from instinctlab.control.anchor import (
     huber_loss,
 )
 from instinctlab.control.command_adapter import rotate_body_to_world
+from instinctlab.control.escape_passage import align_planar_protective_action
 from instinctlab.control.governor import GovernorConfig, b0_governor, decode_governor, extract_latest_commands
 from instinctlab.control.ics import (
     ICS_CACHE_KEYS,
@@ -139,10 +140,11 @@ def test_planar_protection_uses_measured_gravity_and_keeps_vertical_intent():
     action[3, 3] = .60
 
     stock = decode_governor(action, state)
-    aligned = decode_governor(action, state, align_planar_protection=True)
+    aligned_action = align_planar_protective_action(action, state, GovernorConfig())
+    aligned = decode_governor(aligned_action, state)
     before = rotate_body_to_world(stock.v_gov_b, attitude)
     after = rotate_body_to_world(aligned.v_gov_b, attitude)
-    assert torch.equal(stock.v_corr_b, aligned.v_corr_b)
+    assert torch.equal(action[1:], aligned_action[1:])
     assert torch.equal(stock.v_gov_b[1:], aligned.v_gov_b[1:])
     assert torch.allclose(after[0, :2], before[0, :2], atol=1.e-7, rtol=0.)
     assert abs(float(after[0, 2])) < 1.e-7

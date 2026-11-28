@@ -453,3 +453,13 @@ class FacetedWallEdgeReproofPipeline(WallEdgeReproofPipeline):
 class SupportedWallEdgeReproofPipeline(FacetedWallEdgeReproofPipeline):
     certify = staticmethod(partial(certify_local_wall_request, allow_oblique_facets=True,
                                    require_supported_approach=True))
+
+
+class GravityAlignedWallEdgeReproofPipeline(SupportedWallEdgeReproofPipeline):
+    def __call__(self, lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                 explicit_reset, controller_quaternion_wxyz):
+        from .escape_passage import align_planar_protective_action
+
+        action = align_planar_protective_action(governor_action, state_vec, self.config.governor)
+        return super().__call__(lidar_grid, state_vec, action, history_dt_s, episode_reset,
+                                explicit_reset, controller_quaternion_wxyz)
