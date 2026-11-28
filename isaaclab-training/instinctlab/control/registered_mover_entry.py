@@ -5,7 +5,7 @@ import math
 import numpy as np
 import torch
 
-from .escape_passage import observed_path_clearance, rotate_scan_rays
+from .escape_passage import _return_seed, observed_path_clearance, rotate_scan_rays
 from .measured_curve_deflection import _Fit, _LAGS_S, _return_shapes
 from .observed_mover_preview import _rank_continuations, _response
 from .tube_stopping import _ANGLE_BINS, _MOUNT, _surface_normals
@@ -38,13 +38,16 @@ def _patch_history(samples, normal, tangent, up, distance):
     signed = []
     split = []
     extents = []
+    angles = []
+    counts = []
     for points, normals in samples:
         offset = points@normal
         near = ((normals@normal >= math.cos(.045)) & (abs(offset-distance) < .12))
         if near.sum() < 24:
             return None
         median = float(np.median(offset[near]))
-        patch = points[near & (abs(offset-median) <= .013)]
+        matched = near & (abs(offset-median) <= .013)
+        patch = points[matched]
         along = patch@tangent
         if len(patch) < 24 or np.ptp(along) < .14 or np.ptp(patch@up) < .20:
             return None
@@ -56,13 +59,16 @@ def _patch_history(samples, normal, tangent, up, distance):
         split.append((median+np.median(residual[first]),
                       median+np.median(residual[~first]) if (~first).any() else median))
         extents.append((along.min(), along.max()))
+        direction = normals[matched].mean(axis=0)
+        angles.append(math.atan2(direction@tangent, direction@normal))
+        counts.append(len(patch))
     extent = np.asarray(extents)
     if np.max(abs(np.diff(signed))) > .045 or extent[:, 1].min()-extent[:, 0].max() < .10:
         return None
-    return np.asarray(signed), np.asarray(split)
+    return np.asarray(signed), np.asarray(split), np.asarray(angles), min(counts)
 
 
-def _stationary_translation(lidar, rays, rotations, basis, up):
+def _observed_planes(lidar, rays, rotations, basis, up):
     samples = []
     mount = np.asarray(_MOUNT)
     for scan, rotation in zip(lidar.reshape(4, 3, -1), rotations, strict=True):
@@ -93,13 +99,17 @@ def _stationary_translation(lidar, rays, rotations, basis, up):
             match = _patch_history(samples, normal, tangent, up, estimate)
             if match is None:
                 continue
-            signed, split = match
-            if any(normal@n > .999 and abs(signed[-1]-d[-1]) < .05 for n, d, _ in planes):
+            if any(normal@plane[0] > .999 and abs(match[0][-1]-plane[1][-1]) < .05 for plane in planes):
                 continue
-            planes.append((normal, signed, split))
+            planes.append((normal, *match))
+    return planes
+
+
+def _stationary_translation(lidar, rays, rotations, basis, up):
+    planes = _observed_planes(lidar, rays, rotations, basis, up)
     if len(planes) < 3:
         return None
-    normals, distances, split = (np.asarray(part) for part in zip(*planes, strict=True))
+    normals, distances, split, _, _ = (np.asarray(part) for part in zip(*planes, strict=True))
     directions = normals@basis
     if np.linalg.svd(directions, compute_uv=False)[-1] < .35:
         return None
@@ -112,6 +122,33 @@ def _stationary_translation(lidar, rays, rotations, basis, up):
         if np.linalg.norm(independent-translation, axis=1).max() > _DISTANCE_ERROR:
             return None
     return translation
+
+
+def reprove_plane_alignment(lidar, state, rays):
+    """Verify gyro transport with independent normals from two observed planes."""
+    history = state.reshape(4, 13)
+    if float(history[:, :3].norm(dim=1).max()) > .55:
+        return None
+    _, _, clock = _return_seed(lidar, state, maximum_range_m=_RANGE_LIMIT)
+    clock = clock[0]
+    gaps = clock.diff()
+    if bool(((gaps < .065) | (gaps > .135)).any()):
+        return None
+    up = -history[-1, 3:6].cpu().numpy()
+    up = up/np.linalg.norm(up)
+    forward = np.array([1., 0., 0.])-up*up[0]
+    forward /= np.linalg.norm(forward)
+    basis = np.stack((forward, np.cross(up, forward)), axis=1)
+    rotations = _rotations(history, clock)
+    planes = _observed_planes(lidar.cpu().numpy(), rays.cpu().numpy(), rotations, basis, up)
+    if len(planes) < 2 or any(plane[4] < 28 for plane in planes):
+        return None
+    normals = np.stack([plane[0] for plane in planes])@basis
+    if np.linalg.svd(normals, compute_uv=False)[-1] < .50:
+        return None
+    angles = np.stack([plane[3] for plane in planes])
+    error = float(np.max(abs(angles-angles[:, -1:])))
+    return (max(.0015, error), len(planes), float(gaps.min())) if error <= .006 else None
 
 
 def _registered_fit(lidar, state, rays, *, entry):
@@ -198,7 +235,7 @@ def registered_mover_entry(scan, state, selected, config, *, rays, coast, issued
              & (check.v_final_b@request >= .60*(request@request)))
     if not bool(valid.any()):
         return None
-    follow = check.v_final_b[valid]
+    following_actions, follow = actions[valid], check.v_final_b[valid]
     delta = follow-state[:, 48:51]
     limited = state[:, 48:51]+delta*(_FIRST_CHANGE/delta.norm(dim=1, keepdim=True).clamp_min(_FIRST_CHANGE))
     actions = action_for_velocity(limited, state[:, 48:51].expand_as(limited), config.governor)
@@ -208,7 +245,8 @@ def registered_mover_entry(scan, state, selected, config, *, rays, coast, issued
              & (distance <= _FIRST_CHANGE+.00001))
     if not bool(valid.any()):
         return None
-    actions, follow, first = actions[valid], follow[valid], check.v_final_b[valid]
+    actions, following_actions = actions[valid], following_actions[valid]
+    follow, first = follow[valid], check.v_final_b[valid]
     floor = observed_path_clearance(scan, rays, state.new_tensor(coast[1:2]), follow[None], hold_s=.60)[0]
     static = (floor-.055-.10*(first-follow).norm(dim=1)).cpu().numpy()
     first, follow = first.cpu().numpy(), follow.cpu().numpy()
@@ -220,7 +258,8 @@ def registered_mover_entry(scan, state, selected, config, *, rays, coast, issued
     if not eligible.any():
         return None
     best = int(np.where(eligible, ranking, -np.inf).argmax())
-    return actions[best], (float(floor[best]), previous, projection, float(ranking[best]), float(backup[best]))
+    witness = (float(floor[best]), previous, projection, float(ranking[best]), float(backup[best]))
+    return actions[best], following_actions[best], witness
 
 
 def registered_mover_handoff(scan, state, selected, config, *, rays, coast, issued):
@@ -239,3 +278,37 @@ def registered_mover_handoff(scan, state, selected, config, *, rays, coast, issu
     queued = state[0, 48:51].cpu().numpy()
     dynamic = _piecewise_clearance(fit, planar_coast, queued, target, target, .50, .70, spacing)[0]
     return dynamic >= _FLOOR and _rank_continuations(fit, coast, queued, target)[0] >= .15
+
+
+def reprove_registered_mover_follow(scan, state, action, count, config, *, rays, coast, issued):
+    """Renew the original direction from fresh observations or keep the stop backup."""
+    request = state[0, 45:48]
+    if float(request.norm()) < .03:
+        return None
+    history = state.reshape(4, 13)
+    delta = -.05*(history[-2, :3]+history[-1, :3])
+    action = action.clone()
+    direction = rotate_scan_rays((action[1:]-.5)[None], delta)[0]
+    gravity = history[-1, 3:6]
+    direction -= gravity*(direction@gravity)/gravity.square().sum()
+    action[1:] = .5+direction
+    result = issued(scan, state, action[None], config)
+    velocity = result.v_final_b
+    if (float(result.metrics['beta'][0, 0]) < .90 or bool(result.metrics['emergency'][0, 0])
+            or float(velocity[0]@request) < .60*float(request@request)
+            or float((velocity-state[:, 48:51]).norm()) > _FIRST_CHANGE+.00001):
+        return None
+    registered = _registered_fit(scan, state, rays, entry=False)
+    if registered is None:
+        return None
+    fit, basis, spacing = registered
+    planar = (coast@basis[:2])@basis.T
+    queued, target = state[0, 48:51].cpu().numpy(), velocity.cpu().numpy()
+    horizon, hold = max(.70, 1.-.10*count), max(.30, .60-.10*count)
+    static = float(observed_path_clearance(scan, rays, state.new_tensor(coast[1:2]), velocity[None], hold_s=hold)[0, 0])-.055
+    planned = float(_piecewise_clearance(fit, planar, queued, target, target, hold, horizon, spacing)[0])
+    backup = float(_piecewise_clearance(fit, planar, queued, target, np.zeros_like(target), .10,
+                                       .80 if count <= 2 else .60, spacing)[0])
+    rank = float(_rank_continuations(fit, coast, queued, target)[0])
+    floor = min(static, planned, backup)
+    return (action, (floor, planned, 0., rank, backup)) if floor >= _FLOOR and rank >= .15 else None

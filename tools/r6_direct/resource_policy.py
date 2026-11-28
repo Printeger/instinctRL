@@ -35,6 +35,10 @@ from training_workloads.unified_h1.command_replay import (
     NOVEL_OBSERVED_MOVER_PREVIEW_ID as COMMAND_NOVEL_OBSERVED_MOVER_PREVIEW_ID,
     NOVEL_GRAVITY_PREVIEW_RENEWAL_ID as COMMAND_NOVEL_GRAVITY_PREVIEW_RENEWAL_ID,
     NOVEL_REGISTERED_MOVER_ENTRY_ID as COMMAND_NOVEL_REGISTERED_MOVER_ENTRY_ID,
+    NOVEL_MOVER_PASSAGE_REPROOF_ID as COMMAND_NOVEL_MOVER_PASSAGE_REPROOF_ID,
+    NOVEL_V60_CLOSURE_FRESH_ID as COMMAND_NOVEL_V60_CLOSURE_FRESH_ID,
+    LONG_V60_CLOSURE_ID as COMMAND_LONG_V60_CLOSURE_ID,
+    REGRESSION_V60_CLOSURE_ID as COMMAND_REGRESSION_V60_CLOSURE_ID,
     NOVEL_OFFSET_STOP_ID as COMMAND_NOVEL_OFFSET_STOP_ID, NOVEL_PRIORITY_ID as COMMAND_NOVEL_PRIORITY_ID,
     NOVEL_STANDOFF_ID as COMMAND_NOVEL_STANDOFF_ID,
     NOVEL_SETTLED_STOP_ID as COMMAND_NOVEL_SETTLED_STOP_ID,
@@ -376,6 +380,14 @@ BOUNDED_SCOPES = {
         'docs/experiments/instinct-continuous-command/gravity_preview_renewal/RESOURCE_LEDGER.json'),
     COMMAND_NOVEL_REGISTERED_MOVER_ENTRY_ID: (COMMAND_REPLAY_SCHEMA,
         'docs/experiments/instinct-continuous-command/registered_mover_entry/RESOURCE_LEDGER.json'),
+    COMMAND_NOVEL_MOVER_PASSAGE_REPROOF_ID: (COMMAND_REPLAY_SCHEMA,
+        'docs/experiments/instinct-continuous-command/mover_passage_reproof/RESOURCE_LEDGER.json'),
+    COMMAND_NOVEL_V60_CLOSURE_FRESH_ID: (COMMAND_REPLAY_SCHEMA,
+        'docs/experiments/instinct-continuous-command/mover_passage_reproof/fresh/RESOURCE_LEDGER.json'),
+    COMMAND_REGRESSION_V60_CLOSURE_ID: (COMMAND_REPLAY_SCHEMA,
+        'docs/experiments/instinct-continuous-command/mover_passage_reproof/regression/RESOURCE_LEDGER.json'),
+    COMMAND_LONG_V60_CLOSURE_ID: (COMMAND_REPLAY_SCHEMA,
+        'docs/experiments/instinct-continuous-command/mover_passage_reproof/long/RESOURCE_LEDGER.json'),
     COMMAND_NOVEL_RETREAT_CONTINUATION_ID: (COMMAND_REPLAY_SCHEMA,
         'docs/experiments/instinct-continuous-command/retreat_continuation/RESOURCE_LEDGER.json'),
     COMMAND_NOVEL_RETREAT_CONTINUATION_CONFIRM_ID: (COMMAND_REPLAY_SCHEMA,
@@ -466,11 +478,14 @@ def third_policy(pin, *, schema=THIRD_SCHEMA):
     if pin is None:
         raise ValueError('DIRECT_THIRD_RESOURCE_AUTHORITY_REQUIRED')
     policy = json.loads(checked(pin).read_text())
+    zero_allowed = {OUTPUT_CAP}
+    if schema == COMMAND_REPLAY_SCHEMA:
+        zero_allowed.update(('training_transitions', 'training_checkpoint_writes'))
     if (set(policy) != {'schema_version', 'user_authority', 'caps', 'elapsed_seconds'}
             or policy['schema_version'] != schema
             or set(policy['caps']) != THIRD_CAPS
             or type(policy['elapsed_seconds']) is not int or policy['elapsed_seconds'] <= 0
-            or not all(type(v) is int and (v >= 0 if key == OUTPUT_CAP else v > 0)
+            or not all(type(v) is int and (v >= 0 if key in zero_allowed else v > 0)
                        for key, v in policy['caps'].items())):
         raise ValueError('DIRECT_THIRD_RESOURCE_POLICY')
     checked(policy['user_authority'])

@@ -186,7 +186,7 @@ def run(plan, input_pin):
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
             VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
-            CORRIDOR_PROJECTION_EXECUTION, NOVEL_PREFIX, REGRESSION_IDS,
+            CORRIDOR_PROJECTION_EXECUTION, MOVER_PASSAGE_REPROOF_EXECUTION, NOVEL_PREFIX, REGRESSION_IDS,
             SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS, CURRENT_REQUEST_RECOVERY_EXECUTION, SUPPORTED_WALL_EXECUTIONS,
             WALL_TANGENT_EXECUTIONS,
             load_lane_streams, matches as command_replay,
@@ -552,15 +552,22 @@ def run(plan, input_pin):
                     if retreat_stop:
                         execution['verify_retreat_stop'] = True
                     if option_version in SUPPORTED_WALL_EXECUTIONS:
-                        verify_supported_wall_pipelines(env, aligned=option_version == CORRIDOR_PROJECTION_EXECUTION)
+                        verify_supported_wall_pipelines(env, aligned=option_version in (CORRIDOR_PROJECTION_EXECUTION, MOVER_PASSAGE_REPROOF_EXECUTION))
                         execution['supported_wall_approach'] = True
-                    if option_version in (CURRENT_REQUEST_RECOVERY_EXECUTION, CORRIDOR_PROJECTION_EXECUTION):
+                    if option_version in (CURRENT_REQUEST_RECOVERY_EXECUTION, CORRIDOR_PROJECTION_EXECUTION,
+                                          MOVER_PASSAGE_REPROOF_EXECUTION):
                         verify_current_request_recovery(env)
                         execution.update(retry_command_handoff=True, verify_outward_brake=True)
-                    if option_version == CORRIDOR_PROJECTION_EXECUTION:
+                    if option_version in (CORRIDOR_PROJECTION_EXECUTION, MOVER_PASSAGE_REPROOF_EXECUTION):
                         verify_corridor_projection(env)
                         execution.update(align_planar_protection=True, verify_neutral_retry=True,
                                          observed_turn_braking=True, static_turn_onset=True, corridor_projection=True)
+                    if option_version == MOVER_PASSAGE_REPROOF_EXECUTION:
+                        if not (env.escape_option.verify_registered_mover_entry
+                                and env.escape_option.verify_mover_passage_reproof
+                                and env.escape_option.verify_registered_mover_follow):
+                            raise ValueError('COMMAND_REGRESSION_MOVER_PASSAGE_REPROOF')
+                        execution['mover_passage_reproof'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

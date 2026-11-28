@@ -140,10 +140,13 @@ NOVEL_MEASURED_CURVE_APPROACH_ID = NOVEL_PREFIX+'111'
 NOVEL_OBSERVED_MOVER_PREVIEW_ID = NOVEL_PREFIX+'112'
 NOVEL_GRAVITY_PREVIEW_RENEWAL_ID = NOVEL_PREFIX+'113'
 NOVEL_REGISTERED_MOVER_ENTRY_ID = NOVEL_PREFIX+'114'
+NOVEL_MOVER_PASSAGE_REPROOF_ID = NOVEL_PREFIX+'115'
+NOVEL_V60_CLOSURE_FRESH_ID = NOVEL_PREFIX+'116'
 OBSERVABLE_SWEEP_DEVELOPMENT_IDS = (NOVEL_OBSERVABLE_SWEEP_ID, NOVEL_MEASURED_CURVE_DEFLECTION_ID,
                                    NOVEL_MEASURED_CURVE_SLEW_ID, NOVEL_MEASURED_CURVE_APPROACH_ID,
                                    NOVEL_OBSERVED_MOVER_PREVIEW_ID, NOVEL_GRAVITY_PREVIEW_RENEWAL_ID,
-                                   NOVEL_REGISTERED_MOVER_ENTRY_ID)
+                                   NOVEL_REGISTERED_MOVER_ENTRY_ID, NOVEL_MOVER_PASSAGE_REPROOF_ID,
+                                   NOVEL_V60_CLOSURE_FRESH_ID)
 RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID,
                            *OBSERVABLE_SWEEP_DEVELOPMENT_IDS)
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
@@ -154,6 +157,7 @@ MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATI
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 LONG_OBSERVABLE_SWEEP_ID = LONG_PREFIX+'02'
+LONG_V60_CLOSURE_ID = LONG_PREFIX+'03'
 FORMAL_GATE_SHA256 = '45c89839e87a4b43a3c0e2fd1cc5e96dd8eed51996a933458f711c510c247a52'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
 ENDURANCE_PREFIXES = (ENDURANCE_PREFIX, HOVER_PREFIX, *PHYSICS_CLEARANCE_PREFIXES)
@@ -163,8 +167,9 @@ REGRESSION_ID = PREFIX + 'R6-01'
 REGRESSION_RETRY_ID = PREFIX + 'R6-02'
 REGRESSION_SUPPORTED_WALL_ID = PREFIX + 'R6-03'
 REGRESSION_CORRIDOR_PROJECTION_ID = PREFIX + 'R6-04'
+REGRESSION_V60_CLOSURE_ID = PREFIX + 'R6-05'
 REGRESSION_IDS = (REGRESSION_ID, REGRESSION_RETRY_ID, REGRESSION_SUPPORTED_WALL_ID,
-                  REGRESSION_CORRIDOR_PROJECTION_ID)
+                  REGRESSION_CORRIDOR_PROJECTION_ID, REGRESSION_V60_CLOSURE_ID)
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -269,7 +274,9 @@ MEASURED_CURVE_APPROACH_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v56'
 OBSERVED_MOVER_PREVIEW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v57'
 GRAVITY_PREVIEW_RENEWAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v58'
 REGISTERED_MOVER_ENTRY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v59'
-GRAVITY_PREVIEW_RENEWAL_EXECUTIONS = (GRAVITY_PREVIEW_RENEWAL_EXECUTION, REGISTERED_MOVER_ENTRY_EXECUTION)
+MOVER_PASSAGE_REPROOF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v60'
+REGISTERED_MOVER_ENTRY_EXECUTIONS = (REGISTERED_MOVER_ENTRY_EXECUTION, MOVER_PASSAGE_REPROOF_EXECUTION)
+GRAVITY_PREVIEW_RENEWAL_EXECUTIONS = (GRAVITY_PREVIEW_RENEWAL_EXECUTION, *REGISTERED_MOVER_ENTRY_EXECUTIONS)
 OBSERVED_MOVER_PREVIEW_EXECUTIONS = (OBSERVED_MOVER_PREVIEW_EXECUTION, *GRAVITY_PREVIEW_RENEWAL_EXECUTIONS)
 MEASURED_CURVE_APPROACH_EXECUTIONS = (MEASURED_CURVE_APPROACH_EXECUTION, *OBSERVED_MOVER_PREVIEW_EXECUTIONS)
 MEASURED_CURVE_SLEW_EXECUTIONS = (MEASURED_CURVE_SLEW_EXECUTION, *MEASURED_CURVE_APPROACH_EXECUTIONS)
@@ -680,7 +687,9 @@ def novel_contract(params):
                   NOVEL_FINITE_EDGE_ID: (CONFIRMED_TUBE_EXECUTION, FINITE_EDGE_EXECUTION),
                   NOVEL_EDGE_CONTINUATION_ID: (FINITE_EDGE_EXECUTION, EDGE_CONTINUATION_EXECUTION),
                   NOVEL_TANGENT_MAGNITUDE_ID: (FINITE_EDGE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION),
-                  NOVEL_ROTATION_TUBE_ID: (FINITE_EDGE_EXECUTION, ROTATION_TUBE_EXECUTION)}.get(params['experiment_id'])
+                  NOVEL_ROTATION_TUBE_ID: (FINITE_EDGE_EXECUTION, ROTATION_TUBE_EXECUTION),
+                  NOVEL_V60_CLOSURE_FRESH_ID: (GRAVITY_PREVIEW_RENEWAL_EXECUTION,
+                                              MOVER_PASSAGE_REPROOF_EXECUTION)}.get(params['experiment_id'])
     paired = comparison is not None
     prefix_seconds = MATCHED_ENDURANCE_PREFIX_SECONDS.get(params['experiment_id'])
     labels = {'control', 'candidate'} if paired else {'candidate'}
@@ -809,6 +818,8 @@ def novel_contract(params):
         execution = (GRAVITY_PREVIEW_RENEWAL_EXECUTION,)
     elif params['experiment_id'] == NOVEL_REGISTERED_MOVER_ENTRY_ID:
         execution = (REGISTERED_MOVER_ENTRY_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_MOVER_PASSAGE_REPROOF_ID:
+        execution = (MOVER_PASSAGE_REPROOF_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FRONT_WALL_HANDOFF_ID:
         execution = (FRONT_WALL_HANDOFF_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COLLECTIVE_PROJECTION_ID:
@@ -894,6 +905,8 @@ def long_contract(params):
     sweep = schema in versions[1:]
     ramped = schema in versions[2:]
     observable = schema == versions[3]
+    observable_execution = {LONG_OBSERVABLE_SWEEP_ID: CORRIDOR_PROJECTION_EXECUTION,
+                            LONG_V60_CLOSURE_ID: MOVER_PASSAGE_REPROOF_EXECUTION}.get(params['experiment_id'])
     crossing_field = 'street_sweep' if sweep else 'street_center_ms'
     scenario = protocol.get(crossing_field)
     if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
@@ -902,8 +915,8 @@ def long_contract(params):
             or protocol['experiment_id'] != params['experiment_id'] or protocol['scene_seed'] != params['seed']
             or protocol['stream'] != params['stream'] or protocol['execution'] != params['execution']
             or protocol['checkpoint'] != params['models']['candidate']
-            or observable != (params['experiment_id'] == LONG_OBSERVABLE_SWEEP_ID)
-            or (observable and (params['execution'] != CORRIDOR_PROJECTION_EXECUTION
+            or observable != (observable_execution is not None)
+            or (observable and (params['execution'] != observable_execution
                                 or protocol['acceptance_gates'].get('sha256') != FORMAL_GATE_SHA256))
             or not (scenario == authored_street_sweep(params['seed'], ramped=ramped, observable=observable)
                     if sweep else valid_crossing_centers(scenario))
@@ -1470,6 +1483,8 @@ def run(backend, params):
                         tensors['escape_observed_mover_preview'] = pre['observed_mover_preview']
                     if 'registered_mover_entry' in pre:
                         tensors['escape_registered_mover_entry'] = pre['registered_mover_entry']
+                    if 'mover_passage_reproof' in pre:
+                        tensors['escape_mover_passage_reproof'] = pre['mover_passage_reproof']
                     if 'braking' in option:
                         tensors['escape_braking'] = option['braking']
                     if 'retreating' in option:
@@ -1666,9 +1681,13 @@ def run(backend, params):
             model['observed_mover_preview'] = True
             if gravity_reproof:
                 model['gravity_preview_renewal'] = True
-        if execution == REGISTERED_MOVER_ENTRY_EXECUTION:
+        if execution in REGISTERED_MOVER_ENTRY_EXECUTIONS:
             if not env.escape_option.verify_registered_mover_entry:
                 raise ValueError('COMMAND_REGISTERED_MOVER_ENTRY_PROOF')
             model['registered_mover_entry'] = True
+        if execution == MOVER_PASSAGE_REPROOF_EXECUTION:
+            if not (env.escape_option.verify_mover_passage_reproof and env.escape_option.verify_registered_mover_follow):
+                raise ValueError('COMMAND_MOVER_PASSAGE_REPROOF')
+            model['mover_passage_reproof'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

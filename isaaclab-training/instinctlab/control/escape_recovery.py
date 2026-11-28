@@ -118,6 +118,7 @@ MEASURED_CURVE_APPROACH_25 = 'm4-escape-brake-tube-p25-crossing-stop-v56'
 OBSERVED_MOVER_PREVIEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v57'
 GRAVITY_PREVIEW_RENEWAL_25 = 'm4-escape-brake-tube-p25-crossing-stop-v58'
 REGISTERED_MOVER_ENTRY_25 = 'm4-escape-brake-tube-p25-crossing-stop-v59'
+MOVER_PASSAGE_REPROOF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v60'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -157,7 +158,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25, STATIC_TURN_ONSET_25: 25,
                        CORRIDOR_PROJECTION_25: 25, MEASURED_CURVE_DEFLECTION_25: 25,
                        MEASURED_CURVE_SLEW_25: 25, MEASURED_CURVE_APPROACH_25: 25, OBSERVED_MOVER_PREVIEW_25: 25,
-                       GRAVITY_PREVIEW_RENEWAL_25: 25, REGISTERED_MOVER_ENTRY_25: 25}
+                       GRAVITY_PREVIEW_RENEWAL_25: 25, REGISTERED_MOVER_ENTRY_25: 25, MOVER_PASSAGE_REPROOF_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -194,7 +195,8 @@ class EscapeRecovery(EscapeOption):
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
                  verify_neutral_retry=False, observed_turn_braking=False, verify_static_turn=False,
                  verify_measured_curve=False, limit_curve_entry=False, require_curve_approach=False,
-                 verify_observed_mover_preview=False, gravity_preview_reproof=False, registered_mover_entry=False):
+                 verify_observed_mover_preview=False, gravity_preview_reproof=False, registered_mover_entry=False,
+                 registered_mover_follow=False, mover_passage_reproof=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -216,6 +218,8 @@ class EscapeRecovery(EscapeOption):
         self.verify_measured_curve = verify_measured_curve
         self.verify_observed_mover_preview = verify_observed_mover_preview
         self.verify_registered_mover_entry = registered_mover_entry
+        self.verify_registered_mover_follow = registered_mover_follow
+        self.verify_mover_passage_reproof = mover_passage_reproof
         if verify_measured_curve:
             from .measured_curve_deflection import MeasuredCurveDeflection
 
@@ -233,6 +237,17 @@ class EscapeRecovery(EscapeOption):
                 raise ValueError('Registered mover entry requires both measured protections')
             self.registered_mover_rearm = torch.zeros_like(self.remaining)
             self.registered_mover_witness = self.direction.new_zeros((lanes, 6))
+        if registered_mover_follow:
+            if not registered_mover_entry:
+                raise ValueError('Registered continuation requires a registered first command')
+            self.registered_mover_goal = self.direction.new_zeros((lanes, 4))
+        if mover_passage_reproof:
+            from .mover_passage_reproof import MoverPassageReproof
+
+            if not registered_mover_follow:
+                raise ValueError('Mover passage renewal requires registered continuation')
+            self.mover_passage = MoverPassageReproof(self.direction)
+            self.mover_passage_witness = self.direction.new_zeros((lanes, 7))
         if verify_static_turn:
             if not verified_retreat_onset:
                 raise ValueError('Static turn recheck requires verified retreat onset')
@@ -530,6 +545,11 @@ class EscapeRecovery(EscapeOption):
         if self.verify_registered_mover_entry:
             self.registered_mover_rearm[lanes] = 0
             self.registered_mover_witness[lanes] = 0.
+        if self.verify_registered_mover_follow:
+            self.registered_mover_goal[lanes] = 0.
+        if self.verify_mover_passage_reproof:
+            self.mover_passage.reset(lanes)
+            self.mover_passage_witness[lanes] = 0.
         if self.static_scan_stop:
             self.static_stop_verified[lanes] = False
         if self.verify_overlapping_stop:
@@ -2939,15 +2959,32 @@ class EscapeRecovery(EscapeOption):
         selected[used] = actor_action[used]
         return margin
 
+    def supersede_mover_edge_choice(self, lanes):
+        if self.wall_tangent:
+            self.tangent_used[lanes] = False
+        if self.finite_edge:
+            self.detour_used[lanes] = False
+        if self.shallow_steering:
+            self.shallow_used[lanes] = False
+        if self.observed_heading_steering:
+            self.observed_heading_used[lanes] = False
+        if self.edge_continuation:
+            self.edge_continued[lanes] = False
+            self.edge_steps[lanes] = 0
+
     def apply_registered_mover_entry(self, policy, selected, config, blocked):
         from .measured_curve_deflection import fresh_motion_history
-        from .registered_mover_entry import registered_mover_entry, registered_mover_handoff
+        from .registered_mover_entry import (
+            registered_mover_entry, registered_mover_handoff, reprove_registered_mover_follow,
+        )
 
         lidar, state = policy['lidar_grid'], policy['state_vec']
         history = state.reshape(-1, 4, 13)
         speed = history[:, -1, 6:9].norm(dim=1)
         fresh = fresh_motion_history(history) & (self.curve_deflection.age >= 4.)
         pending = self.registered_mover_rearm == 10
+        if self.verify_registered_mover_follow:
+            pending |= ((self.registered_mover_witness[:, 0] == 4.) & (self.registered_mover_rearm >= 7))
         self.registered_mover_rearm.sub_(1).clamp_min_(0)
         self.registered_mover_witness.zero_()
         rays = self.detector._full_rays
@@ -2957,7 +2994,18 @@ class EscapeRecovery(EscapeOption):
             if registered_mover_handoff(scan, packet, selected[lane:lane+1], config,
                                          rays=rays, coast=coast, issued=self.issued):
                 self.registered_mover_witness[lane, 0] = 2.
-            elif not bool(self.tangent_used[lane] | self.detour_used[lane]):
+                continue
+            if self.verify_registered_mover_follow:
+                count = 10-int(self.registered_mover_rearm[lane])
+                proof = reprove_registered_mover_follow(scan, packet, self.registered_mover_goal[lane], count,
+                                                        config, rays=rays, coast=coast, issued=self.issued)
+                if proof is not None:
+                    selected[lane], witness = proof
+                    self.registered_mover_goal[lane] = selected[lane]
+                    self.registered_mover_witness[lane] = state.new_tensor((4., *witness))
+                    self.supersede_mover_edge_choice(lane)
+                    continue
+            if not bool(self.tangent_used[lane] | self.detour_used[lane]):
                 neutral = selected.new_tensor([[0., .5, .5, .5]])
                 result = self.issued(scan, packet, neutral, config)
                 if not bool(result.metrics['emergency'][0, 0]):
@@ -2974,11 +3022,13 @@ class EscapeRecovery(EscapeOption):
                                            action_for_velocity=self.action_for_velocity)
             if proof is None:
                 continue
-            selected[lane], witness = proof
+            selected[lane], goal, witness = proof
+            if self.verify_registered_mover_follow:
+                self.registered_mover_goal[lane] = goal
             self.registered_mover_rearm[lane] = 10
             self.registered_mover_witness[lane] = state.new_tensor((1., *witness))
         mode = self.registered_mover_witness[:, 0]
-        self.measured_mover_active |= (mode == 1.) | (mode == 3.)
+        self.measured_mover_active |= (mode == 1.) | (mode == 3.) | (mode == 4.)
 
     def apply_recovery(self, policy, action, config):
         if self.verify_retreat_onset_side:
@@ -3076,6 +3126,27 @@ class EscapeRecovery(EscapeOption):
                                       | self.brake_recovery_verified | self.offset_stopped | self.recovering
                                       | self.opening_steered | self.measured_mover_active)
                 self.apply_registered_mover_entry(policy, selected, config, registered_blocked)
+            if self.verify_mover_passage_reproof:
+                protected = (self.retreating | self.holding | self.static_stop_verified | self.crossing_restart_verified
+                             | (self.zero_crossing_commit > 0) | (self.observed_turn_brake_floor > 0.)
+                             | self.handed_off | self.tracked_resume_used | self.composed_crossing_verified
+                             | self.brake_recovery_verified | self.offset_stopped | self.recovering
+                             | self.opening_steered | self.measured_mover_active)
+                self.mover_passage_witness = self.mover_passage.apply(
+                    policy['lidar_grid'], policy['state_vec'], selected, config,
+                    rays=self.detector._full_rays, observer=self.curve_deflection, issued=self.issued,
+                    active=self.applied, ranked=self.ranked, braking=self.braking,
+                    intercepting=self.intercepted | self.intercept_continued, blocked=protected)
+                chosen = self.mover_passage_witness[:, 0] != 0.
+                self.measured_mover_active |= chosen
+                self.applied[chosen] = False
+                self.remaining[chosen] = 0
+                self.ranked[chosen] = False
+                self.braking[chosen] = False
+                self.intercept_steps[chosen] = 0
+                self.intercepted[chosen] = False
+                self.intercept_continued[chosen] = False
+                self.supersede_mover_edge_choice(chosen)
         return selected
 
     def _apply_recovery(self, policy, action, config):
