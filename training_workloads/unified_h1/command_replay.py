@@ -1330,6 +1330,8 @@ def run(backend, params):
                         tensors['escape_retreat_onset_side_floor'] = option['retreat_onset_side_floor']
                     if 'retreat_stop_floor' in option:
                         tensors['escape_retreat_stop_floor'] = option['retreat_stop_floor']
+                    if 'composed_crossing_floor' in option:
+                        tensors['escape_composed_crossing_floor'] = option['composed_crossing_floor']
                     if 'hover_own_side' in option:
                         tensors['escape_hover_own_side'] = option['hover_own_side']
                     if 'far_crossing_refined' in option:
