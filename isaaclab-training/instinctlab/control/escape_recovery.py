@@ -85,6 +85,7 @@ CROSSING_STOP_25_V23 = 'm4-escape-brake-tube-p25-crossing-stop-v23'
 CROSSING_STOP_25_V24 = 'm4-escape-brake-tube-p25-crossing-stop-v24'
 CROSSING_STOP_25_V25 = 'm4-escape-brake-tube-p25-crossing-stop-v25'
 CROSSING_STOP_25_V26 = 'm4-escape-brake-tube-p25-crossing-stop-v26'
+CROSSING_STOP_25_V27 = 'm4-escape-brake-tube-p25-crossing-stop-v27'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -112,7 +113,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V16: 25, CROSSING_STOP_25_V17: 25, CROSSING_STOP_25_V18: 25,
                        CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25, CROSSING_STOP_25_V21: 25,
                        CROSSING_STOP_25_V22: 25, CROSSING_STOP_25_V23: 25, CROSSING_STOP_25_V24: 25,
-                       CROSSING_STOP_25_V25: 25, CROSSING_STOP_25_V26: 25}
+                       CROSSING_STOP_25_V25: 25, CROSSING_STOP_25_V26: 25, CROSSING_STOP_25_V27: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -139,7 +140,7 @@ class EscapeRecovery(EscapeOption):
                  hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
                  retain_only_clipped_retreat=False, verify_hover_reference_reserve=False,
                  verify_crossing_restart=False, verify_overlapping_stop=False, verify_brake_recovery=False,
-                 verify_retreat_continuation=False):
+                 verify_retreat_continuation=False, verify_brake_transition=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -219,6 +220,11 @@ class EscapeRecovery(EscapeOption):
                 raise ValueError('Brake recovery requires verified crossing restart')
             self.brake_recovery_verified = torch.zeros_like(self.applied)
             self.brake_recovery_bounds = self.direction.new_zeros((lanes, 2))
+        self.verify_brake_transition = verify_brake_transition
+        if verify_brake_transition:
+            if not verify_brake_recovery:
+                raise ValueError('Brake transition requires verified brake recovery')
+            self.brake_transition_steps = torch.zeros_like(self.remaining)
         self.verify_retreat_continuation = verify_retreat_continuation
         if verify_retreat_continuation:
             if not (verify_overlapping_stop and retreat_priority and commit_intercept):
@@ -376,6 +382,8 @@ class EscapeRecovery(EscapeOption):
         if self.verify_brake_recovery:
             self.brake_recovery_verified[lanes] = False
             self.brake_recovery_bounds[lanes] = 0.
+        if self.verify_brake_transition:
+            self.brake_transition_steps[lanes] = 0
         if self.verify_retreat_continuation:
             self.retreat_continuation_steps[lanes] = 0
             self.retreat_continuation_verified[lanes] = False
@@ -1216,7 +1224,7 @@ class EscapeRecovery(EscapeOption):
         self.tracked_resume_witness[accepted] = False
 
     def verify_request_during_braking(self, lidar, state, selected, actor_action, config):
-        from .escape_passage import braking_recovery_clearance, moving_intercepts
+        from .escape_passage import braking_recovery_clearance, intercept_scores, moving_intercepts
 
         self.brake_recovery_verified.zero_()
         self.brake_recovery_bounds.zero_()
@@ -1229,6 +1237,14 @@ class EscapeRecovery(EscapeOption):
         protected = (self.intercepted | self.intercept_continued | self.retreating | self.ranked | self.holding
                      | self.static_stop_verified | self.handed_off | self.offset_stopped | self.crossing_restart_verified)
         eligible = self.applied & self.braking & ~protected & fresh & (speed >= .08) & (speed <= .30)
+        if self.verify_brake_transition:
+            remaining = self.brake_transition_steps.clone()
+            self.brake_transition_steps.zero_()
+            previous = history[:, -2, 6:9]
+            request_change = (request-previous).norm(dim=1)
+            previous_speed = previous.norm(dim=1)
+            same_heading = (previous_speed >= .08) & ((request*previous).sum(dim=1) >= .98*speed*previous_speed)
+            eligible &= (request_change >= .15) | ((remaining > 0) & same_heading)
         trials = eligible.nonzero().flatten()
         if not len(trials):
             return
@@ -1253,6 +1269,24 @@ class EscapeRecovery(EscapeOption):
         floor = braking_recovery_clearance(lidar[observed], rays, state[observed], position, motion,
                                            coast, radius, target[suitable][fitted])
         verified = (floor[:, 0] >= .39) & (floor[:, 1] >= .43)
+        if self.verify_brake_transition:
+            along = torch.nn.functional.normalize(motion, dim=1)
+            normal = torch.stack((-along[:, 1], along[:, 0]), dim=1)
+            inward = normal*(position*normal).sum(dim=1).sign()[:, None]
+            latest = request[observed, :2]
+            earlier = previous[observed]
+            prior_clearance = intercept_scores(position, motion, coast, radius, earlier[:, None],
+                                               hold_s=2.4, preview_steps=121)[:, 0]
+            onset = ((request_change[observed] >= .15) & ((earlier[:, :2]*inward).sum(dim=1) >= .12)
+                     & (prior_clearance < .36))
+            renewing = (remaining[observed] > 0) & same_heading[observed]
+            tangent = (latest*inward).sum(dim=1).abs() <= .04
+            against_crossing = (latest*along).sum(dim=1) <= -.50*speed[observed]
+            verified &= (onset | renewing) & tangent & against_crossing
+            # An unverified packet drops the renewal. Current observations must
+            # support the exact request again on every packet.
+            self.brake_transition_steps[observed[verified]] = torch.where(
+                onset[verified], 7, remaining[observed[verified]]-1)
         accepted = observed[verified]
         # This command is independent of how the braking option evolves next tick.
         selected[accepted] = actor_action[accepted]

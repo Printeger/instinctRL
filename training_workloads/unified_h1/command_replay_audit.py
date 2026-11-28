@@ -15,7 +15,7 @@ from .command_replay import (
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
-    LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTION,
+    LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION,
     RETREAT_CONTINUATION_EXECUTION,
     FRONT_WALL_BRAKING_EXECUTION, FRONT_WALL_BRAKING_TRACE_FIELDS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
@@ -370,9 +370,12 @@ def audit(output, params, counters):
         overlapping_stop_profile = model['execution'] in OVERLAPPING_STOP_EXECUTIONS
         if model.get('verify_overlapping_stop', False) is not overlapping_stop_profile:
             raise ValueError('COMMAND_REPLAY_OVERLAPPING_STOP_PROFILE')
-        brake_recovery_profile = model['execution'] == BRAKE_RECOVERY_EXECUTION
+        brake_recovery_profile = model['execution'] in BRAKE_RECOVERY_EXECUTIONS
         if model.get('verify_brake_recovery', False) is not brake_recovery_profile:
             raise ValueError('COMMAND_REPLAY_BRAKE_RECOVERY_PROFILE')
+        brake_transition_profile = model['execution'] == BRAKE_TRANSITION_EXECUTION
+        if model.get('verify_brake_transition', False) is not brake_transition_profile:
+            raise ValueError('COMMAND_REPLAY_BRAKE_TRANSITION_PROFILE')
         front_wall_profile = model['execution'] == FRONT_WALL_BRAKING_EXECUTION
         if model.get('front_wall_braking', False) is not front_wall_profile:
             raise ValueError('COMMAND_REPLAY_FRONT_WALL_PROFILE')

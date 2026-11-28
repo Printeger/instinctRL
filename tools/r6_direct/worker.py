@@ -178,7 +178,7 @@ def run(plan, input_pin):
             FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
             CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
             CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTION,
-            OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTION, RETREAT_CONTINUATION_EXECUTION,
+            OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -373,7 +373,8 @@ def run(plan, input_pin):
                     front_wall_braking = option_version == FRONT_WALL_BRAKING_EXECUTION
                     overlapping_stop = option_version in OVERLAPPING_STOP_EXECUTIONS
                     retreat_continuation = option_version == RETREAT_CONTINUATION_EXECUTION
-                    brake_recovery = option_version == BRAKE_RECOVERY_EXECUTION
+                    brake_recovery = option_version in BRAKE_RECOVERY_EXECUTIONS
+                    brake_transition = option_version == BRAKE_TRANSITION_EXECUTION
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,
@@ -422,6 +423,7 @@ def run(plan, input_pin):
                             or env.local_wall_stopping != local_wall_stopping
                             or env.escape_option.verify_overlapping_stop != overlapping_stop
                             or env.escape_option.verify_brake_recovery != brake_recovery
+                            or env.escape_option.verify_brake_transition != brake_transition
                             or env.front_wall_braking != front_wall_braking
                             or env.escape_option.verify_retreat_continuation != retreat_continuation):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
@@ -512,6 +514,8 @@ def run(plan, input_pin):
                         execution['verify_overlapping_stop'] = True
                     if brake_recovery:
                         execution['verify_brake_recovery'] = True
+                    if brake_transition:
+                        execution['verify_brake_transition'] = True
                     if front_wall_braking:
                         execution['front_wall_braking'] = True
                     if retreat_continuation:
