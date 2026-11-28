@@ -1,0 +1,23 @@
+{
+  "adjacent": [
+    1065,
+    1067
+  ],
+  "observed_through": 1070,
+  "reopening_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/INPUTS.json",
+    "sha256": "07e15913b072cb6cb68755f613e2ac912df946c6735d5bcccff9db29928b27cd"
+  },
+  "split_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_split/INPUTS.json",
+    "sha256": "b966c2785110c4c776799e2f85bfcddb62878961dd9d4398da253c4b2a19fce3"
+  },
+  "split_result": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLY-SPLIT/SPLITS.json",
+    "sha256": "830586db076e26bd976d946cbe55772142953991f43736f5ca3e548809647e63"
+  },
+  "split_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_split/find_split.py",
+    "sha256": "38682560164210637a8115e99b42171161c29cbc6d835306a77c0452713f39f8"
+  }
+}
