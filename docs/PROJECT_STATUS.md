@@ -30,6 +30,8 @@
 
 `v55` 的首拍限速配对通过行为审核。第 20 路连续发出七拍提前避让，原接触消失，全程最低物理净空 0.343 米。第 22 路在来物仍远离时进入同一分支，于第 678 拍新增接触并重置，最低净空 −0.123 米。全组首飞 31/32、松杆 30/32，未过短程安全门槛。 [配对结果](experiments/instinct-continuous-command/measured_curve_slew/REPORT.md)
 
+`v56` 将提前避让限制为实收来物连续接近。32/32 路完成配对首飞，零碰撞和重置。第 20、22 路最低净空分别为 0.343、0.167 米。全组松杆 30/32，第 16、17、19 路仍低于 0.15 米，室内最长可行低进展 4.6 秒。同版完整 R6 和独立 30 分钟验收待完成。 [配对结果](experiments/instinct-continuous-command/measured_curve_approach/REPORT.md)
+
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
