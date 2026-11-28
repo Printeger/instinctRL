@@ -86,6 +86,8 @@
 
 同侧撤离复核的 Crazy 配对完成 32/32 条首飞和停车，零接触与重置。原接触窗口的净空从 −0.07716 米增至 0.18424 米，折返后的全组最小净空为 0.17490 米。短程跟踪与恢复仍有缺口。进入预登记的独立 Crazy 复验。 [同输入结果](experiments/instinct-continuous-command/retreat_continuation/REPORT.md)
 
+独立同侧撤离复验的五类 32/32 首飞完整，零接触及重置，最小净空 0.19541 米。街道来物折返后一次停车未维持，31/32 个停车窗达标，保留原件作配对开发。 [独立回放](experiments/instinct-continuous-command/independent_retreat_continuation/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
