@@ -112,6 +112,7 @@ NOVEL_RANKED_REVERSAL_STOP_CONFIRM_ID = NOVEL_PREFIX+'83'
 NOVEL_ROOM_TANGENT_MAGNITUDE_ID = NOVEL_PREFIX+'84'
 NOVEL_COMBINED_CONTROL_ID = NOVEL_PREFIX+'85'
 NOVEL_RETREAT_ONSET_SIDE_ID = NOVEL_PREFIX+'86'
+NOVEL_RETREAT_ONSET_SIDE_CONFIRM_ID = NOVEL_PREFIX+'87'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -344,7 +345,7 @@ def compress_trace(run_id):
                                                        NOVEL_WALL_EDGE_REPROOF_ID, NOVEL_ZERO_CROSSING_WITHDRAWAL_ID,
                                                        NOVEL_RANKED_REVERSAL_STOP_ID, NOVEL_RANKED_REVERSAL_STOP_CONFIRM_ID,
                                                        NOVEL_ROOM_TANGENT_MAGNITUDE_ID, NOVEL_COMBINED_CONTROL_ID,
-                                                       NOVEL_RETREAT_ONSET_SIDE_ID)
+                                                       NOVEL_RETREAT_ONSET_SIDE_ID, NOVEL_RETREAT_ONSET_SIDE_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -670,7 +671,7 @@ def novel_contract(params):
         execution = (ROOM_TANGENT_MAGNITUDE_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COMBINED_CONTROL_ID:
         execution = (COMBINED_CONTROL_EXECUTION,)
-    elif params['experiment_id'] == NOVEL_RETREAT_ONSET_SIDE_ID:
+    elif params['experiment_id'] in (NOVEL_RETREAT_ONSET_SIDE_ID, NOVEL_RETREAT_ONSET_SIDE_CONFIRM_ID):
         execution = (RETREAT_ONSET_SIDE_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
