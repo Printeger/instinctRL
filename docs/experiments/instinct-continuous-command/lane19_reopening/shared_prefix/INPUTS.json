@@ -1,0 +1,116 @@
+{
+  "split_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_split/INPUTS.json",
+    "sha256": "b966c2785110c4c776799e2f85bfcddb62878961dd9d4398da253c4b2a19fce3"
+  },
+  "split_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_split/find_split.py",
+    "sha256": "38682560164210637a8115e99b42171161c29cbc6d835306a77c0452713f39f8"
+  },
+  "exact_menu": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-FIRST-ISSUE/SCREEN.json",
+    "sha256": "d6a9955c5af438113d26854472f450997f3eefa5d3637c52949bfd757d9464ee"
+  },
+  "drift_screen": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-FIRST-ISSUE/DRIFT.json",
+    "sha256": "909660234a07624d6b5133459f8d7fd2f5375e9ec714accb8583445a8c81efcd"
+  },
+  "case_groups": [
+    [
+      "nominal",
+      "early_negative",
+      "hard_negative"
+    ],
+    [
+      "early_positive",
+      "hard_positive"
+    ]
+  ],
+  "settings": {
+    "refinements": 5,
+    "drift_headroom_m": 0.0001,
+    "stop_speed_m_s": 0.07,
+    "speed_headroom_m_s": 0.0001
+  },
+  "modes": {
+    "strict_joint": {
+      "split_step": 1067,
+      "extra_motion_ticks": 0,
+      "restart_slew": false,
+      "strict_bank": true,
+      "seeds": [
+        [
+          0,
+          20,
+          180
+        ],
+        [
+          60,
+          50,
+          180
+        ],
+        [
+          170,
+          30,
+          160
+        ],
+        [
+          220,
+          20,
+          200
+        ]
+      ]
+    },
+    "guarded_common": {
+      "split_step": 1110,
+      "extra_motion_ticks": 4,
+      "restart_slew": true,
+      "strict_bank": false,
+      "seeds": [
+        [
+          30,
+          30,
+          30
+        ],
+        [
+          160,
+          160,
+          160
+        ],
+        [
+          230,
+          230,
+          230
+        ]
+      ]
+    },
+    "guarded_joint": {
+      "split_step": 1067,
+      "extra_motion_ticks": 4,
+      "restart_slew": true,
+      "strict_bank": false,
+      "seeds": [
+        [
+          0,
+          20,
+          180
+        ],
+        [
+          60,
+          50,
+          180
+        ],
+        [
+          170,
+          30,
+          160
+        ],
+        [
+          220,
+          20,
+          200
+        ]
+      ]
+    }
+  }
+}
