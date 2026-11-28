@@ -90,7 +90,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
                     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
                     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTION,
-                    OVERLAPPING_STOP_EXECUTION, BRAKE_RECOVERY_EXECUTION,
+                    OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTION, RETREAT_CONTINUATION_EXECUTION,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -184,12 +184,14 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['verify_crossing_restart'] = True
                     if override in LOCAL_WALL_STOPPING_EXECUTIONS:
                         expected['local_wall_stopping'] = True
-                    if override == OVERLAPPING_STOP_EXECUTION:
+                    if override in OVERLAPPING_STOP_EXECUTIONS:
                         expected['verify_overlapping_stop'] = True
                     if override == BRAKE_RECOVERY_EXECUTION:
                         expected['verify_brake_recovery'] = True
                     if override == FRONT_WALL_BRAKING_EXECUTION:
                         expected['front_wall_braking'] = True
+                    if override == RETREAT_CONTINUATION_EXECUTION:
+                        expected['verify_retreat_continuation'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

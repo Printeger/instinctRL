@@ -99,6 +99,8 @@ NOVEL_OVERLAPPING_STOP_ID = NOVEL_PREFIX+'70'
 NOVEL_OVERLAPPING_STOP_CONFIRM_ID = NOVEL_PREFIX+'71'
 NOVEL_BRAKE_RECOVERY_ID = NOVEL_PREFIX+'72'
 NOVEL_FRONT_WALL_BRAKING_ID = NOVEL_PREFIX+'73'
+NOVEL_RETREAT_CONTINUATION_ID = NOVEL_PREFIX+'74'
+NOVEL_RETREAT_CONTINUATION_CONFIRM_ID = NOVEL_PREFIX+'75'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -192,7 +194,9 @@ FRONT_WALL_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v25'
 FRONT_WALL_BRAKING_TRACE_FIELDS = ('front_wall_brake_verified', 'front_wall_brake_previous_b',
     'front_wall_brake_gap_m', 'front_wall_brake_required_m', 'front_wall_brake_attributed_beams')
 LOCAL_WALL_STOPPING_EXECUTIONS = (LOCAL_WALL_STOPPING_EXECUTION, FRONT_WALL_BRAKING_EXECUTION)
-CROSSING_RESTART_EXECUTIONS = (CROSSING_RESTART_EXECUTION, OVERLAPPING_STOP_EXECUTION, BRAKE_RECOVERY_EXECUTION,
+RETREAT_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v26'
+OVERLAPPING_STOP_EXECUTIONS = (OVERLAPPING_STOP_EXECUTION, RETREAT_CONTINUATION_EXECUTION)
+CROSSING_RESTART_EXECUTIONS = (CROSSING_RESTART_EXECUTION, BRAKE_RECOVERY_EXECUTION, *OVERLAPPING_STOP_EXECUTIONS,
                                *LOCAL_WALL_STOPPING_EXECUTIONS)
 HOVER_REFERENCE_RESERVE_EXECUTIONS = (HOVER_REFERENCE_RESERVE_EXECUTION, *CROSSING_RESTART_EXECUTIONS)
 CLIPPED_RETREAT_ONSET_EXECUTIONS = (CLIPPED_RETREAT_ONSET_EXECUTION, *HOVER_REFERENCE_RESERVE_EXECUTIONS)
@@ -302,7 +306,8 @@ def compress_trace(run_id):
                                                        NOVEL_HOVER_REFERENCE_RESERVE_ID, NOVEL_HOVER_REFERENCE_RESERVE_CONFIRM_ID,
                                                        NOVEL_CROSSING_RESTART_ID, NOVEL_CROSSING_RESTART_CONFIRM_ID,
                                                        NOVEL_LOCAL_WALL_STOPPING_ID, NOVEL_OVERLAPPING_STOP_ID,
-                                                       NOVEL_OVERLAPPING_STOP_CONFIRM_ID, NOVEL_BRAKE_RECOVERY_ID, NOVEL_FRONT_WALL_BRAKING_ID)
+                                                       NOVEL_OVERLAPPING_STOP_CONFIRM_ID, NOVEL_BRAKE_RECOVERY_ID, NOVEL_FRONT_WALL_BRAKING_ID,
+                                                       NOVEL_RETREAT_CONTINUATION_ID, NOVEL_RETREAT_CONTINUATION_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -610,6 +615,8 @@ def novel_contract(params):
         execution = (BRAKE_RECOVERY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FRONT_WALL_BRAKING_ID:
         execution = (FRONT_WALL_BRAKING_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_RETREAT_CONTINUATION_ID, NOVEL_RETREAT_CONTINUATION_CONFIRM_ID):
+        execution = (RETREAT_CONTINUATION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -913,7 +920,8 @@ def run(backend, params):
             crossing_restart = execution in CROSSING_RESTART_EXECUTIONS
             local_wall_stopping = execution in LOCAL_WALL_STOPPING_EXECUTIONS
             front_wall_braking = execution == FRONT_WALL_BRAKING_EXECUTION
-            overlapping_stop = execution == OVERLAPPING_STOP_EXECUTION
+            overlapping_stop = execution in OVERLAPPING_STOP_EXECUTIONS
+            retreat_continuation = execution == RETREAT_CONTINUATION_EXECUTION
             brake_recovery = execution == BRAKE_RECOVERY_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
@@ -956,7 +964,8 @@ def run(backend, params):
                     or env.local_wall_stopping != local_wall_stopping
                     or env.escape_option.verify_overlapping_stop != overlapping_stop
                     or env.escape_option.verify_brake_recovery != brake_recovery
-                    or env.front_wall_braking != front_wall_braking):
+                    or env.front_wall_braking != front_wall_braking
+                    or env.escape_option.verify_retreat_continuation != retreat_continuation):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -1045,6 +1054,8 @@ def run(backend, params):
                 model['verify_brake_recovery'] = True
             if front_wall_braking:
                 model['front_wall_braking'] = True
+            if retreat_continuation:
+                model['verify_retreat_continuation'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -1184,6 +1195,9 @@ def run(backend, params):
                     if 'brake_recovery_verified' in option:
                         tensors['escape_brake_recovery_verified'] = option['brake_recovery_verified']
                         tensors['escape_brake_recovery_bounds'] = option['brake_recovery_bounds']
+                    if 'retreat_continuation_verified' in option:
+                        tensors['escape_retreat_continuation_verified'] = option['retreat_continuation_verified']
+                        tensors['escape_retreat_continuation_floor'] = option['retreat_continuation_floor']
                     if 'tube_stopping_hold_s' in option:
                         tensors.update({field:option[field] for field in TUBE_STOPPING_TRACE_FIELDS})
                     if 'local_wall_stopping_hold_s' in option:
