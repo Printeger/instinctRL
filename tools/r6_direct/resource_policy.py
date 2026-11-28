@@ -433,7 +433,9 @@ def load_run_ledger(run_id, authority):
     from tools.r6_direct.import_legacy import ROOT, NEW
     from tools.r6_direct.lifecycle import imported_budget
 
-    scope = next((value for prefix, value in BOUNDED_SCOPES.items() if run_id.startswith(prefix)), None)
+    scope = BOUNDED_SCOPES.get(run_id)
+    if scope is None:
+        scope = next((value for prefix, value in BOUNDED_SCOPES.items() if run_id.startswith(prefix)), None)
     if scope is None:
         path = NEW / 'RESOURCE_LEDGER.json'
         ledger = json.loads(path.read_text())

@@ -32,7 +32,7 @@ def test_authorized_unlimited_preserves_accounting_and_duplicate_guard(tmp_path)
 
 
 def test_third_requires_own_authority_ledger_and_elapsed_window(tmp_path, monkeypatch):
-    from tools.r6_direct import import_legacy
+    from tools.r6_direct import import_legacy, resource_policy
     from tools.r6_direct.resource_policy import (
         THIRD_CAPS, THIRD_SCHEMA, check_elapsed, load_run_ledger, third_predecessor,
     )
@@ -61,6 +61,11 @@ def test_third_requires_own_authority_ledger_and_elapsed_window(tmp_path, monkey
     ledger = dict(resource_policy=scope_pin, caps=caps, historical_charged=zero, new_used=zero,
                   protected_confirmation_delivery_repair=zero, new_reservations=[])
     ledger_file.write_text(json.dumps(ledger))
+    scoped_path = str(ledger_file.relative_to(tmp_path))
+    monkeypatch.setattr(resource_policy, 'BOUNDED_SCOPES', {
+        run_id[:-1]: (THIRD_SCHEMA, 'other-scope.json'),
+        run_id: (THIRD_SCHEMA, scoped_path),
+    })
     path, loaded, imported, policy = load_run_ledger(run_id, scope_pin)
     assert path == ledger_file and imported is None and loaded == ledger
     assert check_elapsed(ledger, policy, 90, now=500) == 500
