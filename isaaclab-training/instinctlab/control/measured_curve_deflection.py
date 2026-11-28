@@ -15,6 +15,7 @@ _TIMES_S = np.arange(601)*.005
 _PASS_S = 2.4
 _SURFACE_FLOOR_M = .39
 _ENTRY_DELTA_M_S = .30
+_MIN_RANGE_CLOSURE_M = .003
 
 
 @dataclass
@@ -28,7 +29,7 @@ class _Fit:
         return np.pad(self.acceleration.mean(axis=1), ((0, 0), (0, 1)))
 
 
-def _fit_return(lidar, state, rays, offsets, coast, *, entry):
+def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False):
     history = state.reshape(4, 13)
     ages = history[:, 12]
     valid = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
@@ -46,6 +47,8 @@ def _fit_return(lidar, state, rays, offsets, coast, *, entry):
     if not bool(tracked[0] & supported.all()) or float(radii.max()-radii.min()) > (.025 if entry else .04):
         return None
     if entry:
+        if require_approach and not bool((centers.norm(dim=1).diff()[-2:] <= -_MIN_RANGE_CLOSURE_M).all()):
+            return None
         near, other, visible = fitted_sphere_returns(lidar, rays, centers[-1:], radii[-1:])
         if not bool(visible[0] & (other[0] >= near[0]+.06)):
             return None
@@ -172,13 +175,14 @@ class _Pass:
 
 
 class MeasuredCurveDeflection:
-    def __init__(self, lanes, reference, *, limit_entry=False):
+    def __init__(self, lanes, reference, *, limit_entry=False, require_approach=False):
         self.passes = [None]*lanes
         self.offsets = [reference.new_zeros((lanes, 4, 2)) for _ in _LAGS_S]
         self.coast = [reference.new_zeros((lanes, 2)) for _ in _LAGS_S]
         self.age = reference.new_zeros(lanes)
         self.rearm = reference.new_zeros(lanes)
         self.limit_entry = limit_entry
+        self.require_approach = require_approach
 
     def reset(self, lanes):
         for lane in lanes.tolist():
@@ -219,7 +223,8 @@ class MeasuredCurveDeflection:
             score = 0.
             startup = None
             if item is None:
-                fit = _fit_return(scan, packet, rays, offsets, coast, entry=True)
+                fit = _fit_return(scan, packet, rays, offsets, coast, entry=True,
+                                  require_approach=self.require_approach)
                 if fit is None:
                     continue
                 original = issued(scan, packet, selected[lane:lane+1], config)

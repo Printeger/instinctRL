@@ -24,7 +24,8 @@ from .command_replay import (
     RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
     COLLECTIVE_PROJECTION_EXECUTIONS, CORRIDOR_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS,
-    MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTION, STATIC_TURN_ONSET_EXECUTIONS,
+    MEASURED_CURVE_APPROACH_EXECUTION, MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTIONS,
+    STATIC_TURN_ONSET_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -478,7 +479,8 @@ def audit(output, params, counters):
         collective_projection = model['execution'] in COLLECTIVE_PROJECTION_EXECUTIONS
         corridor_projection = model['execution'] in CORRIDOR_PROJECTION_EXECUTIONS
         measured_curve = model['execution'] in MEASURED_CURVE_EXECUTIONS
-        measured_curve_slew = model['execution'] == MEASURED_CURVE_SLEW_EXECUTION
+        measured_curve_slew = model['execution'] in MEASURED_CURVE_SLEW_EXECUTIONS
+        measured_curve_approach = model['execution'] == MEASURED_CURVE_APPROACH_EXECUTION
         static_turn_onset = model['execution'] in STATIC_TURN_ONSET_EXECUTIONS
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
@@ -496,6 +498,7 @@ def audit(output, params, counters):
                 or model.get('corridor_projection', False) is not corridor_projection
                 or model.get('measured_curve_deflection', False) is not measured_curve
                 or model.get('measured_curve_slew', False) is not measured_curve_slew
+                or model.get('measured_curve_approach', False) is not measured_curve_approach
                 or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
