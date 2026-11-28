@@ -25,7 +25,7 @@ from .command_replay import (
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
     COLLECTIVE_PROJECTION_EXECUTIONS, CORRIDOR_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS,
     MEASURED_CURVE_APPROACH_EXECUTIONS, MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTIONS,
-    OBSERVED_MOVER_PREVIEW_EXECUTION, STATIC_TURN_ONSET_EXECUTIONS,
+    GRAVITY_PREVIEW_RENEWAL_EXECUTION, OBSERVED_MOVER_PREVIEW_EXECUTIONS, STATIC_TURN_ONSET_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -481,7 +481,8 @@ def audit(output, params, counters):
         measured_curve = model['execution'] in MEASURED_CURVE_EXECUTIONS
         measured_curve_slew = model['execution'] in MEASURED_CURVE_SLEW_EXECUTIONS
         measured_curve_approach = model['execution'] in MEASURED_CURVE_APPROACH_EXECUTIONS
-        observed_mover_preview = model['execution'] == OBSERVED_MOVER_PREVIEW_EXECUTION
+        observed_mover_preview = model['execution'] in OBSERVED_MOVER_PREVIEW_EXECUTIONS
+        gravity_preview_renewal = model['execution'] == GRAVITY_PREVIEW_RENEWAL_EXECUTION
         static_turn_onset = model['execution'] in STATIC_TURN_ONSET_EXECUTIONS
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
@@ -501,6 +502,7 @@ def audit(output, params, counters):
                 or model.get('measured_curve_slew', False) is not measured_curve_slew
                 or model.get('measured_curve_approach', False) is not measured_curve_approach
                 or model.get('observed_mover_preview', False) is not observed_mover_preview
+                or model.get('gravity_preview_renewal', False) is not gravity_preview_renewal
                 or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
@@ -608,7 +610,8 @@ def audit(output, params, counters):
                     raise ValueError('COMMAND_REPLAY_MEASURED_CURVE_SCOPE')
                 if observed_mover_preview:
                     previews = row.get('escape_observed_mover_preview', ())
-                    if (len(previews) != LANES or any(len(value) != 5 for value in previews)
+                    width = 6 if gravity_preview_renewal else 5
+                    if (len(previews) != LANES or any(len(value) != width for value in previews)
                             or any(count not in range(11)
                                    or not all(math.isfinite(x) for x in (floor, latest, before, projected))
                                    or (not count and any((floor, latest, before, projected)))
@@ -617,8 +620,11 @@ def audit(output, params, counters):
                                                        or projected-before < .079999))
                                    or (count != 1 and (before or projected))
                                    for (count, floor, latest, before, projected), curve, peak in
-                                   zip(previews, curves, trim, strict=True))):
+                                   zip((value[:5] for value in previews), curves, trim, strict=True))):
                         raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_BINDING')
+                    if gravity_preview_renewal and any(value[5] not in (0., 1.) or (value[5] and value[0] < 2)
+                                                       for value in previews):
+                        raise ValueError('COMMAND_REPLAY_GRAVITY_PREVIEW_RENEWAL_BINDING')
                 elif 'escape_observed_mover_preview' in row:
                     raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_SCOPE')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):

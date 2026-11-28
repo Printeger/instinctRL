@@ -33,12 +33,13 @@ from instinctlab.control.escape_recovery import (
     GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25, TANGENT_RESPONSE_HEADROOM_25,
     NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25, FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25,
     STATIC_TURN_ONSET_25, CORRIDOR_PROJECTION_25, MEASURED_CURVE_DEFLECTION_25, MEASURED_CURVE_SLEW_25,
-    MEASURED_CURVE_APPROACH_25, OBSERVED_MOVER_PREVIEW_25,
+    MEASURED_CURVE_APPROACH_25, OBSERVED_MOVER_PREVIEW_25, GRAVITY_PREVIEW_RENEWAL_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-MEASURED_CURVE_APPROACH_VERSIONS = (MEASURED_CURVE_APPROACH_25, OBSERVED_MOVER_PREVIEW_25)
+OBSERVED_MOVER_PREVIEW_VERSIONS = (OBSERVED_MOVER_PREVIEW_25, GRAVITY_PREVIEW_RENEWAL_25)
+MEASURED_CURVE_APPROACH_VERSIONS = (MEASURED_CURVE_APPROACH_25, *OBSERVED_MOVER_PREVIEW_VERSIONS)
 MEASURED_CURVE_SLEW_VERSIONS = (MEASURED_CURVE_SLEW_25, *MEASURED_CURVE_APPROACH_VERSIONS)
 MEASURED_CURVE_VERSIONS = (MEASURED_CURVE_DEFLECTION_25, *MEASURED_CURVE_SLEW_VERSIONS)
 CORRIDOR_PROJECTION_VERSIONS = (CORRIDOR_PROJECTION_25, *MEASURED_CURVE_VERSIONS)
@@ -298,7 +299,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_measured_curve=version in MEASURED_CURVE_VERSIONS,
                                                 limit_curve_entry=version in MEASURED_CURVE_SLEW_VERSIONS,
                                                 require_curve_approach=version in MEASURED_CURVE_APPROACH_VERSIONS,
-                                                verify_observed_mover_preview=version == OBSERVED_MOVER_PREVIEW_25)
+                                                verify_observed_mover_preview=version in OBSERVED_MOVER_PREVIEW_VERSIONS,
+                                                gravity_preview_reproof=version == GRAVITY_PREVIEW_RENEWAL_25)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

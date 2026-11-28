@@ -29,7 +29,8 @@ class _Fit:
         return np.pad(self.acceleration.mean(axis=1), ((0, 0), (0, 1)))
 
 
-def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False, coherent=True):
+def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False, coherent=True,
+                align_gravity=False):
     history = state.reshape(4, 13)
     ages = history[:, 12]
     valid = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
@@ -42,7 +43,7 @@ def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=F
     _, _, times = _return_seed(lidar, state, maximum_range_m=2.65)
     tracked, _, times, shapes = track_nearby_return(
         lidar, state, rays, curved=True, fit_full_center=True, maximum_previous_command=.46,
-        seeded=(ready, seed, times))
+        seeded=(ready, seed, times), align_gravity=align_gravity)
     centers, radii, supported = (torch.stack(values, dim=1)[0] for values in zip(*shapes, strict=True))
     if not bool(tracked[0] & supported.all()) or float(radii.max()-radii.min()) > (.025 if entry else .04):
         return None

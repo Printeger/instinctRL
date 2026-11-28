@@ -65,9 +65,11 @@ def _rank_continuations(fit, coast, queued, targets):
 
 
 class ObservedMoverPreview:
-    def __init__(self, lanes, reference):
+    def __init__(self, lanes, reference, *, gravity_reproof=False):
         self.passes = [None]*lanes
         self.rearm = reference.new_zeros(lanes)
+        self.gravity_reproof = gravity_reproof
+        self.record_width = 6 if gravity_reproof else 5
 
     def reset(self, lanes):
         for lane in lanes.tolist():
@@ -83,7 +85,7 @@ class ObservedMoverPreview:
         usable = (lidar[:, 10] > .5) & (lidar[:, 11] > .55)
         near = lidar[:, 9].masked_fill(~usable, torch.inf).flatten(1).amin(dim=1)
         entry = (speed >= .06) & (speed <= .30) & (near >= .85) & (near <= 1.4) & (self.rearm == 0.)
-        update = state.new_zeros((len(state), 5))
+        update = state.new_zeros((len(state), self.record_width))
         for lane in (active & ~fresh).nonzero().flatten().tolist():
             self.passes[lane] = None
         for lane in (fresh & (entry | active)).nonzero().flatten().tolist():
@@ -94,6 +96,10 @@ class ObservedMoverPreview:
             starting = item is None
             fit = _fit_return(scan, packet, rays, offsets, coast, entry=starting,
                               require_approach=starting, coherent=False)
+            aligned = (self.gravity_reproof and not starting and fit is not None
+                       and np.linalg.norm(fit.acceleration, axis=2).max() > _ACCELERATION_M_S2)
+            if aligned:
+                fit = _fit_return(scan, packet, rays, offsets, coast, entry=False, coherent=False, align_gravity=True)
             if fit is None or np.linalg.norm(fit.acceleration, axis=2).max() > _ACCELERATION_M_S2:
                 self.passes[lane] = None
                 continue
@@ -122,7 +128,9 @@ class ObservedMoverPreview:
                 item.action = action
             selected[lane] = action
             item.count += 1
-            update[lane] = packet.new_tensor([item.count, margin, latest, before, projected])
+            update[lane, :5] = packet.new_tensor([item.count, margin, latest, before, projected])
+            if self.gravity_reproof:
+                update[lane, 5] = float(aligned)
             self.passes[lane] = item if item.count < _MAX_PACKETS else None
         return update
 

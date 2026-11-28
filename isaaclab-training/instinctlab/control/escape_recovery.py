@@ -116,6 +116,7 @@ MEASURED_CURVE_DEFLECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v54'
 MEASURED_CURVE_SLEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v55'
 MEASURED_CURVE_APPROACH_25 = 'm4-escape-brake-tube-p25-crossing-stop-v56'
 OBSERVED_MOVER_PREVIEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v57'
+GRAVITY_PREVIEW_RENEWAL_25 = 'm4-escape-brake-tube-p25-crossing-stop-v58'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -154,7 +155,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25,
                        FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25, STATIC_TURN_ONSET_25: 25,
                        CORRIDOR_PROJECTION_25: 25, MEASURED_CURVE_DEFLECTION_25: 25,
-                       MEASURED_CURVE_SLEW_25: 25, MEASURED_CURVE_APPROACH_25: 25, OBSERVED_MOVER_PREVIEW_25: 25}
+                       MEASURED_CURVE_SLEW_25: 25, MEASURED_CURVE_APPROACH_25: 25, OBSERVED_MOVER_PREVIEW_25: 25,
+                       GRAVITY_PREVIEW_RENEWAL_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -191,7 +193,7 @@ class EscapeRecovery(EscapeOption):
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
                  verify_neutral_retry=False, observed_turn_braking=False, verify_static_turn=False,
                  verify_measured_curve=False, limit_curve_entry=False, require_curve_approach=False,
-                 verify_observed_mover_preview=False):
+                 verify_observed_mover_preview=False, gravity_preview_reproof=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -222,8 +224,8 @@ class EscapeRecovery(EscapeOption):
         if verify_observed_mover_preview:
             from .observed_mover_preview import ObservedMoverPreview
 
-            self.mover_preview = ObservedMoverPreview(lanes, self.direction)
-            self.measured_preview = self.direction.new_zeros((lanes, 5))
+            self.mover_preview = ObservedMoverPreview(lanes, self.direction, gravity_reproof=gravity_preview_reproof)
+            self.measured_preview = self.direction.new_zeros((lanes, self.mover_preview.record_width))
         if verify_static_turn:
             if not verified_retreat_onset:
                 raise ValueError('Static turn recheck requires verified retreat onset')

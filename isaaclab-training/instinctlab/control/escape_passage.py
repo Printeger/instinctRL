@@ -435,7 +435,7 @@ def _return_seed(lidar, state, *, minimum_range_m=0., maximum_range_m=1.9):
 
 
 def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_command=.08, seeded=None,
-                        fit_full_center=False):
+                        fit_full_center=False, align_gravity=False):
     """Associate a supported closing return across four delivered scans."""
     histories = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3]
@@ -446,6 +446,13 @@ def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_co
     lanes = torch.arange(len(lidar), device=lidar.device)
     rays = rays[None].expand(len(lidar), -1, -1)
     aligned = rays
+    if align_gravity:
+        gravity = histories[:, :, 3:6]
+        magnitude = gravity.norm(dim=2, keepdim=True)
+        accepted &= ((magnitude >= .90) & (magnitude <= 1.10)).all(dim=(1, 2))
+        gravity = gravity/magnitude.clamp_min(.90)
+        identity = torch.eye(3, dtype=rays.dtype, device=rays.device)[None].expand(len(lidar), -1, -1)
+        rotation_to_latest = identity
     medians = []
     shapes = []
     anchor = None
@@ -453,7 +460,17 @@ def track_nearby_return(lidar, state, rays, *, curved=False, maximum_previous_co
         if frame < 3:
             gyro = (histories[:, frame, :3]+histories[:, frame+1, :3])*.5
             delta = -gyro*gap[:, frame, None]
-            aligned = rotate_scan_rays(aligned, delta)
+            if align_gravity:
+                rotation = rotate_scan_rays(identity, delta)
+                predicted = (gravity[:, frame:frame+1]@rotation)[:, 0]
+                measured = gravity[:, frame+1]
+                axis = torch.cross(predicted, measured, dim=1)
+                sine = axis.norm(dim=1, keepdim=True)
+                tilt = torch.atan2(sine, (predicted*measured).sum(dim=1, keepdim=True))
+                rotation_to_latest = rotate_scan_rays(rotation, axis*tilt/sine.clamp_min(1.e-8))@rotation_to_latest
+                aligned = rays@rotation_to_latest
+            else:
+                aligned = rotate_scan_rays(aligned, delta)
         points = aligned*ranges[:, frame].flatten(1)[:, :, None]
         valid = reliable[:, frame].flatten(1)
         if anchor is not None:
