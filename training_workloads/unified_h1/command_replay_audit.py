@@ -20,8 +20,8 @@ from .command_replay import (
     OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTIONS,
     RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
-    COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTION,
-    STATIC_RETREAT_HANDOFF_EXECUTIONS,
+    COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTIONS,
+    RELEASE_STOP_CERTIFICATES_EXECUTION, STATIC_RETREAT_HANDOFF_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -421,13 +421,15 @@ def audit(output, params, counters):
         composed_crossing = model['execution'] in COMPOSED_CROSSING_EXECUTIONS
         request_recovery = model['execution'] in CURRENT_REQUEST_RECOVERY_EXECUTIONS
         static_retreat_handoff = model['execution'] in STATIC_RETREAT_HANDOFF_EXECUTIONS
-        align_planar_protection = model['execution'] == GRAVITY_ALIGNED_PROTECTION_EXECUTION
+        align_planar_protection = model['execution'] in GRAVITY_ALIGNED_PROTECTION_EXECUTIONS
+        verify_release_stop = model['execution'] == RELEASE_STOP_CERTIFICATES_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
                 or model.get('verify_outward_brake', False) is not request_recovery
                 or model.get('verify_recent_handoff', False) is not static_retreat_handoff
                 or model.get('verify_static_retreat_handoff', False) is not static_retreat_handoff
-                or model.get('align_planar_protection', False) is not align_planar_protection):
+                or model.get('align_planar_protection', False) is not align_planar_protection
+                or model.get('verify_release_stop', False) is not verify_release_stop):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}

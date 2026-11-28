@@ -1,0 +1,216 @@
+{
+  "artifacts": {
+    "hacker-long01-lane2-stop-n79-control.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lane2-stop-n79-control.jsonl",
+      "sha256": "0bf2f1615c06eb5b2d3080b6309ac6154363af7b21393f85b934370e7a800fd1"
+    },
+    "hacker-long01-lane2-stop-post-native-bound.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lane2-stop-post-native-bound.jsonl",
+      "sha256": "f2f6775df4da44a1518358d049fdb045f0dc8c479171eb890a72ddd81a3c5b75"
+    },
+    "hacker-long01-lane20-stop-post-arbitration-negative.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lane20-stop-post-arbitration-negative.jsonl",
+      "sha256": "6757787b50ca20463e283305a36df6c5b9f7ce9768d17fbbe145674bbdf50f1f"
+    },
+    "long01-street-stop-signed-retry.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-street-stop-signed-retry.jsonl",
+      "sha256": "7038c96e4a178358422f0b157bbe7e0e528a5d0cbd0d634b0957549278219e58"
+    },
+    "long01-street16-small-withdrawal-physical.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-street16-small-withdrawal-physical.jsonl",
+      "sha256": "f981f4a9482bd040a9684ff496aa9fea62e320615e28defef6ca630bb0f4d880"
+    },
+    "long01-street16-small-withdrawal.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-street16-small-withdrawal.jsonl",
+      "sha256": "d2ce560a0d5423cf8a5a2a11b69b956c544cee9f4a18647b6a3b10771aad34aa"
+    },
+    "long01-v45-v44-room-stop.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v45-v44-room-stop.jsonl",
+      "sha256": "78a0948db4aa0d54f85544056dbe67b75be49514780d62783aad505441900098"
+    },
+    "long01-v45-v44-room-stop.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v45-v44-room-stop.py",
+      "sha256": "8c2f2e599dbaef87424b25e88d3fc0f3a5418d74432f6d187eab88d79e5a06ba"
+    },
+    "long01-v45-v44-street-stop-25.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v45-v44-street-stop-25.jsonl",
+      "sha256": "ae9bb72dee1519a2639ad227a09c09c3b83adeec1497837f19fcc28c27116dcc"
+    },
+    "long01-v45-v44-street-stop-35.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v45-v44-street-stop-35.jsonl",
+      "sha256": "59f06e2fc5140e93927674bc59232bee3aaf76a4964a32acaaace9f2f5392364"
+    },
+    "long01-v45-v44-street-stop-45.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v45-v44-street-stop-45.jsonl",
+      "sha256": "315d97bfd06b740bf7b0289a254eacf0dbfb4fcd2d7d429728ac559fc2823c8b"
+    },
+    "long01-v45-v44-street-stop.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v45-v44-street-stop.py",
+      "sha256": "323b23bc73c15837b1bbde13a359469cff4cbc460f700b8e28b096fa2458cb98"
+    }
+  },
+  "native_control": "017eefb29463686cab255198263be52f2abbd1e6",
+  "outcomes": {
+    "room2": [
+      {
+        "candidate": false,
+        "clearance_m": 0.7015347773625918,
+        "mode": "recorded",
+        "stop": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.6840441837639626,
+          "stopped_after_s": null
+        }
+      },
+      {
+        "candidate": true,
+        "clearance_m": 0.6852387479114439,
+        "mode": "recorded",
+        "stop": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.08656671564809115,
+          "stopped_after_s": 0.5
+        }
+      },
+      {
+        "candidate": false,
+        "clearance_m": 0.7013089642048049,
+        "mode": "fixed",
+        "stop": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.6835643777886445,
+          "stopped_after_s": null
+        }
+      },
+      {
+        "candidate": true,
+        "clearance_m": 0.6772926196715074,
+        "mode": "fixed",
+        "stop": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.08653897697149437,
+          "stopped_after_s": 0.5
+        }
+      }
+    ],
+    "street16": [
+      {
+        "baseline": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.4112164728614083,
+          "stopped_after_s": 1.6
+        },
+        "candidate": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.4112164728614083,
+          "stopped_after_s": 1.6
+        },
+        "exact_commands": true,
+        "lag_s": 0.25,
+        "minimum_m": 0.6977551752161129
+      },
+      {
+        "baseline": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.4360256201348079,
+          "stopped_after_s": 1.8
+        },
+        "candidate": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.4360256201348079,
+          "stopped_after_s": 1.8
+        },
+        "exact_commands": true,
+        "lag_s": 0.35,
+        "minimum_m": 0.7041780361516858
+      },
+      {
+        "baseline": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.4312674592571879,
+          "stopped_after_s": 1.8
+        },
+        "candidate": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.4312674592571879,
+          "stopped_after_s": 1.8
+        },
+        "exact_commands": true,
+        "lag_s": 0.45,
+        "minimum_m": 0.7086859367631548
+      }
+    ],
+    "street17": [
+      {
+        "baseline": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.19953233877674864,
+          "stopped_after_s": 1.1
+        },
+        "candidate": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.07737271062684448,
+          "stopped_after_s": 0.4
+        },
+        "exact_commands": false,
+        "lag_s": 0.25,
+        "minimum_m": 0.7163781211850797
+      },
+      {
+        "baseline": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.21262149721059098,
+          "stopped_after_s": 1.2000000000000002
+        },
+        "candidate": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.09888732547021528,
+          "stopped_after_s": 0.6000000000000001
+        },
+        "exact_commands": false,
+        "lag_s": 0.35,
+        "minimum_m": 0.7163781211850797
+      },
+      {
+        "baseline": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.22624799785759794,
+          "stopped_after_s": 1.3
+        },
+        "candidate": {
+          "first_flight_completed_window": true,
+          "max_drift_m": 0.12022670650221938,
+          "stopped_after_s": 0.7000000000000001
+        },
+        "exact_commands": false,
+        "lag_s": 0.45,
+        "minimum_m": 0.7163781211850797
+      }
+    ],
+    "street21": [
+      {
+        "baseline": null,
+        "candidate": null,
+        "exact_commands": true,
+        "lag_s": 0.25,
+        "minimum_m": 0.31611147169471776
+      },
+      {
+        "baseline": null,
+        "candidate": null,
+        "exact_commands": true,
+        "lag_s": 0.35,
+        "minimum_m": 0.31520157421908435
+      },
+      {
+        "baseline": null,
+        "candidate": null,
+        "exact_commands": true,
+        "lag_s": 0.45,
+        "minimum_m": 0.27639330217043984
+      }
+    ]
+  },
+  "schema_version": "instinctrl-certified-release-stop-cpu-witnesses/1",
+  "source": "c2fc9f952555449b53346fb15e413b5a1534d385"
+}

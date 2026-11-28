@@ -1,0 +1,107 @@
+{
+  "diagnostic": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/n98-detour-audit-crossing-precedence.jsonl",
+    "sha256": "50610b8146ed2cce5de628a3c7d7b44708674f226ef7f46b0712f05c6552013f"
+  },
+  "original_native_source": "059764f5b521b4da4843769aa2c9495a5e39a241",
+  "packets": [
+    {
+      "along": -0.033914297349982955,
+      "beta": 1.0,
+      "composed_floor": 0.5394335389137268,
+      "emergency": 0.0,
+      "failed_old_audit": true,
+      "flags": {
+        "escape_active": false,
+        "escape_finite_edge": true,
+        "escape_intercepted": false,
+        "escape_observed_heading": true,
+        "escape_shallow_steering": false,
+        "escape_wall_tangent": false
+      },
+      "lane": 22,
+      "selected": [
+        0.0,
+        0.20014157891273499,
+        0.5049928426742554,
+        0.5
+      ],
+      "speed": 0.24863110473893282,
+      "step": 721
+    },
+    {
+      "along": -0.03430893215350753,
+      "beta": 1.0,
+      "composed_floor": 0.5518775582313538,
+      "emergency": 0.0,
+      "failed_old_audit": true,
+      "flags": {
+        "escape_active": false,
+        "escape_finite_edge": true,
+        "escape_intercepted": false,
+        "escape_observed_heading": true,
+        "escape_shallow_steering": false,
+        "escape_wall_tangent": false
+      },
+      "lane": 22,
+      "selected": [
+        0.0,
+        0.20018252730369568,
+        0.507035493850708,
+        0.5
+      ],
+      "speed": 0.24863112989534053,
+      "step": 722
+    },
+    {
+      "along": -0.03494056116405227,
+      "beta": 1.0,
+      "composed_floor": 0.5539685487747192,
+      "emergency": 0.0,
+      "failed_old_audit": true,
+      "flags": {
+        "escape_active": false,
+        "escape_finite_edge": true,
+        "escape_intercepted": false,
+        "escape_observed_heading": true,
+        "escape_shallow_steering": false,
+        "escape_wall_tangent": false
+      },
+      "lane": 22,
+      "selected": [
+        0.0,
+        0.20026418566703796,
+        0.5099216103553772,
+        0.5
+      ],
+      "speed": 0.2486311312828053,
+      "step": 723
+    },
+    {
+      "along": -0.03604217452273479,
+      "beta": 1.0,
+      "composed_floor": 0.5372994542121887,
+      "emergency": 0.0,
+      "failed_old_audit": true,
+      "flags": {
+        "escape_active": false,
+        "escape_finite_edge": true,
+        "escape_intercepted": false,
+        "escape_observed_heading": false,
+        "escape_shallow_steering": false,
+        "escape_wall_tangent": false
+      },
+      "lane": 22,
+      "selected": [
+        0.0,
+        0.20046693086624146,
+        0.5148307085037231,
+        0.5
+      ],
+      "speed": 0.24863113408592732,
+      "step": 724
+    }
+  ],
+  "schema_version": "instinctrl-composed-crossing-audit-precedence/1",
+  "verified_analyzer_source": "05c51f3b50410f40471e1b8eb86ead87eff4853f"
+}

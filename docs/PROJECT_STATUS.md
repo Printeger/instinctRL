@@ -10,7 +10,7 @@
 
 同一 `v40` 完整通过原始 R6 的五个任务和 16 个扰动块，累计 193,600 步，零自动重置。跟踪、停令锚点和有效覆盖的配对差值均为零。该配置接续独立 Crazy 30 分钟验收。当前全部指令为仿真生成，零新增训练。 [完整 R6 结果](experiments/instinct-continuous-command/regression/attempt-03/REPORT.md) [30 分钟验收方案](experiments/instinct-continuous-command/long/PLAN.md)
 
-首次 30 分钟评价完成 576,000 个评价步，正式结果未通过。27/32 完成完整首飞，街道第 22 路接触，四条走廊首飞低于高度线并重置。预设松杆 61/64，通过全部首飞要求的三类仍有跟踪或恢复缺口。`v41` 固定同输入前 120 秒复验横穿。叠加普通避让交回、持续撤离交回和水平动作重力对齐的 `v44` 固定前 420 秒进行原生开发配对。 [首次长程结果](experiments/instinct-continuous-command/long/REPORT.md) [横穿复验](experiments/instinct-continuous-command/composed_crossing_recovery/PLAN.md) [交回与高度复验](experiments/instinct-continuous-command/static_retreat_handoff/PLAN.md)
+首次 30 分钟评价完成 576,000 个评价步，正式结果未通过。27/32 完成完整首飞，街道第 22 路接触，四条走廊首飞低于高度线并重置。预设松杆 61/64，通过全部首飞要求的三类仍有跟踪或恢复缺口。`v41` 固定同输入前 120 秒复验横穿。叠加指令交回、水平动作重力对齐和两处停杆修正的 `v45` 固定前 420 秒进行原生开发配对。 [首次长程结果](experiments/instinct-continuous-command/long/REPORT.md) [横穿复验](experiments/instinct-continuous-command/composed_crossing_recovery/PLAN.md) [交回与高度复验](experiments/instinct-continuous-command/static_retreat_handoff/PLAN.md)
 
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 

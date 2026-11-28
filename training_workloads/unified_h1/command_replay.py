@@ -225,7 +225,9 @@ CURRENT_REQUEST_RECOVERY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v40
 COMPOSED_CROSSING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v41'
 STATIC_RETREAT_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 GRAVITY_ALIGNED_PROTECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v44'
-STATIC_RETREAT_HANDOFF_EXECUTIONS = (STATIC_RETREAT_HANDOFF_EXECUTION, GRAVITY_ALIGNED_PROTECTION_EXECUTION)
+RELEASE_STOP_CERTIFICATES_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v45'
+GRAVITY_ALIGNED_PROTECTION_EXECUTIONS = (GRAVITY_ALIGNED_PROTECTION_EXECUTION, RELEASE_STOP_CERTIFICATES_EXECUTION)
+STATIC_RETREAT_HANDOFF_EXECUTIONS = (STATIC_RETREAT_HANDOFF_EXECUTION, *GRAVITY_ALIGNED_PROTECTION_EXECUTIONS)
 COMPOSED_CROSSING_EXECUTIONS = (COMPOSED_CROSSING_EXECUTION, *STATIC_RETREAT_HANDOFF_EXECUTIONS)
 CURRENT_REQUEST_RECOVERY_EXECUTIONS = (CURRENT_REQUEST_RECOVERY_EXECUTION, *COMPOSED_CROSSING_EXECUTIONS)
 SUPPORTED_WALL_EXECUTIONS = (SUPPORTED_WALL_APPROACH_EXECUTION, *CURRENT_REQUEST_RECOVERY_EXECUTIONS)
@@ -727,7 +729,7 @@ def novel_contract(params):
     elif params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID:
         execution = (COMPOSED_CROSSING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_STATIC_RETREAT_HANDOFF_ID:
-        execution = (GRAVITY_ALIGNED_PROTECTION_EXECUTION,)
+        execution = (RELEASE_STOP_CERTIFICATES_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -1423,10 +1425,14 @@ def run(backend, params):
             if not (env.escape_option.verify_recent_handoff and env.escape_option.verify_static_retreat_handoff):
                 raise ValueError('COMMAND_STATIC_RETREAT_HANDOFF_PROOF')
             model.update(verify_recent_handoff=True, verify_static_retreat_handoff=True)
-        if execution == GRAVITY_ALIGNED_PROTECTION_EXECUTION:
+        if execution in GRAVITY_ALIGNED_PROTECTION_EXECUTIONS:
             if not (env.escape_option.align_planar_protection
                     and all(pipeline.config.align_planar_protection for pipeline in env._control_pipelines)):
                 raise ValueError('COMMAND_PLANAR_PROTECTION_PROOF')
             model['align_planar_protection'] = True
+        if execution == RELEASE_STOP_CERTIFICATES_EXECUTION:
+            if not env.escape_option.verify_release_stop:
+                raise ValueError('COMMAND_RELEASE_STOP_PROOF')
+            model['verify_release_stop'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))
