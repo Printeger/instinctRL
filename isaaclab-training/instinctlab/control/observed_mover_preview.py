@@ -13,6 +13,8 @@ from .measured_curve_deflection import (
 
 _ACCELERATION_M_S2 = 1.05
 _MIN_PROJECTED_GAP_M = .12
+_MAX_PRIOR_PROJECTED_GAP_M = .15
+_MIN_PROJECTED_GAIN_M = .08
 _MAX_PACKETS = 10
 _INITIAL_HOLD_S = .60
 _CERTIFICATE_TIMES_S = np.arange(201)*.005
@@ -81,7 +83,7 @@ class ObservedMoverPreview:
         usable = (lidar[:, 10] > .5) & (lidar[:, 11] > .55)
         near = lidar[:, 9].masked_fill(~usable, torch.inf).flatten(1).amin(dim=1)
         entry = (speed >= .06) & (speed <= .30) & (near >= .85) & (near <= 1.4) & (self.rearm == 0.)
-        update = state.new_zeros((len(state), 4))
+        update = state.new_zeros((len(state), 5))
         for lane in (active & ~fresh).nonzero().flatten().tolist():
             self.passes[lane] = None
         for lane in (fresh & (entry | active)).nonzero().flatten().tolist():
@@ -98,11 +100,14 @@ class ObservedMoverPreview:
             queued = packet[0, 48:51].cpu().numpy()
             prior = issued(scan, packet, selected[lane:lane+1], config)
             latest = float(_clearance(fit, coast, queued, prior.v_final_b.cpu().numpy(), _INITIAL_HOLD_S, 1.)[0])
-            projected = 0.
+            before, projected = 0., 0.
             if starting:
                 if latest >= .36 or bool(prior.metrics['emergency'][0, 0]):
                     continue
-                choice = self._enter(scan, packet, rays, fit, coast, queued, config, issued, action_for_velocity)
+                before = float(_rank_continuations(fit, coast, queued, prior.v_final_b.cpu().numpy())[0])
+                if before >= _MAX_PRIOR_PROJECTED_GAP_M:
+                    continue
+                choice = self._enter(scan, packet, rays, fit, coast, queued, before, config, issued, action_for_velocity)
                 if choice is None:
                     continue
                 action, target, margin, projected = choice
@@ -117,12 +122,12 @@ class ObservedMoverPreview:
                 item.action = action
             selected[lane] = action
             item.count += 1
-            update[lane] = packet.new_tensor([item.count, margin, latest, projected])
+            update[lane] = packet.new_tensor([item.count, margin, latest, before, projected])
             self.passes[lane] = item if item.count < _MAX_PACKETS else None
         return update
 
     @staticmethod
-    def _enter(scan, state, rays, fit, coast, queued, config, issued, action_for_velocity):
+    def _enter(scan, state, rays, fit, coast, queued, before, config, issued, action_for_velocity):
         request = state[0, 45:48]
         up = -state[0, 42:45]
         up = up/up.norm()
@@ -146,7 +151,8 @@ class ObservedMoverPreview:
         targets = velocity.cpu().numpy()
         floor = np.minimum(static, _clearance(fit, coast, queued, targets, _INITIAL_HOLD_S, 1.))
         projections = _rank_continuations(fit, coast, queued, targets)
-        candidates = np.flatnonzero((floor >= _SURFACE_FLOOR_M) & (projections >= _MIN_PROJECTED_GAP_M))
+        minimum_projection = max(_MIN_PROJECTED_GAP_M, before+_MIN_PROJECTED_GAIN_M)
+        candidates = np.flatnonzero((floor >= _SURFACE_FLOOR_M) & (projections >= minimum_projection))
         for best in candidates[np.argsort(-projections[candidates])]:
             target = actions[indices[best]]
             startup, margin = _limited_entry(scan, state, target, float(floor[best]), config, issued, action_for_velocity)

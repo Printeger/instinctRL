@@ -223,7 +223,7 @@ class EscapeRecovery(EscapeOption):
             from .observed_mover_preview import ObservedMoverPreview
 
             self.mover_preview = ObservedMoverPreview(lanes, self.direction)
-            self.measured_preview = self.direction.new_zeros((lanes, 4))
+            self.measured_preview = self.direction.new_zeros((lanes, 5))
         if verify_static_turn:
             if not verified_retreat_onset:
                 raise ValueError('Static turn recheck requires verified retreat onset')

@@ -608,13 +608,15 @@ def audit(output, params, counters):
                     raise ValueError('COMMAND_REPLAY_MEASURED_CURVE_SCOPE')
                 if observed_mover_preview:
                     previews = row.get('escape_observed_mover_preview', ())
-                    if (len(previews) != LANES or any(len(value) != 4 for value in previews)
-                            or any(count not in range(11) or not all(math.isfinite(x) for x in (floor, latest, projected))
-                                   or (not count and any((floor, latest, projected)))
+                    if (len(previews) != LANES or any(len(value) != 5 for value in previews)
+                            or any(count not in range(11)
+                                   or not all(math.isfinite(x) for x in (floor, latest, before, projected))
+                                   or (not count and any((floor, latest, before, projected)))
                                    or (count and (floor < .389999 or peak or curve[1]))
-                                   or (count == 1 and (projected < .119999 or latest >= .360001))
-                                   or (count != 1 and projected)
-                                   for (count, floor, latest, projected), curve, peak in
+                                   or (count == 1 and (projected < .119999 or latest >= .360001 or before >= .150001
+                                                       or projected-before < .079999))
+                                   or (count != 1 and (before or projected))
+                                   for (count, floor, latest, before, projected), curve, peak in
                                    zip(previews, curves, trim, strict=True))):
                         raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_BINDING')
                 elif 'escape_observed_mover_preview' in row:
