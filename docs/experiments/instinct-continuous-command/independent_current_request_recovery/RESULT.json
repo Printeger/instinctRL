@@ -1,0 +1,308 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "22": 1,
+          "25": 1,
+          "29": 1
+        },
+        "escape_far_crossing_refined": {
+          "20": 1
+        },
+        "escape_finite_edge": {
+          "0": 100,
+          "1": 61,
+          "2": 64,
+          "3": 52,
+          "4": 51,
+          "5": 100,
+          "6": 107,
+          "7": 70,
+          "8": 11,
+          "9": 14,
+          "10": 8,
+          "11": 35,
+          "12": 8,
+          "13": 10,
+          "14": 16,
+          "15": 17,
+          "16": 21,
+          "17": 61,
+          "18": 5,
+          "19": 22,
+          "20": 21,
+          "21": 12,
+          "22": 12,
+          "23": 9,
+          "24": 37,
+          "25": 23,
+          "26": 33,
+          "27": 58,
+          "28": 51,
+          "29": 39,
+          "30": 42,
+          "31": 48
+        },
+        "escape_intercept_continued": {
+          "16": 12,
+          "18": 8,
+          "19": 4,
+          "20": 4,
+          "22": 16,
+          "23": 8
+        },
+        "escape_intercepted": {
+          "16": 49,
+          "17": 28,
+          "18": 50,
+          "19": 27,
+          "20": 26,
+          "21": 23,
+          "22": 63,
+          "23": 30
+        },
+        "escape_observed_heading": {
+          "0": 25,
+          "1": 9,
+          "2": 6,
+          "3": 8,
+          "4": 5,
+          "5": 8,
+          "6": 18,
+          "7": 5,
+          "8": 1,
+          "9": 3,
+          "10": 2,
+          "11": 21,
+          "12": 2,
+          "14": 5,
+          "15": 4,
+          "16": 5,
+          "17": 3,
+          "19": 1,
+          "20": 2,
+          "21": 4,
+          "22": 3,
+          "23": 2,
+          "24": 24,
+          "25": 20,
+          "26": 19,
+          "27": 29,
+          "29": 4,
+          "30": 2
+        },
+        "escape_offset_stop": {
+          "16": 12,
+          "17": 32,
+          "18": 4,
+          "19": 12,
+          "20": 3,
+          "21": 17,
+          "22": 9,
+          "23": 12
+        },
+        "escape_shallow_steering": {
+          "0": 55,
+          "1": 45,
+          "2": 46,
+          "3": 44,
+          "4": 46,
+          "5": 43,
+          "6": 51,
+          "7": 49,
+          "8": 3,
+          "9": 4,
+          "10": 1,
+          "11": 3,
+          "14": 4,
+          "16": 9,
+          "17": 11,
+          "18": 5,
+          "19": 11,
+          "20": 1,
+          "21": 3,
+          "22": 5,
+          "23": 5,
+          "25": 1,
+          "26": 1,
+          "27": 4,
+          "28": 45,
+          "29": 26,
+          "30": 12,
+          "31": 40
+        },
+        "escape_tracked_resume": {
+          "17": 20,
+          "18": 6,
+          "19": 5,
+          "20": 1,
+          "21": 9,
+          "22": 1,
+          "23": 9
+        },
+        "escape_wall_tangent": {
+          "5": 36,
+          "6": 19,
+          "9": 15,
+          "10": 22,
+          "11": 38,
+          "14": 14,
+          "24": 36,
+          "25": 65,
+          "26": 84,
+          "27": 89,
+          "28": 15,
+          "29": 2
+        },
+        "faceted_wall_stopping_used": {
+          "29": 51,
+          "30": 74,
+          "31": 40
+        },
+        "front_wall_brake_verified": {
+          "25": 40,
+          "26": 15,
+          "27": 24
+        },
+        "local_wall_stopping": {
+          "0": 20,
+          "1": 7,
+          "2": 11,
+          "3": 8,
+          "4": 4,
+          "5": 10,
+          "6": 54,
+          "7": 1,
+          "21": 2,
+          "22": 1,
+          "24": 85,
+          "25": 103,
+          "26": 57,
+          "27": 41,
+          "29": 54,
+          "30": 74,
+          "31": 42
+        },
+        "wall_edge_reproof": {
+          "6": 3
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-97/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "4c20564180bade7f9bcd3afb62330c7ff3c2bfe5531df82cd9cdbe098a65a328"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 27,
+            "m": 0.2923378050327301,
+            "time_s": 119.765
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 31,
+            "m": 0.3144015387389252,
+            "time_s": 120.0
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 0,
+            "m": 0.30058653331420404,
+            "time_s": 20.19
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 22,
+            "m": 0.1821685336167556,
+            "time_s": 70.795
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 15,
+            "m": 0.48940830335542895,
+            "time_s": 13.040000000000001
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-97/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-97/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "2fc2d1bf5ab6a5eb01acabe713886fc466e91b0b05543f0423d91e44974b0e95"
+      },
+      "windows": []
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-97/analysis/binding.json",
+    "sha256": "6b836c43dbbff3f52bfa05ad985f14ba1f9e89b14b99c9d2092629f7997315f5"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-97/analysis/clearance-and-progress.json",
+    "sha256": "c2fae2631f480298446889d221cdce0add6205271bcc23b3281287fd54e6470b"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "017eefb29463686cab255198263be52f2abbd1e6",
+  "status": "DEVELOPMENT_INDEPENDENT_CURRENT_REQUEST_RECOVERY_SHORT_SAFETY_AND_STOPS_PASS"
+}
