@@ -1,0 +1,89 @@
+{
+  "dense": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+    "sha256": "bf3701716492e2c001481f2e0deb8e2e4a5fed686bfd27419f8063e5aff879c9"
+  },
+  "gates": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/long/GATES.json",
+    "sha256": "45c89839e87a4b43a3c0e2fd1cc5e96dd8eed51996a933458f711c510c247a52"
+  },
+  "geometry": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/results/research-r6-dynamic-assay/initial_preflight/geometry.json",
+    "sha256": "65d666b1f85694bf2e4840b37580d2037685c9552c4b5abb400932bb2eba1b9b"
+  },
+  "hard_backup": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-BACKUP/HARD-POSITIVE.json",
+    "sha256": "0bc320d861e8c2a581f8168a8e278a9515a970fe3c07bf2ec4180427cdb481c2"
+  },
+  "protocol": {
+    "angle_count": 24,
+    "cases": {
+      "early_negative": {
+        "attitude": "recorded",
+        "fork_step": 1062,
+        "sign": -1
+      },
+      "early_positive": {
+        "attitude": "recorded",
+        "fork_step": 1062,
+        "sign": 1
+      },
+      "hard_negative": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": -1
+      },
+      "hard_positive": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": 1
+      },
+      "nominal": {
+        "attitude": "recorded",
+        "fork_step": 1064,
+        "sign": 0
+      }
+    },
+    "end": 1110,
+    "exact_top_per_bucket": 16,
+    "lags_s": [
+      0.25,
+      0.35,
+      0.45
+    ],
+    "lane": 19,
+    "scene_seed": 1999375583,
+    "screening_stride": 5,
+    "second_speeds": [
+      0.3,
+      0.4499
+    ],
+    "slew_m_s": 0.3,
+    "speed_cap_m_s": 0.4499,
+    "start": 1060,
+    "stop_steps": [
+      1070,
+      1072,
+      1074,
+      1076,
+      1078,
+      1080,
+      1082,
+      1084
+    ],
+    "switch_packets": [
+      4,
+      6,
+      8
+    ],
+    "v60_source": "a346bea85a7478f0da3905dc2dae58cdc179b150",
+    "zero_window": [
+      1070,
+      1084
+    ]
+  },
+  "trace": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+    "sha256": "2cb8a9b933c4f463295c7467ac99cc1e746e1a7a0278433748d6a152a930b9e7"
+  }
+}
