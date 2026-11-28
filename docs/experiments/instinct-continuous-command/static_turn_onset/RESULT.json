@@ -1,0 +1,2111 @@
+{
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/analysis/binding.json",
+    "sha256": "92d3dadd9a101bc3ff1c8c581b1ad9261bee64ca086ed0049f10683a8ea243c5"
+  },
+  "by_layout": {
+    "corridor": [
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 3,
+          "recovery_opportunities": 9,
+          "visible_moving": null,
+          "windows": 9
+        },
+        "lane": 24,
+        "passed_stops": 1,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 19414,
+          "maximum_measured_link_envelope_m": 0.2098170518875122,
+          "minimum_clearance_lower_bound_m": 0.4080047160387039,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.804603576660156,
+          "maximum_y_m": 0.3512115478515625,
+          "minimum_y_m": -0.3649749755859375
+        },
+        "stop_windows": {
+          "lane24-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05753457095996038,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 1,
+        "tracking": {
+          "feasible_moving_steps": 967,
+          "fraction_at_least_60_percent_of_intent": 0.7745604963805585,
+          "longest_slow_feasible_start_step": 740,
+          "longest_slow_feasible_window_s": 1.7000000000000002,
+          "mean_along_intent_m_s": 0.14432980395715023,
+          "requested_moving_steps": 973,
+          "rmse_m_s": 0.1288199305469759
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 2,
+          "recovery_opportunities": 7,
+          "visible_moving": null,
+          "windows": 7
+        },
+        "lane": 25,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 20616,
+          "maximum_measured_link_envelope_m": 0.2098245471715927,
+          "minimum_clearance_lower_bound_m": 0.47301340103149414,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.4818267822265625,
+          "maximum_y_m": 0.3247528076171875,
+          "minimum_y_m": -0.1585540771484375
+        },
+        "stop_windows": {
+          "lane25-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08616975320528346,
+            "stopped_after_s": 0.5
+          },
+          "lane25-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08360511150696581,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 949,
+          "fraction_at_least_60_percent_of_intent": 0.7060063224446786,
+          "longest_slow_feasible_start_step": 956,
+          "longest_slow_feasible_window_s": 2.9000000000000004,
+          "mean_along_intent_m_s": 0.12948548385460482,
+          "requested_moving_steps": 955,
+          "rmse_m_s": 0.15812681273541118
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 3,
+          "recovery_opportunities": 8,
+          "visible_moving": null,
+          "windows": 8
+        },
+        "lane": 26,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 14668,
+          "maximum_measured_link_envelope_m": 0.2098219096660614,
+          "minimum_clearance_lower_bound_m": 0.42899197340011597,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 7.23577880859375,
+          "maximum_y_m": 0.42288970947265625,
+          "minimum_y_m": -0.37615966796875
+        },
+        "stop_windows": {
+          "lane26-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08639745596695582,
+            "stopped_after_s": 0.5
+          },
+          "lane26-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08398483786139088,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 936,
+          "fraction_at_least_60_percent_of_intent": 0.7617521367521367,
+          "longest_slow_feasible_start_step": 705,
+          "longest_slow_feasible_window_s": 3.0,
+          "mean_along_intent_m_s": 0.14412951092332246,
+          "requested_moving_steps": 942,
+          "rmse_m_s": 0.1314339696208192
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 3,
+          "recovery_opportunities": 9,
+          "visible_moving": null,
+          "windows": 10
+        },
+        "lane": 27,
+        "passed_stops": 0,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 20158,
+          "maximum_measured_link_envelope_m": 0.20981991291046143,
+          "minimum_clearance_lower_bound_m": 0.30797669291496277,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 7.9481658935546875,
+          "maximum_y_m": 0.5354980826377869,
+          "minimum_y_m": -0.4248359501361847
+        },
+        "stop_windows": {},
+        "total_stops": 0,
+        "tracking": {
+          "feasible_moving_steps": 994,
+          "fraction_at_least_60_percent_of_intent": 0.727364185110664,
+          "longest_slow_feasible_start_step": 902,
+          "longest_slow_feasible_window_s": 2.8000000000000003,
+          "mean_along_intent_m_s": 0.13614396325171846,
+          "requested_moving_steps": 1000,
+          "rmse_m_s": 0.1335584372706722
+        }
+      }
+    ],
+    "open_tube": [
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 5,
+          "visible_moving": null,
+          "windows": 5
+        },
+        "lane": 28,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 13528,
+          "maximum_measured_link_envelope_m": 0.20981968939304352,
+          "minimum_clearance_lower_bound_m": 0.3037538612192965,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.55511474609375,
+          "maximum_y_m": 0.9151077270507812,
+          "minimum_y_m": -0.7074432373046875
+        },
+        "stop_windows": {
+          "lane28-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08636799795830157,
+            "stopped_after_s": 0.5
+          },
+          "lane28-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08052242952453632,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 927,
+          "fraction_at_least_60_percent_of_intent": 0.7411003236245954,
+          "longest_slow_feasible_start_step": 652,
+          "longest_slow_feasible_window_s": 2.9000000000000004,
+          "mean_along_intent_m_s": 0.14388639640737952,
+          "requested_moving_steps": 933,
+          "rmse_m_s": 0.11314135997533528
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 2,
+          "recovery_opportunities": 3,
+          "visible_moving": null,
+          "windows": 3
+        },
+        "lane": 29,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 24000,
+          "maximum_measured_link_envelope_m": 0.20982427895069122,
+          "minimum_clearance_lower_bound_m": 0.5731481215499269,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.804046630859375,
+          "maximum_y_m": 0.5979461669921875,
+          "minimum_y_m": -0.596893310546875
+        },
+        "stop_windows": {
+          "lane29-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08560528125826758,
+            "stopped_after_s": 0.5
+          },
+          "lane29-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08050710161088645,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 928,
+          "fraction_at_least_60_percent_of_intent": 0.7435344827586207,
+          "longest_slow_feasible_start_step": 739,
+          "longest_slow_feasible_window_s": 2.1,
+          "mean_along_intent_m_s": 0.14095329215728983,
+          "requested_moving_steps": 934,
+          "rmse_m_s": 0.13582521484927695
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 30,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 22625,
+          "maximum_measured_link_envelope_m": 0.2098267376422882,
+          "minimum_clearance_lower_bound_m": 0.35271191981530425,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 4.995208740234375,
+          "maximum_y_m": 0.796234130859375,
+          "minimum_y_m": -0.7369842529296875
+        },
+        "stop_windows": {
+          "lane30-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08584916282495182,
+            "stopped_after_s": 0.5
+          },
+          "lane30-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07895102578523966,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 941,
+          "fraction_at_least_60_percent_of_intent": 0.7747077577045696,
+          "longest_slow_feasible_start_step": 1102,
+          "longest_slow_feasible_window_s": 3.2,
+          "mean_along_intent_m_s": 0.14455423122685532,
+          "requested_moving_steps": 947,
+          "rmse_m_s": 0.11479440916471957
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 5,
+          "visible_moving": null,
+          "windows": 5
+        },
+        "lane": 31,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 19314,
+          "maximum_measured_link_envelope_m": 0.20983141660690308,
+          "minimum_clearance_lower_bound_m": 0.4671044900977833,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.276397705078125,
+          "maximum_y_m": 0.69775390625,
+          "minimum_y_m": -0.6254806518554688
+        },
+        "stop_windows": {
+          "lane31-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08578811757838029,
+            "stopped_after_s": 0.5
+          },
+          "lane31-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07934727076325257,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 986,
+          "fraction_at_least_60_percent_of_intent": 0.7860040567951319,
+          "longest_slow_feasible_start_step": 714,
+          "longest_slow_feasible_window_s": 1.0,
+          "mean_along_intent_m_s": 0.1374758648385657,
+          "requested_moving_steps": 986,
+          "rmse_m_s": 0.1249460235354816
+        }
+      }
+    ],
+    "room_corner": [
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 0,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 22695,
+          "maximum_measured_link_envelope_m": 0.2098345160484314,
+          "minimum_clearance_lower_bound_m": 0.5336727648973465,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.1568603515625,
+          "maximum_y_m": 1.99993896484375,
+          "minimum_y_m": -0.0271759033203125
+        },
+        "stop_windows": {
+          "lane0-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05358985899244582,
+            "stopped_after_s": 0.4
+          },
+          "lane0-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.11077924418734239,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 964,
+          "fraction_at_least_60_percent_of_intent": 0.8153526970954357,
+          "longest_slow_feasible_start_step": 180,
+          "longest_slow_feasible_window_s": 1.9000000000000001,
+          "mean_along_intent_m_s": 0.15568771538839393,
+          "requested_moving_steps": 970,
+          "rmse_m_s": 0.10193365925783082
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 1,
+          "visible_moving": null,
+          "windows": 1
+        },
+        "lane": 1,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 3726,
+          "maximum_measured_link_envelope_m": 0.20983466506004333,
+          "minimum_clearance_lower_bound_m": 0.6732417643070221,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.145599365234375,
+          "maximum_y_m": 1.7381591796875,
+          "minimum_y_m": -0.2351226806640625
+        },
+        "stop_windows": {
+          "lane1-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05352913497616062,
+            "stopped_after_s": 0.4
+          },
+          "lane1-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.0739364427714336,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 998,
+          "fraction_at_least_60_percent_of_intent": 0.7565130260521042,
+          "longest_slow_feasible_start_step": 174,
+          "longest_slow_feasible_window_s": 2.5,
+          "mean_along_intent_m_s": 0.14290657017264558,
+          "requested_moving_steps": 1004,
+          "rmse_m_s": 0.12277831325257903
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 2,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 21882,
+          "maximum_measured_link_envelope_m": 0.2098221480846405,
+          "minimum_clearance_lower_bound_m": 0.5671104287258052,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.147796630859375,
+          "maximum_y_m": 2.224134683609009,
+          "minimum_y_m": 0.02336009219288826
+        },
+        "stop_windows": {
+          "lane2-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05401818730219952,
+            "stopped_after_s": 0.4
+          },
+          "lane2-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08861970054447656,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 987,
+          "fraction_at_least_60_percent_of_intent": 0.7710233029381965,
+          "longest_slow_feasible_start_step": 274,
+          "longest_slow_feasible_window_s": 3.9000000000000004,
+          "mean_along_intent_m_s": 0.15167800399028908,
+          "requested_moving_steps": 993,
+          "rmse_m_s": 0.10908171562768325
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 3,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 23973,
+          "maximum_measured_link_envelope_m": 0.20983637869358063,
+          "minimum_clearance_lower_bound_m": 0.4627913816779031,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 6.896514892578125,
+          "maximum_y_m": 2.3210983276367188,
+          "minimum_y_m": -0.06037139892578125
+        },
+        "stop_windows": {
+          "lane3-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05350113725824197,
+            "stopped_after_s": 0.4
+          },
+          "lane3-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.09575301568055977,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 973,
+          "fraction_at_least_60_percent_of_intent": 0.7019527235354573,
+          "longest_slow_feasible_start_step": 276,
+          "longest_slow_feasible_window_s": 3.7,
+          "mean_along_intent_m_s": 0.14326687689826226,
+          "requested_moving_steps": 979,
+          "rmse_m_s": 0.12907897898449266
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 4,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 14318,
+          "maximum_measured_link_envelope_m": 0.20982646942138672,
+          "minimum_clearance_lower_bound_m": 0.4807793840144454,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.127227783203125,
+          "maximum_y_m": 2.0442962646484375,
+          "minimum_y_m": -0.1854095458984375
+        },
+        "stop_windows": {
+          "lane4-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05343982233312365,
+            "stopped_after_s": 0.4
+          },
+          "lane4-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.10816582730783735,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 1005,
+          "fraction_at_least_60_percent_of_intent": 0.8119402985074626,
+          "longest_slow_feasible_start_step": 168,
+          "longest_slow_feasible_window_s": 3.0,
+          "mean_along_intent_m_s": 0.1589600930608181,
+          "requested_moving_steps": 1011,
+          "rmse_m_s": 0.10989536606637024
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 1,
+          "visible_moving": null,
+          "windows": 1
+        },
+        "lane": 5,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 18153,
+          "maximum_measured_link_envelope_m": 0.20982542634010315,
+          "minimum_clearance_lower_bound_m": 0.5774496355936044,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.0653533935546875,
+          "maximum_y_m": 1.760589599609375,
+          "minimum_y_m": -0.3038330078125
+        },
+        "stop_windows": {
+          "lane5-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05383580429578393,
+            "stopped_after_s": 0.4
+          },
+          "lane5-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.09358066050142778,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 1024,
+          "fraction_at_least_60_percent_of_intent": 0.7841796875,
+          "longest_slow_feasible_start_step": 171,
+          "longest_slow_feasible_window_s": 2.8000000000000003,
+          "mean_along_intent_m_s": 0.1451447564459318,
+          "requested_moving_steps": 1030,
+          "rmse_m_s": 0.1071929304045739
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 6,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 4150,
+          "maximum_measured_link_envelope_m": 0.2098223865032196,
+          "minimum_clearance_lower_bound_m": 0.5193373560905457,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.2648773193359375,
+          "maximum_y_m": 1.6624832153320312,
+          "minimum_y_m": -0.33135986328125
+        },
+        "stop_windows": {
+          "lane6-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05430702190559978,
+            "stopped_after_s": 0.4
+          },
+          "lane6-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.11668289991227233,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 996,
+          "fraction_at_least_60_percent_of_intent": 0.7751004016064257,
+          "longest_slow_feasible_start_step": 162,
+          "longest_slow_feasible_window_s": 2.7,
+          "mean_along_intent_m_s": 0.14976000646941243,
+          "requested_moving_steps": 996,
+          "rmse_m_s": 0.12798730488936938
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 3,
+          "visible_moving": null,
+          "windows": 3
+        },
+        "lane": 7,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 3979,
+          "maximum_measured_link_envelope_m": 0.20981498062610626,
+          "minimum_clearance_lower_bound_m": 0.5027037357596889,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.1908721923828125,
+          "maximum_y_m": 2.0326154232025146,
+          "minimum_y_m": -0.1691974401473999
+        },
+        "stop_windows": {
+          "lane7-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05423161258047346,
+            "stopped_after_s": 0.4
+          },
+          "lane7-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.032732291169457306,
+            "stopped_after_s": 0.2
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 1004,
+          "fraction_at_least_60_percent_of_intent": 0.8097609561752988,
+          "longest_slow_feasible_start_step": 284,
+          "longest_slow_feasible_window_s": 2.9000000000000004,
+          "mean_along_intent_m_s": 0.1543374604357922,
+          "requested_moving_steps": 1010,
+          "rmse_m_s": 0.10358862666966215
+        }
+      }
+    ],
+    "street_gap": [
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 5,
+          "recovery_opportunities": 6,
+          "visible_moving": null,
+          "windows": 6
+        },
+        "lane": 16,
+        "passed_stops": 1,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 2045,
+          "maximum_measured_link_envelope_m": 0.20981329679489136,
+          "minimum_clearance_lower_bound_m": 0.4189825365147697,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.032895088195801,
+          "maximum_y_m": 1.127410888671875,
+          "minimum_y_m": -0.08148956298828125
+        },
+        "stop_windows": {
+          "lane16-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.16351374313254266,
+            "stopped_after_s": 0.7000000000000001
+          }
+        },
+        "total_stops": 1,
+        "tracking": {
+          "feasible_moving_steps": 927,
+          "fraction_at_least_60_percent_of_intent": 0.7001078748651565,
+          "longest_slow_feasible_start_step": 104,
+          "longest_slow_feasible_window_s": 2.3000000000000003,
+          "mean_along_intent_m_s": 0.12550747245866425,
+          "requested_moving_steps": 944,
+          "rmse_m_s": 0.1382723227055322
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 3,
+          "recovery_opportunities": 4,
+          "visible_moving": null,
+          "windows": 4
+        },
+        "lane": 17,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 1253,
+          "maximum_measured_link_envelope_m": 0.20980721712112427,
+          "minimum_clearance_lower_bound_m": 0.438749100704416,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 0.3089178204536438,
+          "maximum_y_m": 0.3584166169166565,
+          "minimum_y_m": -0.7738569974899292
+        },
+        "stop_windows": {
+          "lane17-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05069574921370033,
+            "stopped_after_s": 0.4
+          },
+          "lane17-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.09747475038662684,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 948,
+          "fraction_at_least_60_percent_of_intent": 0.6635021097046413,
+          "longest_slow_feasible_start_step": 31,
+          "longest_slow_feasible_window_s": 5.2,
+          "mean_along_intent_m_s": 0.13223686062197035,
+          "requested_moving_steps": 954,
+          "rmse_m_s": 0.14745778250915184
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 3,
+          "recovery_opportunities": 5,
+          "visible_moving": null,
+          "windows": 5
+        },
+        "lane": 18,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 1400,
+          "maximum_measured_link_envelope_m": 0.20981428027153015,
+          "minimum_clearance_lower_bound_m": 0.2838185680834347,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 0.36205944418907166,
+          "maximum_y_m": 1.347015380859375,
+          "minimum_y_m": 0.007659912109375
+        },
+        "stop_windows": {
+          "lane18-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05088150017194312,
+            "stopped_after_s": 0.4
+          },
+          "lane18-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.09125534862847547,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 903,
+          "fraction_at_least_60_percent_of_intent": 0.6666666666666666,
+          "longest_slow_feasible_start_step": 260,
+          "longest_slow_feasible_window_s": 4.4,
+          "mean_along_intent_m_s": 0.12443612957865266,
+          "requested_moving_steps": 922,
+          "rmse_m_s": 0.14274606796282316
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 3,
+          "visible_moving": null,
+          "windows": 3
+        },
+        "lane": 19,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 22351,
+          "maximum_measured_link_envelope_m": 0.20981743931770325,
+          "minimum_clearance_lower_bound_m": 0.5657715310274007,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 1.0182769298553467,
+          "maximum_y_m": 1.438507080078125,
+          "minimum_y_m": -0.5767974853515625
+        },
+        "stop_windows": {
+          "lane19-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05049112866258896,
+            "stopped_after_s": 0.4
+          },
+          "lane19-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.040998203774318696,
+            "stopped_after_s": 0.30000000000000004
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 924,
+          "fraction_at_least_60_percent_of_intent": 0.7283549783549783,
+          "longest_slow_feasible_start_step": 55,
+          "longest_slow_feasible_window_s": 2.2,
+          "mean_along_intent_m_s": 0.13236670912447335,
+          "requested_moving_steps": 930,
+          "rmse_m_s": 0.1512797854500153
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 3,
+          "recovery_opportunities": 6,
+          "visible_moving": null,
+          "windows": 7
+        },
+        "lane": 20,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 13118,
+          "maximum_measured_link_envelope_m": 0.20982006192207336,
+          "minimum_clearance_lower_bound_m": 0.23078873293895869,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 0.676971435546875,
+          "maximum_y_m": 1.4830322265625,
+          "minimum_y_m": -0.1582183837890625
+        },
+        "stop_windows": {
+          "lane20-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05034802231306105,
+            "stopped_after_s": 0.4
+          },
+          "lane20-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.09528712265517206,
+            "stopped_after_s": 0.6000000000000001
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 932,
+          "fraction_at_least_60_percent_of_intent": 0.6319742489270386,
+          "longest_slow_feasible_start_step": 257,
+          "longest_slow_feasible_window_s": 4.1000000000000005,
+          "mean_along_intent_m_s": 0.11220900237408063,
+          "requested_moving_steps": 954,
+          "rmse_m_s": 0.16686229104247066
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 1,
+          "late_recovery": 6,
+          "recovery_opportunities": 7,
+          "visible_moving": null,
+          "windows": 7
+        },
+        "lane": 21,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 22740,
+          "maximum_measured_link_envelope_m": 0.20981620252132416,
+          "minimum_clearance_lower_bound_m": 0.19929531200539713,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 1.1165847778320312,
+          "maximum_y_m": 1.3415679931640625,
+          "minimum_y_m": -1.4384231567382812
+        },
+        "stop_windows": {
+          "lane21-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05069817342978953,
+            "stopped_after_s": 0.4
+          },
+          "lane21-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.043861002295897705,
+            "stopped_after_s": 0.30000000000000004
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 953,
+          "fraction_at_least_60_percent_of_intent": 0.6883525708289612,
+          "longest_slow_feasible_start_step": 259,
+          "longest_slow_feasible_window_s": 3.9000000000000004,
+          "mean_along_intent_m_s": 0.12294861517629618,
+          "requested_moving_steps": 974,
+          "rmse_m_s": 0.15152647128813757
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 7,
+          "recovery_opportunities": 8,
+          "visible_moving": null,
+          "windows": 8
+        },
+        "lane": 22,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 14417,
+          "maximum_measured_link_envelope_m": 0.20981433987617493,
+          "minimum_clearance_lower_bound_m": 0.4791606862804134,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 0.341094970703125,
+          "maximum_y_m": 0.05960762873291969,
+          "minimum_y_m": -1.267828345298767
+        },
+        "stop_windows": {
+          "lane22-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05041671965840006,
+            "stopped_after_s": 0.4
+          },
+          "lane22-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.09038565170659606,
+            "stopped_after_s": 0.5
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 911,
+          "fraction_at_least_60_percent_of_intent": 0.5817782656421515,
+          "longest_slow_feasible_start_step": 716,
+          "longest_slow_feasible_window_s": 5.9,
+          "mean_along_intent_m_s": 0.10056992393377438,
+          "requested_moving_steps": 917,
+          "rmse_m_s": 0.16445522131754028
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 4,
+          "visible_moving": null,
+          "windows": 4
+        },
+        "lane": 23,
+        "passed_stops": 1,
+        "physical": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 6145,
+          "maximum_measured_link_envelope_m": 0.20981571078300476,
+          "minimum_clearance_lower_bound_m": 0.2868472544908533,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 1.0992355346679688,
+          "maximum_y_m": 0.3452301025390625,
+          "minimum_y_m": -1.5215301513671875
+        },
+        "stop_windows": {
+          "lane23-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05060934745337826,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 1,
+        "tracking": {
+          "feasible_moving_steps": 946,
+          "fraction_at_least_60_percent_of_intent": 0.6955602536997886,
+          "longest_slow_feasible_start_step": 997,
+          "longest_slow_feasible_window_s": 3.7,
+          "mean_along_intent_m_s": 0.13430915912745797,
+          "requested_moving_steps": 964,
+          "rmse_m_s": 0.15866333577347663
+        }
+      }
+    ],
+    "trunk_aisle": [
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 1,
+          "visible_moving": null,
+          "windows": 1
+        },
+        "lane": 8,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 17402,
+          "maximum_measured_link_envelope_m": 0.20982296764850616,
+          "minimum_clearance_lower_bound_m": 0.548393989492023,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.9657745361328125,
+          "maximum_y_m": 0.866455078125,
+          "minimum_y_m": -0.520355224609375
+        },
+        "stop_windows": {
+          "lane8-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07138908103866955,
+            "stopped_after_s": 0.5
+          },
+          "lane8-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05605512039909177,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 933,
+          "fraction_at_least_60_percent_of_intent": 0.804930332261522,
+          "longest_slow_feasible_start_step": 628,
+          "longest_slow_feasible_window_s": 2.7,
+          "mean_along_intent_m_s": 0.139143470240527,
+          "requested_moving_steps": 939,
+          "rmse_m_s": 0.1018577062846458
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 0,
+          "visible_moving": null,
+          "windows": 0
+        },
+        "lane": 9,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 6828,
+          "maximum_measured_link_envelope_m": 0.20982488989830017,
+          "minimum_clearance_lower_bound_m": 0.5691967739269195,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.3420867919921875,
+          "maximum_y_m": 0.6581268310546875,
+          "minimum_y_m": -0.3184967041015625
+        },
+        "stop_windows": {
+          "lane9-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07739882126665101,
+            "stopped_after_s": 0.5
+          },
+          "lane9-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05658580145160252,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 946,
+          "fraction_at_least_60_percent_of_intent": 0.781183932346723,
+          "longest_slow_feasible_start_step": 1179,
+          "longest_slow_feasible_window_s": 1.5,
+          "mean_along_intent_m_s": 0.1329037668291662,
+          "requested_moving_steps": 952,
+          "rmse_m_s": 0.11743070931408946
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 0,
+          "visible_moving": null,
+          "windows": 0
+        },
+        "lane": 10,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 7361,
+          "maximum_measured_link_envelope_m": 0.2098168432712555,
+          "minimum_clearance_lower_bound_m": 0.534402257879363,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.492271423339844,
+          "maximum_y_m": 0.5025482177734375,
+          "minimum_y_m": -0.615264892578125
+        },
+        "stop_windows": {
+          "lane10-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07509992793546597,
+            "stopped_after_s": 0.5
+          },
+          "lane10-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05701321632081045,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 957,
+          "fraction_at_least_60_percent_of_intent": 0.8223615464994776,
+          "longest_slow_feasible_start_step": 1021,
+          "longest_slow_feasible_window_s": 2.4000000000000004,
+          "mean_along_intent_m_s": 0.14700697807819632,
+          "requested_moving_steps": 957,
+          "rmse_m_s": 0.1019185427023828
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 3,
+          "visible_moving": null,
+          "windows": 3
+        },
+        "lane": 11,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 5642,
+          "maximum_measured_link_envelope_m": 0.2098156213760376,
+          "minimum_clearance_lower_bound_m": 0.532340623527864,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.1888885498046875,
+          "maximum_y_m": 0.4849853515625,
+          "minimum_y_m": -0.45665740966796875
+        },
+        "stop_windows": {
+          "lane11-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.025271088986361944,
+            "stopped_after_s": 0.1
+          },
+          "lane11-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05575413770097128,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 912,
+          "fraction_at_least_60_percent_of_intent": 0.7839912280701754,
+          "longest_slow_feasible_start_step": 262,
+          "longest_slow_feasible_window_s": 2.3000000000000003,
+          "mean_along_intent_m_s": 0.1387898679367184,
+          "requested_moving_steps": 912,
+          "rmse_m_s": 0.09731012463224632
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 1,
+          "visible_moving": null,
+          "windows": 1
+        },
+        "lane": 12,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 7848,
+          "maximum_measured_link_envelope_m": 0.20981243252754211,
+          "minimum_clearance_lower_bound_m": 0.5734583455530384,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.3541717529296875,
+          "maximum_y_m": 0.3420957922935486,
+          "minimum_y_m": -0.6476851105690002
+        },
+        "stop_windows": {
+          "lane12-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.06926524841105036,
+            "stopped_after_s": 0.5
+          },
+          "lane12-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05718634766653125,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 955,
+          "fraction_at_least_60_percent_of_intent": 0.7706806282722513,
+          "longest_slow_feasible_start_step": 1165,
+          "longest_slow_feasible_window_s": 2.9000000000000004,
+          "mean_along_intent_m_s": 0.13260385696152546,
+          "requested_moving_steps": 961,
+          "rmse_m_s": 0.10659883323494294
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 1,
+          "visible_moving": null,
+          "windows": 1
+        },
+        "lane": 13,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 20976,
+          "maximum_measured_link_envelope_m": 0.20981639623641968,
+          "minimum_clearance_lower_bound_m": 0.561687464739277,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.452537536621094,
+          "maximum_y_m": 0.641448974609375,
+          "minimum_y_m": -0.7680206298828125
+        },
+        "stop_windows": {
+          "lane13-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07681086611883053,
+            "stopped_after_s": 0.5
+          },
+          "lane13-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.057116711726222714,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 947,
+          "fraction_at_least_60_percent_of_intent": 0.808870116156283,
+          "longest_slow_feasible_start_step": 682,
+          "longest_slow_feasible_window_s": 2.7,
+          "mean_along_intent_m_s": 0.1479645922568608,
+          "requested_moving_steps": 953,
+          "rmse_m_s": 0.09319735224686213
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 0,
+          "recovery_opportunities": 0,
+          "visible_moving": null,
+          "windows": 0
+        },
+        "lane": 14,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 11867,
+          "maximum_measured_link_envelope_m": 0.2098228633403778,
+          "minimum_clearance_lower_bound_m": 0.47231165448817836,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.5348968505859375,
+          "maximum_y_m": 0.5102996826171875,
+          "minimum_y_m": -0.9327850341796875
+        },
+        "stop_windows": {
+          "lane14-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08580458858812166,
+            "stopped_after_s": 0.5
+          },
+          "lane14-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05625678016785732,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 938,
+          "fraction_at_least_60_percent_of_intent": 0.746268656716418,
+          "longest_slow_feasible_start_step": 561,
+          "longest_slow_feasible_window_s": 4.1000000000000005,
+          "mean_along_intent_m_s": 0.13251306288129674,
+          "requested_moving_steps": 944,
+          "rmse_m_s": 0.10893742568005246
+        }
+      },
+      {
+        "contact": null,
+        "elapsed_s": 120.0,
+        "events": {
+          "late_intervention": 0,
+          "late_recovery": 1,
+          "recovery_opportunities": 2,
+          "visible_moving": null,
+          "windows": 2
+        },
+        "lane": 15,
+        "passed_stops": 2,
+        "physical": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 16777,
+          "maximum_measured_link_envelope_m": 0.2098107933998108,
+          "minimum_clearance_lower_bound_m": 0.47920090841833707,
+          "sample_period_ms": 5,
+          "samples": 24001,
+          "source": {
+            "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+            "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+          }
+        },
+        "reset": null,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 4.406258583068848,
+          "maximum_y_m": 1.125457763671875,
+          "minimum_y_m": -0.63275146484375
+        },
+        "stop_windows": {
+          "lane15-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07728816192095685,
+            "stopped_after_s": 0.5
+          },
+          "lane15-stop-1": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.056900310435643205,
+            "stopped_after_s": 0.4
+          }
+        },
+        "total_stops": 2,
+        "tracking": {
+          "feasible_moving_steps": 962,
+          "fraction_at_least_60_percent_of_intent": 0.7577962577962578,
+          "longest_slow_feasible_start_step": 675,
+          "longest_slow_feasible_window_s": 3.7,
+          "mean_along_intent_m_s": 0.13373257828160162,
+          "requested_moving_steps": 966,
+          "rmse_m_s": 0.10239902135443435
+        }
+      }
+    ]
+  },
+  "checkpoint": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-R5-RECOVERY-U1792-TWO-STUDY-FORMAL-B-U2816/results/research-r6-training/checkpoints/u2816.pt",
+    "sha256": "841a0a7c7926a14584f257667c5dffe0077129c33458898026ae37405ce9e231"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/analysis/clearance-and-progress.json",
+    "sha256": "7b81ad303f526e436479c699bc767fe3fb9d52e09741ac0d5f01f3a6b79b17b7"
+  },
+  "contacts": {},
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "execution": "m4-escape-brake-tube-p25-crossing-stop-v52",
+  "failed_short_guardrail_lanes": [],
+  "first_flight_lane_seconds": 3840.0,
+  "first_flights_completed": 32,
+  "formal_acceptance": false,
+  "input": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/static_turn_onset/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106-inputs.json",
+    "sha256": "f36a93a2d1cc9f1c758341420180c1ab8fce7947b8ed50c864ab48d54564c4a8"
+  },
+  "matched_control": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/front_wall_handoff/RESULT.json",
+    "sha256": "24debeb38761b69127bc69fb1c0a805fda2019006106de899a1521802b56921c"
+  },
+  "matched_windows": [
+    {
+      "candidate": {
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 760,
+          "maximum_measured_link_envelope_m": 0.2098141759634018,
+          "minimum_clearance_lower_bound_m": 0.9097422361373901,
+          "samples": 761
+        },
+        "first": {
+          "issued": [
+            0.12497055530548096,
+            -0.04242154210805893,
+            0.000269629352260381
+          ],
+          "issued_ratio": 0.8526941285947516,
+          "measured": [
+            -0.07686417549848557,
+            -0.21268302202224731,
+            -0.0005312652792781591
+          ],
+          "progress_ratio": -0.030791725012509385,
+          "request": [
+            0.1466352343147048,
+            -0.049526231717355776,
+            0.0
+          ],
+          "retreating": false,
+          "step": 535,
+          "wall_brake": false
+        },
+        "packets": 38,
+        "progress_confirmation": 549,
+        "progress_steps": 28
+      },
+      "control": {
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 107,
+          "maximum_measured_link_envelope_m": 0.20981411635875702,
+          "minimum_clearance_lower_bound_m": 1.0690662562847137,
+          "samples": 761
+        },
+        "first": {
+          "issued": [
+            -0.28422608971595764,
+            0.09599775075912476,
+            6.111804395914078e-10
+          ],
+          "issued_ratio": -1.9383206390264263,
+          "measured": [
+            -0.08758512139320374,
+            -0.2090291678905487,
+            0.0006055350531823933
+          ],
+          "progress_ratio": -0.1039726516748508,
+          "request": [
+            0.1466352343147048,
+            -0.049526231717355776,
+            0.0
+          ],
+          "retreating": true,
+          "step": 535,
+          "wall_brake": false
+        },
+        "packets": 38,
+        "progress_confirmation": 562,
+        "progress_steps": 15
+      },
+      "end_step": 573,
+      "lane": 22,
+      "start_step": 535
+    },
+    {
+      "candidate": {
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 275,
+          "maximum_measured_link_envelope_m": 0.20981407165527344,
+          "minimum_clearance_lower_bound_m": 0.6137736141357479,
+          "samples": 301
+        },
+        "first": {
+          "issued": [
+            -0.2457001954317093,
+            -0.17204751074314117,
+            6.6356733441352844e-09
+          ],
+          "issued_ratio": -0.8775006979703902,
+          "measured": [
+            -0.043846603482961655,
+            -0.0041086552664637566,
+            -0.002184258308261633
+          ],
+          "progress_ratio": -0.15659501243914875,
+          "request": [
+            0.28,
+            0.0,
+            0.0
+          ],
+          "retreating": false,
+          "step": 46,
+          "wall_brake": false
+        },
+        "packets": 15,
+        "progress_confirmation": null,
+        "progress_steps": 0
+      },
+      "control": {
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 275,
+          "maximum_measured_link_envelope_m": 0.20981407165527344,
+          "minimum_clearance_lower_bound_m": 0.6137736141357479,
+          "samples": 301
+        },
+        "first": {
+          "issued": [
+            -0.2457001954317093,
+            -0.17204751074314117,
+            6.6356733441352844e-09
+          ],
+          "issued_ratio": -0.8775006979703902,
+          "measured": [
+            -0.043846603482961655,
+            -0.0041086552664637566,
+            -0.002184258308261633
+          ],
+          "progress_ratio": -0.15659501243914875,
+          "request": [
+            0.28,
+            0.0,
+            0.0
+          ],
+          "retreating": false,
+          "step": 46,
+          "wall_brake": false
+        },
+        "packets": 15,
+        "progress_confirmation": null,
+        "progress_steps": 0
+      },
+      "end_step": 61,
+      "lane": 22,
+      "start_step": 46
+    },
+    {
+      "candidate": {
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 480,
+          "maximum_measured_link_envelope_m": 0.20981577038764954,
+          "minimum_clearance_lower_bound_m": 0.5305632650852203,
+          "samples": 481
+        },
+        "first": {
+          "issued": [
+            -0.23878107964992523,
+            0.01204393245279789,
+            0.00023088720627129078
+          ],
+          "issued_ratio": 0.8765394593059053,
+          "measured": [
+            -0.006340536288917065,
+            0.0008954167133197188,
+            0.00035623268922790885
+          ],
+          "progress_ratio": 0.023382018493994915,
+          "request": [
+            -0.2724114854632936,
+            0.013777841982157493,
+            0.0
+          ],
+          "retreating": false,
+          "step": 752,
+          "wall_brake": false
+        },
+        "packets": 24,
+        "progress_confirmation": 761,
+        "progress_steps": 19
+      },
+      "control": {
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 480,
+          "maximum_measured_link_envelope_m": 0.20981577038764954,
+          "minimum_clearance_lower_bound_m": 0.5305632650852203,
+          "samples": 481
+        },
+        "first": {
+          "issued": [
+            -0.23878107964992523,
+            0.01204393245279789,
+            0.00023088720627129078
+          ],
+          "issued_ratio": 0.8765394593059053,
+          "measured": [
+            -0.006340536288917065,
+            0.0008954167133197188,
+            0.00035623268922790885
+          ],
+          "progress_ratio": 0.023382018493994915,
+          "request": [
+            -0.2724114854632936,
+            0.013777841982157493,
+            0.0
+          ],
+          "retreating": false,
+          "step": 752,
+          "wall_brake": false
+        },
+        "packets": 24,
+        "progress_confirmation": 761,
+        "progress_steps": 19
+      },
+      "end_step": 776,
+      "lane": 24,
+      "start_step": 752
+    },
+    {
+      "candidate": {
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 94,
+          "maximum_measured_link_envelope_m": 0.2098138928413391,
+          "minimum_clearance_lower_bound_m": 0.5278981924057007,
+          "samples": 541
+        },
+        "first": {
+          "issued": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "issued_ratio": 0.0,
+          "measured": [
+            0.0069526564329862595,
+            -0.0002687314699869603,
+            -0.0004579805245157331
+          ],
+          "progress_ratio": -9.840647352744296e-05,
+          "request": [
+            -0.00961456282273614,
+            -0.22943848069166103,
+            0.0
+          ],
+          "retreating": false,
+          "step": 756,
+          "wall_brake": false
+        },
+        "packets": 27,
+        "progress_confirmation": null,
+        "progress_steps": 4
+      },
+      "control": {
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 181,
+          "maximum_measured_link_envelope_m": 0.20981422066688538,
+          "minimum_clearance_lower_bound_m": 0.3787759318868684,
+          "samples": 541
+        },
+        "first": {
+          "issued": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "issued_ratio": 0.0,
+          "measured": [
+            -0.016155237331986427,
+            0.0007086290861479938,
+            -0.0001260703575098887
+          ],
+          "progress_ratio": -0.00013769434963020345,
+          "request": [
+            -0.00961456282273614,
+            -0.22943848069166103,
+            0.0
+          ],
+          "retreating": false,
+          "step": 756,
+          "wall_brake": false
+        },
+        "packets": 27,
+        "progress_confirmation": null,
+        "progress_steps": 4
+      },
+      "end_step": 783,
+      "lane": 22,
+      "start_step": 756
+    }
+  ],
+  "native_exit": -15,
+  "old_contacts": {},
+  "receipt": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/control/receipt.json",
+    "sha256": "663a47f2a1b49c03468009b4cde48be400c25df6fc80f1ab903a76203ccbb791"
+  },
+  "schema_version": "instinctrl-static-turn-onset-pair-result/1",
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/static_turn_onset/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106-source.json",
+    "sha256": "c1df9a46ec5ad5b754fc1a4bf27f36ba5fd1f9967f1034733ed4f04f661c0122"
+  },
+  "static_turns": {
+    "22": [
+      {
+        "margin_m": 1.0818732976913452,
+        "step": 535
+      }
+    ]
+  },
+  "status": "CLOSED_DEVELOPMENT_COMPARISON",
+  "wall_seconds": 578.4200184121728
+}

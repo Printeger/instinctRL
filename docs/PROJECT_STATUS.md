@@ -20,6 +20,8 @@
 
 `v51` 的底层投影补偿在同输入中把四条走廊的 200 秒终点高度抬高 0.051–0.070 米。32/32 路首飞完整，街道第 21 路净空仅 0.138 米且第二个预设停杆晚至 1.5 秒。全组停杆 63/64，最长可行低进展 7.5 秒。该配置短程护栏未通过，最新静态换令修复以 `v50` 配对。 [原生配对](experiments/instinct-continuous-command/collective_projection/REPORT.md)
 
+`v52` 的静态换令复核在同输入前 120 秒完成 32/32 首飞、59/59 停杆，零接触和重置，最小净空 0.199 米。街道第 22 路第 535 拍取消误触反向退避，连续五拍实际进展提前 1.3 秒。最长可行低进展仍为 5.9 秒。 [原生配对](experiments/instinct-continuous-command/static_turn_onset/REPORT.md)
+
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
