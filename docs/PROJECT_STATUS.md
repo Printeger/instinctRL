@@ -106,6 +106,8 @@
 
 室内沿墙速度配对的五类首飞、停车均达标，保持最低净空 0.19541 米。室内固定窗实测沿令从 0/31 增至 22/31，整条窗口仍有低进展，较宽窗口跟踪误差略增。 [同输入结果](experiments/instinct-continuous-command/room_tangent_magnitude/REPORT.md)
 
+同侧撤离复核的配对五类首飞和停车均通过，零接触与重置。原失败横穿窗实测净空从 0.13970 米增至 0.69961 米，整组最小净空 0.20542 米。短程跟踪和恢复仍有缺口，进入预登记独立复验。 [配对实测](experiments/instinct-continuous-command/retreat_onset_side/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
