@@ -100,6 +100,7 @@ CROSSING_STOP_25_V38 = 'm4-escape-brake-tube-p25-crossing-stop-v38'
 CROSSING_STOP_25_V39 = 'm4-escape-brake-tube-p25-crossing-stop-v39'
 CROSSING_STOP_25_V40 = 'm4-escape-brake-tube-p25-crossing-stop-v40'
 CROSSING_STOP_25_V41 = 'm4-escape-brake-tube-p25-crossing-stop-v41'
+RECENT_COMMAND_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v42'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -132,7 +133,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V31: 25, CROSSING_STOP_25_V32: 25, CROSSING_STOP_25_V33: 25,
                        CROSSING_STOP_25_V34: 25, CROSSING_STOP_25_V35: 25, CROSSING_STOP_25_V36: 25,
                        CROSSING_STOP_25_V37: 25, CROSSING_STOP_25_V38: 25, CROSSING_STOP_25_V39: 25,
-                       CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25}
+                       CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -164,7 +165,7 @@ class EscapeRecovery(EscapeOption):
                  verify_retreat_continuation=False, verify_brake_transition=False, verify_oldest_partial_turn=False,
                  verify_zero_crossing_withdrawal=False, verify_ranked_reversal_stop=False,
                  verify_retreat_onset_side=False, verify_retreat_stop=False, retry_command_handoff=False,
-                 verify_outward_brake=False, verify_composed_crossing=False):
+                 verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -204,6 +205,9 @@ class EscapeRecovery(EscapeOption):
             self.intercept_continued = torch.zeros_like(self.applied)
         self.command_handoff = command_handoff
         self.retry_command_handoff = retry_command_handoff
+        self.verify_recent_handoff = verify_recent_handoff
+        if verify_recent_handoff and not retry_command_handoff:
+            raise ValueError('ESCAPE_RECENT_HANDOFF_REQUIRES_COMMAND_RETRY')
         if retry_command_handoff:
             if not (command_handoff and clear_pass and static_scan_stop and commit_intercept):
                 raise ValueError('Retrying a handoff requires evidence for the active protections')
@@ -1015,7 +1019,7 @@ class EscapeRecovery(EscapeOption):
         self.rearm_steps = torch.where(emergency, RECENTER_REARM_STEPS, (self.rearm_steps-1).clamp_min(0))
 
     def handoff_changed_command(self, lidar, state, selected, action, config):
-        from .escape_passage import clear_to_end_escape
+        from .escape_passage import clear_to_end_escape, moving_intercepts
 
         self.handed_off.zero_()
         previous, latest_command = state[:, 32:35], state[:, 45:48]
@@ -1034,7 +1038,14 @@ class EscapeRecovery(EscapeOption):
         changed = (older*latest).sum(dim=1) <= .25
         basis = self.retreat_basis
         moved_away = ((basis*older).sum(dim=1) <= -.35) & ((basis*latest).sum(dim=1) >= -.15)
-        lanes = (changed & moved_away & ordinary & (speed >= .08).all(dim=1)).nonzero().flatten()
+        angular_handoff = changed & moved_away & (speed >= .08).all(dim=1)
+        eligible = angular_handoff
+        if self.verify_recent_handoff:
+            older_requests = state.reshape(-1, 4, 13)[:, :2, 6:9]
+            recent_change = (older_requests-latest_command[:, None]).norm(dim=2).amax(dim=1) > .04
+            recent_handoff = (recent_change & steady & ~protected & (speed[:, 1] >= .08) & (speed[:, 1] <= .30))
+            eligible = eligible | recent_handoff
+        lanes = (eligible & ordinary).nonzero().flatten()
         if not len(lanes):
             return
         scans, history, heading = lidar[lanes], state[lanes], latest[lanes]
@@ -1044,7 +1055,7 @@ class EscapeRecovery(EscapeOption):
         clear = (coverage >= .45) & clear_to_end_escape(scans, history, minimum_coverage=.50)
         if self.retry_command_handoff:
             # Only a fresh change denied by the scan proof gets one recheck.
-            self.handoff_pending[lanes] = ~retry[lanes] & ~protected[lanes] & ~clear
+            self.handoff_pending[lanes] = angular_handoff[lanes] & ~retry[lanes] & ~protected[lanes] & ~clear
         lanes, scans, history, heading = lanes[clear], scans[clear], history[clear], heading[clear]
         if not len(lanes):
             return
@@ -1053,7 +1064,15 @@ class EscapeRecovery(EscapeOption):
         progress = (actor.v_final_b*heading).sum(dim=1)
         old_progress = (held.v_final_b*heading).sum(dim=1)
         usable = (actor.metrics['beta'].flatten() >= .90) & (actor.metrics['emergency'].flatten() == 0.)
-        release = lanes[usable & (progress >= .60*speed[lanes, 1]) & (progress-old_progress >= .12)]
+        usable &= (progress >= .60*speed[lanes, 1]) & (progress-old_progress >= .12)
+        release_ok = usable & angular_handoff[lanes]
+        if self.verify_recent_handoff:
+            recent = usable & ~angular_handoff[lanes] & recent_handoff[lanes] & (old_progress < 0.)
+            if bool(recent.any()):
+                moving, *_ = moving_intercepts(scans, history, self.detector._full_rays, recent, maximum_range_m=2.65)
+                recent[moving] = False
+            release_ok |= recent
+        release = lanes[release_ok]
         selected[release] = action[release]
         self.applied[release] = False
         self.remaining[release] = 0

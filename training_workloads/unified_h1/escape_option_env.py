@@ -29,12 +29,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
-    CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41,
+    CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-CURRENT_REQUEST_RECOVERY_VERSIONS = (CROSSING_STOP_25_V40, CROSSING_STOP_25_V41)
+COMPOSED_CROSSING_VERSIONS = (CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25)
+CURRENT_REQUEST_RECOVERY_VERSIONS = (CROSSING_STOP_25_V40, *COMPOSED_CROSSING_VERSIONS)
 SUPPORTED_WALL_VERSIONS = (CROSSING_STOP_25_V39, *CURRENT_REQUEST_RECOVERY_VERSIONS)
 COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36, CROSSING_STOP_25_V38, *SUPPORTED_WALL_VERSIONS)
 FACETED_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V28, *COMPOSED_MOTION_VERSIONS)
@@ -242,7 +243,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_ranked_reversal_stop=version in RANKED_REVERSAL_STOP_VERSIONS,
                                                 verify_retreat_onset_side=version in RETREAT_ONSET_SIDE_VERSIONS,
                                                 verify_retreat_stop=version in RETREAT_STOP_VERSIONS,
-                                                verify_composed_crossing=version == CROSSING_STOP_25_V41)
+                                                verify_composed_crossing=version in COMPOSED_CROSSING_VERSIONS,
+                                                verify_recent_handoff=version == RECENT_COMMAND_HANDOFF_25)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
