@@ -1,0 +1,303 @@
+{
+  "cpu_policy_packets": 178,
+  "cpu_replay_freeze": "dfcd694b16bb9a49c6981e3377d659923883799c",
+  "held_zero": {
+    "after_expiry_m": -0.1801500267433504,
+    "before_expiry_m": 0.5445085821532158,
+    "first_breach_s": 108.22500000000001,
+    "held_from_packet": 1067,
+    "inputs": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/closed/backup/HELD-ZERO-INPUTS.json",
+      "sha256": "e132d1c62ee7663149a5dd226aeed830fd7d16f3c6e0257a6e009a7c5bf2a792"
+    },
+    "method": {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/closed/backup/held_zero_bound.py",
+      "sha256": "fece3f6ac83212f007cd721af05c23f8d8ee1dcb4613702a6ba400242d181510"
+    },
+    "minimum_m": -0.1801500267433504,
+    "mode": "offline_mover_only_held_neutral",
+    "observed_until_s": 114.9,
+    "proof_expiry_s": 107.5,
+    "queue_s": 0.1,
+    "raw": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-BACKUP/HARD-HELD-ZERO.json",
+      "sha256": "7d38b66af4fea3959af085dbafdf2720ffc30a30085dc58be155a4df8076756e"
+    },
+    "stopped_position": [
+      0.8041668951075611,
+      199.89459482575072,
+      1.8865854039554981
+    ],
+    "worst_time_s": 109.16
+  },
+  "held_zero_freeze": "ce25e19fde2fa8e4a48785b218cc9be46c3c9c7d",
+  "native_evaluation_steps": 0,
+  "pairs": {
+    "HARD-POSITIVE": {
+      "backup_metrics": {
+        "feasible_packets": 20,
+        "feasible_rmse_m_s": 0.10157213802269989,
+        "min_mover_m": -0.14156964262563282,
+        "min_static_m": 1.5128811095581023,
+        "minimum_m": -0.14156964262563282,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 15,
+        "worst_time_s": 109.39000000000001,
+        "zero_window": {
+          "entry_speed_m_s": 0.2013957303419135,
+          "exit_speed_m_s": 0.06077804297566148,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.21902497265529727,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "case": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": 1
+      },
+      "comparison": {
+        "after": {
+          "backup": {
+            "final_speed_m_s": 0.12866075333227284,
+            "first_breach_packet": 1084,
+            "minimum_m": -0.14156964262563282,
+            "mover_minimum_m": -0.14156964262563282,
+            "static_minimum_m": 1.6767291985884019
+          },
+          "prior": {
+            "final_speed_m_s": 0.12855258049056584,
+            "first_breach_packet": 1085,
+            "minimum_m": -0.16060923116021492,
+            "mover_minimum_m": -0.16060923116021492,
+            "static_minimum_m": 1.5604953553115701
+          }
+        },
+        "during": {
+          "backup": {
+            "final_speed_m_s": 0.17216346574171099,
+            "first_breach_packet": null,
+            "minimum_m": 0.5569299649263344,
+            "mover_minimum_m": 0.5569299649263344,
+            "static_minimum_m": 1.5915254958105949
+          },
+          "prior": {
+            "final_speed_m_s": 0.09611954519493077,
+            "first_breach_packet": null,
+            "minimum_m": 0.533772036059309,
+            "mover_minimum_m": 0.533772036059309,
+            "static_minimum_m": 1.5915254958105949
+          }
+        },
+        "first_backup": 1067,
+        "identical_prefix": true,
+        "last_zero_issue": 1071,
+        "stroke": [
+          1067,
+          1068,
+          1069,
+          1070,
+          1071
+        ],
+        "valid_through_exclusive": 1075
+      },
+      "handoff_metrics": {
+        "feasible_packets": 16,
+        "feasible_rmse_m_s": 0.05930384932318968,
+        "min_mover_m": -0.16060923116021492,
+        "min_static_m": 1.5128811095581023,
+        "minimum_m": -0.16060923116021492,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 15,
+        "worst_time_s": 109.605,
+        "zero_window": {
+          "entry_speed_m_s": 0.1552576905519423,
+          "exit_speed_m_s": 0.2769947394367966,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.2268509709180361,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "raw": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-BACKUP/HARD-POSITIVE.json",
+        "sha256": "0bc320d861e8c2a581f8168a8e278a9515a970fe3c07bf2ec4180427cdb481c2"
+      },
+      "reference": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-REOPENING/HARD-POSITIVE.json",
+        "sha256": "aac86b5796e6ad4f7a18fa68c64c0f3c0fa90cbf235d599faed7bce0ae0541e5"
+      },
+      "release_issue_w": [
+        0.0814167708158493,
+        0.2886618375778198,
+        -2.642877916514408e-09
+      ],
+      "release_observation": {
+        "decision": "backup_cancelled",
+        "latest_stop_static_m": 0.7374340441823005,
+        "predicted_issue_b": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "previous_issue_norm_m_s": 0.0,
+        "previous_reason": null,
+        "priority": [
+          "intercepted"
+        ],
+        "proposed_beta": 1.0,
+        "witness_age_ticks": 6,
+        "witness_mover_m": 0.45887909728900955,
+        "witness_static_m": 0.6069726419448852
+      },
+      "release_step": 1072
+    },
+    "NOMINAL": {
+      "backup_metrics": {
+        "feasible_packets": 41,
+        "feasible_rmse_m_s": 0.06981176955263069,
+        "min_mover_m": 0.3886151491682275,
+        "min_static_m": 1.512881150052861,
+        "minimum_m": 0.3886151491682275,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 41,
+        "worst_time_s": 108.565,
+        "zero_window": {
+          "entry_speed_m_s": 0.3949922729598067,
+          "exit_speed_m_s": 0.2528922296567226,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.2272407218763683,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "case": {
+        "attitude": "recorded",
+        "fork_step": 1064,
+        "sign": 0
+      },
+      "comparison": {
+        "after": {
+          "backup": {
+            "final_speed_m_s": 0.1279644541900279,
+            "first_breach_packet": null,
+            "minimum_m": 0.3886151491682275,
+            "mover_minimum_m": 0.3886151491682275,
+            "static_minimum_m": 1.6127862107091542
+          },
+          "prior": {
+            "final_speed_m_s": 0.12793285641028515,
+            "first_breach_packet": null,
+            "minimum_m": 0.3887730379218539,
+            "mover_minimum_m": 0.3887730379218539,
+            "static_minimum_m": 1.5984697641792613
+          }
+        },
+        "during": {
+          "backup": {
+            "final_speed_m_s": 0.05345639113728889,
+            "first_breach_packet": null,
+            "minimum_m": 0.5817682968153,
+            "mover_minimum_m": 0.5817682968153,
+            "static_minimum_m": 1.650479708537635
+          },
+          "prior": {
+            "final_speed_m_s": 0.04281469358777924,
+            "first_breach_packet": null,
+            "minimum_m": 0.5645424002948305,
+            "mover_minimum_m": 0.5645424002948305,
+            "static_minimum_m": 1.650479708537635
+          }
+        },
+        "first_backup": 1069,
+        "identical_prefix": true,
+        "last_zero_issue": 1074,
+        "stroke": [
+          1069,
+          1070,
+          1071,
+          1072,
+          1073,
+          1074
+        ],
+        "valid_through_exclusive": 1077
+      },
+      "handoff_metrics": {
+        "feasible_packets": 41,
+        "feasible_rmse_m_s": 0.0739864318450953,
+        "min_mover_m": 0.3887730379218539,
+        "min_static_m": 1.512881150052861,
+        "minimum_m": 0.3887730379218539,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 41,
+        "worst_time_s": 108.535,
+        "zero_window": {
+          "entry_speed_m_s": 0.3949922729598067,
+          "exit_speed_m_s": 0.26511394277250144,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.23077633756211363,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "raw": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-BACKUP/NOMINAL.json",
+        "sha256": "ed9a3677f41ecbbc85e478daeb6cf662b853485796b1935e490f4f1e32186aa0"
+      },
+      "reference": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-REOPENING/NOMINAL.json",
+        "sha256": "7d3964354778d9561a8ebd092ed9d9c9322208bddb55f79efee1b7c900737193"
+      },
+      "release_issue_w": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "release_observation": {
+        "decision": "backup_cancelled",
+        "latest_stop_static_m": 0.7344556026905774,
+        "predicted_issue_b": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "previous_issue_norm_m_s": 0.0,
+        "previous_reason": null,
+        "priority": [
+          "holding",
+          "offset_stopped"
+        ],
+        "proposed_beta": 1.0,
+        "witness_age_ticks": 7,
+        "witness_mover_m": 0.43177437579099287,
+        "witness_static_m": 0.5918682751059531
+      },
+      "release_step": 1075
+    }
+  },
+  "schema": "instinctrl-lane19-finite-stop-backup/1",
+  "status": "unmet-late-crossing",
+  "training_steps": 0,
+  "v60_source": "a346bea85a7478f0da3905dc2dae58cdc179b150"
+}
