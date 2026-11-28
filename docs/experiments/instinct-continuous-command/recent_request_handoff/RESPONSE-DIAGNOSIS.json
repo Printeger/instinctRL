@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "hacker-long01-request-unity.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-request-unity.jsonl",
+      "sha256": "2ba140371e66a4d81f682d41a9ec94a4b9809b9d349087ac59fea34fddbd997d"
+    },
+    "hacker-long01-request-unity.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-request-unity.py",
+      "sha256": "f78b0cee9a7b8ce9057a879c7f9536f548715fc742a9273d1e9b8d6136a39742"
+    },
+    "rebel-long01/plant-matched.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/rebel-long01/plant-matched.jsonl",
+      "sha256": "79deab8105a3299e525a03ac2fc0a391b0e1e5a3de5502d937cba1a2c2d5a37f"
+    },
+    "rebel-long01/plant-matched.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/rebel-long01/plant-matched.py",
+      "sha256": "ae95f671a13cb361201632a18535f44004e5b3b191dfcd84f6cb0ccc6f625fa8"
+    },
+    "rebel-long01/response.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/rebel-long01/response.jsonl",
+      "sha256": "66ef5bb53c9bfe0a60e0e98eca349f3ea2899970a790185229bc6fa2836c2483"
+    },
+    "rebel-long01/response.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/rebel-long01/response.py",
+      "sha256": "f0277533395a2fcd03efcfec2720d0432d367a8340c07573cc192fd9c5270b1a"
+    },
+    "rebel-long01/trunk-authority.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/rebel-long01/trunk-authority.jsonl",
+      "sha256": "37d7b5e463a3f2eb73bdd705e52dac45f2cab5401bac09190dafbb45bff1d2b7"
+    },
+    "rebel-long01/trunk-authority.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/rebel-long01/trunk-authority.py",
+      "sha256": "11bce420008b31d29785974b54e1b695e081428a3416c8a9fe645e6be8fc2ac6"
+    }
+  },
+  "disposition": "Retain the bounded CPU evidence and the frozen control gain",
+  "native_source": "017eefb29463686cab255198263be52f2abbd1e6",
+  "schema_version": "instinctrl-command-response-diagnosis/1",
+  "selections": {
+    "failed_recoveries": 260,
+    "fully_issued_first_fifteen": 30,
+    "over_two_seconds": 382,
+    "with_inadequate_issuance": 380
+  }
+}
