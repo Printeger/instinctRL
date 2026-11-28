@@ -279,7 +279,8 @@ def clear_opening_crossing_at_stop(lidar, state, rays, command_response, emergen
 
 
 def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, mount_offset, emergency_m,
-                                     previously_verified, *, ordinary_onset=None, verify_reference_reserve=False):
+                                     previously_verified, *, ordinary_onset=None, verify_reference_reserve=False,
+                                     partial_oldest_verified=None):
     """Bound clearance from every observed segment of a reversing mover's line."""
     history = state.reshape(-1, 4, 13)
     ages = history[:, :, 12]
@@ -318,6 +319,7 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
     drift = .35*coast.norm(dim=1)+.10*local_history[:, 48:51].norm(dim=1)
     separation = lateral.norm(dim=2).amin(dim=1)-radius-drift-.002
     clears_line = established & (separation >= .45)
+    partial_oldest = torch.zeros_like(clears_line)
     if ordinary_onset is not None:
         # A reversal within a scan interval can leave little net displacement.
         # Require the two moving intervals to witness the line independently.
@@ -337,14 +339,24 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
             renew = (previously_verified[lanes] & small[:, 0] & aligned_pause[:, 0]
                      & traveling[:, 1] & traveling[:, 2] & (agreement[:, 1] >= .995))
             measured = (turn | renew) & ~clears_line & supported & valid.all(dim=1) & (supported_distance >= .45)
+            if partial_oldest_verified is not None:
+                # The oldest interval can straddle the turn. Keep both full
+                # post-turn intervals and check every aligned segment.
+                partial_oldest = (ordinary_onset[lanes] & ~clears_line & supported & valid.all(dim=1)
+                                  & reversal & traveling[:, 1:].all(dim=1)
+                                  & (speed[:, 0] > .08) & (speed[:, 0] < .20) & (separation >= .50))
+                measured |= partial_oldest
             for index in measured.nonzero().flatten():
                 clears_line[index] = supports_hover_clearance(
                     scans[index], history[lanes[index]], rays, local_times[index], centers[index], radii[index],
-                    corrected[index], axis[index, traveling[index]], center_body[index], radius[index]+drift[index]+.002)
+                    corrected[index], axis[index, traveling[index] | partial_oldest[index]],
+                    center_body[index], radius[index]+drift[index]+.002)
     nearest, others, on_mover = fitted_sphere_returns(scans, rays, centers[:, -1], radii[:, -1])
     clear[lanes] = (supported & valid.all(dim=1) & clears_line
                     & (along[:, -1] < 0.) & (radius-radii.amin(dim=1) <= .04)
                     & (nearest >= emergency_m) & (others >= .85) & others.isfinite() & on_mover)
+    if partial_oldest_verified is not None:
+        partial_oldest_verified[lanes] = partial_oldest & clear[lanes]
     return clear
 
 

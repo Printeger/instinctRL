@@ -87,6 +87,7 @@ CROSSING_STOP_25_V25 = 'm4-escape-brake-tube-p25-crossing-stop-v25'
 CROSSING_STOP_25_V26 = 'm4-escape-brake-tube-p25-crossing-stop-v26'
 CROSSING_STOP_25_V27 = 'm4-escape-brake-tube-p25-crossing-stop-v27'
 CROSSING_STOP_25_V28 = 'm4-escape-brake-tube-p25-crossing-stop-v28'
+CROSSING_STOP_25_V29 = 'm4-escape-brake-tube-p25-crossing-stop-v29'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -115,7 +116,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25, CROSSING_STOP_25_V21: 25,
                        CROSSING_STOP_25_V22: 25, CROSSING_STOP_25_V23: 25, CROSSING_STOP_25_V24: 25,
                        CROSSING_STOP_25_V25: 25, CROSSING_STOP_25_V26: 25, CROSSING_STOP_25_V27: 25,
-                       CROSSING_STOP_25_V28: 25}
+                       CROSSING_STOP_25_V28: 25, CROSSING_STOP_25_V29: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -142,7 +143,7 @@ class EscapeRecovery(EscapeOption):
                  hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
                  retain_only_clipped_retreat=False, verify_hover_reference_reserve=False,
                  verify_crossing_restart=False, verify_overlapping_stop=False, verify_brake_recovery=False,
-                 verify_retreat_continuation=False, verify_brake_transition=False):
+                 verify_retreat_continuation=False, verify_brake_transition=False, verify_oldest_partial_turn=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -209,6 +210,11 @@ class EscapeRecovery(EscapeOption):
         self.verify_hover_reference_reserve = verify_hover_reference_reserve
         if verify_hover_reference_reserve and not (crossing_turn_between_samples and crossing_reference):
             raise ValueError('Hover reserve requires sampled reversals and a static reference')
+        self.verify_oldest_partial_turn = verify_oldest_partial_turn
+        if verify_oldest_partial_turn:
+            if not verify_hover_reference_reserve:
+                raise ValueError('Partial oldest turn requires sampled reversals and a static reference')
+            self.oldest_partial_turn_verified = torch.zeros_like(self.applied)
         self.verify_crossing_restart = verify_crossing_restart
         if verify_crossing_restart:
             if not (verify_hover_reference_reserve and tracked_resume and align_intercept and hover_escape_own_side):
@@ -362,6 +368,8 @@ class EscapeRecovery(EscapeOption):
             self.overlapping_stop_verified[lanes] = False
         if self.settled_crossing_mount is not None:
             self.settled_crossing_verified[lanes] = False
+        if self.verify_oldest_partial_turn:
+            self.oldest_partial_turn_verified[lanes] = False
         if self.opening_steering:
             self.opening_steered[lanes] = False
         self.since_escape[lanes] = RECOVERY_LIMIT
@@ -1543,6 +1551,10 @@ class EscapeRecovery(EscapeOption):
         lanes = (eligible & (onset | was_verified) & ~self.braking & ~self.retreating).nonzero().flatten()
         prior = was_verified[lanes]
         was_verified.zero_()
+        partial = None
+        if self.verify_oldest_partial_turn:
+            self.oldest_partial_turn_verified.zero_()
+            partial = prior.new_zeros(len(lanes))
         if not len(lanes):
             return lanes
         response = self.command_offsets[lanes], self.command_coast[lanes]
@@ -1550,7 +1562,9 @@ class EscapeRecovery(EscapeOption):
         proof = clear_reversing_crossing_at_hover(lidar[lanes], state[lanes], self.detector._full_rays,
             response, self.settled_crossing_mount, emergency_m, prior,
             ordinary_onset=None if ordinary is None else ordinary[lanes],
-            verify_reference_reserve=self.verify_hover_reference_reserve)
+            verify_reference_reserve=self.verify_hover_reference_reserve, partial_oldest_verified=partial)
+        if partial is not None:
+            self.oldest_partial_turn_verified[lanes] = partial
         was_verified[lanes[proof]] = True
         held = lanes[proof]
         self.hold_neutral(held, selected)

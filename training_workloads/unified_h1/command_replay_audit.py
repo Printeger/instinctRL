@@ -16,7 +16,7 @@ from .command_replay import (
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
     LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION,
-    RETREAT_CONTINUATION_EXECUTION,
+    RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTION,
     FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS, FACETED_WALL_STOPPING_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
@@ -382,9 +382,12 @@ def audit(output, params, counters):
         faceted_wall_profile = model['execution'] == FACETED_WALL_STOPPING_EXECUTION
         if model.get('faceted_wall_stopping', False) is not faceted_wall_profile:
             raise ValueError('COMMAND_REPLAY_FACETED_WALL_PROFILE')
-        retreat_continuation_profile = model['execution'] == RETREAT_CONTINUATION_EXECUTION
+        retreat_continuation_profile = model['execution'] in RETREAT_CONTINUATION_EXECUTIONS
         if model.get('verify_retreat_continuation', False) is not retreat_continuation_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_CONTINUATION_PROFILE')
+        oldest_turn_profile = model['execution'] == OLDEST_PARTIAL_TURN_EXECUTION
+        if model.get('verify_oldest_partial_turn', False) is not oldest_turn_profile:
+            raise ValueError('COMMAND_REPLAY_OLDEST_PARTIAL_TURN_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -503,6 +506,10 @@ def audit(output, params, counters):
                 if any(len(flags) != LANES or any(type(value) is not bool for value in flags)
                        for flags in (observed_heading, tracked)):
                     raise ValueError('COMMAND_REPLAY_OBSERVED_HEADING_LANES')
+                oldest_turn = row.get('escape_oldest_partial_turn_verified', [False]*LANES)
+                if ((('escape_oldest_partial_turn_verified' in row) != oldest_turn_profile)
+                        or len(oldest_turn) != LANES or any(type(used) is not bool for used in oldest_turn)):
+                    raise ValueError('COMMAND_REPLAY_OLDEST_PARTIAL_TURN_BINDING')
                 settled_crossing = row.get('escape_settled_crossing', [False]*LANES)
                 if (('escape_settled_crossing' in row) != sampled_turn_profile or len(settled_crossing) != LANES
                         or any(type(value) is not bool for value in settled_crossing)):
@@ -663,6 +670,8 @@ def audit(output, params, counters):
                             or any(math.hypot(*frame[6:9]) > 1.e-6 or math.hypot(*frame[9:12]) > .020001
                                    for frame in actor)):
                         raise ValueError('COMMAND_REPLAY_SAMPLED_TURN_BEHAVIOR')
+                    if oldest_turn[lane] and (not settled_crossing[lane] or not offset[lane]):
+                        raise ValueError('COMMAND_REPLAY_OLDEST_PARTIAL_TURN_BEHAVIOR')
                     if bilateral[lane] and (not .02999 <= math.hypot(*observed) <= .30001
                             or row['escape_active'][lane] or row['recovery_retreating'][lane] or held[lane]
                             or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
