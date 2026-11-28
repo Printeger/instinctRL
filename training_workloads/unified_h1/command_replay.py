@@ -128,7 +128,9 @@ NOVEL_STATIC_RETREAT_HANDOFF_ID = NOVEL_PREFIX+'99'
 NOVEL_STREET_SWEEP_ID = NOVEL_PREFIX+'100'
 NOVEL_ACCELERATION_BOUNDED_SWEEP_ID = NOVEL_PREFIX+'101'
 NOVEL_NEUTRAL_RETRY_ID = NOVEL_PREFIX+'102'
-STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, NOVEL_ACCELERATION_BOUNDED_SWEEP_ID)
+NOVEL_OBSERVED_TURN_BRAKING_ID = NOVEL_PREFIX+'103'
+RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID)
+STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
 MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420,
                                     NOVEL_NEUTRAL_RETRY_ID: 200}
 CORNER_PREFIX = PREFIX + 'CORNER-'
@@ -234,7 +236,9 @@ RELEASE_STOP_CERTIFICATES_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v4
 STEADY_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v46'
 TANGENT_RESPONSE_HEADROOM_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v47'
 NEUTRAL_RETRY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v48'
-TANGENT_RESPONSE_HEADROOM_EXECUTIONS = (TANGENT_RESPONSE_HEADROOM_EXECUTION, NEUTRAL_RETRY_EXECUTION)
+OBSERVED_TURN_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v49'
+NEUTRAL_RETRY_EXECUTIONS = (NEUTRAL_RETRY_EXECUTION, OBSERVED_TURN_BRAKING_EXECUTION)
+TANGENT_RESPONSE_HEADROOM_EXECUTIONS = (TANGENT_RESPONSE_HEADROOM_EXECUTION, *NEUTRAL_RETRY_EXECUTIONS)
 STEADY_HANDOFF_EXECUTIONS = (STEADY_HANDOFF_EXECUTION, *TANGENT_RESPONSE_HEADROOM_EXECUTIONS)
 RELEASE_STOP_CERTIFICATES_EXECUTIONS = (RELEASE_STOP_CERTIFICATES_EXECUTION, *STEADY_HANDOFF_EXECUTIONS)
 GRAVITY_ALIGNED_PROTECTION_EXECUTIONS = (GRAVITY_ALIGNED_PROTECTION_EXECUTION, *RELEASE_STOP_CERTIFICATES_EXECUTIONS)
@@ -744,6 +748,8 @@ def novel_contract(params):
         execution = (CURRENT_REQUEST_RECOVERY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID:
         execution = (COMPOSED_CROSSING_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_OBSERVED_TURN_BRAKING_ID:
+        execution = (OBSERVED_TURN_BRAKING_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_STATIC_RETREAT_HANDOFF_ID, *STREET_SWEEP_DEVELOPMENT_IDS):
         execution = (RELEASE_STOP_CERTIFICATES_EXECUTION,)
     elif params['experiment_id'] == NOVEL_NEUTRAL_RETRY_ID:
@@ -764,7 +770,7 @@ def novel_contract(params):
             or params['pulse_acceleration_m_s2'] != (1. if prefix_seconds else .5)):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
     crossing = params[crossing_field]
-    ramped = params['experiment_id'] == NOVEL_ACCELERATION_BOUNDED_SWEEP_ID
+    ramped = params['experiment_id'] in RAMPED_STREET_SWEEP_IDS
     if not (crossing == authored_street_sweep(params['seed'], ramped=ramped) if sweep else valid_crossing_centers(crossing)):
         raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
     checked(params['models']['candidate'])
@@ -1385,6 +1391,8 @@ def run(backend, params):
                         tensors['escape_steady_handoff_used'] = option['steady_handoff_used']
                     if 'neutral_retry_floor' in option:
                         tensors['escape_neutral_retry_floor'] = option['neutral_retry_floor']
+                    if 'observed_turn_brake_floor' in option:
+                        tensors['escape_observed_turn_brake_floor'] = option['observed_turn_brake_floor']
                     if 'offset_stop' in option:
                         tensors['escape_offset_stop'] = option['offset_stop']
                     if 'wall_tangent' in option:
@@ -1502,9 +1510,13 @@ def run(backend, params):
             if not env.escape_option.tangent_response_headroom:
                 raise ValueError('COMMAND_TANGENT_HEADROOM_PROOF')
             model['tangent_response_headroom'] = .605
-        if execution == NEUTRAL_RETRY_EXECUTION:
+        if execution in NEUTRAL_RETRY_EXECUTIONS:
             if not env.escape_option.verify_neutral_retry:
                 raise ValueError('COMMAND_NEUTRAL_RETRY_PROOF')
             model['verify_neutral_retry'] = True
+        if execution == OBSERVED_TURN_BRAKING_EXECUTION:
+            if not env.escape_option.observed_turn_braking:
+                raise ValueError('COMMAND_OBSERVED_TURN_BRAKING_PROOF')
+            model['observed_turn_braking'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

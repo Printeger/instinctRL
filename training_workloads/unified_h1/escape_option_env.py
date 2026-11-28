@@ -31,12 +31,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
     CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25,
     GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25, TANGENT_RESPONSE_HEADROOM_25,
-    NEUTRAL_RETRY_25,
+    NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-TANGENT_RESPONSE_HEADROOM_VERSIONS = (TANGENT_RESPONSE_HEADROOM_25, NEUTRAL_RETRY_25)
+NEUTRAL_RETRY_VERSIONS = (NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25)
+TANGENT_RESPONSE_HEADROOM_VERSIONS = (TANGENT_RESPONSE_HEADROOM_25, *NEUTRAL_RETRY_VERSIONS)
 STEADY_HANDOFF_VERSIONS = (STEADY_HANDOFF_25, *TANGENT_RESPONSE_HEADROOM_VERSIONS)
 RELEASE_STOP_CERTIFICATES_VERSIONS = (RELEASE_STOP_CERTIFICATES_25, *STEADY_HANDOFF_VERSIONS)
 GRAVITY_ALIGNED_PROTECTION_VERSIONS = (GRAVITY_ALIGNED_PROTECTION_25, *RELEASE_STOP_CERTIFICATES_VERSIONS)
@@ -264,7 +265,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_release_stop=version in RELEASE_STOP_CERTIFICATES_VERSIONS,
                                                 verify_steady_handoff=version in STEADY_HANDOFF_VERSIONS,
                                                 tangent_response_headroom=version in TANGENT_RESPONSE_HEADROOM_VERSIONS,
-                                                verify_neutral_retry=version == NEUTRAL_RETRY_25)
+                                                verify_neutral_retry=version in NEUTRAL_RETRY_VERSIONS,
+                                                observed_turn_braking=version == OBSERVED_TURN_BRAKING_25)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -344,6 +346,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.intercept_continued
                 if option.verify_composed_crossing:
                     protected |= option.composed_crossing_verified
+                if option.observed_turn_braking:
+                    protected |= option.observed_turn_brake_floor > 0.
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
                     if option.align_planar_protection:
@@ -433,6 +437,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if self.escape_option.verify_neutral_retry:
                     self.extras['pre_reset']['escape_option']['neutral_retry_floor'] = (
                         self.escape_option.neutral_retry_floor.detach().clone())
+                if self.escape_option.observed_turn_braking:
+                    self.extras['pre_reset']['escape_option']['observed_turn_brake_floor'] = (
+                        self.escape_option.observed_turn_brake_floor.detach().clone())
                 if self.escape_option.offset_stop:
                     self.extras['pre_reset']['escape_option']['offset_stop'] = self.escape_option.offset_stopped.detach().clone()
                 if self.escape_option.wall_tangent:

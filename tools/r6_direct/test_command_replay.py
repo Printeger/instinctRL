@@ -80,6 +80,22 @@ def test_street_sweep_ramp_preserves_start_and_bounds_speed_and_acceleration():
     assert torch.allclose(xyz[:, :2].amax(dim=0), upper, atol=1.e-5, rtol=0.)
 
 
+@pytest.mark.parametrize('coast,queued', [(.22, .29), (.22, -.18), (-.15, .29)])
+def test_observed_turn_brake_bounds_the_entire_response_and_queue_interval(coast, queued):
+    import numpy as np
+    from instinctlab.control.observed_turn_braking import _axis_floor
+
+    ages = np.linspace(0., 1.15, 231)[None, None, :]
+    lag = np.linspace(.25, .45, 21)[:, None, None]
+    queue = np.linspace(0., .10, 11)[None, :, None]
+    active_queue = np.minimum(ages, queue)
+    coast_gain = -lag*np.expm1(-ages/lag)
+    queue_gain = active_queue+lag*np.expm1(-active_queue/lag)*np.exp(-(ages-active_queue)/lag)
+    body = coast*coast_gain+queued*queue_gain
+    surface = 2.2+(-.37-.12)*ages-.075*ages**2-body-.34
+    assert _axis_floor(2.2, -.37, coast, queued, .34) <= surface.min()+1.e-12
+
+
 def test_shallow_steering_requires_two_observed_paths_and_respects_protection():
     import torch
     from instinctlab.control.escape_recovery import EscapeRecovery

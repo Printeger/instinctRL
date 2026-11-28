@@ -107,6 +107,7 @@ RELEASE_STOP_CERTIFICATES_25 = 'm4-escape-brake-tube-p25-crossing-stop-v45'
 STEADY_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v46'
 TANGENT_RESPONSE_HEADROOM_25 = 'm4-escape-brake-tube-p25-crossing-stop-v47'
 NEUTRAL_RETRY_25 = 'm4-escape-brake-tube-p25-crossing-stop-v48'
+OBSERVED_TURN_BRAKING_25 = 'm4-escape-brake-tube-p25-crossing-stop-v49'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -142,7 +143,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
                        STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25,
                        RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25,
-                       TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25}
+                       TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -177,7 +178,7 @@ class EscapeRecovery(EscapeOption):
                  verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
                  verify_static_retreat_handoff=False, align_planar_protection=False,
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
-                 verify_neutral_retry=False):
+                 verify_neutral_retry=False, observed_turn_braking=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -231,6 +232,14 @@ class EscapeRecovery(EscapeOption):
             self.neutral_retry_observer = NeutralRetryObserver(lanes, device)
             self.neutral_retry_pending = torch.zeros_like(self.applied)
             self.neutral_retry_floor = self.direction.new_zeros(lanes)
+        self.observed_turn_braking = observed_turn_braking
+        if observed_turn_braking:
+            if not (verify_neutral_retry and verify_steady_handoff and align_intercept):
+                raise ValueError('ESCAPE_OBSERVED_TURN_REQUIRES_CURRENT_PROTECTION')
+            from .observed_turn_braking import ObservedTurnBrake
+
+            self.turn_brake = ObservedTurnBrake(lanes)
+            self.observed_turn_brake_floor = self.direction.new_zeros(lanes)
         self.retry_command_handoff = retry_command_handoff
         self.verify_recent_handoff = verify_recent_handoff
         if verify_recent_handoff and not retry_command_handoff:
@@ -510,6 +519,9 @@ class EscapeRecovery(EscapeOption):
             self.neutral_retry_observer.reset(lanes)
             self.neutral_retry_pending[lanes] = False
             self.neutral_retry_floor[lanes] = 0.
+        if self.observed_turn_braking:
+            self.turn_brake.reset(lanes)
+            self.observed_turn_brake_floor[lanes] = 0.
         if self.verify_steady_handoff:
             self.steady_handoff_witness[lanes] = False
             self.steady_handoff_used[lanes] = False
@@ -2863,6 +2875,17 @@ class EscapeRecovery(EscapeOption):
             self.handoff_static_retreat(policy['lidar_grid'], policy['state_vec'], selected, action, config)
         if self.verify_composed_crossing:
             self.verify_composed_crossing_action(policy['lidar_grid'], policy['state_vec'], selected, action, config)
+        if self.observed_turn_braking:
+            protected = (self.applied | self.retreating | self.intercepted | self.intercept_continued
+                         | self.holding | self.braking | self.ranked | self.recovering | self.handed_off
+                         | self.crossing_restart_verified | self.offset_stopped | self.static_stop_verified
+                         | self.brake_recovery_verified | self.composed_crossing_verified
+                         | self.opening_steered | self.tangent_used | self.detour_used
+                         | (self.retreat_stop_floor > 0.) | (self.intercept_steps > 0.))
+            self.observed_turn_brake_floor = self.turn_brake.apply(
+                policy['lidar_grid'], policy['state_vec'], selected, config,
+                rays=self.detector._full_rays, offsets=self.command_offsets, coast=self.command_coast,
+                protected=protected, issued=self.issued)
         return selected
 
     def _apply_recovery(self, policy, action, config):
