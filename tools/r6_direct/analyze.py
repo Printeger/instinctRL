@@ -96,7 +96,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     RANKED_REVERSAL_STOP_EXECUTIONS, RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
-                    ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
+                    ROTATION_TUBE_EXECUTIONS, SUPPORTED_WALL_APPROACH_EXECUTION, TANGENT_MAGNITUDE_EXECUTIONS,
                     VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
                 )
 
@@ -211,6 +211,8 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['verify_retreat_onset_side'] = True
                     if override in RETREAT_STOP_EXECUTIONS:
                         expected['verify_retreat_stop'] = True
+                    if override == SUPPORTED_WALL_APPROACH_EXECUTION:
+                        expected['supported_wall_approach'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

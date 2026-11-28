@@ -187,10 +187,10 @@ def run(plan, input_pin):
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
             VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
             NOVEL_PREFIX, REGRESSION_IDS,
-            SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS,
+            SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS, SUPPORTED_WALL_APPROACH_EXECUTION,
             WALL_TANGENT_EXECUTIONS,
             load_lane_streams, matches as command_replay,
-            route_layouts,
+            route_layouts, verify_supported_wall_pipelines,
         )
         from training_workloads.unified_h1.pipe_authority_probe import MIRRORED_PIPE_RUNS
         validate_graceful_shutdown_configuration(app,resource_pins=pins)
@@ -551,6 +551,9 @@ def run(plan, input_pin):
                         execution['verify_retreat_onset_side'] = True
                     if retreat_stop:
                         execution['verify_retreat_stop'] = True
+                    if option_version == SUPPORTED_WALL_APPROACH_EXECUTION:
+                        verify_supported_wall_pipelines(env)
+                        execution['supported_wall_approach'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:

@@ -119,6 +119,8 @@ NOVEL_RETREAT_STOP_ID = NOVEL_PREFIX+'90'
 NOVEL_RETREAT_STOP_CONFIRM_ID = NOVEL_PREFIX+'91'
 NOVEL_WALL_MOTION_AND_STOP_ID = NOVEL_PREFIX+'92'
 NOVEL_WALL_MOTION_AND_STOP_CONFIRM_ID = NOVEL_PREFIX+'93'
+NOVEL_SUPPORTED_WALL_APPROACH_ID = NOVEL_PREFIX+'94'
+NOVEL_SUPPORTED_WALL_APPROACH_CONFIRM_ID = NOVEL_PREFIX+'95'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -127,7 +129,8 @@ RETURN_DURATION_MS = 36000
 CLEARANCE_ID = EARLY_PREFIX + '02'
 REGRESSION_ID = PREFIX + 'R6-01'
 REGRESSION_RETRY_ID = PREFIX + 'R6-02'
-REGRESSION_IDS = (REGRESSION_ID, REGRESSION_RETRY_ID)
+REGRESSION_SUPPORTED_WALL_ID = PREFIX + 'R6-03'
+REGRESSION_IDS = (REGRESSION_ID, REGRESSION_RETRY_ID, REGRESSION_SUPPORTED_WALL_ID)
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -699,6 +702,8 @@ def novel_contract(params):
         execution = (RETREAT_STOP_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_WALL_MOTION_AND_STOP_ID, NOVEL_WALL_MOTION_AND_STOP_CONFIRM_ID):
         execution = (WALL_MOTION_AND_STOP_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_SUPPORTED_WALL_APPROACH_ID, NOVEL_SUPPORTED_WALL_APPROACH_CONFIRM_ID):
+        execution = (SUPPORTED_WALL_APPROACH_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -882,6 +887,13 @@ def contract(params):
                              simulator_initializations=1, initialization_ticks=10, training_transitions=0,
                              nontraining_transitions=transitions, optimizer_updates=0, checkpoint_writes=0,
                              explicit_resets=trials, automatic_resets=transitions))
+
+
+def verify_supported_wall_pipelines(env):
+    from instinctlab.control.local_wall_stopping import SupportedWallEdgeReproofPipeline
+
+    if {type(pipeline) for pipeline in env._control_pipelines} != {SupportedWallEdgeReproofPipeline}:
+        raise ValueError('COMMAND_SUPPORTED_WALL_PIPELINE')
 
 
 def run(backend, params):
@@ -1362,5 +1374,8 @@ def run(backend, params):
                 filename = f'{label}-{name}-pulse.json'
                 atomic_json_replace(output, filename, pulse)
                 model['trials'][name]['pulse'] = file_pin(output/filename)
+        if execution == SUPPORTED_WALL_APPROACH_EXECUTION:
+            verify_supported_wall_pipelines(env)
+            model['supported_wall_approach'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))
