@@ -99,7 +99,7 @@ def action_menu(data, cfg, anchor):
     requested=state[0,45:48].numpy()
     row=archive[anchor]
     audit=dict(native_beta=row['ics_beta'][lane],bare_stock_body=stock_v[0].tolist(),
-               native_body=row['v_final_b'][lane],local_wall_stopping=row['local_wall_stopping_used'][lane],
+               native_body=row['v_final_b'][lane],local_wall_stopping_hold_s=row['local_wall_stopping_hold_s'][lane],
                stock_short_floor_m=stock_floor,stock_rank_m=stock_rank,capture_error_m=max(x or 0. for _,x in frames),
                absolute_population=int(len(allowed)),rank_gain_count=int((rank[allowed]>=stock_rank+.08).sum()),
                nonzero_population=int((np.linalg.norm(issued_world[allowed],axis=1)>.01).sum()))
