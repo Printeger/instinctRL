@@ -1,0 +1,200 @@
+{
+  "artifacts": {
+    "long01-trunk-directional-closed.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-trunk-directional-closed.jsonl",
+      "sha256": "23cbab5a42938cdb7fdbc687ae3e551934a9be03368450b6576cf3f077d8031e"
+    },
+    "long01-trunk-directional-motion-negative.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-trunk-directional-motion-negative.jsonl",
+      "sha256": "dab224744550e09fde799b67cf1bcfa8d4d25dc74e9827802dc4df01bf3a81c1"
+    },
+    "long01-trunk-queue-directions.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-trunk-queue-directions.jsonl",
+      "sha256": "87e8546391b5488c9ebe23d9b29a77be89c446011a4d3e31cb32af63572119df"
+    },
+    "long01-v42-v41-crossing-45-exact.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-crossing-45-exact.jsonl",
+      "sha256": "6a9795efbafb2e1e351fcdcaebde12fdebdb7db33ab3fd667956cb5065bb1917"
+    },
+    "long01-v42-v41-crossing-closed.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-crossing-closed.py",
+      "sha256": "3c178b1b598b305b378118c9ec12df7bcb12244b80b5c17070244cade76e5d1b"
+    },
+    "long01-v42-v41-recent-handoff-negative.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-recent-handoff-negative.jsonl",
+      "sha256": "c5c0f51ba02794d4bedf00b45b1ce2cd38cfe59b10ece471b982224db0a42b3c"
+    },
+    "long01-v42-v41-recent-handoff-negative.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-recent-handoff-negative.py",
+      "sha256": "618f844e338dbc13da467b9f68eb6cefd80b8be9d87d269deb0329b45586e9e7"
+    },
+    "long01-v42-v41-recent-handoff-positive-a.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-recent-handoff-positive-a.jsonl",
+      "sha256": "23298e0606034263c7c821431640777c58cd865bdf28fb51585bd900e3aa7dcc"
+    },
+    "long01-v42-v41-recent-handoff-positive-a.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-recent-handoff-positive-a.py",
+      "sha256": "43dd5d6d30e22e32d0ab26b1c82ee9d2c13a3381bc78e8339a18ffe8a8ed8ea9"
+    },
+    "long01-v42-v41-recent-handoff-positive-b.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-recent-handoff-positive-b.jsonl",
+      "sha256": "7cd2a66278fa0dc7491e39b6469d0d31af399979f0c502b9cca2d046959be9aa"
+    },
+    "long01-v42-v41-recent-handoff-positive-b.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v42-v41-recent-handoff-positive-b.py",
+      "sha256": "22f72180b8f7c912e5eda7b44b7e68fad35ac4c3d754d8deb306c6b931166334"
+    },
+    "scientist-long01-liveness-prefix.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-liveness-prefix.jsonl",
+      "sha256": "476e15cf274aca294691d95e79bf13d879fdaf19658b260cf7f6a422deb6d008"
+    },
+    "scientist-long01-liveness-prefix.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-liveness-prefix.py",
+      "sha256": "b8790714c6a51865115045381fb1d1fb1cd98598c715c571193fe378e6e2fdc2"
+    },
+    "scientist-long01-ordinary-handoff-strict-tube.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-ordinary-handoff-strict-tube.jsonl",
+      "sha256": "15553a35b82df4a90d2fb6f386a8a4d45b8af2935698f5a40ece6862a0c61349"
+    },
+    "scientist-long01-ordinary-handoff-strict.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-ordinary-handoff-strict.jsonl",
+      "sha256": "e4bd42e3a8742ad3a7b78fa62e2a7dbe29a2e9e019fcd8edf0bcd2d8681bba57"
+    }
+  },
+  "by_lane": {
+    "5": [
+      {
+        "candidate_accepted": 22,
+        "control_accepted": 2,
+        "handoff_steps": [
+          3842
+        ],
+        "lag_s": 0.25,
+        "minimum_m": 0.7518914500361595,
+        "window_end_step": 3870
+      },
+      {
+        "candidate_accepted": 20,
+        "control_accepted": 0,
+        "handoff_steps": [
+          3842
+        ],
+        "lag_s": 0.35,
+        "minimum_m": 0.7337469529550922,
+        "window_end_step": 3870
+      },
+      {
+        "candidate_accepted": 19,
+        "control_accepted": 0,
+        "handoff_steps": [
+          3842
+        ],
+        "lag_s": 0.45,
+        "minimum_m": 0.715600886280233,
+        "window_end_step": 3870
+      }
+    ],
+    "8": [
+      {
+        "exact_packets": 25,
+        "lag_s": 0.25,
+        "minimum_m": 0.657693533180856
+      },
+      {
+        "exact_packets": 25,
+        "lag_s": 0.35,
+        "minimum_m": 0.6461990994916136
+      },
+      {
+        "exact_packets": 25,
+        "lag_s": 0.45,
+        "minimum_m": 0.6357904899094341
+      }
+    ],
+    "10": [
+      {
+        "exact_packets": 32,
+        "lag_s": 0.25,
+        "minimum_m": 0.8265027248010801
+      },
+      {
+        "exact_packets": 32,
+        "lag_s": 0.35,
+        "minimum_m": 0.8265027248010801
+      },
+      {
+        "exact_packets": 32,
+        "lag_s": 0.45,
+        "minimum_m": 0.8265027248010801
+      }
+    ],
+    "26": [
+      {
+        "candidate_accepted": 5,
+        "control_accepted": 1,
+        "handoff_steps": [
+          1431
+        ],
+        "lag_s": 0.25,
+        "minimum_m": 0.7030751611109358,
+        "window_end_step": 1441
+      },
+      {
+        "candidate_accepted": 3,
+        "control_accepted": 0,
+        "handoff_steps": [
+          1431
+        ],
+        "lag_s": 0.35,
+        "minimum_m": 0.7091628696780297,
+        "window_end_step": 1441
+      },
+      {
+        "candidate_accepted": 1,
+        "control_accepted": 0,
+        "handoff_steps": [
+          1431
+        ],
+        "lag_s": 0.45,
+        "minimum_m": 0.7160012553065989,
+        "window_end_step": 1441
+      }
+    ],
+    "28": [
+      {
+        "candidate_accepted": 12,
+        "control_accepted": 2,
+        "handoff_steps": [
+          2325
+        ],
+        "lag_s": 0.25,
+        "minimum_m": 0.959543492190299,
+        "window_end_step": 2345
+      },
+      {
+        "candidate_accepted": 9,
+        "control_accepted": 0,
+        "handoff_steps": [
+          2325
+        ],
+        "lag_s": 0.35,
+        "minimum_m": 0.9595276524014984,
+        "window_end_step": 2345
+      },
+      {
+        "candidate_accepted": 7,
+        "control_accepted": 0,
+        "handoff_steps": [
+          2325
+        ],
+        "lag_s": 0.45,
+        "minimum_m": 0.9595308118375392,
+        "window_end_step": 2345
+      }
+    ]
+  },
+  "native_source": "017eefb29463686cab255198263be52f2abbd1e6",
+  "prefix_s": 420,
+  "production_source": "ddf9476bc125bfa47dab6df23ee573f3220db8f6",
+  "schema_version": "instinctrl-recent-handoff-cpu-witnesses/1"
+}
