@@ -126,6 +126,8 @@ NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID = NOVEL_PREFIX+'97'
 NOVEL_COMPOSED_CROSSING_ID = NOVEL_PREFIX+'98'
 NOVEL_STATIC_RETREAT_HANDOFF_ID = NOVEL_PREFIX+'99'
 NOVEL_STREET_SWEEP_ID = NOVEL_PREFIX+'100'
+NOVEL_ACCELERATION_BOUNDED_SWEEP_ID = NOVEL_PREFIX+'101'
+STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, NOVEL_ACCELERATION_BOUNDED_SWEEP_ID)
 MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420}
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
@@ -339,7 +341,7 @@ LAYOUT_COMMAND_BOUNDS = {
 
 
 def matches(run_id):
-    return (run_id == NOVEL_STREET_SWEEP_ID or isinstance(run_id, str)
+    return (run_id in STREET_SWEEP_DEVELOPMENT_IDS or isinstance(run_id, str)
             and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|NOVEL|LONG)-[0-9]{2}', run_id) is not None)
 
 
@@ -354,7 +356,7 @@ def arm_execution(params, label):
 
 def compress_trace(run_id):
     return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_CURRENT_REQUEST_RECOVERY_ID, NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID,
-                                                       NOVEL_STREET_SWEEP_ID, *MATCHED_ENDURANCE_PREFIX_SECONDS,
+                                                       *STREET_SWEEP_DEVELOPMENT_IDS, *MATCHED_ENDURANCE_PREFIX_SECONDS,
                                                        NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
@@ -535,7 +537,7 @@ def load_lane_streams(pin, *, require_independent=False):
 
 def conditions(params):
     if params['experiment_id'].startswith(NOVEL_PREFIX):
-        key = 'street_sweep' if params['experiment_id'] == NOVEL_STREET_SWEEP_ID else 'street_center_ms'
+        key = 'street_sweep' if params['experiment_id'] in STREET_SWEEP_DEVELOPMENT_IDS else 'street_center_ms'
         return {'layout_routes': params[key]}
     if params['experiment_id'].startswith(LONG_PREFIX):
         protocol = json.loads(checked(params['protocol']).read_bytes())
@@ -603,7 +605,7 @@ def valid_crossing_centers(centers):
 
 
 def novel_contract(params):
-    sweep = params['experiment_id'] == NOVEL_STREET_SWEEP_ID
+    sweep = params['experiment_id'] in STREET_SWEEP_DEVELOPMENT_IDS
     crossing_field = 'street_sweep' if sweep else 'street_center_ms'
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'clearance_envelope',
               crossing_field, 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
@@ -736,7 +738,7 @@ def novel_contract(params):
         execution = (CURRENT_REQUEST_RECOVERY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID:
         execution = (COMPOSED_CROSSING_EXECUTION,)
-    elif params['experiment_id'] in (NOVEL_STATIC_RETREAT_HANDOFF_ID, NOVEL_STREET_SWEEP_ID):
+    elif params['experiment_id'] in (NOVEL_STATIC_RETREAT_HANDOFF_ID, *STREET_SWEEP_DEVELOPMENT_IDS):
         execution = (RELEASE_STOP_CERTIFICATES_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
@@ -754,7 +756,8 @@ def novel_contract(params):
             or params['pulse_acceleration_m_s2'] != (1. if prefix_seconds else .5)):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
     crossing = params[crossing_field]
-    if not (crossing == authored_street_sweep(params['seed']) if sweep else valid_crossing_centers(crossing)):
+    ramped = params['experiment_id'] == NOVEL_ACCELERATION_BOUNDED_SWEEP_ID
+    if not (crossing == authored_street_sweep(params['seed'], ramped=ramped) if sweep else valid_crossing_centers(crossing)):
         raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
@@ -769,8 +772,8 @@ def novel_contract(params):
                     explicit_resets=len(labels), automatic_resets=transitions))
 
 
-def authored_street_sweep(seed):
-    from instinctlab.observations.moving_sphere import street_sweep_phase
+def authored_street_sweep(seed, *, ramped=False):
+    from instinctlab.observations.moving_sphere import SWEEP_ACCELERATION_RAMP_S, street_sweep_phase
     from .robustness_scenarios import reset_spec
 
     block = dict(id='continuous-replay-independent', task='pulse_hold')
@@ -779,6 +782,9 @@ def authored_street_sweep(seed):
         if command_layout(lane) == 'street_gap':
             spec = reset_spec(block, seed=seed, split='development', lane=lane, mount_position_m=(0., 0., .05))
             phases.append(street_sweep_phase(seed, lane, spec['root_position_local_m'][0]))
+    if ramped:
+        return dict(schema_version='instinctrl-independent-street-sweep/2', phase_m=phases,
+                    ramp_s=SWEEP_ACCELERATION_RAMP_S)
     return dict(schema_version='instinctrl-independent-street-sweep/1', phase_m=phases)
 
 
@@ -794,17 +800,20 @@ def long_contract(params):
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
     protocol = json.loads(checked(params['protocol']).read_bytes())
-    sweep = 'street_sweep' in protocol
+    versions = ('instinctrl-command-long-protocol/1', 'instinctrl-command-long-protocol/2',
+                'instinctrl-command-long-protocol/3')
+    schema = protocol.get('schema_version')
+    sweep = schema in versions[1:]
+    ramped = schema == versions[2]
     crossing_field = 'street_sweep' if sweep else 'street_center_ms'
     scenario = protocol.get(crossing_field)
-    version = 'instinctrl-command-long-protocol/2' if sweep else 'instinctrl-command-long-protocol/1'
     if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
                           'progress_opportunities', 'acceptance_gates', crossing_field, 'pulse_acceleration_m_s2'}
-            or protocol['schema_version'] != version
+            or schema not in versions
             or protocol['experiment_id'] != params['experiment_id'] or protocol['scene_seed'] != params['seed']
             or protocol['stream'] != params['stream'] or protocol['execution'] != params['execution']
             or protocol['checkpoint'] != params['models']['candidate']
-            or not (scenario == authored_street_sweep(params['seed']) if sweep else valid_crossing_centers(scenario))
+            or not (scenario == authored_street_sweep(params['seed'], ramped=ramped) if sweep else valid_crossing_centers(scenario))
             or type(protocol['pulse_acceleration_m_s2']) not in (int, float)
             or protocol['pulse_acceleration_m_s2'] not in (.5, 1.)):
         raise ValueError('COMMAND_REPLAY_LONG_FREEZE')
@@ -1275,7 +1284,8 @@ def run(backend, params):
                     delay = crossing/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
                                half_period_s=CROSSING_TRAVEL_S if timed_crossings else None,
-                               exact_clock=independently_timed, sweep_phase_m=phase)
+                               exact_clock=independently_timed, sweep_phase_m=phase,
+                               sweep_ramp_s=street_sweep.get('ramp_s', 0.) if street_sweep is not None else 0.)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])

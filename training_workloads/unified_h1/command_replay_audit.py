@@ -147,26 +147,33 @@ def verify_street_sweep(path, initial, rows, layouts, sweep):
     """Reconstruct the prescribed 5 ms mover path from frozen phases and lane clocks."""
     import numpy as np
     import torch
-    from instinctlab.observations.moving_sphere import street_sweep_pose
+    from instinctlab.observations.moving_sphere import street_sweep_initial_velocity, street_sweep_pose
 
     samples = dense_clearance(path, len(rows))
     street = [i for i, layout in enumerate(layouts) if layout == 'street_gap']
     origins = torch.as_tensor(initial['scene_origins_w'], dtype=torch.float64)[street]
     phases = torch.as_tensor(sweep['phase_m'], dtype=torch.float64)
+    ramp = sweep.get('ramp_s', 0.)
     if not torch.allclose(torch.as_tensor(initial['mover_start_w'], dtype=torch.float64)[street],
-                          street_sweep_pose(origins, torch.zeros(len(street), dtype=torch.float64), phases),
+                          street_sweep_pose(origins, torch.zeros(len(street), dtype=torch.float64), phases, ramp_s=ramp),
                           atol=.003, rtol=0.):
         raise ValueError('COMMAND_REPLAY_SWEEP_START')
     episode_steps = np.empty((len(rows), len(street)), dtype=np.int32)
     elapsed = np.zeros(len(street), dtype=np.int32)
+    start_velocity = street_sweep_initial_velocity(phases, ramp) if ramp else None
     for i, row in enumerate(rows):
         episode_steps[i] = elapsed
+        if start_velocity is not None and (elapsed == 0).any():
+            restarting = np.flatnonzero(elapsed == 0)
+            measured = torch.as_tensor([row['mover_velocity_w'][street[j]] for j in restarting], dtype=torch.float64)
+            if not torch.allclose(measured, start_velocity[restarting], atol=.001, rtol=0.):
+                raise ValueError(f'COMMAND_REPLAY_SWEEP_RESET_VELOCITY {i}')
         elapsed = np.where([row['reset'][j] for j in street], 0, elapsed+1)
     substeps = torch.arange(CLEARANCE_SHAPE[0], dtype=torch.float64)*.005
     for start in range(0, len(rows), 256):
         stop = min(start+256, len(rows))
         clocks = torch.as_tensor(episode_steps[start:stop], dtype=torch.float64)[:, None]*.10
-        expected = street_sweep_pose(origins[None, None], clocks+substeps[None, :, None], phases[None, None])
+        expected = street_sweep_pose(origins[None, None], clocks+substeps[None, :, None], phases[None, None], ramp_s=ramp)
         actual = torch.as_tensor(np.take(samples[start:stop, :, :, 3:6], street, axis=2), dtype=torch.float64)
         if not torch.allclose(actual, expected, atol=.003, rtol=0.):
             raise ValueError(f'COMMAND_REPLAY_SWEEP_CLEARANCE_PATH {start}:{stop}')

@@ -17,23 +17,30 @@ def test_long_trace_gzip_preserves_the_original_json_lines(tmp_path):
         assert replay.read().encode() == raw
 
 
-def test_street_sweep_checks_each_physical_tick_and_restarts_the_lane_clock(tmp_path):
+@pytest.mark.parametrize('ramped', [False, True])
+def test_street_sweep_checks_each_physical_tick_and_restarts_the_lane_clock(tmp_path, ramped):
     import numpy as np
     import torch
-    from instinctlab.observations.moving_sphere import street_sweep_pose
+    from instinctlab.observations.moving_sphere import street_sweep_initial_velocity, street_sweep_pose
     from training_workloads.unified_h1.command_replay import CLEARANCE_SHAPE, LANES, authored_street_sweep, command_layout
     from training_workloads.unified_h1.command_replay_audit import verify_street_sweep
 
     layouts = [command_layout(i) for i in range(LANES)]
     street = [i for i, layout in enumerate(layouts) if layout == 'street_gap']
     origins = torch.arange(LANES * 3, dtype=torch.float64).reshape(LANES, 3)
-    sweep = authored_street_sweep(829377162)
+    sweep = authored_street_sweep(829377162, ramped=ramped)
     phases = torch.as_tensor(sweep['phase_m'], dtype=torch.float64)
     rows = [{'reset': [i == street[0] for i in range(LANES)]}, {'reset': [False] * LANES}]
+    if ramped:
+        start_velocity = torch.zeros_like(origins)
+        start_velocity[street] = street_sweep_initial_velocity(phases, sweep['ramp_s'])
+        for row in rows:
+            row['mover_velocity_w'] = start_velocity.tolist()
     starts = torch.zeros((2, len(street)), dtype=torch.float64)
     starts[1, 1:] = .10
     substep = torch.arange(21, dtype=torch.float64)[None, :, None] * .005
-    locations = street_sweep_pose(origins[street][None, None], starts[:, None] + substep, phases[None, None])
+    locations = street_sweep_pose(origins[street][None, None], starts[:, None] + substep,
+                                  phases[None, None], ramp_s=sweep.get('ramp_s', 0.))
     initial_positions = origins.clone()
     initial_positions[street] = locations[0, 0]
     initial = {'scene_origins_w': origins.tolist(), 'mover_start_w': initial_positions.tolist()}
@@ -47,6 +54,30 @@ def test_street_sweep_checks_each_physical_tick_and_restarts_the_lane_clock(tmp_
     samples.tofile(path)
     with pytest.raises(ValueError, match='COMMAND_REPLAY_SWEEP_CLEARANCE_PATH'):
         verify_street_sweep(path, initial, rows, layouts, sweep)
+
+
+def test_street_sweep_ramp_preserves_start_and_bounds_speed_and_acceleration():
+    import torch
+    from instinctlab.observations.moving_sphere import (
+        SWEEP_ACCELERATION_RAMP_S, SWEEP_LENGTH_XY_M, SWEEP_LOWER_XY_M, SWEEP_SPEED_XY_M_S,
+        street_sweep_initial_velocity, street_sweep_pose,
+    )
+
+    phases = torch.tensor([25.9, .05], dtype=torch.float64)
+    origin = torch.zeros(3, dtype=torch.float64)
+    time = torch.arange(0., 80., .005, dtype=torch.float64)
+    xyz = street_sweep_pose(origin, time, phases, ramp_s=SWEEP_ACCELERATION_RAMP_S)
+    assert torch.allclose(xyz[0], street_sweep_pose(origin, time[0], phases), atol=1.e-10, rtol=0.)
+    speed = torch.as_tensor(SWEEP_SPEED_XY_M_S, dtype=torch.float64)
+    velocity = xyz[:, :2].diff(dim=0)/.005
+    initial_velocity = street_sweep_initial_velocity(phases, SWEEP_ACCELERATION_RAMP_S)
+    assert torch.all((initial_velocity[:2]-velocity[0]).abs() <= speed*.0025+1.e-8)
+    assert torch.all(velocity.abs().amax(dim=0) <= speed+1.e-8)
+    assert torch.all(velocity.diff(dim=0).abs().amax(dim=0)/.005 <= speed/SWEEP_ACCELERATION_RAMP_S+1.e-8)
+    lower = torch.as_tensor(SWEEP_LOWER_XY_M, dtype=torch.float64)
+    upper = lower+torch.as_tensor(SWEEP_LENGTH_XY_M, dtype=torch.float64)
+    assert torch.allclose(xyz[:, :2].amin(dim=0), lower, atol=1.e-5, rtol=0.)
+    assert torch.allclose(xyz[:, :2].amax(dim=0), upper, atol=1.e-5, rtol=0.)
 
 
 def test_shallow_steering_requires_two_observed_paths_and_respects_protection():

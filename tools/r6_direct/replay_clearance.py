@@ -277,6 +277,8 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
     params = ctx['contract']['parameters']
     trials = conditions(params)
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
+    street_sweep = 'street_sweep' in params
+    bound_hazards = long_run or street_sweep
     if long_run:
         protocol = read(params['protocol'])
         if opportunity_pin is not None and opportunity_pin != protocol['progress_opportunities']:
@@ -356,8 +358,8 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
             if hazard_preview:
                 velocity_before = np.concatenate((np.asarray(initial['root_state_w'])[None, :, 7:10], velocities[:-1]), axis=0)
                 issued = np.asarray([row['v_final_w'] for row in rows], dtype=np.float64)
-            if long_run:
-                seen_mover = np.asarray([row['mover_winning_beams'] for row in rows]) > 0
+                if bound_hazards:
+                    seen_mover = np.asarray([row['mover_winning_beams'] for row in rows]) > 0
             values = []
             for lane, (end, score) in enumerate(zip(contact_or_end, item['lanes'], strict=True)):
                 static = static_distance(roots[:end, lane], triangles)
@@ -374,7 +376,7 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                         **measured_clearance(dense, lane, end, triangles, crossing=mover is not None))
                 collider = dense_measure['maximum_measured_link_envelope_m'] if dense_measure else radius
                 stop_path = None
-                if long_run:
+                if bound_hazards and hazard_preview:
                     stop_path, _ = projected_clearance(before[:end, lane], velocity_before[:end, lane],
                         commands[:end, lane], path_mover, triangles, collider, hold_s=.6)
                 tracking = feasible_tracking(before[:end, lane], velocities[:end, lane], commands[:end, lane],
@@ -404,10 +406,10 @@ def summarize(binding, envelope_pin, opportunity_pin=None, *, hazard_preview=Fal
                                                                  commands[:end, lane], path_mover, triangles, collider)
                     physical, _ = projected_clearance(before[:end, lane], velocity_before[:end, lane],
                                                        issued[:end, lane], path_mover, triangles, collider)
-                    exposure = (mover_limited, seen_mover[:end, lane], nearest-collider) if long_run else None
+                    exposure = (mover_limited, seen_mover[:end, lane], nearest-collider) if bound_hazards else None
                     values[-1]['hazard_response_preview'] = hazard_responses(
                         nominal, physical, commands[:end, lane], velocities[:end, lane], floor=floor,
-                        sustained_opportunity=long_run, exposure=exposure)
+                        sustained_opportunity=bound_hazards, exposure=exposure)
             models[name][trial] = values
     result = dict(schema_version='instinctrl-sampled-physical-clearance/1', binding=binding, geometry=geometry_pin,
                 envelope=envelope_pin, sample_period_ms=100, diagnostic_clearance_m=.15, sweep_horizon_s=.6,
