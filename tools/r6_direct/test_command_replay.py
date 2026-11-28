@@ -172,6 +172,42 @@ def test_tube_stopping_retains_independent_and_near_constraints():
             assert verified is None
 
 
+def test_finite_wall_proof_keeps_the_radial_stop_at_an_isolated_wall():
+    import torch
+    from instinctlab.control.ics import ICSConfig, attenuate_command, mounted_mid360_rays_body
+    from instinctlab.control.local_wall_stopping import FacetedWallEdgeReproofPipeline, SupportedWallEdgeReproofPipeline
+
+    rays = mounted_mid360_rays_body()
+    lateral = rays[:, 1]
+    history = torch.zeros(1, 4, 13)
+    history[:, :, 5] = -1.
+    history[:, :, 7] = .20
+    state = history.flatten(1)
+    target = torch.tensor([[0., .174, 0.]])
+    config = ICSConfig(clearance_margin_m=.15, motion_tube_radius_m=.60, motion_tube_confirm_closure=True,
+        motion_tube_neighbor_history=True, confirmed_tube_radius_m=.41, confirmed_tube_align_rotation=True)
+
+    for reverse_distance in (40., 1.30, 1.95):
+        ranges = torch.where(lateral > 0., .90, reverse_distance)/lateral.abs().clamp_min(1.e-6)
+        valid = (ranges < 40.).float()
+        lidar = torch.stack((ranges.clamp_max(40.), valid, valid)).reshape(1, 3, 59, 360).repeat(1, 4, 1, 1)
+        base = attenuate_command(lidar, rays, target, .10, config, state_vec=state)
+        assert not base.v_final_b.any()
+        assert not base.metrics['emergency'].any()
+        previous = FacetedWallEdgeReproofPipeline.certify(lidar, state, rays, target, config, base,
+                                                         previous_speed_bound=.30)
+        updated = SupportedWallEdgeReproofPipeline.certify(lidar, state, rays, target, config, base,
+                                                           previous_speed_bound=.30)
+
+        assert previous is not None
+        assert torch.equal(previous.result.v_final_b, target)
+        if reverse_distance == 1.30:
+            assert updated is not None
+            assert torch.equal(updated.result.v_final_b, target)
+        else:
+            assert updated is None
+
+
 def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     import torch
     from instinctlab.control.escape_passage import crossing_stop_clearance

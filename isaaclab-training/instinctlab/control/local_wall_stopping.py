@@ -21,6 +21,7 @@ _ANGLES = (0., -.15, .15, -.30, .30, -.50, .50, -.70, .70)
 _NORMAL_BINS = np.linspace(-np.pi, np.pi, 181)
 _DISTANCE_BINS = np.linspace(.25, 1.65, 71)
 _HOLD_S = .60
+_MAX_UNPAIRED_INWARD_PROJECTION = .50
 
 
 def _local_planes(scans, history, rays, mounted, valid, up):
@@ -180,15 +181,30 @@ def certify_stop_at_front_wall(lidar, state, rays, *, previous_speed_bound, requ
     return None
 
 
-def _certify_associated_request(trial, planes, config, *, oblique=False):
+def _opposite_wall_pair(first, first_distance, second, second_distance):
+    return first @ second <= -math.cos(.04) and 1.65 <= first_distance+second_distance <= 2.35
+
+
+def _certify_associated_request(trial, planes, config, *, facets=(), require_supported_approach=False):
     result, proposed, heading, lower, upper, gap, required, projection, request_speed = trial
-    if not planes:
+    if not planes and not facets:
         return None
     explained = np.zeros(result.cache['active_mask'].shape[1], dtype=bool)
-    for normal, distance, associated in planes:
+    eligible = []
+    for index, (normal, distance, associated) in enumerate((*planes, *facets)):
         advance = heading @ normal
         if distance-max(lower*advance, upper*advance) >= required:
-            explained |= associated
+            eligible.append((normal, distance, associated, advance, index >= len(planes)))
+    for normal, distance, associated, advance, is_facet in eligible:
+        # A finite capsule can be renewed while approaching the same lone wall.
+        # Keep its radial constraint unless there is signed support on both sides
+        # or the surface belongs to a separately verified enclosing tube.
+        if require_supported_approach and not is_facet and advance > _MAX_UNPAIRED_INWARD_PROJECTION:
+            if not any(_opposite_wall_pair(normal, distance, other, other_distance)
+                       and np.count_nonzero(support) >= 24
+                       for other, other_distance, support, _, _ in eligible):
+                continue
+        explained |= associated
     closing, ratios = _remaining_ratio(result.cache, config)
     active = result.cache['active_mask']
     matched = torch.as_tensor(explained, device=proposed.device)[None]
@@ -204,11 +220,11 @@ def _certify_associated_request(trial, planes, config, *, oblique=False):
                    worst_margin_m_s=torch.where(count > 0, margin, 0.))
     certified = ICSResult(clip_vector_norm(proposed*beta, config.velocity_limit_m_s), metrics,
                           dict(result.cache, active_mask=remaining))
-    return TubeStoppingDecision(certified, proposed, _HOLD_S, gap, required, cleared, oblique)
+    return TubeStoppingDecision(certified, proposed, _HOLD_S, gap, required, cleared, bool(facets))
 
 
 def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *, previous_speed_bound,
-                               allow_oblique_facets=False):
+                               allow_oblique_facets=False, require_supported_approach=False):
     """Re-evaluate a bounded heading without removing unidentified restrictions."""
     history = state.reshape(4, 13)
     request = history[-1, 6:9]
@@ -259,7 +275,8 @@ def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *
         if planes is None:
             planes = _local_planes(scans, history, array(rays), points, valid, up)
         trial = (result, proposed, heading, lower, upper, gap, float(required), projection, speed)
-        decision = _certify_associated_request(trial, planes, config)
+        decision = _certify_associated_request(trial, planes, config,
+                                                require_supported_approach=require_supported_approach)
         if decision is not None:
             return decision
         if allow_oblique_facets:
@@ -268,7 +285,8 @@ def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *
         facets = _oblique_facets(scans, history, array(rays), points, valid, up)
         if facets:
             for trial in blocked_trials:
-                decision = _certify_associated_request(trial, planes+facets, config, oblique=True)
+                decision = _certify_associated_request(trial, planes, config, facets=facets,
+                                                        require_supported_approach=require_supported_approach)
                 if decision is not None:
                     return decision
     return None
@@ -353,7 +371,7 @@ def _signed_edge_clearance(lidar, history, rays, target, oldest_speed, cache):
             explained |= associated
     paired = [min(first_rest, second_rest) for i,(first, first_distance, first_rest) in enumerate(walls)
               for second, second_distance, second_rest in walls[i+1:]
-              if first @ second <= -math.cos(.04) and 1.65 <= first_distance+second_distance <= 2.35]
+              if _opposite_wall_pair(first, first_distance, second, second_distance)]
     if not paired:
         return None
     hard = (cache['active_mask'][0] & (cache['v_safe_m_s'][0] <= 1.e-5)).detach().cpu().numpy()
@@ -429,3 +447,8 @@ class WallEdgeReproofPipeline(FrontWallBrakingPipeline):
 
 class FacetedWallEdgeReproofPipeline(WallEdgeReproofPipeline):
     certify = staticmethod(FacetedWallBrakingPipeline.certify)
+
+
+class SupportedWallEdgeReproofPipeline(FacetedWallEdgeReproofPipeline):
+    certify = staticmethod(partial(certify_local_wall_request, allow_oblique_facets=True,
+                                   require_supported_approach=True))

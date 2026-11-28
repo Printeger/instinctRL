@@ -29,17 +29,18 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
+    CROSSING_STOP_25_V39,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36, CROSSING_STOP_25_V38)
+COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36, CROSSING_STOP_25_V38, CROSSING_STOP_25_V39)
 FACETED_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V28, *COMPOSED_MOTION_VERSIONS)
 WALL_EDGE_REPROOF_VERSIONS = (CROSSING_STOP_25_V30, *COMPOSED_MOTION_VERSIONS)
 BRAKE_TRANSITION_VERSIONS = (CROSSING_STOP_25_V27, *COMPOSED_MOTION_VERSIONS)
 FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28, *WALL_EDGE_REPROOF_VERSIONS)
 LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, *FRONT_WALL_BRAKING_VERSIONS)
-RETREAT_STOP_VERSIONS = (CROSSING_STOP_25_V37, CROSSING_STOP_25_V38)
+RETREAT_STOP_VERSIONS = (CROSSING_STOP_25_V37, CROSSING_STOP_25_V38, CROSSING_STOP_25_V39)
 RETREAT_ONSET_SIDE_VERSIONS = (CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, *RETREAT_STOP_VERSIONS)
 RANKED_REVERSAL_STOP_VERSIONS = (CROSSING_STOP_25_V32, CROSSING_STOP_25_V34, *RETREAT_ONSET_SIDE_VERSIONS)
 ZERO_CROSSING_WITHDRAWAL_VERSIONS = (CROSSING_STOP_25_V31, *RANKED_REVERSAL_STOP_VERSIONS)
@@ -192,7 +193,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 finite_edge=version in FINITE_EDGE_VERSIONS,
                                                 edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
                                                 tangent_magnitude=version in (TANGENT_MAGNITUDE_25_VERSION, CROSSING_STOP_25_V33,
-                                                                              CROSSING_STOP_25_V36, CROSSING_STOP_25_V38),
+                                                                              CROSSING_STOP_25_V36, CROSSING_STOP_25_V38,
+                                                                              CROSSING_STOP_25_V39),
                                                 verified_resume=version == VERIFIED_RESUME_25_VERSION,
                                                 verified_zero=version in VERIFIED_ZERO_VERSIONS,
                                                 intercept_choice=version in INTERCEPT_CHOICE_VERSIONS,
@@ -295,7 +297,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
                 from instinctlab.control.local_wall_stopping import (
                     FacetedWallBrakingPipeline, FacetedWallEdgeReproofPipeline, FrontWallBrakingPipeline, LocalWallStoppingPipeline,
-                    WallEdgeReproofPipeline,
+                    SupportedWallEdgeReproofPipeline, WallEdgeReproofPipeline,
                 )
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
@@ -307,7 +309,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.intercept_continued
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
-                    if self.wall_edge_reproof and self.faceted_wall_stopping:
+                    if self.escape_option_version == CROSSING_STOP_25_V39:
+                        pipeline_type = SupportedWallEdgeReproofPipeline
+                    elif self.wall_edge_reproof and self.faceted_wall_stopping:
                         pipeline_type = FacetedWallEdgeReproofPipeline
                     elif self.wall_edge_reproof:
                         pipeline_type = WallEdgeReproofPipeline
