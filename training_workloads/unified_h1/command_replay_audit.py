@@ -15,9 +15,11 @@ from .command_replay import (
     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
-    LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION,
-    RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTION,
-    FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION,
+    LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS,
+    BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTIONS, RETREAT_CONTINUATION_EXECUTIONS,
+    OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTIONS,
+    RETREAT_ONSET_SIDE_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
+    FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -373,16 +375,16 @@ def audit(output, params, counters):
         brake_recovery_profile = model['execution'] in BRAKE_RECOVERY_EXECUTIONS
         if model.get('verify_brake_recovery', False) is not brake_recovery_profile:
             raise ValueError('COMMAND_REPLAY_BRAKE_RECOVERY_PROFILE')
-        brake_transition_profile = model['execution'] == BRAKE_TRANSITION_EXECUTION
+        brake_transition_profile = model['execution'] in BRAKE_TRANSITION_EXECUTIONS
         if model.get('verify_brake_transition', False) is not brake_transition_profile:
             raise ValueError('COMMAND_REPLAY_BRAKE_TRANSITION_PROFILE')
         front_wall_profile = model['execution'] in FRONT_WALL_BRAKING_EXECUTIONS
         if model.get('front_wall_braking', False) is not front_wall_profile:
             raise ValueError('COMMAND_REPLAY_FRONT_WALL_PROFILE')
-        faceted_wall_profile = model['execution'] == FACETED_WALL_STOPPING_EXECUTION
+        faceted_wall_profile = model['execution'] in FACETED_WALL_STOPPING_EXECUTIONS
         if model.get('faceted_wall_stopping', False) is not faceted_wall_profile:
             raise ValueError('COMMAND_REPLAY_FACETED_WALL_PROFILE')
-        wall_edge_profile = model['execution'] == WALL_EDGE_REPROOF_EXECUTION
+        wall_edge_profile = model['execution'] in WALL_EDGE_REPROOF_EXECUTIONS
         if model.get('wall_edge_reproof', False) is not wall_edge_profile:
             raise ValueError('COMMAND_REPLAY_WALL_EDGE_REPROOF_PROFILE')
         retreat_continuation_profile = model['execution'] in RETREAT_CONTINUATION_EXECUTIONS
@@ -394,9 +396,12 @@ def audit(output, params, counters):
         zero_crossing_profile = model['execution'] in ZERO_CROSSING_WITHDRAWAL_EXECUTIONS
         if model.get('verify_zero_crossing_withdrawal', False) is not zero_crossing_profile:
             raise ValueError('COMMAND_REPLAY_ZERO_CROSSING_PROFILE')
-        ranked_reversal_profile = model['execution'] == RANKED_REVERSAL_STOP_EXECUTION
+        ranked_reversal_profile = model['execution'] in RANKED_REVERSAL_STOP_EXECUTIONS
         if model.get('verify_ranked_reversal_stop', False) is not ranked_reversal_profile:
             raise ValueError('COMMAND_REPLAY_RANKED_REVERSAL_PROFILE')
+        retreat_onset_side_profile = model['execution'] in RETREAT_ONSET_SIDE_EXECUTIONS
+        if model.get('verify_retreat_onset_side', False) is not retreat_onset_side_profile:
+            raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -532,6 +537,12 @@ def audit(output, params, counters):
                 if ((('escape_ranked_reversal_verified' in row) != ranked_reversal_profile)
                         or len(ranked_reversal)!=LANES or any(type(used) is not bool for used in ranked_reversal)):
                     raise ValueError('COMMAND_REPLAY_RANKED_REVERSAL_BINDING')
+                retreat_onset_floor = row.get('escape_retreat_onset_side_floor', [0.]*LANES)
+                if (('escape_retreat_onset_side_floor' in row) != retreat_onset_side_profile
+                        or len(retreat_onset_floor) != LANES
+                        or any(type(x) not in (float, int) or not math.isfinite(x) or (x != 0. and x < .389999)
+                               for x in retreat_onset_floor)):
+                    raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_BINDING')
                 settled_crossing = row.get('escape_settled_crossing', [False]*LANES)
                 if (('escape_settled_crossing' in row) != sampled_turn_profile or len(settled_crossing) != LANES
                         or any(type(value) is not bool for value in settled_crossing)):
@@ -622,6 +633,12 @@ def audit(output, params, counters):
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
                     if math.dist(observed, lane_value(row['raw_event'], lane)['velocity_w_m_s']) > 2e-6:
                         raise ValueError('COMMAND_REPLAY_ACTOR_INPUT')
+                    if retreat_onset_floor[lane]:
+                        issued = row['v_final_b'][lane]
+                        if (not row['recovery_retreating'][lane] or row['escape_active'][lane] or intercepted[lane]
+                                or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                                or dot(issued, actor[-1][6:9]) <= 0. or dot(issued, actor[-1][9:12]) <= 0.):
+                            raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_BEHAVIOR')
                     if tangent[lane] and (not .09999 <= math.hypot(*observed) <= .30001
                             or row['escape_active'][lane] or intercepted[lane] or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) <= 0.):
