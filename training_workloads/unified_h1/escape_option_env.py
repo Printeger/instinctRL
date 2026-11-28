@@ -148,7 +148,12 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.faceted_wall_stopping = enabled and version in FACETED_WALL_STOPPING_VERSIONS
         self.wall_edge_reproof = enabled and version in WALL_EDGE_REPROOF_VERSIONS
         align_planar = enabled and version in GRAVITY_ALIGNED_PROTECTION_VERSIONS
-        for pipeline in self._control_pipelines:
+        from instinctlab.control.local_wall_stopping import GravityAlignedWallEdgeReproofPipeline, SupportedWallEdgeReproofPipeline
+
+        for index, pipeline in enumerate(self._control_pipelines):
+            if not align_planar and isinstance(pipeline, GravityAlignedWallEdgeReproofPipeline):
+                pipeline = SupportedWallEdgeReproofPipeline(pipeline)
+                self._control_pipelines[index] = pipeline
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
             if hasattr(pipeline, 'allow_tube_stopping'):
