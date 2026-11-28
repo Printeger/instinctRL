@@ -1712,7 +1712,8 @@ class EscapeRecovery(EscapeOption):
         if self.crossing_stop_receding_hover:
             opening_allowed = ~onset
             if self.verify_release_stop:
-                opening_allowed |= history[:, -2, 6:9].norm(dim=1) > .03
+                protected = (self.holding | self.intercepted | self.intercept_continued | self.recovering)[lanes]
+                opening_allowed |= onset & ~protected & (history[:, -2, 6:9].norm(dim=1) > .03)
             ordinary = ~proof & opening_allowed & ~self.retreating[lanes]
             pending = lanes[ordinary]
             if len(pending):
