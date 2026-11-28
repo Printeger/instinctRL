@@ -1,0 +1,77 @@
+{
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-114/analysis/clearance-and-progress.json",
+    "sha256": "ea73e3a3bcb2dd72fd959a899fd766dd54d094a95e278dfe1ae3d718b81ccf5b"
+  },
+  "closed_native_binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-114/analysis/binding.json",
+    "sha256": "fb29c0dd853f5b7f9a0157465df99a444d76d8e5efc32b60ecda986e9ba749c6"
+  },
+  "cpu_bindings": [
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-lane16-late-contact-path-live.jsonl",
+      "sha256": "b957101fb6e0188e35a1a99406233948102247da7751950b4d11a51fe1b9fd16"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-early-renewal-menu.py",
+      "sha256": "1fa7b23b7c07dab6c8cb83e6a54c2a931c30ab1fb9d8a52b312474cd514c9275"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-early-renewal-menu-live.jsonl",
+      "sha256": "3d25f6102a7dd83f6ccec1f75678270dc842a3c0bc9bb108ce62401a379fc529"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed.py",
+      "sha256": "d9ca1830126e11055e62e3d1ace0ecda718aa9083ed4840f3ff7fcd42b7cc8ad"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-through-late.py",
+      "sha256": "3b37cb4b01c0bccbddc5dee837a538834144c3ab71a0c21a2e47ed3d009d1ff9"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-through-late-recorded-35-retry2.jsonl",
+      "sha256": "63995366f8ab89d8ea63850a7225dbc80fda4bd3eea6e517af6c266e6a5d1d5f"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-through-late-fixed-35-retry2.jsonl",
+      "sha256": "fdc6ce07d4b7c354bb8fb657ef21caacf09b1a71a8b6df86549eeca4feff9ea8"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n114-lane16-authority-frontier.py",
+      "sha256": "1e69338ef1c3ee9149b4c6e6724339d4bfde1b607599aa4cef8deb5a0efffb58"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n114-lane16-authority-frontier.jsonl",
+      "sha256": "59797fa7d4b2be5ffb192072db65694709a165bced61141b6f28e5109da737b3"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed-recorded-25.jsonl",
+      "sha256": "407cd1f4afc935d206a5f6677386555388595ccca45d8963d8538b5de93c67c3"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed-recorded-35.jsonl",
+      "sha256": "8a563fd9764ed1747288236b98053a23fc097861de5d809059ce0b8de995c806"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed-recorded-45.jsonl",
+      "sha256": "e766be6207ed0c812057d41cf05992a8e6a9694e38006058cf3e525c0cafd73e"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed-fixed-25.jsonl",
+      "sha256": "8aea55b93411a4fe8548d82844fd96c0f3f3fee5bc74ada3a4e1f82d00a1584b"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed-fixed-35.jsonl",
+      "sha256": "4e734d629bbfaa1586b9c0ed2a16717f8f596546db11294907afd489c8d0af5e"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-native-follow-on-closed-fixed-45.jsonl",
+      "sha256": "c8e69d37bfc39d0dbd8dbf9c808c5db10975a7b3c1d3ed8cfc48cb1d77db91d6"
+    }
+  ],
+  "matched_control_result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/gravity_preview_renewal/RESULT.json",
+    "sha256": "070040dc471a9ccaee51c11b4d8aefa9f02eae2079558d414ebc65a52da43768"
+  },
+  "schema_version": "instinctrl-registered-mover-entry-postmortem/1"
+}
