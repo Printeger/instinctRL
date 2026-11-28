@@ -1,0 +1,47 @@
+{
+  "fixed_registration": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/mover_passage_reproof/RESTORATION-WINDOWS.json",
+    "sha256": "cdb9499404ebea86c92a3da2bee11f8b28ebcc98f4d2d1498e84c0406c4cb003"
+  },
+  "frozen_result": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/mover_passage_reproof/RESULT.json",
+    "sha256": "80bb15431f1e0447731c4abaf64193c233dcd43254321545fdef1cca732e364d"
+  },
+  "native_clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+    "sha256": "bf3701716492e2c001481f2e0deb8e2e4a5fed686bfd27419f8063e5aff879c9"
+  },
+  "native_trace": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+    "sha256": "2cb8a9b933c4f463295c7467ac99cc1e746e1a7a0278433748d6a152a930b9e7"
+  },
+  "neutral_stop_reproduction": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-n115-stop-window-lanes19-22.py",
+    "sha256": "890dd734ed5b5e676e4bc5eb483651279b7d6bd7b0c4e57ee730760145325d7f"
+  },
+  "neutral_stop_windows": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-n115-stop-window-lanes19-22.json",
+    "sha256": "cf969d6a3e0463ed6a63badb7672c4ac771c639d6ec5fbe685c8c4e99b5e61d6"
+  },
+  "recovery_delivery": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/v60-recovery-delivery-audit-bound.json",
+    "sha256": "e8c7061c91576d9496473ef52e16e7f9e64e7c4c6407896c9bb8fa4938cc8df5"
+  },
+  "registered_entry_gate": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n115-lane19-register-first-gate.jsonl",
+    "sha256": "6c979bbbdeb07e3a58070a3fc68801e22a05d0ec69534da0a9dab7f688c59945"
+  },
+  "registered_entry_reproduction": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n115-lane19-register-first-gate.py",
+    "sha256": "efa6f7bf42b8728895d43563dbb60417f29a841f4aa5edda6e27767c24b73d0d"
+  },
+  "registered_rejection_menu": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n115-lane19-t1065-menu.jsonl",
+    "sha256": "deb29cfaf5628fcb6534a8c88a16ee8686fc76626061dce150c4e8ba4e6e0c15"
+  },
+  "registered_rejection_reproduction": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n115-lane19-t1065-menu.py",
+    "sha256": "f7a073f2c069753a44edd0a447180022447b9701c231a934418f1979d7f31887"
+  },
+  "scope": "CPU_ARCHIVE_DIAGNOSTIC_ONLY"
+}
