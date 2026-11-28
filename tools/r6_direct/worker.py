@@ -177,7 +177,7 @@ def run(plan, input_pin):
             BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
             FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
             CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
-            CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTION,
+            CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION,
             OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
@@ -372,6 +372,7 @@ def run(plan, input_pin):
                     local_wall_stopping = option_version in LOCAL_WALL_STOPPING_EXECUTIONS
                     front_wall_braking = option_version in FRONT_WALL_BRAKING_EXECUTIONS
                     faceted_wall_stopping = option_version == FACETED_WALL_STOPPING_EXECUTION
+                    wall_edge_reproof = option_version == WALL_EDGE_REPROOF_EXECUTION
                     overlapping_stop = option_version in OVERLAPPING_STOP_EXECUTIONS
                     retreat_continuation = option_version in RETREAT_CONTINUATION_EXECUTIONS
                     oldest_partial_turn = option_version == OLDEST_PARTIAL_TURN_EXECUTION
@@ -428,6 +429,7 @@ def run(plan, input_pin):
                             or env.escape_option.verify_brake_transition != brake_transition
                             or env.front_wall_braking != front_wall_braking
                             or env.faceted_wall_stopping != faceted_wall_stopping
+                            or env.wall_edge_reproof != wall_edge_reproof
                             or env.escape_option.verify_retreat_continuation != retreat_continuation
                             or env.escape_option.verify_oldest_partial_turn != oldest_partial_turn):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
@@ -524,6 +526,8 @@ def run(plan, input_pin):
                         execution['front_wall_braking'] = True
                     if faceted_wall_stopping:
                         execution['faceted_wall_stopping'] = True
+                    if wall_edge_reproof:
+                        execution['wall_edge_reproof'] = True
                     if retreat_continuation:
                         execution['verify_retreat_continuation'] = True
                     if oldest_partial_turn:

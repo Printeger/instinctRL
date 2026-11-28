@@ -17,7 +17,7 @@ from .command_replay import (
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
     LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION,
     RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTION,
-    FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS, FACETED_WALL_STOPPING_EXECUTION,
+    FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -382,6 +382,9 @@ def audit(output, params, counters):
         faceted_wall_profile = model['execution'] == FACETED_WALL_STOPPING_EXECUTION
         if model.get('faceted_wall_stopping', False) is not faceted_wall_profile:
             raise ValueError('COMMAND_REPLAY_FACETED_WALL_PROFILE')
+        wall_edge_profile = model['execution'] == WALL_EDGE_REPROOF_EXECUTION
+        if model.get('wall_edge_reproof', False) is not wall_edge_profile:
+            raise ValueError('COMMAND_REPLAY_WALL_EDGE_REPROOF_PROFILE')
         retreat_continuation_profile = model['execution'] in RETREAT_CONTINUATION_EXECUTIONS
         if model.get('verify_retreat_continuation', False) is not retreat_continuation_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_CONTINUATION_PROFILE')
@@ -571,6 +574,10 @@ def audit(output, params, counters):
                 if ((('faceted_wall_stopping_used' in row) != faceted_wall_profile) or len(faceted_wall) != LANES
                         or any(type(used) is not bool for used in faceted_wall)):
                     raise ValueError('COMMAND_REPLAY_FACETED_WALL_BINDING')
+                wall_edge = row.get('wall_edge_reproof', [[0.]*4]*LANES)
+                if ((('wall_edge_reproof' in row) != wall_edge_profile) or len(wall_edge) != LANES
+                        or any(len(proof)!=4 or not all(math.isfinite(x) for x in proof) for proof in wall_edge)):
+                    raise ValueError('COMMAND_REPLAY_WALL_EDGE_REPROOF_BINDING')
                 if any(((field in row) != front_wall_profile) or (field in row and len(row[field]) != LANES)
                        for field in FRONT_WALL_BRAKING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FRONT_WALL_BINDING')
@@ -703,6 +710,28 @@ def audit(output, params, counters):
                                 or dot(actor[-1][6:9],target) <= 0.
                                 or math.dist(row['v_final_b'][lane],[v*row['ics_beta'][lane] for v in target]) > 2.e-6):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_BEHAVIOR')
+                    if wall_edge_profile:
+                        elapsed, edge_gap, edge_required, signed_distance = wall_edge[lane]
+                        if elapsed:
+                            if elapsed not in (1., 2., 3.) or int(elapsed)>step:
+                                raise ValueError('COMMAND_REPLAY_WALL_EDGE_REPROOF_AGE')
+                            anchor = rows[step-int(elapsed)]
+                            if (not anchor['escape_finite_edge'][lane]
+                                    or anchor.get('escape_shallow_steering',[False]*LANES)[lane]
+                                    or anchor.get('escape_observed_heading',[False]*LANES)[lane]
+                                    or any(old['reset'][lane] for old in rows[step-int(elapsed):step])
+                                    or detour[lane] or row['local_wall_stopping_hold_s'][lane]
+                                    or row['front_wall_brake_verified'][lane] or row['escape_active'][lane]
+                                    or row['escape_braking'][lane] or row['escape_recovering'][lane]
+                                    or row['recovery_retreating'][lane] or held[lane] or ranked[lane]
+                                    or intercepted[lane] or continued[lane] or restart[lane]
+                                    or row['ics_emergency'][lane] or row['ics_beta'][lane] < .98999
+                                    or not .09999 <= math.hypot(*observed) <= .300001
+                                    or dot(observed,row['v_final_w'][lane]) < .5999*dot(observed,observed)
+                                    or edge_gap < edge_required or edge_required < .41 or signed_distance < .409999):
+                                raise ValueError('COMMAND_REPLAY_WALL_EDGE_REPROOF_BEHAVIOR')
+                        elif any(wall_edge[lane]):
+                            raise ValueError('COMMAND_REPLAY_WALL_EDGE_REPROOF_INACTIVE')
                     if front_wall_profile:
                         verified_wall, before_wall, wall_gap, wall_required, closing_beams = (
                             row[field][lane] for field in FRONT_WALL_BRAKING_TRACE_FIELDS)

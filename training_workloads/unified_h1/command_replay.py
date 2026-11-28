@@ -105,6 +105,7 @@ NOVEL_BRAKE_TRANSITION_ID = NOVEL_PREFIX+'76'
 NOVEL_FACETED_WALL_STOPPING_ID = NOVEL_PREFIX+'77'
 NOVEL_OLDEST_PARTIAL_TURN_ID = NOVEL_PREFIX+'78'
 NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID = NOVEL_PREFIX+'79'
+NOVEL_WALL_EDGE_REPROOF_ID = NOVEL_PREFIX+'80'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -198,7 +199,8 @@ BRAKE_TRANSITION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v27'
 BRAKE_RECOVERY_EXECUTIONS = (BRAKE_RECOVERY_EXECUTION, BRAKE_TRANSITION_EXECUTION)
 FRONT_WALL_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v25'
 FACETED_WALL_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v28'
-FRONT_WALL_BRAKING_EXECUTIONS = (FRONT_WALL_BRAKING_EXECUTION, FACETED_WALL_STOPPING_EXECUTION)
+WALL_EDGE_REPROOF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v30'
+FRONT_WALL_BRAKING_EXECUTIONS = (FRONT_WALL_BRAKING_EXECUTION, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION)
 FRONT_WALL_BRAKING_TRACE_FIELDS = ('front_wall_brake_verified', 'front_wall_brake_previous_b',
     'front_wall_brake_gap_m', 'front_wall_brake_required_m', 'front_wall_brake_attributed_beams')
 LOCAL_WALL_STOPPING_EXECUTIONS = (LOCAL_WALL_STOPPING_EXECUTION, *FRONT_WALL_BRAKING_EXECUTIONS)
@@ -319,7 +321,8 @@ def compress_trace(run_id):
                                                        NOVEL_OVERLAPPING_STOP_CONFIRM_ID, NOVEL_BRAKE_RECOVERY_ID, NOVEL_FRONT_WALL_BRAKING_ID,
                                                        NOVEL_RETREAT_CONTINUATION_ID, NOVEL_RETREAT_CONTINUATION_CONFIRM_ID,
                                                        NOVEL_BRAKE_TRANSITION_ID, NOVEL_FACETED_WALL_STOPPING_ID,
-                                                       NOVEL_OLDEST_PARTIAL_TURN_ID, NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID)
+                                                       NOVEL_OLDEST_PARTIAL_TURN_ID, NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID,
+                                                       NOVEL_WALL_EDGE_REPROOF_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -631,6 +634,8 @@ def novel_contract(params):
         execution = (FRONT_WALL_BRAKING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FACETED_WALL_STOPPING_ID:
         execution = (FACETED_WALL_STOPPING_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_WALL_EDGE_REPROOF_ID:
+        execution = (WALL_EDGE_REPROOF_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_RETREAT_CONTINUATION_ID, NOVEL_RETREAT_CONTINUATION_CONFIRM_ID):
         execution = (RETREAT_CONTINUATION_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_OLDEST_PARTIAL_TURN_ID, NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID):
@@ -939,6 +944,7 @@ def run(backend, params):
             local_wall_stopping = execution in LOCAL_WALL_STOPPING_EXECUTIONS
             front_wall_braking = execution in FRONT_WALL_BRAKING_EXECUTIONS
             faceted_wall_stopping = execution == FACETED_WALL_STOPPING_EXECUTION
+            wall_edge_reproof = execution == WALL_EDGE_REPROOF_EXECUTION
             overlapping_stop = execution in OVERLAPPING_STOP_EXECUTIONS
             retreat_continuation = execution in RETREAT_CONTINUATION_EXECUTIONS
             oldest_partial_turn = execution == OLDEST_PARTIAL_TURN_EXECUTION
@@ -988,6 +994,7 @@ def run(backend, params):
                     or env.escape_option.verify_brake_transition != brake_transition
                     or env.front_wall_braking != front_wall_braking
                     or env.faceted_wall_stopping != faceted_wall_stopping
+                    or env.wall_edge_reproof != wall_edge_reproof
                     or env.escape_option.verify_retreat_continuation != retreat_continuation
                     or env.escape_option.verify_oldest_partial_turn != oldest_partial_turn):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
@@ -1082,6 +1089,8 @@ def run(backend, params):
                 model['front_wall_braking'] = True
             if faceted_wall_stopping:
                 model['faceted_wall_stopping'] = True
+            if wall_edge_reproof:
+                model['wall_edge_reproof'] = True
             if retreat_continuation:
                 model['verify_retreat_continuation'] = True
             if oldest_partial_turn:
@@ -1238,6 +1247,8 @@ def run(backend, params):
                         tensors['faceted_wall_stopping_used'] = option['faceted_wall_stopping_used']
                     if 'front_wall_brake_verified' in option:
                         tensors.update({field:option[field] for field in FRONT_WALL_BRAKING_TRACE_FIELDS})
+                    if 'wall_edge_reproof' in option:
+                        tensors['wall_edge_reproof'] = option['wall_edge_reproof']
                     if 'edge_continued' in option:
                         tensors['escape_edge_continued'] = option['edge_continued']
                     if 'verified_resume' in option:

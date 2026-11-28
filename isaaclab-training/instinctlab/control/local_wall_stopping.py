@@ -9,7 +9,7 @@ import torch
 
 from .command_adapter import rotate_body_to_world
 from .escape_option import DURATION_STEPS
-from .escape_passage import _return_seed, _supported_closing_returns, moving_intercepts
+from .escape_passage import _return_seed, _supported_closing_returns, moving_intercepts, rotate_scan_rays
 from .governor import clip_vector_norm
 from .ics import AZIMUTH_SAMPLES, ELEVATION_SAMPLES, ICSResult, attenuate_command, mounted_mid360_rays_body
 from .tube_stopping import (
@@ -324,3 +324,104 @@ class FrontWallBrakingPipeline(LocalWallStoppingPipeline):
 
 class FacetedWallBrakingPipeline(FrontWallBrakingPipeline):
     certify = staticmethod(partial(certify_local_wall_request, allow_oblique_facets=True))
+
+
+def _signed_edge_clearance(lidar, history, rays, target, oldest_speed, cache):
+    scans = lidar.reshape(4, 3, -1)[-3:].detach().cpu().numpy()
+    up = -history[-1, 3:6].detach().cpu().numpy()
+    if abs(up[1]) > .80:
+        return None
+    aligned, mounts, prior = _align_scans(rays, history)
+    valid = (scans[:, 1] > .5) & (scans[:, 2] >= .65)
+    points = scans[:, 0, :, None]*aligned+mounts
+    tail = .35*max(.30, oldest_speed)*math.exp(-.30/.35)
+    velocity = target.detach().cpu().numpy()
+    speed = np.linalg.norm(velocity)
+    _, _, required, _, gap = _braking_capsule(points, valid, prior, velocity/speed, _HOLD_S*speed, tail)
+    if gap < required:
+        return None
+
+    planes = _local_planes(scans, history, rays.detach().cpu().numpy(), points, valid, up)
+    walls = []
+    explained = np.zeros(len(rays), dtype=bool)
+    for normal, distance, associated in planes:
+        inward = prior @ normal
+        rest = distance-.015-.008-tail-.35*max(0., inward.max())-.10*max(0., inward[-1])
+        rest -= _HOLD_S*max(0., velocity @ normal)
+        if rest >= .41 and int(associated.sum()) >= 24:
+            walls.append((normal, distance, float(rest)))
+            explained |= associated
+    paired = [min(first_rest, second_rest) for i,(first, first_distance, first_rest) in enumerate(walls)
+              for second, second_distance, second_rest in walls[i+1:]
+              if first @ second <= -math.cos(.04) and 1.65 <= first_distance+second_distance <= 2.35]
+    if not paired:
+        return None
+    hard = (cache['active_mask'][0] & (cache['v_safe_m_s'][0] <= 1.e-5)).detach().cpu().numpy()
+    if (hard & ~explained).any():
+        return None
+    return gap, required, max(paired)
+
+
+class WallEdgeReproofPipeline(FrontWallBrakingPipeline):
+    """Recheck a recently observed edge command against current walls and full ICS."""
+
+    def __init__(self, baseline):
+        super().__init__(baseline)
+        self.fresh_edge = False
+        self.other_detour = False
+        self.edge_reproof = None
+        self._edge = None
+
+    def __call__(self, lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                 explicit_reset, controller_quaternion_wxyz):
+        result = super().__call__(lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
+                                  explicit_reset, controller_quaternion_wxyz)
+        anchor = self._edge
+        self._edge = None
+        self.edge_reproof = None
+        if (not self.allow_tube_stopping or self.tube_stopping is not None or self.front_wall_brake is not None
+                or self.other_detour or bool(episode_reset[0] or explicit_reset[0])
+                or not math.isclose(history_dt_s, .10, abs_tol=1.e-6)):
+            return result
+        history = state_vec.reshape(4, 13)
+        request = history[-1, 6:9]
+        speed = float(request.norm())
+        if not .10 <= speed <= .30 or bool(result.ics_metrics['emergency'][0, 0]):
+            return result
+        beta = float(result.ics_metrics['beta'][0, 0])
+        if self.fresh_edge:
+            target = result.v_final_b[0]
+            if (0. < float(target.norm()) <= .30 and beta >= .99
+                    and float(target @ request) >= .60*speed**2):
+                self._edge = target.detach().clone(), request.detach().clone(), 0
+            return result
+        if anchor is None or anchor[2] >= 3 or beta > .25:
+            return result
+        ages = history[:, 12]
+        if bool((ages > .04).any() or (ages.diff().abs() > .03).any()
+                or history[-3:, :3].norm(dim=1).max() > .38):
+            return result
+        rotation = -.05*(history[-2, :3]+history[-1, :3])
+        target, prior_request = rotate_scan_rays(torch.stack(anchor[:2]), rotation)
+        if float((request-prior_request).norm()) > .012:
+            return result
+
+        rays = self.lidar_rays_body
+        if rays is None:
+            rays = mounted_mid360_rays_body(device=lidar_grid.device, dtype=lidar_grid.dtype)
+        if bool(_return_seed(lidar_grid, state_vec, maximum_range_m=2.65)[0][0]):
+            return result
+        checked = attenuate_command(lidar_grid, rays, target[None], history_dt_s, self.config.ics, state_vec=state_vec)
+        if (bool(checked.metrics['emergency'][0, 0]) or float(checked.metrics['beta'][0, 0]) < .99
+                or float(checked.v_final_b[0] @ request) < .60*speed**2):
+            return result
+        proof = _signed_edge_clearance(lidar_grid, history, rays, target, self._speed_at_oldest_scan,
+                                       self._last_ics_cache)
+        if proof is None:
+            return result
+        elapsed = anchor[2]+1
+        self._edge = target, prior_request, elapsed
+        self.edge_reproof = elapsed, *proof
+        self._last_ics_cache = checked.cache
+        world = rotate_body_to_world(checked.v_final_b, controller_quaternion_wxyz)
+        return replace(result, v_final_b=checked.v_final_b, v_final_w=world, ics_metrics=checked.metrics)
