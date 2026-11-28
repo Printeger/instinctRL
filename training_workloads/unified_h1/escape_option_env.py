@@ -29,18 +29,19 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
-    CROSSING_STOP_25_V39,
+    CROSSING_STOP_25_V39, CROSSING_STOP_25_V40,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36, CROSSING_STOP_25_V38, CROSSING_STOP_25_V39)
+SUPPORTED_WALL_VERSIONS = (CROSSING_STOP_25_V39, CROSSING_STOP_25_V40)
+COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36, CROSSING_STOP_25_V38, *SUPPORTED_WALL_VERSIONS)
 FACETED_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V28, *COMPOSED_MOTION_VERSIONS)
 WALL_EDGE_REPROOF_VERSIONS = (CROSSING_STOP_25_V30, *COMPOSED_MOTION_VERSIONS)
 BRAKE_TRANSITION_VERSIONS = (CROSSING_STOP_25_V27, *COMPOSED_MOTION_VERSIONS)
 FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28, *WALL_EDGE_REPROOF_VERSIONS)
 LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, *FRONT_WALL_BRAKING_VERSIONS)
-RETREAT_STOP_VERSIONS = (CROSSING_STOP_25_V37, CROSSING_STOP_25_V38, CROSSING_STOP_25_V39)
+RETREAT_STOP_VERSIONS = (CROSSING_STOP_25_V37, CROSSING_STOP_25_V38, *SUPPORTED_WALL_VERSIONS)
 RETREAT_ONSET_SIDE_VERSIONS = (CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, *RETREAT_STOP_VERSIONS)
 RANKED_REVERSAL_STOP_VERSIONS = (CROSSING_STOP_25_V32, CROSSING_STOP_25_V34, *RETREAT_ONSET_SIDE_VERSIONS)
 ZERO_CROSSING_WITHDRAWAL_VERSIONS = (CROSSING_STOP_25_V31, *RANKED_REVERSAL_STOP_VERSIONS)
@@ -185,6 +186,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 intercept=version in INTERCEPTS, align_intercept=version in ALIGNED_INTERCEPTS,
                                                 intercept_reserve=version in RESERVE_INTERCEPTS,
                                                 command_handoff=version in COMMAND_HANDOFFS,
+                                                retry_command_handoff=version == CROSSING_STOP_25_V40,
                                                 commit_intercept=version in COMMITTED_INTERCEPTS,
                                                 retreat_priority=version in PRIORITY_INTERCEPTS,
                                                 offset_stop=version in OFFSET_STOPS,
@@ -194,7 +196,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
                                                 tangent_magnitude=version in (TANGENT_MAGNITUDE_25_VERSION, CROSSING_STOP_25_V33,
                                                                               CROSSING_STOP_25_V36, CROSSING_STOP_25_V38,
-                                                                              CROSSING_STOP_25_V39),
+                                                                              *SUPPORTED_WALL_VERSIONS),
                                                 verified_resume=version == VERIFIED_RESUME_25_VERSION,
                                                 verified_zero=version in VERIFIED_ZERO_VERSIONS,
                                                 intercept_choice=version in INTERCEPT_CHOICE_VERSIONS,
@@ -233,6 +235,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_brake_recovery=version in (CROSSING_STOP_25_V24, *BRAKE_TRANSITION_VERSIONS),
                                                 verify_retreat_continuation=version in RETREAT_CONTINUATION_VERSIONS,
                                                 verify_brake_transition=version in BRAKE_TRANSITION_VERSIONS,
+                                                verify_outward_brake=version == CROSSING_STOP_25_V40,
                                                 verify_oldest_partial_turn=version in OLDEST_PARTIAL_TURN_VERSIONS,
                                                 verify_zero_crossing_withdrawal=version in ZERO_CROSSING_WITHDRAWAL_VERSIONS,
                                                 verify_ranked_reversal_stop=version in RANKED_REVERSAL_STOP_VERSIONS,
@@ -309,7 +312,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.intercept_continued
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
-                    if self.escape_option_version == CROSSING_STOP_25_V39:
+                    if self.escape_option_version in SUPPORTED_WALL_VERSIONS:
                         pipeline_type = SupportedWallEdgeReproofPipeline
                     elif self.wall_edge_reproof and self.faceted_wall_stopping:
                         pipeline_type = FacetedWallEdgeReproofPipeline
