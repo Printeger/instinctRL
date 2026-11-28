@@ -22,7 +22,7 @@ from .command_replay import (
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
     RESERVE_DIRECTION_EXECUTIONS, ROTATION_TUBE_EXECUTIONS,
-    TANGENT_MAGNITUDE_EXECUTION, VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
+    TANGENT_MAGNITUDE_EXECUTIONS, VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
     INTERCEPT_EXECUTIONS, LONG_PREFIX, NEIGHBOR_HISTORY_EXECUTIONS, NOVEL_PREFIX, OFFSET_STOP_EXECUTIONS,
     RANK_EXECUTIONS, REARM_EXECUTIONS, SETTLED_OFFSET_STOP_EXECUTIONS,
     STEP_MS, STOP_RELEASE_EXECUTIONS, WALL_TANGENT_EXECUTIONS,
@@ -293,7 +293,7 @@ def audit(output, params, counters):
         continuation_profile = model['execution'] == EDGE_CONTINUATION_EXECUTION
         if model.get('edge_continuation', False) is not continuation_profile:
             raise ValueError('COMMAND_REPLAY_EDGE_CONTINUATION_PROFILE')
-        if model.get('tangent_magnitude', False) is not (model['execution'] == TANGENT_MAGNITUDE_EXECUTION):
+        if model.get('tangent_magnitude', False) is not (model['execution'] in TANGENT_MAGNITUDE_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_TANGENT_MAGNITUDE_PROFILE')
         resume_profile = model['execution'] == VERIFIED_RESUME_EXECUTION
         if model.get('verified_resume', False) is not resume_profile:

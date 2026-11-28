@@ -93,7 +93,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTION,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
-                    ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
+                    ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
                     VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
                 )
 
@@ -120,7 +120,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['finite_edge'] = True
                     if override == EDGE_CONTINUATION_EXECUTION:
                         expected['edge_continuation'] = True
-                    if override == TANGENT_MAGNITUDE_EXECUTION:
+                    if override in TANGENT_MAGNITUDE_EXECUTIONS:
                         expected['tangent_magnitude'] = True
                     if override == VERIFIED_RESUME_EXECUTION:
                         expected['verified_resume'] = True

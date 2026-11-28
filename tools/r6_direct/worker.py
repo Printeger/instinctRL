@@ -181,7 +181,7 @@ def run(plan, input_pin):
             OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
-            ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
+            ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
             VERIFIED_RESUME_EXECUTION, VERIFIED_ZERO_EXECUTIONS,
             NOVEL_PREFIX, REGRESSION_IDS,
             SETTLED_OFFSET_STOP_EXECUTIONS, STEP_MS,
@@ -337,7 +337,7 @@ def run(plan, input_pin):
                     inner_tube = .41 if option_version in CONFIRMED_TUBE_EXECUTIONS else 0.
                     detour = option_version in FINITE_EDGE_EXECUTIONS
                     edge_continuation = option_version == EDGE_CONTINUATION_EXECUTION
-                    tangent_magnitude = option_version == TANGENT_MAGNITUDE_EXECUTION
+                    tangent_magnitude = option_version in TANGENT_MAGNITUDE_EXECUTIONS
                     aligns_rotation = option_version in ROTATION_TUBE_EXECUTIONS
                     resumes = option_version == VERIFIED_RESUME_EXECUTION
                     zero_stop = option_version in VERIFIED_ZERO_EXECUTIONS
