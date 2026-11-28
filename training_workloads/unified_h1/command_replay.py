@@ -227,7 +227,9 @@ COMPOSED_CROSSING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v41'
 STATIC_RETREAT_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 GRAVITY_ALIGNED_PROTECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v44'
 RELEASE_STOP_CERTIFICATES_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v45'
-GRAVITY_ALIGNED_PROTECTION_EXECUTIONS = (GRAVITY_ALIGNED_PROTECTION_EXECUTION, RELEASE_STOP_CERTIFICATES_EXECUTION)
+STEADY_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v46'
+RELEASE_STOP_CERTIFICATES_EXECUTIONS = (RELEASE_STOP_CERTIFICATES_EXECUTION, STEADY_HANDOFF_EXECUTION)
+GRAVITY_ALIGNED_PROTECTION_EXECUTIONS = (GRAVITY_ALIGNED_PROTECTION_EXECUTION, *RELEASE_STOP_CERTIFICATES_EXECUTIONS)
 STATIC_RETREAT_HANDOFF_EXECUTIONS = (STATIC_RETREAT_HANDOFF_EXECUTION, *GRAVITY_ALIGNED_PROTECTION_EXECUTIONS)
 COMPOSED_CROSSING_EXECUTIONS = (COMPOSED_CROSSING_EXECUTION, *STATIC_RETREAT_HANDOFF_EXECUTIONS)
 CURRENT_REQUEST_RECOVERY_EXECUTIONS = (CURRENT_REQUEST_RECOVERY_EXECUTION, *COMPOSED_CROSSING_EXECUTIONS)
@@ -1360,6 +1362,9 @@ def run(backend, params):
                         tensors['escape_intercept_continued'] = option['intercept_continued']
                     if 'handoff' in option:
                         tensors['escape_command_handoff'] = option['handoff']
+                    if 'steady_handoff_witness' in option:
+                        tensors['escape_steady_handoff_witness'] = option['steady_handoff_witness']
+                        tensors['escape_steady_handoff_used'] = option['steady_handoff_used']
                     if 'offset_stop' in option:
                         tensors['escape_offset_stop'] = option['offset_stop']
                     if 'wall_tangent' in option:
@@ -1465,9 +1470,13 @@ def run(backend, params):
             if not env.escape_option.align_planar_protection:
                 raise ValueError('COMMAND_PLANAR_PROTECTION_PROOF')
             model['align_planar_protection'] = True
-        if execution == RELEASE_STOP_CERTIFICATES_EXECUTION:
+        if execution in RELEASE_STOP_CERTIFICATES_EXECUTIONS:
             if not env.escape_option.verify_release_stop:
                 raise ValueError('COMMAND_RELEASE_STOP_PROOF')
             model['verify_release_stop'] = True
+        if execution == STEADY_HANDOFF_EXECUTION:
+            if not env.escape_option.verify_steady_handoff:
+                raise ValueError('COMMAND_STEADY_HANDOFF_PROOF')
+            model['verify_steady_handoff'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

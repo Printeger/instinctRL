@@ -21,7 +21,7 @@ from .command_replay import (
     RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
     COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTIONS,
-    RELEASE_STOP_CERTIFICATES_EXECUTION, STATIC_RETREAT_HANDOFF_EXECUTIONS,
+    RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -456,14 +456,16 @@ def audit(output, params, counters):
         request_recovery = model['execution'] in CURRENT_REQUEST_RECOVERY_EXECUTIONS
         static_retreat_handoff = model['execution'] in STATIC_RETREAT_HANDOFF_EXECUTIONS
         align_planar_protection = model['execution'] in GRAVITY_ALIGNED_PROTECTION_EXECUTIONS
-        verify_release_stop = model['execution'] == RELEASE_STOP_CERTIFICATES_EXECUTION
+        verify_release_stop = model['execution'] in RELEASE_STOP_CERTIFICATES_EXECUTIONS
+        steady_handoff = model['execution'] == STEADY_HANDOFF_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
                 or model.get('verify_outward_brake', False) is not request_recovery
                 or model.get('verify_recent_handoff', False) is not static_retreat_handoff
                 or model.get('verify_static_retreat_handoff', False) is not static_retreat_handoff
                 or model.get('align_planar_protection', False) is not align_planar_protection
-                or model.get('verify_release_stop', False) is not verify_release_stop):
+                or model.get('verify_release_stop', False) is not verify_release_stop
+                or model.get('verify_steady_handoff', False) is not steady_handoff):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -525,6 +527,13 @@ def audit(output, params, counters):
                     witness = row['escape_static_retreat_witness']
                     if len(witness) != LANES or any(type(value) is not bool for value in witness):
                         raise ValueError('COMMAND_REPLAY_STATIC_RETREAT_LANES')
+                steady_witness = row.get('escape_steady_handoff_witness', [False]*LANES)
+                steady_used = row.get('escape_steady_handoff_used', [False]*LANES)
+                if (('escape_steady_handoff_witness' in row) != steady_handoff
+                        or ('escape_steady_handoff_used' in row) != steady_handoff
+                        or len(steady_witness) != LANES or len(steady_used) != LANES
+                        or any(type(value) is not bool for value in (*steady_witness, *steady_used))):
+                    raise ValueError('COMMAND_REPLAY_STEADY_HANDOFF_BINDING')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
@@ -913,6 +922,13 @@ def audit(output, params, counters):
                     if handoff[lane] and (row['escape_active'][lane] or math.hypot(*observed) < .079999
                                           or (not intercepted[lane] and row['selected_action'][lane] != row['action'][lane])):
                         raise ValueError('COMMAND_REPLAY_HANDOFF_BEHAVIOR')
+                    if steady_used[lane] and (not steady_witness[lane] or not handoff[lane] or not step
+                            or rows[step-1]['reset'][lane] or not rows[step-1]['escape_active'][lane]
+                            or not rows[step-1]['escape_steady_handoff_witness'][lane]
+                            or any(math.dist(frame[6:9], actor[-1][6:9]) > .040001 for frame in actor[:-1])
+                            or (not intercepted[lane] and (row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                                or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)))):
+                        raise ValueError('COMMAND_REPLAY_STEADY_HANDOFF_BEHAVIOR')
                     if resumed[lane] and (not step or rows[step-1]['reset'][lane]
                             or not rows[step-1]['escape_active'][lane] or row['escape_active'][lane]
                             or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999

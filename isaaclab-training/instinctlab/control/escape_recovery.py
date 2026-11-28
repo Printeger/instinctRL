@@ -104,6 +104,7 @@ RECENT_COMMAND_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v42'
 STATIC_RETREAT_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 GRAVITY_ALIGNED_PROTECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v44'
 RELEASE_STOP_CERTIFICATES_25 = 'm4-escape-brake-tube-p25-crossing-stop-v45'
+STEADY_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v46'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -138,7 +139,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V37: 25, CROSSING_STOP_25_V38: 25, CROSSING_STOP_25_V39: 25,
                        CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
                        STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25,
-                       RELEASE_STOP_CERTIFICATES_25: 25}
+                       RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -172,7 +173,7 @@ class EscapeRecovery(EscapeOption):
                  verify_retreat_onset_side=False, verify_retreat_stop=False, retry_command_handoff=False,
                  verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
                  verify_static_retreat_handoff=False, align_planar_protection=False,
-                 verify_release_stop=False):
+                 verify_release_stop=False, verify_steady_handoff=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -221,6 +222,12 @@ class EscapeRecovery(EscapeOption):
         self.verify_recent_handoff = verify_recent_handoff
         if verify_recent_handoff and not retry_command_handoff:
             raise ValueError('ESCAPE_RECENT_HANDOFF_REQUIRES_COMMAND_RETRY')
+        self.verify_steady_handoff = verify_steady_handoff
+        if verify_steady_handoff:
+            if not (verify_recent_handoff and verify_composed_crossing):
+                raise ValueError('ESCAPE_STEADY_HANDOFF_REQUIRES_RECENT_AND_CROSSING_PROOFS')
+            self.steady_handoff_witness = torch.zeros_like(self.applied)
+            self.steady_handoff_used = torch.zeros_like(self.applied)
         if retry_command_handoff:
             if not (command_handoff and clear_pass and static_scan_stop and commit_intercept):
                 raise ValueError('Retrying a handoff requires evidence for the active protections')
@@ -483,6 +490,9 @@ class EscapeRecovery(EscapeOption):
             self.static_retreat_witness[lanes] = False
         if self.verify_release_stop:
             self.release_wall_witness[lanes] = False
+        if self.verify_steady_handoff:
+            self.steady_handoff_witness[lanes] = False
+            self.steady_handoff_used[lanes] = False
         if self.verified_retreat_onset:
             self.retreat_request_kept[lanes] = False
         if self.verify_crossing_restart:
@@ -1048,6 +1058,10 @@ class EscapeRecovery(EscapeOption):
         from .escape_passage import clear_to_end_escape, moving_intercepts
 
         self.handed_off.zero_()
+        if self.verify_steady_handoff:
+            prior_steady = self.steady_handoff_witness.clone()
+            self.steady_handoff_witness.zero_()
+            self.steady_handoff_used.zero_()
         previous, latest_command = state[:, 32:35], state[:, 45:48]
         ordinary = (self.applied & (self.remaining < DURATION_STEPS-1) & ~self.ranked
                     & ~self.braking & ~self.retreating)
@@ -1069,8 +1083,13 @@ class EscapeRecovery(EscapeOption):
         if self.verify_recent_handoff:
             older_requests = state.reshape(-1, 4, 13)[:, :2, 6:9]
             recent_change = (older_requests-latest_command[:, None]).norm(dim=2).amax(dim=1) > .04
-            recent_handoff = (recent_change & steady & ~protected & (speed[:, 1] >= .08) & (speed[:, 1] <= .30))
+            same_request_ready = steady & ~protected & (speed[:, 1] >= .08) & (speed[:, 1] <= .30)
+            recent_handoff = recent_change & same_request_ready
             eligible = eligible | recent_handoff
+            if self.verify_steady_handoff:
+                steady_handoff = (same_request_ready & ~recent_change & (self.remaining > 0)
+                                  & ~self.composed_crossing_verified)
+                eligible |= steady_handoff
         lanes = (eligible & ordinary).nonzero().flatten()
         if not len(lanes):
             return
@@ -1094,9 +1113,18 @@ class EscapeRecovery(EscapeOption):
         release_ok = usable & angular_handoff[lanes]
         if self.verify_recent_handoff:
             recent = usable & ~angular_handoff[lanes] & recent_handoff[lanes] & (old_progress < 0.)
+            if self.verify_steady_handoff:
+                repeated = usable & ~angular_handoff[lanes] & steady_handoff[lanes] & (old_progress < 0.)
+                recent |= repeated
             if bool(recent.any()):
                 moving, *_ = moving_intercepts(scans, history, self.detector._full_rays, recent, maximum_range_m=2.65)
                 recent[moving] = False
+            if self.verify_steady_handoff:
+                proved = repeated & recent
+                self.steady_handoff_witness[lanes] = proved
+                renewed = proved & prior_steady[lanes]
+                self.steady_handoff_used[lanes] = renewed
+                recent &= ~repeated | renewed
             release_ok |= recent
         release = lanes[release_ok]
         selected[release] = action[release]

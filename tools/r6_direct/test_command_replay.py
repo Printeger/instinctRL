@@ -1107,6 +1107,53 @@ def test_command_handoff_ends_obsolete_escape_and_preserves_current_threat(monke
     assert held[1, 2].item() == pytest.approx(.20)
 
 
+def test_steady_handoff_requires_consecutive_proofs_in_the_current_episode(monkeypatch):
+    from types import SimpleNamespace
+    import torch
+    from instinctlab.control import escape_passage
+    from instinctlab.control.escape_recovery import EscapeRecovery
+
+    option = EscapeRecovery(lanes=3, device='cpu', dtype=torch.float32, recenter=True,
+                            rank_return=True, command_handoff=True, clear_pass=True, static_scan_stop=True,
+                            intercept=True, align_intercept=True, commit_intercept=True, finite_edge=True,
+                            retry_command_handoff=True, verify_composed_crossing=True, verify_recent_handoff=True,
+                            verify_steady_handoff=True)
+    option.applied[:] = True
+    option.remaining[:] = 12
+    state = torch.zeros(3, 4, 13)
+    state[:, :, 6] = .25
+    scans = torch.ones(3, 12, 59, 360)
+    scans[:, 0::3] = 1.2
+    actor = torch.tensor([[0., .73, .50, .50]]*3)
+    retreat = torch.tensor([[0., .29, .50, .50]]*3)
+    monkeypatch.setattr(escape_passage, 'clear_to_end_escape',
+                        lambda scan, *args, **kwargs: torch.ones(len(scan), dtype=torch.bool))
+    monkeypatch.setattr(escape_passage, 'moving_intercepts',
+                        lambda scan, *args, **kwargs: ((scan[:, 9, 0, 0] < 1.).nonzero().flatten(),))
+    monkeypatch.setattr(option, 'issued', lambda scan, history, action, config: SimpleNamespace(
+        v_final_b=action[:, 1:]-.5, metrics={'beta': torch.ones(len(action), 1),
+                                           'emergency': torch.zeros(len(action), 1)}))
+
+    selected = retreat.clone()
+    option.handoff_changed_command(scans, state.flatten(1), selected, actor, None)
+    assert option.steady_handoff_witness.tolist() == [True, True, True]
+    assert torch.equal(selected, retreat)
+
+    option.reset(torch.tensor([2]))
+    option.applied[2] = True
+    option.remaining[2] = 12
+    scans[1, 9, 0, 0] = .7
+    option.handoff_changed_command(scans, state.flatten(1), selected, actor, None)
+    assert option.steady_handoff_witness.tolist() == [True, False, True]
+    assert option.steady_handoff_used.tolist() == [True, False, False]
+    assert torch.equal(selected[0], actor[0]) and torch.equal(selected[1:], retreat[1:])
+
+    scans[1, 9, 0, 0] = 1.2
+    option.handoff_changed_command(scans, state.flatten(1), selected, actor, None)
+    assert option.steady_handoff_used.tolist() == [False, False, True]
+    assert torch.equal(selected[1], retreat[1]) and torch.equal(selected[2], actor[2])
+
+
 def test_intercept_continues_only_during_four_fresh_unobserved_frames(monkeypatch):
     from types import SimpleNamespace
     import torch
