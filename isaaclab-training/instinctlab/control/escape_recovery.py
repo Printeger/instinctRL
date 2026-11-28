@@ -105,6 +105,8 @@ STATIC_RETREAT_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 GRAVITY_ALIGNED_PROTECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v44'
 RELEASE_STOP_CERTIFICATES_25 = 'm4-escape-brake-tube-p25-crossing-stop-v45'
 STEADY_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v46'
+TANGENT_RESPONSE_HEADROOM_25 = 'm4-escape-brake-tube-p25-crossing-stop-v47'
+NEUTRAL_RETRY_25 = 'm4-escape-brake-tube-p25-crossing-stop-v48'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -139,7 +141,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V37: 25, CROSSING_STOP_25_V38: 25, CROSSING_STOP_25_V39: 25,
                        CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
                        STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25,
-                       RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25}
+                       RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25,
+                       TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -173,7 +176,8 @@ class EscapeRecovery(EscapeOption):
                  verify_retreat_onset_side=False, verify_retreat_stop=False, retry_command_handoff=False,
                  verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
                  verify_static_retreat_handoff=False, align_planar_protection=False,
-                 verify_release_stop=False, verify_steady_handoff=False):
+                 verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
+                 verify_neutral_retry=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -218,6 +222,15 @@ class EscapeRecovery(EscapeOption):
             if not (verify_composed_crossing and crossing_stop_receding_hover and verify_static_retreat_handoff):
                 raise ValueError('ESCAPE_RELEASE_STOP_REQUIRES_CURRENT_PROTECTION')
             self.release_wall_witness = torch.zeros_like(self.applied)
+        self.verify_neutral_retry = verify_neutral_retry
+        if verify_neutral_retry:
+            if not (verify_release_stop and crossing_stop_verified_hover):
+                raise ValueError('ESCAPE_NEUTRAL_RETRY_REQUIRES_VERIFIED_RELEASE')
+            from .neutral_retry import NeutralRetryObserver
+
+            self.neutral_retry_observer = NeutralRetryObserver(lanes, device)
+            self.neutral_retry_pending = torch.zeros_like(self.applied)
+            self.neutral_retry_floor = self.direction.new_zeros(lanes)
         self.retry_command_handoff = retry_command_handoff
         self.verify_recent_handoff = verify_recent_handoff
         if verify_recent_handoff and not retry_command_handoff:
@@ -236,6 +249,9 @@ class EscapeRecovery(EscapeOption):
         self.settled_offset_stop = settled_offset_stop
         self.wall_tangent = wall_tangent
         self.tangent_magnitude = tangent_magnitude
+        self.tangent_response_headroom = tangent_response_headroom
+        if tangent_response_headroom and not (wall_tangent and tangent_magnitude):
+            raise ValueError('ESCAPE_TANGENT_HEADROOM_REQUIRES_VERIFIED_TANGENT')
         self.finite_edge = finite_edge
         self.edge_continuation = edge_continuation
         self.verified_resume = verified_resume
@@ -490,6 +506,10 @@ class EscapeRecovery(EscapeOption):
             self.static_retreat_witness[lanes] = False
         if self.verify_release_stop:
             self.release_wall_witness[lanes] = False
+        if self.verify_neutral_retry:
+            self.neutral_retry_observer.reset(lanes)
+            self.neutral_retry_pending[lanes] = False
+            self.neutral_retry_floor[lanes] = 0.
         if self.verify_steady_handoff:
             self.steady_handoff_witness[lanes] = False
             self.steady_handoff_used[lanes] = False
@@ -1727,6 +1747,10 @@ class EscapeRecovery(EscapeOption):
     def end_at_verified_hover(self, lidar, state, selected, config, eligible):
         from .escape_passage import clear_fitted_crossing_at_stop, clear_opening_crossing_at_stop, retreat_stop_clearance
 
+        if self.verify_neutral_retry:
+            prior_retry = self.neutral_retry_pending.clone()
+            self.neutral_retry_pending.zero_()
+            self.neutral_retry_floor.zero_()
         zero = state[:, 45:48].norm(dim=1) <= 1.e-6
         leaving_hover = (self.applied | self.retreating) & ~self.braking & ~self.ranked
         lanes = (eligible & zero & leaving_hover).nonzero().flatten()
@@ -1771,6 +1795,24 @@ class EscapeRecovery(EscapeOption):
                 if bound is not None:
                     proof[index] = True
                     self.retreat_stop_floor[lane] = bound
+        if self.verify_neutral_retry:
+            protected = (self.holding | self.intercepted | self.intercept_continued | self.recovering
+                         | self.composed_crossing_verified)[lanes]
+            prior_speed = history[:, -2, 6:9].norm(dim=1)
+            ready = ~proof & ~protected
+            self.neutral_retry_pending[lanes] = ready & (prior_speed > .03)
+            second = ready & prior_retry[lanes] & (prior_speed <= 1.e-6) & (history[:, -3, 6:9].norm(dim=1) > .03)
+            for index in second.nonzero().flatten():
+                lane = lanes[index].reshape(1)
+                scan, local = lidar[lane], state[lane]
+                action = selected.new_tensor([[0., .5, .5, .5]])
+                neutral = self.issued(scan, local, action, config)
+                if bool(neutral.metrics['emergency'][0, 0]) or float(neutral.v_final_b.norm()) > .001:
+                    continue
+                floor = self.neutral_retry_observer.clearance(int(lane[0]), scan, local, self.detector._full_rays)
+                if floor is not None:
+                    proof[index] = True
+                    self.neutral_retry_floor[lane] = floor
         held = lanes[proof]
         self.hold_neutral(held, selected)
         self.retreating[held] = False
@@ -2390,6 +2432,7 @@ class EscapeRecovery(EscapeOption):
         head = command[selected]/speed[selected, None]
         progress = ((issued.v_final_b-original.v_final_b[blocked[confirmed]])*head).sum(dim=1)
         use = (issued.metrics['beta'][:, 0] >= .9) & (progress >= .055)
+        velocities = issued.v_final_b
         if self.tangent_magnitude:
             tangent = target[confirmed]
             full_speed = tangent/tangent.norm(dim=1, keepdim=True)*speed[selected, None]
@@ -2403,6 +2446,34 @@ class EscapeRecovery(EscapeOption):
                 along = (checked.v_final_b*head[boost]).sum(dim=1)
                 accept = (checked.metrics['beta'][:, 0] >= .9) & (along >= minimum[boost])
                 trial[boost[accept]] = expanded[accept]
+                if self.tangent_response_headroom:
+                    velocities = velocities.clone()
+                    velocities[boost[accept]] = checked.v_final_b[accept]
+        if self.tangent_response_headroom:
+            from .escape_passage import moving_intercepts
+
+            ratio = (velocities*head).sum(dim=1)/speed[selected]
+            close = (use & (ratio >= .60) & (ratio < .605)).nonzero().flatten()
+            if len(close):
+                lanes = selected[close]
+                target = velocities[close]*(.605002/ratio[close, None])
+                capped = target.norm(dim=1) <= speed[lanes].clamp_max(.2999)
+                close, lanes, target = close[capped], lanes[capped], target[capped]
+                if len(close):
+                    candidate_scans, candidate_state = lidar[lanes], state[lanes]
+                    static = torch.ones(len(close), dtype=torch.bool, device=state.device)
+                    moving, *_ = moving_intercepts(candidate_scans, candidate_state, self.detector._full_rays,
+                                                    static, maximum_range_m=2.65)
+                    static[moving] = False
+                    close, lanes, target = close[static], lanes[static], target[static]
+                if len(close):
+                    proposed = self.action_for_velocity(target, previous[lanes], config.governor)
+                    checked = self.issued(lidar[lanes], state[lanes], proposed, config)
+                    along = (checked.v_final_b*head[close]).sum(dim=1)
+                    aligned = torch.nn.functional.cosine_similarity(velocities[close], checked.v_final_b)
+                    valid = ((checked.metrics['beta'][:, 0] >= .90) & (checked.metrics['emergency'][:, 0] == 0.)
+                             & (along >= .605*speed[lanes]) & (aligned >= .999999))
+                    trial[close[valid]] = proposed[valid]
         action[selected[use]] = trial[use]
         self.tangent_used[selected[use]] = True
 
@@ -2761,6 +2832,8 @@ class EscapeRecovery(EscapeOption):
 
                 self.command_offsets, self.command_coast = advance_command_response(
                     self.command_offsets, self.command_coast, state)
+            if self.verify_neutral_retry:
+                self.neutral_retry_observer.advance(state)
             if self.verified_resume:
                 self.avoid_interception(policy['lidar_grid'], state, selected, config, actor_action=action)
                 self.resumed &= ~self.intercepted

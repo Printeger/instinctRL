@@ -21,7 +21,8 @@ from .command_replay import (
     RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
     COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTIONS,
-    RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTION,
+    RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
+    TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -464,7 +465,9 @@ def audit(output, params, counters):
         static_retreat_handoff = model['execution'] in STATIC_RETREAT_HANDOFF_EXECUTIONS
         align_planar_protection = model['execution'] in GRAVITY_ALIGNED_PROTECTION_EXECUTIONS
         verify_release_stop = model['execution'] in RELEASE_STOP_CERTIFICATES_EXECUTIONS
-        steady_handoff = model['execution'] == STEADY_HANDOFF_EXECUTION
+        steady_handoff = model['execution'] in STEADY_HANDOFF_EXECUTIONS
+        tangent_headroom = .605 if model['execution'] in TANGENT_RESPONSE_HEADROOM_EXECUTIONS else None
+        neutral_retry = model['execution'] == NEUTRAL_RETRY_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
                 or model.get('verify_outward_brake', False) is not request_recovery
@@ -472,7 +475,9 @@ def audit(output, params, counters):
                 or model.get('verify_static_retreat_handoff', False) is not static_retreat_handoff
                 or model.get('align_planar_protection', False) is not align_planar_protection
                 or model.get('verify_release_stop', False) is not verify_release_stop
-                or model.get('verify_steady_handoff', False) is not steady_handoff):
+                or model.get('verify_steady_handoff', False) is not steady_handoff
+                or model.get('tangent_response_headroom') != tangent_headroom
+                or model.get('verify_neutral_retry', False) is not neutral_retry):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -541,6 +546,10 @@ def audit(output, params, counters):
                         or len(steady_witness) != LANES or len(steady_used) != LANES
                         or any(type(value) is not bool for value in (*steady_witness, *steady_used))):
                     raise ValueError('COMMAND_REPLAY_STEADY_HANDOFF_BINDING')
+                retry_floor = row.get('escape_neutral_retry_floor', [0.]*LANES)
+                if (('escape_neutral_retry_floor' in row) != neutral_retry or len(retry_floor) != LANES
+                        or any(not math.isfinite(x) or (x != 0. and x < .649999) for x in retry_floor)):
+                    raise ValueError('COMMAND_REPLAY_NEUTRAL_RETRY_BINDING')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
@@ -936,6 +945,13 @@ def audit(output, params, counters):
                             or (not intercepted[lane] and (row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
                                 or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)))):
                         raise ValueError('COMMAND_REPLAY_STEADY_HANDOFF_BEHAVIOR')
+                    if retry_floor[lane] and (not step or rows[step-1]['reset'][lane]
+                            or not held[lane] or not offset[lane] or intercepted[lane] or row['ics_emergency'][lane]
+                            or math.hypot(*actor[-3][6:9]) <= .029999
+                            or any(math.hypot(*frame[6:9]) > 1.00001e-6 for frame in actor[-2:])
+                            or row['selected_action'][lane] != [0., .5, .5, .5]
+                            or math.hypot(*row['v_final_b'][lane]) > .001001):
+                        raise ValueError('COMMAND_REPLAY_NEUTRAL_RETRY_BEHAVIOR')
                     if resumed[lane] and (not step or rows[step-1]['reset'][lane]
                             or not rows[step-1]['escape_active'][lane] or row['escape_active'][lane]
                             or intercepted[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999

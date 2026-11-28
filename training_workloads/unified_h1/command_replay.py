@@ -127,8 +127,10 @@ NOVEL_COMPOSED_CROSSING_ID = NOVEL_PREFIX+'98'
 NOVEL_STATIC_RETREAT_HANDOFF_ID = NOVEL_PREFIX+'99'
 NOVEL_STREET_SWEEP_ID = NOVEL_PREFIX+'100'
 NOVEL_ACCELERATION_BOUNDED_SWEEP_ID = NOVEL_PREFIX+'101'
+NOVEL_NEUTRAL_RETRY_ID = NOVEL_PREFIX+'102'
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, NOVEL_ACCELERATION_BOUNDED_SWEEP_ID)
-MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420}
+MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420,
+                                    NOVEL_NEUTRAL_RETRY_ID: 200}
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -230,7 +232,11 @@ STATIC_RETREAT_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 GRAVITY_ALIGNED_PROTECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v44'
 RELEASE_STOP_CERTIFICATES_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v45'
 STEADY_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v46'
-RELEASE_STOP_CERTIFICATES_EXECUTIONS = (RELEASE_STOP_CERTIFICATES_EXECUTION, STEADY_HANDOFF_EXECUTION)
+TANGENT_RESPONSE_HEADROOM_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v47'
+NEUTRAL_RETRY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v48'
+TANGENT_RESPONSE_HEADROOM_EXECUTIONS = (TANGENT_RESPONSE_HEADROOM_EXECUTION, NEUTRAL_RETRY_EXECUTION)
+STEADY_HANDOFF_EXECUTIONS = (STEADY_HANDOFF_EXECUTION, *TANGENT_RESPONSE_HEADROOM_EXECUTIONS)
+RELEASE_STOP_CERTIFICATES_EXECUTIONS = (RELEASE_STOP_CERTIFICATES_EXECUTION, *STEADY_HANDOFF_EXECUTIONS)
 GRAVITY_ALIGNED_PROTECTION_EXECUTIONS = (GRAVITY_ALIGNED_PROTECTION_EXECUTION, *RELEASE_STOP_CERTIFICATES_EXECUTIONS)
 STATIC_RETREAT_HANDOFF_EXECUTIONS = (STATIC_RETREAT_HANDOFF_EXECUTION, *GRAVITY_ALIGNED_PROTECTION_EXECUTIONS)
 COMPOSED_CROSSING_EXECUTIONS = (COMPOSED_CROSSING_EXECUTION, *STATIC_RETREAT_HANDOFF_EXECUTIONS)
@@ -341,7 +347,7 @@ LAYOUT_COMMAND_BOUNDS = {
 
 
 def matches(run_id):
-    return (run_id in STREET_SWEEP_DEVELOPMENT_IDS or isinstance(run_id, str)
+    return (run_id in (*STREET_SWEEP_DEVELOPMENT_IDS, NOVEL_NEUTRAL_RETRY_ID) or isinstance(run_id, str)
             and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|NOVEL|LONG)-[0-9]{2}', run_id) is not None)
 
 
@@ -740,6 +746,8 @@ def novel_contract(params):
         execution = (COMPOSED_CROSSING_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_STATIC_RETREAT_HANDOFF_ID, *STREET_SWEEP_DEVELOPMENT_IDS):
         execution = (RELEASE_STOP_CERTIFICATES_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_NEUTRAL_RETRY_ID:
+        execution = (NEUTRAL_RETRY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -1375,6 +1383,8 @@ def run(backend, params):
                     if 'steady_handoff_witness' in option:
                         tensors['escape_steady_handoff_witness'] = option['steady_handoff_witness']
                         tensors['escape_steady_handoff_used'] = option['steady_handoff_used']
+                    if 'neutral_retry_floor' in option:
+                        tensors['escape_neutral_retry_floor'] = option['neutral_retry_floor']
                     if 'offset_stop' in option:
                         tensors['escape_offset_stop'] = option['offset_stop']
                     if 'wall_tangent' in option:
@@ -1484,9 +1494,17 @@ def run(backend, params):
             if not env.escape_option.verify_release_stop:
                 raise ValueError('COMMAND_RELEASE_STOP_PROOF')
             model['verify_release_stop'] = True
-        if execution == STEADY_HANDOFF_EXECUTION:
+        if execution in STEADY_HANDOFF_EXECUTIONS:
             if not env.escape_option.verify_steady_handoff:
                 raise ValueError('COMMAND_STEADY_HANDOFF_PROOF')
             model['verify_steady_handoff'] = True
+        if execution in TANGENT_RESPONSE_HEADROOM_EXECUTIONS:
+            if not env.escape_option.tangent_response_headroom:
+                raise ValueError('COMMAND_TANGENT_HEADROOM_PROOF')
+            model['tangent_response_headroom'] = .605
+        if execution == NEUTRAL_RETRY_EXECUTION:
+            if not env.escape_option.verify_neutral_retry:
+                raise ValueError('COMMAND_NEUTRAL_RETRY_PROOF')
+            model['verify_neutral_retry'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

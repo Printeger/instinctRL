@@ -30,12 +30,15 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
     CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25,
-    GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25,
+    GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25, TANGENT_RESPONSE_HEADROOM_25,
+    NEUTRAL_RETRY_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-RELEASE_STOP_CERTIFICATES_VERSIONS = (RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25)
+TANGENT_RESPONSE_HEADROOM_VERSIONS = (TANGENT_RESPONSE_HEADROOM_25, NEUTRAL_RETRY_25)
+STEADY_HANDOFF_VERSIONS = (STEADY_HANDOFF_25, *TANGENT_RESPONSE_HEADROOM_VERSIONS)
+RELEASE_STOP_CERTIFICATES_VERSIONS = (RELEASE_STOP_CERTIFICATES_25, *STEADY_HANDOFF_VERSIONS)
 GRAVITY_ALIGNED_PROTECTION_VERSIONS = (GRAVITY_ALIGNED_PROTECTION_25, *RELEASE_STOP_CERTIFICATES_VERSIONS)
 STATIC_RETREAT_HANDOFF_VERSIONS = (STATIC_RETREAT_HANDOFF_25, *GRAVITY_ALIGNED_PROTECTION_VERSIONS)
 RECENT_HANDOFF_VERSIONS = (RECENT_COMMAND_HANDOFF_25, *STATIC_RETREAT_HANDOFF_VERSIONS)
@@ -259,7 +262,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_static_retreat_handoff=version in STATIC_RETREAT_HANDOFF_VERSIONS,
                                                 align_planar_protection=align_planar,
                                                 verify_release_stop=version in RELEASE_STOP_CERTIFICATES_VERSIONS,
-                                                verify_steady_handoff=version == STEADY_HANDOFF_25)
+                                                verify_steady_handoff=version in STEADY_HANDOFF_VERSIONS,
+                                                tangent_response_headroom=version in TANGENT_RESPONSE_HEADROOM_VERSIONS,
+                                                verify_neutral_retry=version == NEUTRAL_RETRY_25)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -425,6 +430,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     option = self.extras['pre_reset']['escape_option']
                     option['steady_handoff_witness'] = self.escape_option.steady_handoff_witness.detach().clone()
                     option['steady_handoff_used'] = self.escape_option.steady_handoff_used.detach().clone()
+                if self.escape_option.verify_neutral_retry:
+                    self.extras['pre_reset']['escape_option']['neutral_retry_floor'] = (
+                        self.escape_option.neutral_retry_floor.detach().clone())
                 if self.escape_option.offset_stop:
                     self.extras['pre_reset']['escape_option']['offset_stop'] = self.escape_option.offset_stopped.detach().clone()
                 if self.escape_option.wall_tangent:
