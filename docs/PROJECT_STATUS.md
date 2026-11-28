@@ -4,7 +4,9 @@
 
 # 连续指令仿真开发
 
-冻结 `v38` 完成原始 R6 的 193,600 个评价步。原 W 为 0/32，三个干净朝墙扰动块各 24/32，其余 13 块各 32/32。逐帧复算把退化定位到孤立墙面回波被有限路径检查清除。`v39` 在归档扫描中恢复径向制动，保持走廊、管道和街道停杆样本。原生配对已启动，独立短程、全量 R6 与 30 分钟仍待验证。当前全部指令为仿真生成，零新增训练。 [R6 结果](experiments/instinct-continuous-command/regression/attempt-02/REPORT.md) [修复证据](experiments/instinct-continuous-command/supported_wall_approach/CPU-WITNESSES.json)
+冻结 `v38` 完成原始 R6 的 193,600 个评价步。原 W 为 0/32，三个干净朝墙扰动块各 24/32，其余 13 块各 32/32。逐帧复算把退化定位到孤立墙面回波被有限路径检查清除。`v39` 在归档扫描中恢复径向制动，原生配对和独立 Crazy 短程均 32/32 首飞及松杆通过。独立最低净空 0.217 米，最长可行低进展仍为 6.2 秒。 [R6 结果](experiments/instinct-continuous-command/regression/attempt-02/REPORT.md) [v39 独立结果](experiments/instinct-continuous-command/independent_supported_wall_approach/REPORT.md)
+
+`v40` 保留该制动逻辑，复核普通避让的换向交回和经观测支持的刹停向外请求。CPU 闭环修复两个街道恢复和一个走廊交回样本，七个既有控制窗逐拍一致。正进行原生配对，完整 R6 和 30 分钟同冻结配置验收仍待通过。当前全部指令为仿真生成，零新增训练。 [恢复证据](experiments/instinct-continuous-command/current_request_recovery/CPU-WITNESSES.json)
 
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
