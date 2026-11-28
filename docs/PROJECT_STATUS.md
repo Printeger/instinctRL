@@ -88,6 +88,8 @@
 
 独立同侧撤离复验的五类 32/32 首飞完整，零接触及重置，最小净空 0.19541 米。街道来物折返后一次停车未维持，31/32 个停车窗达标，保留原件作配对开发。 [独立回放](experiments/instinct-continuous-command/independent_retreat_continuation/REPORT.md)
 
+制动变令的受限复验完成五类 32/32 首飞及停车，零接触与重置，最小净空 0.22235 米。仅在目标街道的六拍复核通过，最新指令首次可行后 0.9 秒完成恢复确认。另一危险窗由 3.2 秒变为 3.3 秒，整组跟踪及恢复仍有缺口。 [同输入结果](experiments/instinct-continuous-command/brake_transition/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
