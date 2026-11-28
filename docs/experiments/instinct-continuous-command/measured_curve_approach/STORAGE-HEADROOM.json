@@ -1,0 +1,52 @@
+{
+  "schema_version": "instinctrl-closed-snapshot-space/1",
+  "purpose": "Free system-partition headroom for sequential complete R6 and independent thirty-minute simulation.",
+  "scope": "Closed or idle development snapshots, Git-tracked identical demo GIFs and unreferenced document copies.",
+  "hash_and_path_preserving": true,
+  "tranches": {
+    "demo-gifs": {
+      "paths": 306,
+      "planned_bytes": 1509064704,
+      "measured_released_bytes": 1508855808,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-capacity-cklxqwyj/demo-gifs/PLAN.json",
+        "sha256": "41da396bbe89921f0114563f12847f92410cb529754b9ded60ed88668d04afe0"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-capacity-cklxqwyj/demo-gifs/share-identical-snapshot-files.py",
+        "sha256": "be0fe6ffb18c83ff3af468e990779b191090f4acb5f465c4aa8f025c0290053a"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-capacity-cklxqwyj/demo-gifs/RESULT.json",
+        "sha256": "1ef7f76ac39241001fc869a09dced8834aceaea5d0dbf980c71498a4f95804f3"
+      }
+    },
+    "closed-reference-docs": {
+      "paths": 2060,
+      "planned_bytes": 188153856,
+      "measured_released_bytes": 188153856,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-capacity-cklxqwyj/closed-reference-docs/PLAN.json",
+        "sha256": "a0a237184ea1945b6fb07e3b23e3a0d78dd2d4706df411c337e71f190c09e04d"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-capacity-cklxqwyj/closed-reference-docs/share-identical-snapshot-files.py",
+        "sha256": "8d3c0c12fd75b418f7d084404cb2832127a70f5611808fad7f2fc28ef007572d"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-capacity-cklxqwyj/closed-reference-docs/RESULT.json",
+        "sha256": "d52c565d1417a120f825908859475cfcdce42a56bf66b4ce35ef73d2b19883da"
+      }
+    }
+  },
+  "measured_released_bytes": 1697009664,
+  "measured_available_bytes": 39551709184,
+  "system_floor_bytes": 32212254720,
+  "supervisor_allowance_bytes": 268435456,
+  "full_r6_payload_bytes": 5368709120,
+  "full_r6_start_minimum_bytes": 37849399296,
+  "complete_r6_reference_retention_bytes": 4521164800,
+  "long_payload_bytes": 2147483648,
+  "long_start_minimum_bytes": 34628173824,
+  "requires_actual_capacity_recheck_after_r6": true
+}
