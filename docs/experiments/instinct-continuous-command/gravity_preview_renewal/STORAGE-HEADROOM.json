@@ -1,0 +1,25 @@
+{
+  "schema_version": "instinctrl-closed-snapshot-space/1",
+  "measured_released_bytes": 517955584,
+  "paths": 6951,
+  "measured_available_bytes": 39797022720,
+  "system_floor_bytes": 32212254720,
+  "full_r6_start_minimum_bytes": 37849399296,
+  "long_start_minimum_bytes": 34628173824,
+  "plan": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-followup-v158snh0/PLAN.json",
+    "sha256": "be1dc5d2b2267b823eb2f0e2636e147b54090b69bd249675940266f7accf21c0"
+  },
+  "result": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-followup-v158snh0/RESULT.json",
+    "sha256": "0fd55b57e62f89580bd06013a4b11931f9097f4fef3c268ae2c5d81152e5f271"
+  },
+  "tool": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-long2-followup-v158snh0/share-identical-snapshot-files.py",
+    "sha256": "b25ff9f6151e6e4111fc6aa433bc33831173d0bb689f515154da8aa6e6cbdf66"
+  },
+  "prior": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/measured_curve_approach/STORAGE-HEADROOM.json",
+    "sha256": "5f3665974ff299daa99241732ead61f1ae9e3d4310cdcf7e0fd19a61d31a75d3"
+  }
+}
