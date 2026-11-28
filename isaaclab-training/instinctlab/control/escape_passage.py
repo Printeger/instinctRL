@@ -280,12 +280,17 @@ def clear_opening_crossing_at_stop(lidar, state, rays, command_response, emergen
 
 def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, mount_offset, emergency_m,
                                      previously_verified, *, ordinary_onset=None, verify_reference_reserve=False,
-                                     partial_oldest_verified=None):
+                                     partial_oldest_verified=None, ranked_onset=None, ranked_reversal_verified=None):
     """Bound clearance from every observed segment of a reversing mover's line."""
     history = state.reshape(-1, 4, 13)
     ages = history[:, :, 12]
     accepted, seeds, times = _return_seed(lidar, state)
-    accepted &= (ages <= .04).all(dim=1) & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .06)
+    gyro = history[:, :, :3].norm(dim=2)
+    standard_rotation = (gyro <= .06).all(dim=1)
+    ranked_rotation = torch.zeros_like(standard_rotation)
+    if ranked_onset is not None:
+        ranked_rotation = ranked_onset & (gyro <= .22).all(dim=1) & (gyro[:, -2:] <= .06).all(dim=1)
+    accepted &= (ages <= .04).all(dim=1) & (standard_rotation | ranked_rotation)
     accepted &= (history[:, :, 6:9].norm(dim=2) <= 1.e-6).all(dim=1)
     accepted &= (history[:, :, 9:12].norm(dim=2) <= .02).all(dim=1)
     lanes = accepted.nonzero().flatten()
@@ -318,8 +323,9 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
     radius = radii.amax(dim=1)
     drift = .35*coast.norm(dim=1)+.10*local_history[:, 48:51].norm(dim=1)
     separation = lateral.norm(dim=2).amin(dim=1)-radius-drift-.002
-    clears_line = established & (separation >= .45)
+    clears_line = established & (separation >= .45) & standard_rotation[lanes]
     partial_oldest = torch.zeros_like(clears_line)
+    ranked_reversal = torch.zeros_like(clears_line)
     if ordinary_onset is not None:
         # A reversal within a scan interval can leave little net displacement.
         # Require the two moving intervals to witness the line independently.
@@ -327,7 +333,7 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
         transverse = segments-(segments*axis[:, -1:]).sum(dim=2, keepdim=True)*axis[:, -1:]
         aligned_pause = transverse.norm(dim=2)*local_times.diff(dim=1) <= .005
         turn = (ordinary_onset[lanes] & traveling[:, 0] & traveling[:, 2]
-                & small[:, 1] & aligned_pause[:, 1] & (agreement[:, 0] <= -.995))
+                & small[:, 1] & aligned_pause[:, 1] & (agreement[:, 0] <= -.995) & standard_rotation[lanes])
         supported_distance = lateral.norm(dim=2).masked_fill(~traveling, torch.inf).amin(dim=1)
         supported_distance -= radius+drift+.002
         clears_line &= ~ordinary_onset[lanes] | previously_verified[lanes]
@@ -337,15 +343,23 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
 
             # The short interval moves out of the history on the next packet. Recheck the two new aligned segments.
             renew = (previously_verified[lanes] & small[:, 0] & aligned_pause[:, 0]
-                     & traveling[:, 1] & traveling[:, 2] & (agreement[:, 1] >= .995))
+                     & traveling[:, 1] & traveling[:, 2] & (agreement[:, 1] >= .995) & standard_rotation[lanes])
             measured = (turn | renew) & ~clears_line & supported & valid.all(dim=1) & (supported_distance >= .45)
             if partial_oldest_verified is not None:
                 # The oldest interval can straddle the turn. Keep both full
                 # post-turn intervals and check every aligned segment.
                 partial_oldest = (ordinary_onset[lanes] & ~clears_line & supported & valid.all(dim=1)
                                   & reversal & traveling[:, 1:].all(dim=1)
-                                  & (speed[:, 0] > .08) & (speed[:, 0] < .20) & (separation >= .50))
+                                  & (speed[:, 0] > .08) & (speed[:, 0] < .20) & (separation >= .50)
+                                  & standard_rotation[lanes])
                 measured |= partial_oldest
+            if ranked_onset is not None:
+                # A newly ranked escape needs a stronger independent stop
+                # proof once the two newest intervals agree after the turn.
+                ranked_reversal = (ranked_rotation[lanes] & ~clears_line & supported & valid.all(dim=1)
+                                   & small[:, 0] & aligned_pause[:, 0] & traveling[:, 1:].all(dim=1)
+                                   & (agreement[:, 1] >= .995) & (supported_distance >= .60))
+                measured |= ranked_reversal
             for index in measured.nonzero().flatten():
                 clears_line[index] = supports_hover_clearance(
                     scans[index], history[lanes[index]], rays, local_times[index], centers[index], radii[index],
@@ -357,6 +371,8 @@ def clear_reversing_crossing_at_hover(lidar, state, rays, command_response, moun
                     & (nearest >= emergency_m) & (others >= .85) & others.isfinite() & on_mover)
     if partial_oldest_verified is not None:
         partial_oldest_verified[lanes] = partial_oldest & clear[lanes]
+    if ranked_reversal_verified is not None:
+        ranked_reversal_verified[lanes] = ranked_reversal & clear[lanes]
     return clear
 
 

@@ -27,14 +27,15 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
-    CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31,
+    CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
 FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28, CROSSING_STOP_25_V30)
 LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, *FRONT_WALL_BRAKING_VERSIONS)
-OLDEST_PARTIAL_TURN_VERSIONS = (CROSSING_STOP_25_V29, CROSSING_STOP_25_V31)
+ZERO_CROSSING_WITHDRAWAL_VERSIONS = (CROSSING_STOP_25_V31, CROSSING_STOP_25_V32)
+OLDEST_PARTIAL_TURN_VERSIONS = (CROSSING_STOP_25_V29, *ZERO_CROSSING_WITHDRAWAL_VERSIONS)
 RETREAT_CONTINUATION_VERSIONS = (CROSSING_STOP_25_V26, *OLDEST_PARTIAL_TURN_VERSIONS)
 OVERLAPPING_STOP_VERSIONS = (CROSSING_STOP_25_V23, *RETREAT_CONTINUATION_VERSIONS)
 CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V24, CROSSING_STOP_25_V27, *OVERLAPPING_STOP_VERSIONS,
@@ -222,7 +223,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_retreat_continuation=version in RETREAT_CONTINUATION_VERSIONS,
                                                 verify_brake_transition=version == CROSSING_STOP_25_V27,
                                                 verify_oldest_partial_turn=version in OLDEST_PARTIAL_TURN_VERSIONS,
-                                                verify_zero_crossing_withdrawal=version == CROSSING_STOP_25_V31)
+                                                verify_zero_crossing_withdrawal=version in ZERO_CROSSING_WITHDRAWAL_VERSIONS,
+                                                verify_ranked_reversal_stop=version == CROSSING_STOP_25_V32)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -387,6 +389,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     option = self.extras['pre_reset']['escape_option']
                     option['zero_crossing_mode'] = self.escape_option.zero_crossing_mode.detach().clone()
                     option['zero_crossing_floor'] = self.escape_option.zero_crossing_floor.detach().clone()
+                if self.escape_option.verify_ranked_reversal_stop:
+                    self.extras['pre_reset']['escape_option']['ranked_reversal_verified'] = (
+                        self.escape_option.ranked_reversal_verified.detach().clone())
                 if self.escape_option.hover_escape_own_side:
                     self.extras['pre_reset']['escape_option']['hover_own_side'] = self.escape_option.hover_escape_redirected.detach().clone()
                 if self.escape_option.far_crossing_reference:
