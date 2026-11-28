@@ -129,10 +129,11 @@ NOVEL_STREET_SWEEP_ID = NOVEL_PREFIX+'100'
 NOVEL_ACCELERATION_BOUNDED_SWEEP_ID = NOVEL_PREFIX+'101'
 NOVEL_NEUTRAL_RETRY_ID = NOVEL_PREFIX+'102'
 NOVEL_OBSERVED_TURN_BRAKING_ID = NOVEL_PREFIX+'103'
+NOVEL_FRONT_WALL_HANDOFF_ID = NOVEL_PREFIX+'104'
 RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID)
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
 MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420,
-                                    NOVEL_NEUTRAL_RETRY_ID: 200}
+                                    NOVEL_NEUTRAL_RETRY_ID: 200, NOVEL_FRONT_WALL_HANDOFF_ID: 200}
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -237,7 +238,9 @@ STEADY_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v46'
 TANGENT_RESPONSE_HEADROOM_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v47'
 NEUTRAL_RETRY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v48'
 OBSERVED_TURN_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v49'
-NEUTRAL_RETRY_EXECUTIONS = (NEUTRAL_RETRY_EXECUTION, OBSERVED_TURN_BRAKING_EXECUTION)
+FRONT_WALL_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v50'
+OBSERVED_TURN_BRAKING_EXECUTIONS = (OBSERVED_TURN_BRAKING_EXECUTION, FRONT_WALL_HANDOFF_EXECUTION)
+NEUTRAL_RETRY_EXECUTIONS = (NEUTRAL_RETRY_EXECUTION, *OBSERVED_TURN_BRAKING_EXECUTIONS)
 TANGENT_RESPONSE_HEADROOM_EXECUTIONS = (TANGENT_RESPONSE_HEADROOM_EXECUTION, *NEUTRAL_RETRY_EXECUTIONS)
 STEADY_HANDOFF_EXECUTIONS = (STEADY_HANDOFF_EXECUTION, *TANGENT_RESPONSE_HEADROOM_EXECUTIONS)
 RELEASE_STOP_CERTIFICATES_EXECUTIONS = (RELEASE_STOP_CERTIFICATES_EXECUTION, *STEADY_HANDOFF_EXECUTIONS)
@@ -351,7 +354,8 @@ LAYOUT_COMMAND_BOUNDS = {
 
 
 def matches(run_id):
-    return (run_id in (*STREET_SWEEP_DEVELOPMENT_IDS, NOVEL_NEUTRAL_RETRY_ID) or isinstance(run_id, str)
+    return (run_id in (*STREET_SWEEP_DEVELOPMENT_IDS, NOVEL_NEUTRAL_RETRY_ID, NOVEL_FRONT_WALL_HANDOFF_ID)
+            or isinstance(run_id, str)
             and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|NOVEL|LONG)-[0-9]{2}', run_id) is not None)
 
 
@@ -750,6 +754,8 @@ def novel_contract(params):
         execution = (COMPOSED_CROSSING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_OBSERVED_TURN_BRAKING_ID:
         execution = (OBSERVED_TURN_BRAKING_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_FRONT_WALL_HANDOFF_ID:
+        execution = (FRONT_WALL_HANDOFF_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_STATIC_RETREAT_HANDOFF_ID, *STREET_SWEEP_DEVELOPMENT_IDS):
         execution = (RELEASE_STOP_CERTIFICATES_EXECUTION,)
     elif params['experiment_id'] == NOVEL_NEUTRAL_RETRY_ID:
@@ -1393,6 +1399,8 @@ def run(backend, params):
                         tensors['escape_neutral_retry_floor'] = option['neutral_retry_floor']
                     if 'observed_turn_brake_floor' in option:
                         tensors['escape_observed_turn_brake_floor'] = option['observed_turn_brake_floor']
+                    if 'front_wall_handoff_margin' in option:
+                        tensors['escape_front_wall_handoff_margin'] = option['front_wall_handoff_margin']
                     if 'offset_stop' in option:
                         tensors['escape_offset_stop'] = option['offset_stop']
                     if 'wall_tangent' in option:
@@ -1514,9 +1522,13 @@ def run(backend, params):
             if not env.escape_option.verify_neutral_retry:
                 raise ValueError('COMMAND_NEUTRAL_RETRY_PROOF')
             model['verify_neutral_retry'] = True
-        if execution == OBSERVED_TURN_BRAKING_EXECUTION:
+        if execution in OBSERVED_TURN_BRAKING_EXECUTIONS:
             if not env.escape_option.observed_turn_braking:
                 raise ValueError('COMMAND_OBSERVED_TURN_BRAKING_PROOF')
             model['observed_turn_braking'] = True
+        if execution == FRONT_WALL_HANDOFF_EXECUTION:
+            if env.escape_option_version != FRONT_WALL_HANDOFF_EXECUTION:
+                raise ValueError('COMMAND_FRONT_WALL_HANDOFF_PROOF')
+            model['front_wall_handoff'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

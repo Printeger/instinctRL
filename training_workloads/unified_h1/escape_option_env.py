@@ -31,12 +31,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
     CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25,
     GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25, TANGENT_RESPONSE_HEADROOM_25,
-    NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25,
+    NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25, FRONT_WALL_HANDOFF_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-NEUTRAL_RETRY_VERSIONS = (NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25)
+OBSERVED_TURN_BRAKING_VERSIONS = (OBSERVED_TURN_BRAKING_25, FRONT_WALL_HANDOFF_25)
+NEUTRAL_RETRY_VERSIONS = (NEUTRAL_RETRY_25, *OBSERVED_TURN_BRAKING_VERSIONS)
 TANGENT_RESPONSE_HEADROOM_VERSIONS = (TANGENT_RESPONSE_HEADROOM_25, *NEUTRAL_RETRY_VERSIONS)
 STEADY_HANDOFF_VERSIONS = (STEADY_HANDOFF_25, *TANGENT_RESPONSE_HEADROOM_VERSIONS)
 RELEASE_STOP_CERTIFICATES_VERSIONS = (RELEASE_STOP_CERTIFICATES_25, *STEADY_HANDOFF_VERSIONS)
@@ -266,7 +267,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_steady_handoff=version in STEADY_HANDOFF_VERSIONS,
                                                 tangent_response_headroom=version in TANGENT_RESPONSE_HEADROOM_VERSIONS,
                                                 verify_neutral_retry=version in NEUTRAL_RETRY_VERSIONS,
-                                                observed_turn_braking=version == OBSERVED_TURN_BRAKING_25)
+                                                observed_turn_braking=version in OBSERVED_TURN_BRAKING_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -323,7 +324,12 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         if isinstance(self.escape_option, EscapeRecovery):
             option = self.escape_option
             config = self._control_pipelines[0].config
-            actions = option.apply_recovery(self._policy, actions, config)
+            selected = option.apply_recovery(self._policy, actions, config)
+            front_wall_handoff = self.escape_option_version == FRONT_WALL_HANDOFF_25
+            if front_wall_handoff:
+                self._front_wall_handoff_margin = option.handoff_after_front_wall_brake(
+                    self._policy, selected, actions, config, self._control_pipelines)
+            actions = selected
             if option.verify_release_stop:
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
@@ -348,6 +354,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.composed_crossing_verified
                 if option.observed_turn_braking:
                     protected |= option.observed_turn_brake_floor > 0.
+                if front_wall_handoff:
+                    protected |= self._front_wall_handoff_margin > 0.
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
                     if option.align_planar_protection:
@@ -440,6 +448,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if self.escape_option.observed_turn_braking:
                     self.extras['pre_reset']['escape_option']['observed_turn_brake_floor'] = (
                         self.escape_option.observed_turn_brake_floor.detach().clone())
+                if self.escape_option_version == FRONT_WALL_HANDOFF_25:
+                    self.extras['pre_reset']['escape_option']['front_wall_handoff_margin'] = (
+                        self._front_wall_handoff_margin.detach().clone())
                 if self.escape_option.offset_stop:
                     self.extras['pre_reset']['escape_option']['offset_stop'] = self.escape_option.offset_stopped.detach().clone()
                 if self.escape_option.wall_tangent:
@@ -581,7 +592,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         super()._reset_idx(env_ids)
         if self.lidar_rays_body is not None:
             for lane in self._validate_reset_indices(env_ids).detach().cpu().tolist():
-                self._control_pipelines[lane].lidar_rays_body = self.lidar_rays_body
+                pipeline = self._control_pipelines[lane]
+                pipeline.lidar_rays_body = self.lidar_rays_body
+                if (getattr(self, 'escape_option_version', None) == FRONT_WALL_HANDOFF_25
+                        and hasattr(pipeline, 'front_wall_brake')):
+                    pipeline.front_wall_brake = None
 
 
 class EscapeHoldoutEnv(EscapeOptionEnv):

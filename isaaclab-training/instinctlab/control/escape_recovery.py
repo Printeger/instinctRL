@@ -108,6 +108,7 @@ STEADY_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v46'
 TANGENT_RESPONSE_HEADROOM_25 = 'm4-escape-brake-tube-p25-crossing-stop-v47'
 NEUTRAL_RETRY_25 = 'm4-escape-brake-tube-p25-crossing-stop-v48'
 OBSERVED_TURN_BRAKING_25 = 'm4-escape-brake-tube-p25-crossing-stop-v49'
+FRONT_WALL_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v50'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -143,7 +144,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
                        STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25,
                        RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25,
-                       TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25}
+                       TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25,
+                       FRONT_WALL_HANDOFF_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -2817,6 +2819,44 @@ class EscapeRecovery(EscapeOption):
                 self.static_stop_verified[lane] = True
                 self.released[lane] = True
                 self.hold_neutral(lane, selected)
+
+    def handoff_after_front_wall_brake(self, policy, selected, actor_action, config, pipelines):
+        from .front_wall_handoff import tangential_wall_margin
+
+        lidar, state = policy['lidar_grid'], policy['state_vec']
+        protected = (self.ranked | self.braking | self.retreating | self.holding | self.recovering
+                     | self.intercepted | self.intercept_continued | self.opening_steered
+                     | self.composed_crossing_verified | self.detour_used | self.tangent_used
+                     | self.tracked_resume_used | self.brake_recovery_verified | self.crossing_restart_verified
+                     | self.retreat_continuation_verified | self.handed_off | self.static_stop_verified
+                     | self.offset_stopped | (self.intercept_steps > 0) | (self.retreat_hold_steps > 0)
+                     | (self.observed_turn_brake_floor > 0.))
+        margin = state.new_zeros(len(state))
+        for lane in (self.applied & ~protected).nonzero().flatten().tolist():
+            pipeline = pipelines[lane]
+            if getattr(pipeline, 'front_wall_brake', None) is None:
+                continue
+            latest, oldest = state[lane, 45:48], state[lane, 6:9]
+            speed, old_speed = float(latest.norm()), float(oldest.norm())
+            if (min(speed, old_speed) < .08 or max(speed, old_speed) > .30
+                    or float(latest @ oldest) > .25*speed*old_speed):
+                continue
+            index = slice(lane, lane+1)
+            held = self.issued(lidar[index], state[index], selected[index], config)
+            if bool(held.metrics['emergency'][0, 0]) or float(held.v_final_b[0] @ latest) >= -.08*speed:
+                continue
+            checked = self.issued(lidar[index], state[index], actor_action[index], config)
+            margin[lane] = tangential_wall_margin(
+                lidar[index], state[index], self.detector._full_rays, checked,
+                (self.command_offsets[index], self.command_coast[index]), pipeline.oldest_speed_bound)
+        used = margin > 0.
+        self.applied[used] = False
+        self.remaining[used] = 0
+        self.cooldown[used] = 0
+        self.since_escape[used] = RECOVERY_LIMIT
+        self.handed_off[used] = True
+        selected[used] = actor_action[used]
+        return margin
 
     def apply_recovery(self, policy, action, config):
         if self.verify_retreat_onset_side:
