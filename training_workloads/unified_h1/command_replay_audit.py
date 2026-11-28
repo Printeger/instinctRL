@@ -477,9 +477,9 @@ def audit(output, params, counters):
                 resets += sum(row['reset'])
                 if ('escape_composed_crossing_floor' in row) != composed_crossing:
                     raise ValueError('COMMAND_REPLAY_COMPOSED_CROSSING_BINDING')
+                composed_floor = row.get('escape_composed_crossing_floor', [0.]*LANES)
                 if composed_crossing:
-                    floor = row['escape_composed_crossing_floor']
-                    if len(floor) != LANES or any(not math.isfinite(value) or value < 0. for value in floor):
+                    if len(composed_floor) != LANES or any(not math.isfinite(value) or value < 0. for value in composed_floor):
                         raise ValueError('COMMAND_REPLAY_COMPOSED_CROSSING_LANES')
                 if ('escape_static_retreat_witness' in row) != static_retreat_handoff:
                     raise ValueError('COMMAND_REPLAY_STATIC_RETREAT_BINDING')
@@ -675,6 +675,16 @@ def audit(output, params, counters):
                             raise ValueError('COMMAND_REPLAY_PLANAR_PROTECTION_BEHAVIOR')
                     if math.dist(observed, lane_value(row['raw_event'], lane)['velocity_w_m_s']) > 2e-6:
                         raise ValueError('COMMAND_REPLAY_ACTOR_INPUT')
+                    crossing_chosen = composed_floor[lane] > 0.
+                    if crossing_chosen:
+                        alpha, x, y, z = row['selected_action'][lane]
+                        if (composed_floor[lane] < .389999 or not .119999 <= math.hypot(*observed) <= .300001
+                                or abs(alpha) > 1.e-6 or abs(z-.5) > 1.e-6
+                                or abs(math.hypot(x-.5, y-.5)-.2999) > 2.e-6
+                                or row['ics_beta'][lane] < .899999 or row['ics_emergency'][lane]
+                                or held[lane] or ranked[lane] or row['escape_braking'][lane]
+                                or row['recovery_retreating'][lane]):
+                            raise ValueError('COMMAND_REPLAY_COMPOSED_CROSSING_BEHAVIOR')
                     if retreat_onset_floor[lane]:
                         issued = row['v_final_b'][lane]
                         if (not row['recovery_retreating'][lane] or row['escape_active'][lane] or intercepted[lane]
@@ -692,7 +702,8 @@ def audit(output, params, counters):
                             or dot(observed, row['v_final_w'][lane]) <= 0.):
                         raise ValueError('COMMAND_REPLAY_WALL_TANGENT_BEHAVIOR')
                     minimum_detour_speed = .02999 if observed_heading[lane] else .09999
-                    if detour[lane] and (not minimum_detour_speed <= math.hypot(*observed) <= .30001
+                    # A composed crossing withdrawal has authority over an earlier edge proposal.
+                    if detour[lane] and not crossing_chosen and (not minimum_detour_speed <= math.hypot(*observed) <= .30001
                             or tangent[lane] or row['escape_active'][lane] or intercepted[lane]
                             or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) < .5999*dot(observed, observed)):
