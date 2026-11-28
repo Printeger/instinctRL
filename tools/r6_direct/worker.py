@@ -177,8 +177,11 @@ def run(plan, input_pin):
             BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
             FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
             CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
-            CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION,
-            OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTION,
+            CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS,
+            FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
+            OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTIONS,
+            RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS,
+            RANKED_REVERSAL_STOP_EXECUTIONS,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
@@ -371,15 +374,15 @@ def run(plan, input_pin):
                     crossing_restart = option_version in CROSSING_RESTART_EXECUTIONS
                     local_wall_stopping = option_version in LOCAL_WALL_STOPPING_EXECUTIONS
                     front_wall_braking = option_version in FRONT_WALL_BRAKING_EXECUTIONS
-                    faceted_wall_stopping = option_version == FACETED_WALL_STOPPING_EXECUTION
-                    wall_edge_reproof = option_version == WALL_EDGE_REPROOF_EXECUTION
+                    faceted_wall_stopping = option_version in FACETED_WALL_STOPPING_EXECUTIONS
+                    wall_edge_reproof = option_version in WALL_EDGE_REPROOF_EXECUTIONS
                     overlapping_stop = option_version in OVERLAPPING_STOP_EXECUTIONS
                     retreat_continuation = option_version in RETREAT_CONTINUATION_EXECUTIONS
                     oldest_partial_turn = option_version in OLDEST_PARTIAL_TURN_EXECUTIONS
                     zero_crossing_withdrawal = option_version in ZERO_CROSSING_WITHDRAWAL_EXECUTIONS
-                    ranked_reversal_stop = option_version == RANKED_REVERSAL_STOP_EXECUTION
+                    ranked_reversal_stop = option_version in RANKED_REVERSAL_STOP_EXECUTIONS
                     brake_recovery = option_version in BRAKE_RECOVERY_EXECUTIONS
-                    brake_transition = option_version == BRAKE_TRANSITION_EXECUTION
+                    brake_transition = option_version in BRAKE_TRANSITION_EXECUTIONS
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
                     profiles = {(p.config.ics.clearance_margin_m, p.config.ics.motion_tube_radius_m,
                                  p.config.ics.motion_tube_confirm_closure, p.config.ics.motion_tube_neighbor_history,

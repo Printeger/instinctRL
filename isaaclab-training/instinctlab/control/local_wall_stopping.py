@@ -425,3 +425,7 @@ class WallEdgeReproofPipeline(FrontWallBrakingPipeline):
         self._last_ics_cache = checked.cache
         world = rotate_body_to_world(checked.v_final_b, controller_quaternion_wxyz)
         return replace(result, v_final_b=checked.v_final_b, v_final_w=world, ics_metrics=checked.metrics)
+
+
+class FacetedWallEdgeReproofPipeline(WallEdgeReproofPipeline):
+    certify = staticmethod(FacetedWallBrakingPipeline.certify)

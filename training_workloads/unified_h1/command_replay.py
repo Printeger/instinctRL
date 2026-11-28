@@ -110,6 +110,7 @@ NOVEL_ZERO_CROSSING_WITHDRAWAL_ID = NOVEL_PREFIX+'81'
 NOVEL_RANKED_REVERSAL_STOP_ID = NOVEL_PREFIX+'82'
 NOVEL_RANKED_REVERSAL_STOP_CONFIRM_ID = NOVEL_PREFIX+'83'
 NOVEL_ROOM_TANGENT_MAGNITUDE_ID = NOVEL_PREFIX+'84'
+NOVEL_COMBINED_CONTROL_ID = NOVEL_PREFIX+'85'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -200,11 +201,15 @@ LOCAL_WALL_STOPPING_TRACE_FIELDS = tuple(field.replace('tube_', 'local_wall_', 1
 OVERLAPPING_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v23'
 BRAKE_RECOVERY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v24'
 BRAKE_TRANSITION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v27'
-BRAKE_RECOVERY_EXECUTIONS = (BRAKE_RECOVERY_EXECUTION, BRAKE_TRANSITION_EXECUTION)
+COMBINED_CONTROL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v34'
+BRAKE_TRANSITION_EXECUTIONS = (BRAKE_TRANSITION_EXECUTION, COMBINED_CONTROL_EXECUTION)
+BRAKE_RECOVERY_EXECUTIONS = (BRAKE_RECOVERY_EXECUTION, *BRAKE_TRANSITION_EXECUTIONS)
 FRONT_WALL_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v25'
 FACETED_WALL_STOPPING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v28'
 WALL_EDGE_REPROOF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v30'
-FRONT_WALL_BRAKING_EXECUTIONS = (FRONT_WALL_BRAKING_EXECUTION, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION)
+FACETED_WALL_STOPPING_EXECUTIONS = (FACETED_WALL_STOPPING_EXECUTION, COMBINED_CONTROL_EXECUTION)
+WALL_EDGE_REPROOF_EXECUTIONS = (WALL_EDGE_REPROOF_EXECUTION, COMBINED_CONTROL_EXECUTION)
+FRONT_WALL_BRAKING_EXECUTIONS = (FRONT_WALL_BRAKING_EXECUTION, FACETED_WALL_STOPPING_EXECUTION, *WALL_EDGE_REPROOF_EXECUTIONS)
 FRONT_WALL_BRAKING_TRACE_FIELDS = ('front_wall_brake_verified', 'front_wall_brake_previous_b',
     'front_wall_brake_gap_m', 'front_wall_brake_required_m', 'front_wall_brake_attributed_beams')
 LOCAL_WALL_STOPPING_EXECUTIONS = (LOCAL_WALL_STOPPING_EXECUTION, *FRONT_WALL_BRAKING_EXECUTIONS)
@@ -212,7 +217,8 @@ RETREAT_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v26'
 OLDEST_PARTIAL_TURN_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v29'
 ZERO_CROSSING_WITHDRAWAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v31'
 RANKED_REVERSAL_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v32'
-ZERO_CROSSING_WITHDRAWAL_EXECUTIONS = (ZERO_CROSSING_WITHDRAWAL_EXECUTION, RANKED_REVERSAL_STOP_EXECUTION)
+RANKED_REVERSAL_STOP_EXECUTIONS = (RANKED_REVERSAL_STOP_EXECUTION, COMBINED_CONTROL_EXECUTION)
+ZERO_CROSSING_WITHDRAWAL_EXECUTIONS = (ZERO_CROSSING_WITHDRAWAL_EXECUTION, *RANKED_REVERSAL_STOP_EXECUTIONS)
 ROOM_TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v33'
 TANGENT_MAGNITUDE_EXECUTIONS = (TANGENT_MAGNITUDE_EXECUTION, ROOM_TANGENT_MAGNITUDE_EXECUTION)
 OLDEST_PARTIAL_TURN_EXECUTIONS = (OLDEST_PARTIAL_TURN_EXECUTION, ROOM_TANGENT_MAGNITUDE_EXECUTION,
@@ -335,7 +341,7 @@ def compress_trace(run_id):
                                                        NOVEL_OLDEST_PARTIAL_TURN_ID, NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID,
                                                        NOVEL_WALL_EDGE_REPROOF_ID, NOVEL_ZERO_CROSSING_WITHDRAWAL_ID,
                                                        NOVEL_RANKED_REVERSAL_STOP_ID, NOVEL_RANKED_REVERSAL_STOP_CONFIRM_ID,
-                                                       NOVEL_ROOM_TANGENT_MAGNITUDE_ID)
+                                                       NOVEL_ROOM_TANGENT_MAGNITUDE_ID, NOVEL_COMBINED_CONTROL_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -659,6 +665,8 @@ def novel_contract(params):
         execution = (RANKED_REVERSAL_STOP_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ROOM_TANGENT_MAGNITUDE_ID:
         execution = (ROOM_TANGENT_MAGNITUDE_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_COMBINED_CONTROL_ID:
+        execution = (COMBINED_CONTROL_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -962,15 +970,15 @@ def run(backend, params):
             crossing_restart = execution in CROSSING_RESTART_EXECUTIONS
             local_wall_stopping = execution in LOCAL_WALL_STOPPING_EXECUTIONS
             front_wall_braking = execution in FRONT_WALL_BRAKING_EXECUTIONS
-            faceted_wall_stopping = execution == FACETED_WALL_STOPPING_EXECUTION
-            wall_edge_reproof = execution == WALL_EDGE_REPROOF_EXECUTION
+            faceted_wall_stopping = execution in FACETED_WALL_STOPPING_EXECUTIONS
+            wall_edge_reproof = execution in WALL_EDGE_REPROOF_EXECUTIONS
             overlapping_stop = execution in OVERLAPPING_STOP_EXECUTIONS
             retreat_continuation = execution in RETREAT_CONTINUATION_EXECUTIONS
             oldest_partial_turn = execution in OLDEST_PARTIAL_TURN_EXECUTIONS
             zero_crossing_withdrawal = execution in ZERO_CROSSING_WITHDRAWAL_EXECUTIONS
-            ranked_reversal_stop = execution == RANKED_REVERSAL_STOP_EXECUTION
+            ranked_reversal_stop = execution in RANKED_REVERSAL_STOP_EXECUTIONS
             brake_recovery = execution in BRAKE_RECOVERY_EXECUTIONS
-            brake_transition = execution == BRAKE_TRANSITION_EXECUTION
+            brake_transition = execution in BRAKE_TRANSITION_EXECUTIONS
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
                     or env.escape_option.settled_offset_stop != settled_stop or env.escape_option.wall_tangent != tangent
                     or env.escape_option.finite_edge != detour or env.escape_option.edge_continuation != edge_continuation

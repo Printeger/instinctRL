@@ -28,13 +28,18 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
+    CROSSING_STOP_25_V34,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28, CROSSING_STOP_25_V30)
+FACETED_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V28, CROSSING_STOP_25_V34)
+WALL_EDGE_REPROOF_VERSIONS = (CROSSING_STOP_25_V30, CROSSING_STOP_25_V34)
+BRAKE_TRANSITION_VERSIONS = (CROSSING_STOP_25_V27, CROSSING_STOP_25_V34)
+FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28, *WALL_EDGE_REPROOF_VERSIONS)
 LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, *FRONT_WALL_BRAKING_VERSIONS)
-ZERO_CROSSING_WITHDRAWAL_VERSIONS = (CROSSING_STOP_25_V31, CROSSING_STOP_25_V32)
+RANKED_REVERSAL_STOP_VERSIONS = (CROSSING_STOP_25_V32, CROSSING_STOP_25_V34)
+ZERO_CROSSING_WITHDRAWAL_VERSIONS = (CROSSING_STOP_25_V31, *RANKED_REVERSAL_STOP_VERSIONS)
 OLDEST_PARTIAL_TURN_VERSIONS = (CROSSING_STOP_25_V29, CROSSING_STOP_25_V33, *ZERO_CROSSING_WITHDRAWAL_VERSIONS)
 RETREAT_CONTINUATION_VERSIONS = (CROSSING_STOP_25_V26, *OLDEST_PARTIAL_TURN_VERSIONS)
 OVERLAPPING_STOP_VERSIONS = (CROSSING_STOP_25_V23, *RETREAT_CONTINUATION_VERSIONS)
@@ -129,8 +134,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.tube_stopping = enabled and version == CROSSING_STOP_25_V19
         self.local_wall_stopping = enabled and version in LOCAL_WALL_STOPPING_VERSIONS
         self.front_wall_braking = enabled and version in FRONT_WALL_BRAKING_VERSIONS
-        self.faceted_wall_stopping = enabled and version == CROSSING_STOP_25_V28
-        self.wall_edge_reproof = enabled and version == CROSSING_STOP_25_V30
+        self.faceted_wall_stopping = enabled and version in FACETED_WALL_STOPPING_VERSIONS
+        self.wall_edge_reproof = enabled and version in WALL_EDGE_REPROOF_VERSIONS
         for pipeline in self._control_pipelines:
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
@@ -219,12 +224,12 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_hover_reference_reserve=version in HOVER_REFERENCE_RESERVE_VERSIONS,
                                                 verify_crossing_restart=version in CROSSING_RESTART_VERSIONS,
                                                 verify_overlapping_stop=version in OVERLAPPING_STOP_VERSIONS,
-                                                verify_brake_recovery=version in (CROSSING_STOP_25_V24, CROSSING_STOP_25_V27),
+                                                verify_brake_recovery=version in (CROSSING_STOP_25_V24, *BRAKE_TRANSITION_VERSIONS),
                                                 verify_retreat_continuation=version in RETREAT_CONTINUATION_VERSIONS,
-                                                verify_brake_transition=version == CROSSING_STOP_25_V27,
+                                                verify_brake_transition=version in BRAKE_TRANSITION_VERSIONS,
                                                 verify_oldest_partial_turn=version in OLDEST_PARTIAL_TURN_VERSIONS,
                                                 verify_zero_crossing_withdrawal=version in ZERO_CROSSING_WITHDRAWAL_VERSIONS,
-                                                verify_ranked_reversal_stop=version == CROSSING_STOP_25_V32)
+                                                verify_ranked_reversal_stop=version in RANKED_REVERSAL_STOP_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -283,7 +288,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             if self.bilateral_stopping or self.tube_stopping or self.local_wall_stopping:
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
                 from instinctlab.control.local_wall_stopping import (
-                    FacetedWallBrakingPipeline, FrontWallBrakingPipeline, LocalWallStoppingPipeline,
+                    FacetedWallBrakingPipeline, FacetedWallEdgeReproofPipeline, FrontWallBrakingPipeline, LocalWallStoppingPipeline,
                     WallEdgeReproofPipeline,
                 )
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
@@ -296,7 +301,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.intercept_continued
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
-                    if self.wall_edge_reproof:
+                    if self.wall_edge_reproof and self.faceted_wall_stopping:
+                        pipeline_type = FacetedWallEdgeReproofPipeline
+                    elif self.wall_edge_reproof:
                         pipeline_type = WallEdgeReproofPipeline
                     elif self.faceted_wall_stopping:
                         pipeline_type = FacetedWallBrakingPipeline
