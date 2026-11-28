@@ -573,7 +573,7 @@ def hover_escape_scores(lidar, state, rays, issued, *, turn_fallback=False):
     return supported, separation.amin(dim=2)-radius[:, None]
 
 
-def advance_command_response(offsets, coast, state):
+def advance_command_response(offsets, coast, state, *, lag=.35):
     """Advance a delayed request model and keep displacements at the four scan times."""
     import math
 
@@ -585,8 +585,8 @@ def advance_command_response(offsets, coast, state):
     previous_yaw = -.05*(state[:, 15]+state[:, 28])
     coast = rotate(coast, yaw)
     delayed = rotate(state[:, 35:37], yaw+previous_yaw)
-    decay = math.exp(-.1/.35)
-    travel = .1*delayed+.35*(1.-decay)*(coast-delayed)
+    decay = math.exp(-.1/lag)
+    travel = .1*delayed+lag*(1.-decay)*(coast-delayed)
     earlier = rotate(offsets[:, 1:], yaw[:, None])-travel[:, None]
     return torch.cat((earlier, torch.zeros_like(earlier[:, :1])), dim=1), delayed+decay*(coast-delayed)
 
