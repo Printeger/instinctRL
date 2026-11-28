@@ -14,6 +14,8 @@
 
 为检验固定横穿线的覆盖不足，新增独立几何与 Crazy 指令的双轴折返。急折返及同输入限加速度配对均有四条街道首飞接触，失败原件和各路可见性保留。`v48` 在原输入的前 200 秒配对完成 32/32 首飞、64/64 停杆，最低净空 0.199 米。街道第 16 路在第二个零令拍采取停车，实测 0.7 秒停稳、漂移 0.164 米。低进展和恢复仍有缺口。同版完整原始 R6 和独立 30 分钟正式验收仍待完成。 [急折返结果](experiments/instinct-continuous-command/independent_street_sweep/REPORT.md) · [限加速度结果](experiments/instinct-continuous-command/acceleration_bounded_street_sweep/REPORT.md) · [200 秒原生结果](experiments/instinct-continuous-command/neutral_retry/REPORT.md)
 
+`v49` 复跑独立限加速度输入，街道第 16 路在第 38–43 拍用实测来物转向复核短制动，原接触窗动态净空下界从 −0.062 米提高到 0.210 米。全组 29/32 路完成 120 秒首飞，街道第 19、21、23 路仍接触，第 17 路低于 0.15 米。保留原始轨迹，继续按正式门槛验证。 [逐布局结果](experiments/instinct-continuous-command/observed_turn_braking/REPORT.md)
+
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
