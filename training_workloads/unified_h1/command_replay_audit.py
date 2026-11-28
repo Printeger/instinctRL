@@ -23,7 +23,8 @@ from .command_replay import (
     COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTIONS,
     RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
-    COLLECTIVE_PROJECTION_EXECUTION, FRONT_WALL_HANDOFF_EXECUTIONS, STATIC_TURN_ONSET_EXECUTION,
+    COLLECTIVE_PROJECTION_EXECUTIONS, CORRIDOR_PROJECTION_EXECUTION, FRONT_WALL_HANDOFF_EXECUTIONS,
+    STATIC_TURN_ONSET_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -471,8 +472,9 @@ def audit(output, params, counters):
         neutral_retry = model['execution'] in NEUTRAL_RETRY_EXECUTIONS
         observed_turn_braking = model['execution'] in OBSERVED_TURN_BRAKING_EXECUTIONS
         front_wall_handoff = model['execution'] in FRONT_WALL_HANDOFF_EXECUTIONS
-        collective_projection = model['execution'] == COLLECTIVE_PROJECTION_EXECUTION
-        static_turn_onset = model['execution'] == STATIC_TURN_ONSET_EXECUTION
+        collective_projection = model['execution'] in COLLECTIVE_PROJECTION_EXECUTIONS
+        corridor_projection = model['execution'] == CORRIDOR_PROJECTION_EXECUTION
+        static_turn_onset = model['execution'] in STATIC_TURN_ONSET_EXECUTIONS
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
                 or model.get('verify_outward_brake', False) is not request_recovery
@@ -486,6 +488,7 @@ def audit(output, params, counters):
                 or model.get('observed_turn_braking', False) is not observed_turn_braking
                 or model.get('front_wall_handoff', False) is not front_wall_handoff
                 or model.get('collective_projection', False) is not collective_projection
+                or model.get('corridor_projection', False) is not corridor_projection
                 or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
@@ -573,6 +576,14 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_COLLECTIVE_PROJECTION_BINDING')
                 elif 'collective_projection_peak_m_s2' in row:
                     raise ValueError('COMMAND_REPLAY_COLLECTIVE_PROJECTION_SCOPE')
+                if corridor_projection:
+                    widths = row.get('corridor_projection_width_m', ())
+                    if (len(widths) != LANES or any(not math.isfinite(x) or (x != 0. and not 1.649999 <= x <= 2.260001)
+                                                    for x in widths)
+                            or any(peak and not width for peak, width in zip(trim, widths, strict=True))):
+                        raise ValueError('COMMAND_REPLAY_CORRIDOR_PROJECTION_BINDING')
+                elif 'corridor_projection_width_m' in row:
+                    raise ValueError('COMMAND_REPLAY_CORRIDOR_PROJECTION_SCOPE')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)

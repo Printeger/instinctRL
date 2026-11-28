@@ -31,12 +31,15 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
     CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25,
     GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25, TANGENT_RESPONSE_HEADROOM_25,
-    NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25, FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25, STATIC_TURN_ONSET_25,
+    NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25, FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25,
+    STATIC_TURN_ONSET_25, CORRIDOR_PROJECTION_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-FRONT_WALL_HANDOFF_VERSIONS = (FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25, STATIC_TURN_ONSET_25)
+STATIC_TURN_ONSET_VERSIONS = (STATIC_TURN_ONSET_25, CORRIDOR_PROJECTION_25)
+COLLECTIVE_PROJECTION_VERSIONS = (COLLECTIVE_PROJECTION_25, CORRIDOR_PROJECTION_25)
+FRONT_WALL_HANDOFF_VERSIONS = (FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25, *STATIC_TURN_ONSET_VERSIONS)
 OBSERVED_TURN_BRAKING_VERSIONS = (OBSERVED_TURN_BRAKING_25, *FRONT_WALL_HANDOFF_VERSIONS)
 NEUTRAL_RETRY_VERSIONS = (NEUTRAL_RETRY_25, *OBSERVED_TURN_BRAKING_VERSIONS)
 TANGENT_RESPONSE_HEADROOM_VERSIONS = (TANGENT_RESPONSE_HEADROOM_25, *NEUTRAL_RETRY_VERSIONS)
@@ -149,14 +152,22 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self._set_lidar_mount(pitch)
         previous_version = getattr(self, 'escape_option_version', None)
         self.escape_option_version = version if enabled else None
-        projection = self.escape_option_version == COLLECTIVE_PROJECTION_25
-        previous_projection = previous_version == COLLECTIVE_PROJECTION_25
+        projection = self.escape_option_version in COLLECTIVE_PROJECTION_VERSIONS
+        previous_projection = previous_version in COLLECTIVE_PROJECTION_VERSIONS
         if projection and not previous_projection:
             from instinctlab.control.collective_projection import CollectiveProjectionAdapter
 
             self._wrench_adapter = CollectiveProjectionAdapter(self._wrench_adapter, self._collective_control_state)
         elif not projection and previous_projection:
             self._wrench_adapter = self._wrench_adapter.baseline
+        self._corridor_projection = None
+        if self.escape_option_version == CORRIDOR_PROJECTION_25:
+            from instinctlab.control.corridor_projection_guard import CorridorProjectionGuard
+
+            self._corridor_projection = CorridorProjectionGuard(self._actions)
+            self._wrench_adapter.eligible = self._corridor_projection.width > 0.
+        elif projection:
+            self._wrench_adapter.eligible = None
         self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
         self.tube_stopping = enabled and version == CROSSING_STOP_25_V19
         self.local_wall_stopping = enabled and version in LOCAL_WALL_STOPPING_VERSIONS
@@ -278,7 +289,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 tangent_response_headroom=version in TANGENT_RESPONSE_HEADROOM_VERSIONS,
                                                 verify_neutral_retry=version in NEUTRAL_RETRY_VERSIONS,
                                                 observed_turn_braking=version in OBSERVED_TURN_BRAKING_VERSIONS,
-                                                verify_static_turn=version == STATIC_TURN_ONSET_25)
+                                                verify_static_turn=version in STATIC_TURN_ONSET_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -335,8 +346,12 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
     def _pre_physics_step(self, actions):
         if hasattr(self, '_clearance_samples'):
             self._captured = 0
-        if getattr(self, 'escape_option_version', None) == COLLECTIVE_PROJECTION_25:
+        if getattr(self, 'escape_option_version', None) in COLLECTIVE_PROJECTION_VERSIONS:
             self._wrench_adapter.peak_correction.zero_()
+        corridor_projection = getattr(self, '_corridor_projection', None)
+        if corridor_projection is not None:
+            self._wrench_adapter.eligible = corridor_projection.update(
+                self._policy['lidar_grid'], self._policy['state_vec'], self.lidar_rays_body)
         if isinstance(self.escape_option, EscapeRecovery):
             option = self.escape_option
             config = self._control_pipelines[0].config
@@ -345,6 +360,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             if front_wall_handoff:
                 self._front_wall_handoff_margin = option.handoff_after_front_wall_brake(
                     self._policy, selected, actions, config, self._control_pipelines)
+            if corridor_projection is not None:
+                crossing = (option.intercepted | option.intercept_continued | (option.intercept_steps > 0)
+                            | (option.observed_turn_brake_floor > 0.))
+                self._wrench_adapter.eligible &= ~crossing
             actions = selected
             if option.verify_release_stop:
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
@@ -430,9 +449,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self.extras['pre_reset']['clearance_samples'] = self._clearance_samples
         if getattr(self, 'capture_ics_limiter', False):
             self.extras['pre_reset']['ics_limiter'] = self._ics_limiter_witness()
-        if getattr(self, 'escape_option_version', None) == COLLECTIVE_PROJECTION_25:
+        if getattr(self, 'escape_option_version', None) in COLLECTIVE_PROJECTION_VERSIONS:
             self.extras['pre_reset']['collective_projection_peak_m_s2'] = (
                 self._wrench_adapter.peak_correction.detach().clone())
+        if getattr(self, '_corridor_projection', None) is not None:
+            self.extras['pre_reset']['corridor_projection_width_m'] = self._corridor_projection.width.detach().clone()
         if self.escape_option is not None:
             self.extras['pre_reset']['escape_option'] = {
                 'active': self.escape_option.applied.detach().clone(),
@@ -611,6 +632,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
     def _reset_idx(self, env_ids):
         if self.escape_option is not None:
             self.escape_option.reset(self._validate_reset_indices(env_ids))
+        if getattr(self, '_corridor_projection', None) is not None:
+            self._corridor_projection.reset(self._validate_reset_indices(env_ids))
         super()._reset_idx(env_ids)
         if self.lidar_rays_body is not None:
             for lane in self._validate_reset_indices(env_ids).detach().cpu().tolist():

@@ -3,6 +3,7 @@ import math
 import torch
 
 from instinctlab.assets.taslab_uav.config import TASLAB_UAV
+from instinctlab.control import corridor_projection_guard
 from instinctlab.control.collective_projection import restore_vertical_projection
 from instinctlab.control.lee_velocity_controller import GRAVITY_M_S2, taslab_velocity_control
 
@@ -53,3 +54,18 @@ def test_tilt_gate_uses_the_same_normalized_attitude_as_lee():
     assert torch.equal(actual_commands[0], normalized[0])
     assert delta[0, 0] == 0.
     assert 0. < delta[1, 0] <= .03
+
+
+def test_corridor_permission_is_cleared_on_stale_scans_and_reset(monkeypatch):
+    monkeypatch.setattr(corridor_projection_guard, 'corridor_width', lambda *args: 2.)
+    state = torch.zeros(2, 52)
+    lidar = state.new_ones((2, 12, 59, 360))
+    rays = state.new_zeros((59*360, 3))
+    guard = corridor_projection_guard.CorridorProjectionGuard(state)
+
+    assert guard.update(lidar, state, rays).tolist() == [True, True]
+    state[0, 51] = .05
+    assert guard.update(lidar, state, rays).tolist() == [False, True]
+    guard.reset(torch.tensor([1]))
+    state[0, 51] = 0.
+    assert guard.update(lidar, state, rays).tolist() == [False, False]

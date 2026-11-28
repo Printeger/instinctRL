@@ -45,11 +45,16 @@ class CollectiveProjectionAdapter:
         self.control_state = control_state
         self.rotors = baseline.rotors
         self.peak_correction = torch.zeros((self.rotors.num_envs,), device=self.rotors.device, dtype=self.rotors.dtype)
+        self.eligible = None
 
     def apply(self, articulation, normalized):
         root, target_w, stock_collective = self.control_state()
         mass, allocation = measured_control_plant(articulation, root)
         corrected, delta = restore_vertical_projection(normalized, root, target_w, stock_collective, mass, allocation)
+        if self.eligible is not None:
+            selected = self.eligible[:, None]
+            corrected = torch.where(selected, corrected, normalized)
+            delta = torch.where(selected, delta, 0.)
         result = self.baseline.apply(articulation, corrected)
         torch.maximum(self.peak_correction, delta[:, 0].abs(), out=self.peak_correction)
         return result
@@ -60,3 +65,5 @@ class CollectiveProjectionAdapter:
     def reset(self, articulation, indices=None):
         self.baseline.reset(articulation, indices)
         self.peak_correction[indices] = 0.
+        if self.eligible is not None:
+            self.eligible[indices] = False
