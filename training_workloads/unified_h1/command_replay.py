@@ -106,6 +106,7 @@ NOVEL_FACETED_WALL_STOPPING_ID = NOVEL_PREFIX+'77'
 NOVEL_OLDEST_PARTIAL_TURN_ID = NOVEL_PREFIX+'78'
 NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID = NOVEL_PREFIX+'79'
 NOVEL_WALL_EDGE_REPROOF_ID = NOVEL_PREFIX+'80'
+NOVEL_ZERO_CROSSING_WITHDRAWAL_ID = NOVEL_PREFIX+'81'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -206,7 +207,9 @@ FRONT_WALL_BRAKING_TRACE_FIELDS = ('front_wall_brake_verified', 'front_wall_brak
 LOCAL_WALL_STOPPING_EXECUTIONS = (LOCAL_WALL_STOPPING_EXECUTION, *FRONT_WALL_BRAKING_EXECUTIONS)
 RETREAT_CONTINUATION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v26'
 OLDEST_PARTIAL_TURN_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v29'
-RETREAT_CONTINUATION_EXECUTIONS = (RETREAT_CONTINUATION_EXECUTION, OLDEST_PARTIAL_TURN_EXECUTION)
+ZERO_CROSSING_WITHDRAWAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v31'
+OLDEST_PARTIAL_TURN_EXECUTIONS = (OLDEST_PARTIAL_TURN_EXECUTION, ZERO_CROSSING_WITHDRAWAL_EXECUTION)
+RETREAT_CONTINUATION_EXECUTIONS = (RETREAT_CONTINUATION_EXECUTION, *OLDEST_PARTIAL_TURN_EXECUTIONS)
 OVERLAPPING_STOP_EXECUTIONS = (OVERLAPPING_STOP_EXECUTION, *RETREAT_CONTINUATION_EXECUTIONS)
 CROSSING_RESTART_EXECUTIONS = (CROSSING_RESTART_EXECUTION, *BRAKE_RECOVERY_EXECUTIONS, *OVERLAPPING_STOP_EXECUTIONS,
                                *LOCAL_WALL_STOPPING_EXECUTIONS)
@@ -322,7 +325,7 @@ def compress_trace(run_id):
                                                        NOVEL_RETREAT_CONTINUATION_ID, NOVEL_RETREAT_CONTINUATION_CONFIRM_ID,
                                                        NOVEL_BRAKE_TRANSITION_ID, NOVEL_FACETED_WALL_STOPPING_ID,
                                                        NOVEL_OLDEST_PARTIAL_TURN_ID, NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID,
-                                                       NOVEL_WALL_EDGE_REPROOF_ID)
+                                                       NOVEL_WALL_EDGE_REPROOF_ID, NOVEL_ZERO_CROSSING_WITHDRAWAL_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -640,6 +643,8 @@ def novel_contract(params):
         execution = (RETREAT_CONTINUATION_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_OLDEST_PARTIAL_TURN_ID, NOVEL_OLDEST_PARTIAL_TURN_CONFIRM_ID):
         execution = (OLDEST_PARTIAL_TURN_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_ZERO_CROSSING_WITHDRAWAL_ID:
+        execution = (ZERO_CROSSING_WITHDRAWAL_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -947,7 +952,8 @@ def run(backend, params):
             wall_edge_reproof = execution == WALL_EDGE_REPROOF_EXECUTION
             overlapping_stop = execution in OVERLAPPING_STOP_EXECUTIONS
             retreat_continuation = execution in RETREAT_CONTINUATION_EXECUTIONS
-            oldest_partial_turn = execution == OLDEST_PARTIAL_TURN_EXECUTION
+            oldest_partial_turn = execution in OLDEST_PARTIAL_TURN_EXECUTIONS
+            zero_crossing_withdrawal = execution == ZERO_CROSSING_WITHDRAWAL_EXECUTION
             brake_recovery = execution in BRAKE_RECOVERY_EXECUTIONS
             brake_transition = execution == BRAKE_TRANSITION_EXECUTION
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
@@ -996,7 +1002,8 @@ def run(backend, params):
                     or env.faceted_wall_stopping != faceted_wall_stopping
                     or env.wall_edge_reproof != wall_edge_reproof
                     or env.escape_option.verify_retreat_continuation != retreat_continuation
-                    or env.escape_option.verify_oldest_partial_turn != oldest_partial_turn):
+                    or env.escape_option.verify_oldest_partial_turn != oldest_partial_turn
+                    or env.escape_option.verify_zero_crossing_withdrawal != zero_crossing_withdrawal):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -1095,6 +1102,8 @@ def run(backend, params):
                 model['verify_retreat_continuation'] = True
             if oldest_partial_turn:
                 model['verify_oldest_partial_turn'] = True
+            if zero_crossing_withdrawal:
+                model['verify_zero_crossing_withdrawal'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -1222,6 +1231,9 @@ def run(backend, params):
                         tensors['bilateral_stopping'] = option['bilateral_stopping']
                     if 'oldest_partial_turn_verified' in option:
                         tensors['escape_oldest_partial_turn_verified'] = option['oldest_partial_turn_verified']
+                    if 'zero_crossing_mode' in option:
+                        tensors['escape_zero_crossing_mode'] = option['zero_crossing_mode']
+                        tensors['escape_zero_crossing_floor'] = option['zero_crossing_floor']
                     if 'hover_own_side' in option:
                         tensors['escape_hover_own_side'] = option['hover_own_side']
                     if 'far_crossing_refined' in option:

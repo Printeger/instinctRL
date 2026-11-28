@@ -90,7 +90,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
                     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
                     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION,
-                    OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTION,
+                    OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTION,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTION,
@@ -198,8 +198,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['wall_edge_reproof'] = True
                     if override in RETREAT_CONTINUATION_EXECUTIONS:
                         expected['verify_retreat_continuation'] = True
-                    if override == OLDEST_PARTIAL_TURN_EXECUTION:
+                    if override in OLDEST_PARTIAL_TURN_EXECUTIONS:
                         expected['verify_oldest_partial_turn'] = True
+                    if override == ZERO_CROSSING_WITHDRAWAL_EXECUTION:
+                        expected['verify_zero_crossing_withdrawal'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     report['inputs'].append(dict(binding, bytes=Path(binding['path']).stat().st_size))

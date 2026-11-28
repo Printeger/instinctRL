@@ -89,6 +89,7 @@ CROSSING_STOP_25_V27 = 'm4-escape-brake-tube-p25-crossing-stop-v27'
 CROSSING_STOP_25_V28 = 'm4-escape-brake-tube-p25-crossing-stop-v28'
 CROSSING_STOP_25_V29 = 'm4-escape-brake-tube-p25-crossing-stop-v29'
 CROSSING_STOP_25_V30 = 'm4-escape-brake-tube-p25-crossing-stop-v30'
+CROSSING_STOP_25_V31 = 'm4-escape-brake-tube-p25-crossing-stop-v31'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -117,7 +118,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V19: 25, CROSSING_STOP_25_V20: 25, CROSSING_STOP_25_V21: 25,
                        CROSSING_STOP_25_V22: 25, CROSSING_STOP_25_V23: 25, CROSSING_STOP_25_V24: 25,
                        CROSSING_STOP_25_V25: 25, CROSSING_STOP_25_V26: 25, CROSSING_STOP_25_V27: 25,
-                       CROSSING_STOP_25_V28: 25, CROSSING_STOP_25_V29: 25, CROSSING_STOP_25_V30: 25}
+                       CROSSING_STOP_25_V28: 25, CROSSING_STOP_25_V29: 25, CROSSING_STOP_25_V30: 25,
+                       CROSSING_STOP_25_V31: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -144,7 +146,8 @@ class EscapeRecovery(EscapeOption):
                  hover_escape_own_side=False, far_crossing_reference=False, verified_retreat_onset=False,
                  retain_only_clipped_retreat=False, verify_hover_reference_reserve=False,
                  verify_crossing_restart=False, verify_overlapping_stop=False, verify_brake_recovery=False,
-                 verify_retreat_continuation=False, verify_brake_transition=False, verify_oldest_partial_turn=False):
+                 verify_retreat_continuation=False, verify_brake_transition=False, verify_oldest_partial_turn=False,
+                 verify_zero_crossing_withdrawal=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -216,6 +219,14 @@ class EscapeRecovery(EscapeOption):
             if not verify_hover_reference_reserve:
                 raise ValueError('Partial oldest turn requires sampled reversals and a static reference')
             self.oldest_partial_turn_verified = torch.zeros_like(self.applied)
+        self.verify_zero_crossing_withdrawal = verify_zero_crossing_withdrawal
+        if verify_zero_crossing_withdrawal:
+            if not (verify_oldest_partial_turn and commit_intercept):
+                raise ValueError('Zero crossing withdrawal requires the observed crossing controller')
+            self.zero_crossing_ticks = torch.zeros_like(self.remaining)
+            self.zero_crossing_commit = torch.zeros_like(self.remaining)
+            self.zero_crossing_mode = torch.zeros_like(self.remaining)
+            self.zero_crossing_floor = self.direction.new_zeros(lanes)
         self.verify_crossing_restart = verify_crossing_restart
         if verify_crossing_restart:
             if not (verify_hover_reference_reserve and tracked_resume and align_intercept and hover_escape_own_side):
@@ -371,6 +382,11 @@ class EscapeRecovery(EscapeOption):
             self.settled_crossing_verified[lanes] = False
         if self.verify_oldest_partial_turn:
             self.oldest_partial_turn_verified[lanes] = False
+        if self.verify_zero_crossing_withdrawal:
+            self.zero_crossing_ticks[lanes] = 0
+            self.zero_crossing_commit[lanes] = 0
+            self.zero_crossing_mode[lanes] = 0
+            self.zero_crossing_floor[lanes] = 0.
         if self.opening_steering:
             self.opening_steered[lanes] = False
         self.since_escape[lanes] = RECOVERY_LIMIT
@@ -1575,6 +1591,91 @@ class EscapeRecovery(EscapeOption):
         self.offset_stopped[held] = True
         return held
 
+    def verify_zero_crossing(self, lidar, state, selected, config):
+        from .escape_passage import crossing_stop_components, intercept_scores, moving_intercepts
+
+        history = state.reshape(-1, 4, 13)
+        zero = history[:, -1, 6:9].norm(dim=1) <= 1.e-6
+        previous_motion = history[:, -2, 6:9].norm(dim=1) > .03
+        onset = zero & previous_motion & self.applied & ~self.intercepted
+        ticks = self.zero_crossing_ticks.clone()
+        self.zero_crossing_ticks.sub_(1).clamp_min_(0)
+        self.zero_crossing_ticks.masked_fill_(~zero, 0)
+        ages = history[:, :, 12]
+        fresh = (ages <= .04).all(dim=1) & (ages.diff(dim=1).abs() <= .03).all(dim=1)
+        limit = torch.where(onset, .50, .80)
+        fresh &= history[:, :, :3].norm(dim=2).amax(dim=1) <= limit
+        protected = (self.retreating | self.braking | self.ranked | self.holding | self.recovering
+                     | self.crossing_restart_verified)
+        eligible = zero & fresh & ~protected & (onset | (ticks > 0))
+        if not bool(eligible.any()):
+            return
+        rays = self.detector._full_rays
+        lanes, position, motion, coast, radius = moving_intercepts(lidar, state, rays, eligible,
+            command_response=(self.command_offsets, self.command_coast))
+        if not len(lanes):
+            return
+        scans, local = lidar[lanes], state[lanes]
+        original = self.issued(scans, local, selected[lanes], config)
+        mover_speed = motion.norm(dim=1, keepdim=True)
+        along = motion/mover_speed
+        normal = torch.stack((-along[:, 1], along[:, 0]), dim=1)
+        side = -(position*normal).sum(dim=1).sign()[:, None]*normal
+        lateral = torch.nn.functional.pad(side, (0, 1))
+        tangent = torch.nn.functional.pad(along, (0, 1))
+        original_outward = (original.v_final_b*lateral).sum(dim=1)
+        emergency = original.metrics['emergency'][:, 0] != 0.
+        ready = ~emergency & (~onset[lanes] | (original_outward <= -.12))
+        if not bool(ready.any()):
+            return
+        headings = [torch.nn.functional.normalize(lateral+angle*tangent, dim=1)
+                    for angle in (.22, 0., .40, -.22, -.40)]
+        amounts = (.15, .20, .24, .2999)
+        targets = [speed*heading for speed in amounts for heading in headings]
+        actions = [self.action_for_velocity(target, local[:, 48:51], config.governor) for target in targets]
+        checked = [self.issued(scans, local, action, config) for action in actions]
+        velocities = torch.stack((original.v_final_b, torch.zeros_like(original.v_final_b),
+                                  *(trial.v_final_b for trial in checked)), dim=1)
+        swept, stopped = crossing_stop_components(scans, rays, position, motion, coast, radius, velocities, hold_s=.60)
+        floor = torch.minimum(swept, stopped)
+        for variation in (-.12, .12):
+            varied = (mover_speed+variation).clamp_min(.20)*along
+            estimate = intercept_scores(position, varied, coast, radius, velocities, hold_s=.60, preview_steps=121)
+            floor = torch.minimum(floor, estimate)
+        floor -= .10*local[:, 48:51].norm(dim=1, keepdim=True)
+
+        ordinary_safe = floor[:, 0] >= .39
+        stop = ready & (~onset[lanes] | ~ordinary_safe) & (floor[:, 1] >= .39)
+        stay_away = self.intercepted[lanes] & ordinary_safe & (original_outward >= .12)
+        can_move = ready & ~stop & ~stay_away & (~onset[lanes] | ~ordinary_safe)
+        can_move &= onset[lanes] | (ticks[lanes] > 29)
+        usable = torch.cat([((trial.metrics['beta'] >= .90) & (trial.metrics['emergency'] == 0.))
+                            for trial in checked], dim=1)
+        usable &= (floor[:, 2:] >= .39) & ((floor[:, 2:]-floor[:, :1]) >= .075)
+        usable &= (velocities[:, 2:]*lateral[:, None]).sum(dim=2) >= .12
+        usable[:, torch.arange(len(targets), device=state.device) % len(headings) != 0] &= ~onset[lanes, None]
+        moving = can_move & usable.any(dim=1)
+        choices = usable.to(torch.int32).argmax(dim=1)[moving]
+        withdrawn = lanes[moving]
+        selected[withdrawn] = torch.stack(actions, dim=1)[moving, choices]
+        withdrawn_velocity = velocities[moving, choices+2]
+        self.intercept_direction[withdrawn] = torch.nn.functional.normalize(withdrawn_velocity, dim=1)
+        self.intercept_speed[withdrawn] = withdrawn_velocity.norm(dim=1)
+        self.intercept_steps[withdrawn] = 2
+        self.intercepted[withdrawn] = True
+        self.intercept_continued[withdrawn] = False
+        self.zero_crossing_commit[withdrawn] = 2
+        self.zero_crossing_mode[withdrawn] = 1
+        self.zero_crossing_floor[withdrawn] = floor[moving, choices+2]
+        self.hold_neutral(lanes[stop], selected)
+        self.intercepted[lanes[stop]] = False
+        self.intercept_steps[lanes[stop]] = 0
+        self.intercept_continued[lanes[stop]] = False
+        self.zero_crossing_commit[lanes[stop]] = 0
+        self.zero_crossing_mode[lanes[stop]] = 2
+        self.zero_crossing_floor[lanes[stop]] = floor[stop, 1]
+        self.zero_crossing_ticks[lanes[onset[lanes] & (moving | stop)]] = 40
+
     def keep_side_at_retreat_start(self, scans, history, selected, config, lanes, position, motion, coast, radius):
         from .escape_passage import crossing_stop_components, intercept_scores
 
@@ -2203,6 +2304,13 @@ class EscapeRecovery(EscapeOption):
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
+        if self.verify_zero_crossing_withdrawal:
+            latest = policy['state_vec'][:, 45:48]
+            changed = (self.zero_crossing_commit > 0) & (latest.norm(dim=1) > 1.e-6)
+            self.intercept_steps[changed] = 0
+            self.zero_crossing_commit.sub_(1).clamp_min_(0)
+            self.zero_crossing_mode.zero_()
+            self.zero_crossing_floor.zero_()
         selected = self._apply_recovery(policy, action, config)
         if self.command_handoff:
             self.handoff_changed_command(policy['lidar_grid'], policy['state_vec'], selected, action, config)
@@ -2233,6 +2341,8 @@ class EscapeRecovery(EscapeOption):
                 self.verify_request_during_braking(policy['lidar_grid'], state, selected, action, config)
             if self.verify_retreat_continuation:
                 self.continue_retreat_on_observed_side(policy['lidar_grid'], state, selected, config)
+            if self.verify_zero_crossing_withdrawal:
+                self.verify_zero_crossing(policy['lidar_grid'], state, selected, config)
             if self.wall_tangent:
                 self.tangent_used &= ~self.intercepted
             if self.finite_edge:

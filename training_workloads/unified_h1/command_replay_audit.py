@@ -16,7 +16,7 @@ from .command_replay import (
     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION, TUBE_STOPPING_TRACE_FIELDS,
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
     LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION,
-    RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTION,
+    RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTION,
     FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS, FACETED_WALL_STOPPING_EXECUTION, WALL_EDGE_REPROOF_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
@@ -388,9 +388,12 @@ def audit(output, params, counters):
         retreat_continuation_profile = model['execution'] in RETREAT_CONTINUATION_EXECUTIONS
         if model.get('verify_retreat_continuation', False) is not retreat_continuation_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_CONTINUATION_PROFILE')
-        oldest_turn_profile = model['execution'] == OLDEST_PARTIAL_TURN_EXECUTION
+        oldest_turn_profile = model['execution'] in OLDEST_PARTIAL_TURN_EXECUTIONS
         if model.get('verify_oldest_partial_turn', False) is not oldest_turn_profile:
             raise ValueError('COMMAND_REPLAY_OLDEST_PARTIAL_TURN_PROFILE')
+        zero_crossing_profile = model['execution'] == ZERO_CROSSING_WITHDRAWAL_EXECUTION
+        if model.get('verify_zero_crossing_withdrawal', False) is not zero_crossing_profile:
+            raise ValueError('COMMAND_REPLAY_ZERO_CROSSING_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -513,6 +516,15 @@ def audit(output, params, counters):
                 if ((('escape_oldest_partial_turn_verified' in row) != oldest_turn_profile)
                         or len(oldest_turn) != LANES or any(type(used) is not bool for used in oldest_turn)):
                     raise ValueError('COMMAND_REPLAY_OLDEST_PARTIAL_TURN_BINDING')
+                zero_crossing = row.get('escape_zero_crossing_mode', [0]*LANES)
+                zero_floor = row.get('escape_zero_crossing_floor', [0.]*LANES)
+                if (('escape_zero_crossing_mode' in row) != zero_crossing_profile
+                        or ('escape_zero_crossing_floor' in row) != zero_crossing_profile
+                        or len(zero_crossing) != LANES or len(zero_floor) != LANES
+                        or any(type(mode) is not int or mode not in (0,1,2) or not math.isfinite(bound)
+                               or (not mode and bound != 0.)
+                               for mode,bound in zip(zero_crossing,zero_floor,strict=True))):
+                    raise ValueError('COMMAND_REPLAY_ZERO_CROSSING_BINDING')
                 settled_crossing = row.get('escape_settled_crossing', [False]*LANES)
                 if (('escape_settled_crossing' in row) != sampled_turn_profile or len(settled_crossing) != LANES
                         or any(type(value) is not bool for value in settled_crossing)):
@@ -677,6 +689,15 @@ def audit(output, params, counters):
                             or any(math.hypot(*frame[6:9]) > 1.e-6 or math.hypot(*frame[9:12]) > .020001
                                    for frame in actor)):
                         raise ValueError('COMMAND_REPLAY_SAMPLED_TURN_BEHAVIOR')
+                    if zero_crossing[lane] and (math.hypot(*observed) > 1.e-6 or zero_floor[lane] < .389999
+                            or row['ics_emergency'][lane] or ranked[lane] or restart[lane]
+                            or row['escape_braking'][lane] or row['recovery_retreating'][lane]
+                            or (zero_crossing[lane] == 1 and (not intercepted[lane] or held[lane]
+                                or row['ics_beta'][lane] < .89999
+                                or not .119999 <= math.hypot(*row['v_final_b'][lane]) <= .300001))
+                            or (zero_crossing[lane] == 2 and (intercepted[lane] or not held[lane]
+                                or math.hypot(*row['v_final_b'][lane]) > 1.e-6))):
+                        raise ValueError('COMMAND_REPLAY_ZERO_CROSSING_BEHAVIOR')
                     if oldest_turn[lane] and (not settled_crossing[lane] or not offset[lane]):
                         raise ValueError('COMMAND_REPLAY_OLDEST_PARTIAL_TURN_BEHAVIOR')
                     if bilateral[lane] and (not .02999 <= math.hypot(*observed) <= .30001
@@ -758,8 +779,11 @@ def audit(output, params, counters):
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)
+                        withdrawal = zero_crossing[lane] == 1 or (zero_crossing_profile and continued[lane]
+                            and any(r['escape_zero_crossing_mode'][lane] == 1 for r in rows[max(0,step-2):step]))
                         if (held[lane] or row['ics_emergency'][lane] or abs(alpha) > 1.e-6 or abs(z-.5) > 1.e-6
-                                or min(abs(planar_speed-speed) for speed in intercept_speeds) > 1.e-6):
+                                or (not withdrawal and min(abs(planar_speed-speed) for speed in intercept_speeds) > 1.e-6)
+                                or (withdrawal and not .119999 <= planar_speed <= .300001)):
                             raise ValueError('COMMAND_REPLAY_INTERCEPT_BEHAVIOR')
                     if handoff[lane] and (row['escape_active'][lane] or math.hypot(*observed) < .079999
                                           or (not intercepted[lane] and row['selected_action'][lane] != row['action'][lane])):
