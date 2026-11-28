@@ -57,8 +57,11 @@ def main():
         fixed, weights, norms, offsets, limits = normal_layout(active, issued, models, *args)
         # The previous issued velocity is zero at the first restart
         # packet; this is the screened full-speed exception.
-        i = len(active)
-        return fixed, weights, np.delete(norms,i,axis=0), np.delete(offsets,i,axis=0), np.delete(limits,i)
+        assert not norms[-len(models):].any()
+        drift = fixed[:, resume*20] - fixed[:, start_zero*20]
+        assert np.linalg.norm(drift, axis=1).max() <= cfg['drift_m']
+        ignored = [len(active), *range(len(norms) - len(models), len(norms))]
+        return fixed, weights, np.delete(norms,ignored,axis=0), np.delete(offsets,ignored,axis=0), np.delete(limits,ignored)
 
     all_cases = list(origin['protocol']['cases'])
     result = {}
@@ -73,9 +76,10 @@ def main():
             exact = runtime['second_readback'](active,option,fixed,prepared,origin['geometry'],archive,initial,cfg)
             assert exact['issued_w'][:resume]==fixed[:resume].tolist()
             rows.append(dict(optimization={k:v for k,v in option.items() if k!='issue_xy'},exact=exact))
-        found = max(rows,key=lambda x:x['exact']['physical']['clearance_m'])
+        found = max(rows,key=lambda x:x['exact']['physical']['clearance_m'],default=None)
         result[name] = dict(cases=cases, winning_search=found, all_searches=rows)
-        print(json.dumps(dict(branch=name, winner={k:v for k,v in found['exact'].items() if k!='issued_w'})),flush=True)
+        summary = None if found is None else {k:v for k,v in found['exact'].items() if k!='issued_w'}
+        print(json.dumps(dict(branch=name, winner=summary, searches=len(rows))),flush=True)
     assert not stop_paths(), stop_paths()
     print(json.dumps(dict(raw=save(args.output,dict(registry=pin(registry),script=pin(script),
                          common_start=winner[0],common_seed=winner[1]['optimization']['seed_deg'],
