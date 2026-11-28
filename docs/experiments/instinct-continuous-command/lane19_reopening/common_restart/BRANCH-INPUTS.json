@@ -1,0 +1,39 @@
+{
+  "branches": {
+    "nominal_or_negative": [
+      "nominal",
+      "early_negative",
+      "hard_negative"
+    ],
+    "positive": [
+      "early_positive",
+      "hard_positive"
+    ]
+  },
+  "changes": {
+    "refinements": 6,
+    "seed_bearings_deg": [
+      0.0,
+      30.0,
+      60.0,
+      110.0,
+      150.0,
+      180.0,
+      210.0,
+      240.0,
+      300.0
+    ]
+  },
+  "common_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/common_restart/INPUTS.json",
+    "sha256": "4f4fd5957829296a4786d830f1d298d9c2df9a552777b7026ed1fc93136f41b3"
+  },
+  "common_results": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-COMMON-RESTART/SEARCH.json",
+    "sha256": "35f17caef3b41c98c015ce4e90b65a04a9cff52b72083261601d7e8d65280095"
+  },
+  "common_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/common_restart/find_restart.py",
+    "sha256": "c70af861d5e810cdade10836211bd54ea00483cf589ef485e2f8ab581d153734"
+  }
+}
