@@ -1,0 +1,437 @@
+{
+  "clock_commit": "241b3753ad49419ad00f619f837d609317fdc909",
+  "closed_loop_candidate_steps": 0,
+  "experiment_commit": "20295dca49941b7e387b7f09bbb4e11677d13c93",
+  "first_raw_observation_difference": 1065,
+  "latest_tested_safe_open_loop_split": 1064,
+  "native_evaluation_steps": 0,
+  "paired_fit_counts": {
+    "1064": [
+      {
+        "changed_ranges": 0,
+        "hard_positive_fit": true,
+        "lag_s": 0.25,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 0,
+        "hard_positive_fit": true,
+        "lag_s": 0.35,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 0,
+        "hard_positive_fit": true,
+        "lag_s": 0.45,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      }
+    ],
+    "1065": [
+      {
+        "changed_ranges": 837,
+        "hard_positive_fit": true,
+        "lag_s": 0.25,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 849,
+        "hard_positive_fit": true,
+        "lag_s": 0.35,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 855,
+        "hard_positive_fit": true,
+        "lag_s": 0.45,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      }
+    ],
+    "1066": [
+      {
+        "changed_ranges": 810,
+        "hard_positive_fit": false,
+        "lag_s": 0.25,
+        "nominal_fit": false,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 834,
+        "hard_positive_fit": true,
+        "lag_s": 0.35,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 837,
+        "hard_positive_fit": true,
+        "lag_s": 0.45,
+        "nominal_fit": true,
+        "observation_age_s": 0.0
+      }
+    ],
+    "1067": [
+      {
+        "changed_ranges": 792,
+        "hard_positive_fit": false,
+        "lag_s": 0.25,
+        "nominal_fit": false,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 816,
+        "hard_positive_fit": false,
+        "lag_s": 0.35,
+        "nominal_fit": false,
+        "observation_age_s": 0.0
+      },
+      {
+        "changed_ranges": 827,
+        "hard_positive_fit": false,
+        "lag_s": 0.45,
+        "nominal_fit": false,
+        "observation_age_s": 0.0
+      }
+    ]
+  },
+  "positive_reference": {
+    "max_speed_after_deadline_m_s": 0.05152223850428972,
+    "maximum_drift_m": 0.19999900000081855,
+    "mover_min_by_case": [
+      0.17335258688627497,
+      0.1520226173534961
+    ],
+    "open_loop_progress": {
+      "0.25": {
+        "first_five_progress_s": 0.5
+      },
+      "0.35": {
+        "first_five_progress_s": 0.5
+      },
+      "0.45": {
+        "first_five_progress_s": 0.5
+      }
+    },
+    "physical": {
+      "case": 1,
+      "clearance_m": 0.1520226173534961,
+      "lag_s": 0.45,
+      "time_s": 108.905
+    },
+    "static_m": 1.4910085894658043
+  },
+  "raw": {
+    "CLOCK": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLY-SPLIT/CLOCK.json",
+      "sha256": "bbf4dc94b66cb5bcd29e4acb9603e856822a9c208e46dd9a9dd43a72cf102d41"
+    },
+    "SPLITS": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLY-SPLIT/SPLITS.json",
+      "sha256": "830586db076e26bd976d946cbe55772142953991f43736f5ca3e548809647e63"
+    }
+  },
+  "schema": "instinctrl-lane19-shared-prefix-clock/1",
+  "sensor_summary": [
+    {
+      "all_group_velocity_gap_m_s": -0.0399999994039536,
+      "hard_gap_after_error_m": -0.002,
+      "hard_histories_identical": true,
+      "hard_registered_all_lags": true,
+      "min_hard_paired_projection_gap_m": 0.0,
+      "step": 1060
+    },
+    {
+      "all_group_velocity_gap_m_s": -0.040030787077941166,
+      "hard_gap_after_error_m": -0.002,
+      "hard_histories_identical": true,
+      "hard_registered_all_lags": true,
+      "min_hard_paired_projection_gap_m": 0.0,
+      "step": 1061
+    },
+    {
+      "all_group_velocity_gap_m_s": -0.04000868694608073,
+      "hard_gap_after_error_m": -0.002,
+      "hard_histories_identical": true,
+      "hard_registered_all_lags": true,
+      "min_hard_paired_projection_gap_m": 0.0,
+      "step": 1062
+    },
+    {
+      "all_group_velocity_gap_m_s": -0.04010260763028212,
+      "hard_gap_after_error_m": -0.002,
+      "hard_histories_identical": true,
+      "hard_registered_all_lags": true,
+      "min_hard_paired_projection_gap_m": 0.0,
+      "step": 1063
+    },
+    {
+      "all_group_velocity_gap_m_s": -0.04024986962504418,
+      "hard_gap_after_error_m": -0.002,
+      "hard_histories_identical": true,
+      "hard_registered_all_lags": true,
+      "min_hard_paired_projection_gap_m": 0.0,
+      "step": 1064
+    },
+    {
+      "all_group_velocity_gap_m_s": -0.03822194060088224,
+      "hard_gap_after_error_m": -0.0018205487265159897,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": true,
+      "min_hard_paired_projection_gap_m": 0.00017945127348401035,
+      "step": 1065
+    },
+    {
+      "all_group_velocity_gap_m_s": null,
+      "hard_gap_after_error_m": null,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": false,
+      "min_hard_paired_projection_gap_m": null,
+      "step": 1066
+    },
+    {
+      "all_group_velocity_gap_m_s": null,
+      "hard_gap_after_error_m": null,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": false,
+      "min_hard_paired_projection_gap_m": null,
+      "step": 1067
+    },
+    {
+      "all_group_velocity_gap_m_s": null,
+      "hard_gap_after_error_m": null,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": false,
+      "min_hard_paired_projection_gap_m": null,
+      "step": 1068
+    },
+    {
+      "all_group_velocity_gap_m_s": null,
+      "hard_gap_after_error_m": null,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": false,
+      "min_hard_paired_projection_gap_m": null,
+      "step": 1069
+    },
+    {
+      "all_group_velocity_gap_m_s": null,
+      "hard_gap_after_error_m": null,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": false,
+      "min_hard_paired_projection_gap_m": null,
+      "step": 1070
+    }
+  ],
+  "splits": {
+    "1061": {
+      "first_changed_issue_m_s": 0.21667391923479334,
+      "first_changed_packet": 1061,
+      "joint_clearance_m": 0.1520226173534961,
+      "released_branch": {
+        "max_speed_after_deadline_m_s": 0.04920508786930301,
+        "maximum_drift_m": 0.18984429901542227,
+        "mover_min_by_case": [
+          0.28067363062255035,
+          0.6678150003216567,
+          0.6282355438375462
+        ],
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 0,
+          "case_name": "nominal",
+          "clearance_m": 0.28067363062255035,
+          "lag_s": 0.45,
+          "time_s": 108.995
+        },
+        "static_m": 1.237265802033271
+      },
+      "searched": 8
+    },
+    "1064": {
+      "first_changed_issue_m_s": 0.3000000046867881,
+      "first_changed_packet": 1064,
+      "joint_clearance_m": 0.1520226173534961,
+      "released_branch": {
+        "max_speed_after_deadline_m_s": 0.04366101286855879,
+        "maximum_drift_m": 0.16808995420198758,
+        "mover_min_by_case": [
+          0.1769041339195775,
+          0.5592626190400891,
+          0.5219402631204701
+        ],
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 0,
+          "case_name": "nominal",
+          "clearance_m": 0.1769041339195775,
+          "lag_s": 0.45,
+          "time_s": 109.18
+        },
+        "static_m": 1.1990697185878667
+      },
+      "searched": 8
+    },
+    "1065": {
+      "first_changed_issue_m_s": 0.3000003290407046,
+      "first_changed_packet": 1065,
+      "joint_clearance_m": 0.1400826804894536,
+      "released_branch": {
+        "max_speed_after_deadline_m_s": 0.0423892040627755,
+        "maximum_drift_m": 0.1632835142566286,
+        "mover_min_by_case": [
+          0.1400826804894536,
+          0.5194959589019696,
+          0.48320636445849896
+        ],
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 0,
+          "case_name": "nominal",
+          "clearance_m": 0.1400826804894536,
+          "lag_s": 0.45,
+          "time_s": 109.27
+        },
+        "static_m": 1.1826350656455868
+      },
+      "searched": 8
+    },
+    "1066": {
+      "first_changed_issue_m_s": 0.30000046645307565,
+      "first_changed_packet": 1066,
+      "joint_clearance_m": 0.10513027718109047,
+      "released_branch": {
+        "max_speed_after_deadline_m_s": 0.04143635265026433,
+        "maximum_drift_m": 0.1599596705759112,
+        "mover_min_by_case": [
+          0.10513027718109047,
+          0.4811861025404749,
+          0.4458508587534431
+        ],
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 0,
+          "case_name": "nominal",
+          "clearance_m": 0.10513027718109047,
+          "lag_s": 0.45,
+          "time_s": 109.365
+        },
+        "static_m": 1.1837235106586033
+      },
+      "searched": 8
+    },
+    "1067": {
+      "first_changed_issue_m_s": 0.2999989055629973,
+      "first_changed_packet": 1067,
+      "joint_clearance_m": 0.07216211388359461,
+      "released_branch": {
+        "max_speed_after_deadline_m_s": 0.04204524201289617,
+        "maximum_drift_m": 0.1630985910193609,
+        "mover_min_by_case": [
+          0.07216211388359461,
+          0.4444988995206639,
+          0.41013891010957415
+        ],
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 0,
+          "case_name": "nominal",
+          "clearance_m": 0.07216211388359461,
+          "lag_s": 0.45,
+          "time_s": 109.46
+        },
+        "static_m": 1.1879634703449113
+      },
+      "searched": 8
+    },
+    "1068": {
+      "first_changed_issue_m_s": 0.30000973789892493,
+      "first_changed_packet": 1068,
+      "joint_clearance_m": 0.04108516450892519,
+      "released_branch": {
+        "max_speed_after_deadline_m_s": 0.04510902864681048,
+        "maximum_drift_m": 0.17604375641193326,
+        "mover_min_by_case": [
+          0.04108516450892519,
+          0.4093931067980342,
+          0.37601870155449624
+        ],
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 0,
+          "case_name": "nominal",
+          "clearance_m": 0.04108516450892519,
+          "lag_s": 0.45,
+          "time_s": 109.565
+        },
+        "static_m": 1.280738999130638
+      },
+      "searched": 8
+    }
+  },
+  "status": "tested-split-precedes-observable-divergence",
+  "training_steps": 0
+}
