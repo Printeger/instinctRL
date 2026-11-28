@@ -125,6 +125,7 @@ NOVEL_CURRENT_REQUEST_RECOVERY_ID = NOVEL_PREFIX+'96'
 NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID = NOVEL_PREFIX+'97'
 NOVEL_COMPOSED_CROSSING_ID = NOVEL_PREFIX+'98'
 NOVEL_STATIC_RETREAT_HANDOFF_ID = NOVEL_PREFIX+'99'
+NOVEL_STREET_SWEEP_ID = NOVEL_PREFIX+'100'
 MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420}
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
@@ -336,7 +337,8 @@ LAYOUT_COMMAND_BOUNDS = {
 
 
 def matches(run_id):
-    return isinstance(run_id, str) and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|NOVEL|LONG)-[0-9]{2}', run_id) is not None
+    return (run_id == NOVEL_STREET_SWEEP_ID or isinstance(run_id, str)
+            and re.fullmatch(PREFIX + r'(?:PAIR|GUARD|ROUTE|CRAZY|ENDURANCE|RETURN|EARLY|HOVER|PASSAGE|REARM|RANK|CURVED|HOVERPATH|RELEASE|CORNER|NOVEL|LONG)-[0-9]{2}', run_id) is not None)
 
 
 def route_layouts(run_id):
@@ -350,7 +352,7 @@ def arm_execution(params, label):
 
 def compress_trace(run_id):
     return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_CURRENT_REQUEST_RECOVERY_ID, NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID,
-                                                       *MATCHED_ENDURANCE_PREFIX_SECONDS,
+                                                       NOVEL_STREET_SWEEP_ID, *MATCHED_ENDURANCE_PREFIX_SECONDS,
                                                        NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
@@ -531,7 +533,8 @@ def load_lane_streams(pin, *, require_independent=False):
 
 def conditions(params):
     if params['experiment_id'].startswith(NOVEL_PREFIX):
-        return {'layout_routes': params['street_center_ms']}
+        key = 'street_sweep' if params['experiment_id'] == NOVEL_STREET_SWEEP_ID else 'street_center_ms'
+        return {'layout_routes': params[key]}
     if params['experiment_id'].startswith(LONG_PREFIX):
         protocol = json.loads(checked(params['protocol']).read_bytes())
         key = 'street_sweep' if 'street_sweep' in protocol else 'street_center_ms'
@@ -598,8 +601,10 @@ def valid_crossing_centers(centers):
 
 
 def novel_contract(params):
+    sweep = params['experiment_id'] == NOVEL_STREET_SWEEP_ID
+    crossing_field = 'street_sweep' if sweep else 'street_center_ms'
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'clearance_envelope',
-              'street_center_ms', 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
+              crossing_field, 'pulse_acceleration_m_s2', 'wall_seconds', 'output_cap_bytes'}
     comparison = {NOVEL_TURN_ID: (STOP_RELEASE_EXECUTION, TURN_FIT_EXECUTION),
                   NOVEL_INTERCEPT_ID: (TURN_FIT_EXECUTION, INTERCEPT_EXECUTION),
                   NOVEL_ALIGNED_ID: (INTERCEPT_EXECUTION, ALIGNED_INTERCEPT_EXECUTION),
@@ -729,7 +734,7 @@ def novel_contract(params):
         execution = (CURRENT_REQUEST_RECOVERY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID:
         execution = (COMPOSED_CROSSING_EXECUTION,)
-    elif params['experiment_id'] == NOVEL_STATIC_RETREAT_HANDOFF_ID:
+    elif params['experiment_id'] in (NOVEL_STATIC_RETREAT_HANDOFF_ID, NOVEL_STREET_SWEEP_ID):
         execution = (RELEASE_STOP_CERTIFICATES_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
@@ -746,7 +751,8 @@ def novel_contract(params):
             or params['wall_seconds'] != wall or params['output_cap_bytes'] != 512*2**20
             or params['pulse_acceleration_m_s2'] != (1. if prefix_seconds else .5)):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
-    if not valid_crossing_centers(params['street_center_ms']):
+    crossing = params[crossing_field]
+    if not (crossing == authored_street_sweep(params['seed']) if sweep else valid_crossing_centers(crossing)):
         raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
