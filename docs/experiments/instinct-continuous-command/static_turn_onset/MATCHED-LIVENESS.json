@@ -1,0 +1,57 @@
+{
+  "inputs": {
+    "archive": 1200,
+    "commits": {
+      "NOVEL-104": "babaabd04687df1d1c1a7420282bd70239dda79d",
+      "NOVEL-106": "44245fe880f4df831c3618b515d33bcb535e6f74"
+    },
+    "kind": "inputs",
+    "pins": {
+      "NOVEL-104": {
+        "dense": {
+          "bytes": 22579200,
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-104/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+          "sha256": "9da7eacdfd5a604fcbcf4878c0cfcf3a97ec2de61781e1f6839614c176615e8c"
+        },
+        "geometry": "65d666b1f85694bf2e4840b37580d2037685c9552c4b5abb400932bb2eba1b9b",
+        "raw": {
+          "complete_members": 1201,
+          "compressed_bytes": 34633825,
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-104/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+          "sha256": "0d41724f259cff954f17a6bf69b5475edc3dc5d7a396c16b6073076903acd05a"
+        },
+        "rays": "436df0a0f808172d0e0428ac142016077aa2e3c925f8f14b57ee2389057d3b6f"
+      },
+      "NOVEL-106": {
+        "dense": {
+          "bytes": 22579200,
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+          "sha256": "5797a24eec41c34d4a77a82b1ebe65b6fde720292081a1a461605ad4e2d333b9"
+        },
+        "geometry": "65d666b1f85694bf2e4840b37580d2037685c9552c4b5abb400932bb2eba1b9b",
+        "raw": {
+          "complete_members": 1201,
+          "compressed_bytes": 34643132,
+          "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-106/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+          "sha256": "195bbbfdf04e6a36f2b26d3646eeedaf589e80b6abea6a45d8936817beb037a6"
+        },
+        "rays": "436df0a0f808172d0e0428ac142016077aa2e3c925f8f14b57ee2389057d3b6f"
+      }
+    },
+    "scorer_source": "44245fe880f4df831c3618b515d33bcb535e6f74",
+    "seconds": 120.0,
+    "sha": "9cdffbf8133ef6309268f4dea44974a9305f43d964cab58e5abac9585b345352"
+  },
+  "late_recovery": {
+    "NOVEL-104": 44,
+    "NOVEL-106": 45
+  },
+  "result": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-v50-v52-matched-liveness.jsonl",
+    "sha256": "17d47dedb33d150c8984cd5e30871e66493ac69c2de26fca4631d6dc9b05f8f7"
+  },
+  "scorer": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-v50-v52-matched-liveness.py",
+    "sha256": "9cdffbf8133ef6309268f4dea44974a9305f43d964cab58e5abac9585b345352"
+  }
+}
