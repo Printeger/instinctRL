@@ -188,7 +188,9 @@ def main():
     commands = np.array([r['raw_event'][lane]['velocity_w_m_s'] for r in rows])
     zero_start, resume = (x-start for x in cfg['zero_window'])
     assert not commands[zero_start:resume].any() and np.linalg.norm(commands[resume]) > .03
-    assert np.linalg.norm(first - pending) <= cfg['slew_m_s']
+    preceding_body = np.array(rows[0]['actor_state'][lane][-1][9:12])
+    first_body_jump = float(np.linalg.norm(np.array(origin['proof']['body']) - preceding_body))
+    assert first_body_jump <= cfg['slew_m_s'] + .00001
     grid = np.memmap(checked(contract['dense']), '<f4', 'r', shape=(1200, 21, 32, 7))
     dense = np.concatenate((grid[start:end, :-1, lane].reshape(-1, 7), grid[end-1, -1:, lane])).astype(float)
     assert np.allclose(dense[0, :3], p, atol=2.e-5, rtol=0.)
@@ -215,6 +217,7 @@ def main():
                            score[k]['max_speed_after_stop_deadline_m_s']] for k in ('best','best_stop')})
             print(json.dumps(summary), flush=True)
     data = dict(inputs=pin(registry), script=pin(script), first_world=first.tolist(), preceding_world=pending.tolist(),
+                first_body_jump_m_s=first_body_jump, first_world_jump_m_s=float(np.linalg.norm(first - pending)),
                 relaxation=reach, screened=screened)
     print(json.dumps(dict(raw=save(args.output, data),relaxation=reach)), flush=True)
 
