@@ -69,6 +69,68 @@
       "sha256": "c8e69d37bfc39d0dbd8dbf9c808c5db10975a7b3c1d3ed8cfc48cb1d77db91d6"
     }
   ],
+  "follow_up_cpu": [
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-n114-lane16-return-identifiability.jsonl",
+      "sha256": "376cef4a204cbd9580817a47d651267af7e9ecf15eb1a521cc5085ac85cd2a30"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-n114-lane16-early-return-axial-dual-113.jsonl",
+      "sha256": "d03e6499d69248b748717e494204cdc0d611895cb7b783f4733faed413626230"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-n114-lane16-early-return-axial-114.jsonl",
+      "sha256": "80ebd178f324cdf442f07852325afe07c3d7e95c2cf12d70560be33c46cca188"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n114-lane16-short-renew-menu.jsonl",
+      "sha256": "8c582fa8d671d353fc5eb3fbdbbf95de60812c6c67e128b513aa1327c041836e"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-n114-lane16-short-pulse-shifted-bound.jsonl",
+      "sha256": "153c5c4a21fba96e08a82ec84d380409871948573c784c18babfaa0d5e74d81d"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-n114-late-lane16-score.json",
+      "sha256": "064a8a1d4af5b5ef2b1d7b90979fe05d026eade4ba1b5fdb2f7f93dbced3aeb4"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-late-stalled-intercept-114-688-recorded-70.jsonl",
+      "sha256": "836f720a47c386d93cb189b6d9d977c530c02675822e593f38907486aa6f465d"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-late-stalled-intercept-114-688-fixed-70.jsonl",
+      "sha256": "ab6459352efc8374322d575420ff9c09e3a0027e36b5df0f8ba2390c917aee0d"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-late-receding-slow-shift-recorded-35.jsonl",
+      "sha256": "cea3b35ff7f971993f64656387fa1539eecedb178a73cf004366067e581ef54a"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-late-orientation-reproof-24-35-retry.jsonl",
+      "sha256": "9e47008e4627a85b6298444a8d26b3ed8c8c0fe0932531fafd384f66e1d977ff"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-late-orientation-reproof-28-35-advanced.jsonl",
+      "sha256": "3610f5ca7c524240085c9123cbc9829f1844d41fcec967432351b7e2b6bde89d"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/root-n114-two-window-ordinary-debug-fixed-35.jsonl",
+      "sha256": "3260bcb69592aea5ee1822118c9fc1f2e18dc569fd593664a6df7957f4eb62db"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/n108-trunk-preblock-early-only-35.jsonl",
+      "sha256": "b18312eff3b6afe237256257d0eb8b0fa8c3449f6a2fc69b0e21c63f990d3a75"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/n108-trunk-preblock-early-reserve-35.jsonl",
+      "sha256": "f16ce8e90a018bb6b4ac697014e1060c079e58bde66c0642ff26de7335363d60"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-n113-prehandoff-evidence.json",
+      "sha256": "e6fbf6726bf4cc054290195d6532a28caadd94a37fe759fbca6ee344242dbe60"
+    }
+  ],
   "matched_control_result": {
     "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/gravity_preview_renewal/RESULT.json",
     "sha256": "070040dc471a9ccaee51c11b4d8aefa9f02eae2079558d414ebc65a52da43768"
