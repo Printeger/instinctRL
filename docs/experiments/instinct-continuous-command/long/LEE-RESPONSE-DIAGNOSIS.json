@@ -1,0 +1,34 @@
+{
+  "artifacts": {
+    "scientist-long01-lee-collective.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-lee-collective.jsonl",
+      "sha256": "dafdfa4d5c3be0c6d2e808ca573744d1f88713fde59e928ec9d0c1aa346ee9f2"
+    },
+    "scientist-long01-lee-collective.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-lee-collective.py",
+      "sha256": "c74f6ddafdf18e5e5047fd7890168788561281ac6e972242e59ed0e74515bb2a"
+    }
+  },
+  "near_level_lane_26": {
+    "measured_equivalent_m": 6e-05,
+    "projected_equivalent_m": 0.0,
+    "total_seconds": 51.8
+  },
+  "observed_and_projected_height_equivalent_m": {
+    "lane_23_matched": [
+      -0.34414,
+      -0.3472
+    ],
+    "lane_24": [
+      -0.69489,
+      -0.68948
+    ],
+    "lane_26": [
+      -0.5951,
+      -0.59509
+    ]
+  },
+  "schema_version": "instinctrl-lee-response-diagnosis/1",
+  "scope": "Fixed archived attitudes and velocities at 100 ms with an inter-packet attitude model",
+  "source": "017eefb29463686cab255198263be52f2abbd1e6"
+}
