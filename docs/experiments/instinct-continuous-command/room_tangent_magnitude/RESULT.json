@@ -1,0 +1,299 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "20": 1,
+          "24": 1,
+          "25": 2,
+          "26": 1,
+          "28": 1,
+          "29": 1,
+          "30": 1
+        },
+        "escape_far_crossing_refined": {
+          "17": 4,
+          "18": 10,
+          "20": 1
+        },
+        "escape_finite_edge": {
+          "0": 80,
+          "1": 68,
+          "2": 58,
+          "3": 89,
+          "4": 84,
+          "5": 47,
+          "6": 118,
+          "7": 53,
+          "8": 20,
+          "9": 49,
+          "10": 53,
+          "11": 15,
+          "12": 3,
+          "13": 12,
+          "14": 85,
+          "15": 13,
+          "16": 5,
+          "17": 12,
+          "18": 21,
+          "19": 20,
+          "20": 31,
+          "21": 39,
+          "22": 13,
+          "23": 52,
+          "24": 72,
+          "25": 65,
+          "26": 62,
+          "27": 40,
+          "28": 123,
+          "29": 96,
+          "30": 30,
+          "31": 25
+        },
+        "escape_intercept_continued": {
+          "16": 4,
+          "17": 8,
+          "18": 12,
+          "19": 5,
+          "20": 4,
+          "23": 5
+        },
+        "escape_intercepted": {
+          "16": 20,
+          "17": 44,
+          "18": 67,
+          "19": 55,
+          "20": 47,
+          "21": 55,
+          "22": 33,
+          "23": 42
+        },
+        "escape_observed_heading": {
+          "0": 9,
+          "1": 25,
+          "2": 5,
+          "3": 20,
+          "4": 27,
+          "5": 4,
+          "6": 38,
+          "8": 3,
+          "9": 32,
+          "10": 15,
+          "11": 1,
+          "12": 3,
+          "13": 5,
+          "14": 40,
+          "15": 4,
+          "16": 2,
+          "17": 3,
+          "18": 4,
+          "19": 11,
+          "20": 5,
+          "21": 14,
+          "22": 5,
+          "23": 14,
+          "24": 45,
+          "25": 22,
+          "26": 60,
+          "27": 31,
+          "28": 38,
+          "29": 3,
+          "31": 3
+        },
+        "escape_offset_stop": {
+          "16": 5,
+          "17": 11,
+          "18": 28,
+          "19": 9,
+          "20": 27,
+          "21": 6,
+          "22": 4,
+          "23": 7
+        },
+        "escape_oldest_partial_turn_verified": {
+          "17": 1,
+          "20": 1
+        },
+        "escape_retreat_request_kept": {
+          "16": 1
+        },
+        "escape_settled_crossing": {
+          "17": 1,
+          "20": 1
+        },
+        "escape_shallow_steering": {
+          "0": 57,
+          "1": 38,
+          "2": 49,
+          "3": 50,
+          "4": 43,
+          "5": 38,
+          "6": 46,
+          "7": 47,
+          "9": 4,
+          "10": 2,
+          "14": 11,
+          "15": 4,
+          "16": 2,
+          "17": 3,
+          "20": 10,
+          "21": 11,
+          "22": 6,
+          "23": 9,
+          "27": 1,
+          "29": 71,
+          "30": 22,
+          "31": 11
+        },
+        "escape_tracked_resume": {
+          "16": 1,
+          "17": 4,
+          "18": 9,
+          "19": 1,
+          "20": 24,
+          "21": 12,
+          "22": 23,
+          "23": 3
+        },
+        "escape_wall_tangent": {
+          "3": 36,
+          "4": 43,
+          "5": 11,
+          "7": 1,
+          "8": 27,
+          "9": 17,
+          "10": 51,
+          "11": 13,
+          "13": 1,
+          "14": 18,
+          "15": 14,
+          "18": 28,
+          "21": 4,
+          "23": 12,
+          "24": 42,
+          "25": 32,
+          "26": 57,
+          "27": 40,
+          "28": 21,
+          "29": 2,
+          "31": 37
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-84/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "169a0f2729ada41e787d2793147193f0aeb4110e8f7adc03d3b2912e462e8067"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 27,
+            "m": 0.4657720476388931,
+            "time_s": 20.04
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 28,
+            "m": 0.48191687189767485,
+            "time_s": 99.08
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 6,
+            "m": 0.22461615823167225,
+            "time_s": 95.565
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 18,
+            "m": 0.1954107121512218,
+            "time_s": 49.11
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 9,
+            "m": 0.4432026093839252,
+            "time_s": 81.785
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-84/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-84/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "204d7ece59541be0276b13fb9fbb60141193dcdc74ee9233b23ff9b24bb7c49b"
+      },
+      "windows": []
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-84/analysis/binding.json",
+    "sha256": "7e9a36c987ffbb0a34223ae079687847bdcfe227838adf448461646d8c888a92"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-84/analysis/clearance-and-progress.json",
+    "sha256": "2a7a3814c01e6c79a272f06af4e134ff76409b86632defa065f3c14f7322d0f0"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "279a8e077cb42c86f46166f6a5d114d139ab5dcd",
+  "status": "DEVELOPMENT_ROOM_TANGENT_MAGNITUDE_SHORT_SAFETY_AND_STOPS_PASS"
+}

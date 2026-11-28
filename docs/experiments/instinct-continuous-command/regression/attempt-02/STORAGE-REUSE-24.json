@@ -1,0 +1,17 @@
+{
+  "actual_released_bytes": 1211572224,
+  "plan": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-STORAGE-CHECK-24/PLAN.json",
+    "sha256": "491542254c6e752ea9fc437fce99695cafa7dd97bf30aa84bd7333c25dc54b78"
+  },
+  "result": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-STORAGE-CHECK-24/RESULT.json",
+    "sha256": "2485a8296a82c58dc65a4a03e7d89f257f181c204505e29363adf6f06ef8d61c"
+  },
+  "scope": "Identical tracked historical files in closed detached SOURCE35 through SOURCE38, with SOURCE33 as the content anchor",
+  "tool": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-STORAGE-CHECK-24/share-identical-snapshot-files.py",
+    "sha256": "438f91c1623fd8ee79833c3f1aca8d0bf36d52e2f6075b6814445ae2bf7ebb3d"
+  },
+  "verified_paths": 15408
+}
