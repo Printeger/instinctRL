@@ -1,0 +1,248 @@
+{
+  "model_pairs": {
+    "lag25": {
+      "arms": [
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": -0.2564625652298641,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.17539675636675245,
+          "v41": true,
+          "verified_steps": [
+            720,
+            721,
+            722,
+            723
+          ]
+        },
+        {
+          "attitude": "fixed",
+          "minimum_clearance_m": -0.2787137124087418,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "fixed",
+          "minimum_clearance_m": 0.28242150844575664,
+          "v41": true,
+          "verified_steps": [
+            720,
+            721,
+            722,
+            723
+          ]
+        }
+      ],
+      "first_step": 720,
+      "lag_s": 0.25,
+      "lane": 22,
+      "last_step": 784,
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v41-production-lag25.jsonl",
+        "sha256": "f37e483f0102c9af9c67469fab49019cbdcc11af889785702c7e66cfeff1a784"
+      }
+    },
+    "lag35": {
+      "arms": [
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": -0.2503044991334938,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.39451164756640167,
+          "v41": true,
+          "verified_steps": [
+            720,
+            721,
+            722,
+            723,
+            724,
+            725
+          ]
+        },
+        {
+          "attitude": "fixed",
+          "minimum_clearance_m": -0.20162025419274537,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "fixed",
+          "minimum_clearance_m": 0.38085600044321244,
+          "v41": true,
+          "verified_steps": [
+            720,
+            721,
+            722,
+            723,
+            724,
+            725
+          ]
+        }
+      ],
+      "first_step": 720,
+      "lag_s": 0.35,
+      "lane": 22,
+      "last_step": 784,
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v41-production-lag35.jsonl",
+        "sha256": "55ad5502e7b0a979fba8b8cdcdee11952b0d11820e5e8c84a2b5663a631cf06c"
+      }
+    },
+    "lag45": {
+      "arms": [
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": -0.23484671775735638,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.3851117733416196,
+          "v41": true,
+          "verified_steps": [
+            720,
+            721,
+            722,
+            723,
+            724,
+            725
+          ]
+        },
+        {
+          "attitude": "fixed",
+          "minimum_clearance_m": -0.24914656621158981,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "fixed",
+          "minimum_clearance_m": 0.3440861198205968,
+          "v41": true,
+          "verified_steps": [
+            720,
+            721,
+            722,
+            723,
+            724,
+            725
+          ]
+        }
+      ],
+      "first_step": 720,
+      "lag_s": 0.45,
+      "lane": 22,
+      "last_step": 784,
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v41-production-lag45.jsonl",
+        "sha256": "2ca449712c7ce85b59eda65a7895e91d068bc8738a59b6f60d574179759448a6"
+      }
+    },
+    "n83": {
+      "arms": [
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.4643088561081383,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.4643088561081383,
+          "v41": true,
+          "verified_steps": []
+        }
+      ],
+      "first_step": 88,
+      "identical_events": true,
+      "lag_s": 0.35,
+      "lane": 19,
+      "last_step": 131,
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v41-production-n83.jsonl",
+        "sha256": "98e5b60cc6af597c87fce5c3dd89ed1bca769438a2e9047f0c2a43dd8574ddb4"
+      }
+    },
+    "n93": {
+      "arms": [
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.902110904601652,
+          "v41": false,
+          "verified_steps": []
+        },
+        {
+          "attitude": "recorded",
+          "minimum_clearance_m": 0.902110904601652,
+          "v41": true,
+          "verified_steps": []
+        }
+      ],
+      "first_step": 443,
+      "identical_events": true,
+      "lag_s": 0.35,
+      "lane": 23,
+      "last_step": 483,
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v41-production-n93.jsonl",
+        "sha256": "e68cb6553fb39808b608453c52bac57bc6d2d274a33a40cf69779cedb36fc6ce"
+      }
+    }
+  },
+  "native_contact": {
+    "first_below_clearance_s": 76.34,
+    "lane": 22,
+    "minimum_clearance_s": 76.95,
+    "minimum_mover_clearance_m": -0.06758,
+    "step": 769
+  },
+  "native_control_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/long/R6-DIRECT-INSTINCT-GPU-COMMAND-LONG-01-inputs.json",
+    "sha256": "78cde7732182ff4e7a73d39bbdd7b6ce58ffe8f60bf0a73520fa0d098ce70a97"
+  },
+  "native_control_source": "017eefb29463686cab255198263be52f2abbd1e6",
+  "production_source": "abd8efbb0c42634b2a2f43d4ba78b5c7f1ff8198",
+  "schema_version": "instinctrl-composed-crossing-cpu-witnesses/1",
+  "witnesses": {
+    "combined-control-env-bridge.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/combined-control-env-bridge.py",
+      "sha256": "e5263d50e5c3cf5d5dd82276742f2bc48875a376373b9c25665be0296a84a803"
+    },
+    "hacker-long01-lag45-limiter.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lag45-limiter.jsonl",
+      "sha256": "cb8c63828aa3ccd89b8a1d8d9c95ea50a526c297b54f41cd848bc588df2561cb"
+    },
+    "hacker-long01-lag45-renewal-only-positive45.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lag45-renewal-only-positive45.jsonl",
+      "sha256": "219efb1aacac699a6877e04fa514bbaea5381497b0641cca9a98f37f2a17e627"
+    },
+    "long01-v41-production-crossing-closed.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v41-production-crossing-closed.py",
+      "sha256": "030bc1cd4f28034ddfcd168531241c1bc8584dd4e04e1d678fc3fdf83baec3fd"
+    },
+    "n35-early-west-virtual-ics.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/n35-early-west-virtual-ics.py",
+      "sha256": "28024da534ce8c050e485c1b84a32dbc5a422f25fa59f664e04dda0f49048ad7"
+    },
+    "scientist-long01-lane22-early-certificate.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-lane22-early-certificate.jsonl",
+      "sha256": "9b7405d1bd85de28df7372c6b26cb55c8ae6296f0b8d86d514c68e098e82bfd7"
+    },
+    "v40-long-lane22-first-contact-packets.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/v40-long-lane22-first-contact-packets.jsonl",
+      "sha256": "149503d6ce5be87daa9cd0651e0076d4ac7ad727e45245bc24a0fc8289add21b"
+    },
+    "v40-long-lane22-issued-path-proof.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/v40-long-lane22-issued-path-proof.jsonl",
+      "sha256": "3f6b9ea49643365e4bd9a3d77b68b461d609d4281139c852484fc2bcedc2c73a"
+    }
+  }
+}

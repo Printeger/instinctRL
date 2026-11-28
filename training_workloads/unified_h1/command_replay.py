@@ -123,6 +123,7 @@ NOVEL_SUPPORTED_WALL_APPROACH_ID = NOVEL_PREFIX+'94'
 NOVEL_SUPPORTED_WALL_APPROACH_CONFIRM_ID = NOVEL_PREFIX+'95'
 NOVEL_CURRENT_REQUEST_RECOVERY_ID = NOVEL_PREFIX+'96'
 NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID = NOVEL_PREFIX+'97'
+NOVEL_COMPOSED_CROSSING_ID = NOVEL_PREFIX+'98'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -219,7 +220,9 @@ CROSSING_AND_WALL_MOTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v36
 WALL_MOTION_AND_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v38'
 SUPPORTED_WALL_APPROACH_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v39'
 CURRENT_REQUEST_RECOVERY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v40'
-SUPPORTED_WALL_EXECUTIONS = (SUPPORTED_WALL_APPROACH_EXECUTION, CURRENT_REQUEST_RECOVERY_EXECUTION)
+COMPOSED_CROSSING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v41'
+CURRENT_REQUEST_RECOVERY_EXECUTIONS = (CURRENT_REQUEST_RECOVERY_EXECUTION, COMPOSED_CROSSING_EXECUTION)
+SUPPORTED_WALL_EXECUTIONS = (SUPPORTED_WALL_APPROACH_EXECUTION, *CURRENT_REQUEST_RECOVERY_EXECUTIONS)
 COMPOSED_MOTION_EXECUTIONS = (COMBINED_CONTROL_EXECUTION, CROSSING_AND_WALL_MOTION_EXECUTION,
                               WALL_MOTION_AND_STOP_EXECUTION, *SUPPORTED_WALL_EXECUTIONS)
 BRAKE_TRANSITION_EXECUTIONS = (BRAKE_TRANSITION_EXECUTION, *COMPOSED_MOTION_EXECUTIONS)
@@ -339,6 +342,7 @@ def arm_execution(params, label):
 
 def compress_trace(run_id):
     return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_CURRENT_REQUEST_RECOVERY_ID, NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID,
+                                                       NOVEL_COMPOSED_CROSSING_ID,
                                                        NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
@@ -534,6 +538,8 @@ def event_schedule(params, label=None):
         stream_pin = params.get('candidate_stream', params['stream']) if label == 'candidate' else params['stream']
         layouts, by_lane = load_lane_streams(stream_pin, require_independent=params['experiment_id'].startswith((NOVEL_PREFIX, LONG_PREFIX)))
         limit = RETURN_DURATION_MS//STEP_MS+1 if params['experiment_id'].startswith((RETURN_PREFIX, EARLY_PREFIX)) else None
+        if params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID:
+            limit = 120_000//STEP_MS+1
         indices = list(zip(*(sampled_events(stream)[:limit] for stream in by_lane), strict=True))
         events = [[stream['events'][index] for stream, index in zip(by_lane, row, strict=True)] for row in indices]
         return layouts, [list(row) for row in indices], events
@@ -603,6 +609,7 @@ def novel_contract(params):
                   NOVEL_TANGENT_MAGNITUDE_ID: (FINITE_EDGE_EXECUTION, TANGENT_MAGNITUDE_EXECUTION),
                   NOVEL_ROTATION_TUBE_ID: (FINITE_EDGE_EXECUTION, ROTATION_TUBE_EXECUTION)}.get(params['experiment_id'])
     paired = comparison is not None
+    endurance_prefix = params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID
     labels = {'control', 'candidate'} if paired else {'candidate'}
     execution = (HOVER_PATH_EXECUTION, STOP_RELEASE_EXECUTION)
     if paired:
@@ -711,6 +718,8 @@ def novel_contract(params):
         execution = (SUPPORTED_WALL_APPROACH_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_CURRENT_REQUEST_RECOVERY_ID, NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID):
         execution = (CURRENT_REQUEST_RECOVERY_EXECUTION,)
+    elif endurance_prefix:
+        execution = (COMPOSED_CROSSING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -722,14 +731,14 @@ def novel_contract(params):
             or set(params['models']) != labels or any(pin['sha256'] != MODELS['b'] for pin in params['models'].values())
             or (paired and params['models']['candidate'] != params['models']['control'])
             or params['wall_seconds'] != wall or params['output_cap_bytes'] != 512*2**20
-            or params['pulse_acceleration_m_s2'] != .5):
+            or params['pulse_acceleration_m_s2'] != (1. if endurance_prefix else .5)):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
     if not valid_crossing_centers(params['street_center_ms']):
         raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
     _, streams = load_lane_streams(params['stream'], require_independent=True)
-    if any(stream['duration_ms'] != 120000 for stream in streams):
+    if any(stream['duration_ms'] != (1_800_000 if endurance_prefix else 120_000) for stream in streams):
         raise ValueError('COMMAND_REPLAY_NOVEL_DURATION')
     transitions = LANES*1200*len(labels)
     return dict(schema_version='r6-local-runtime-contract/1', execution_mode='local-direct', operation='dynamic',
@@ -1391,8 +1400,12 @@ def run(backend, params):
         if execution in SUPPORTED_WALL_EXECUTIONS:
             verify_supported_wall_pipelines(env)
             model['supported_wall_approach'] = True
-        if execution == CURRENT_REQUEST_RECOVERY_EXECUTION:
+        if execution in CURRENT_REQUEST_RECOVERY_EXECUTIONS:
             verify_current_request_recovery(env)
             model.update(retry_command_handoff=True, verify_outward_brake=True)
+        if execution == COMPOSED_CROSSING_EXECUTION:
+            if not env.escape_option.verify_composed_crossing:
+                raise ValueError('COMMAND_COMPOSED_CROSSING_PROOF')
+            model['verify_composed_crossing'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))
