@@ -1,0 +1,61 @@
+{
+  "base_manifest": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/INPUTS.json",
+    "sha256": "07e15913b072cb6cb68755f613e2ac912df946c6735d5bcccff9db29928b27cd"
+  },
+  "dense": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+    "sha256": "bf3701716492e2c001481f2e0deb8e2e4a5fed686bfd27419f8063e5aff879c9"
+  },
+  "native_metrics": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/analysis/clearance-and-progress.json",
+    "sha256": "73ce946fca80b5b05d4c879ab77b3edc06f4c45b5e0d8fd3d03db662643b591f"
+  },
+  "protocol": {
+    "actuator_lag_s": 0.35,
+    "cases": {
+      "early_negative": {
+        "attitude": "recorded",
+        "fork_step": 1062,
+        "sign": -1
+      },
+      "early_positive": {
+        "attitude": "recorded",
+        "fork_step": 1062,
+        "sign": 1
+      },
+      "hard_negative": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": -1
+      },
+      "hard_positive": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": 1
+      },
+      "nominal": {
+        "attitude": "recorded",
+        "fork_step": 1064,
+        "sign": 0
+      }
+    },
+    "end_exclusive": 1149,
+    "expected_entry_floor_m": 0.52120516485,
+    "expected_first_body_m_s": [
+      0.0251277685,
+      0.0482462645,
+      -0.0036664605
+    ],
+    "expected_stock_floor_m": 0.331228,
+    "lane": 19,
+    "recovery_anchor": 1110,
+    "scene_seed": 1999375583,
+    "start": 1060,
+    "warm": 979,
+    "zero_window": [
+      1070,
+      1084
+    ]
+  }
+}
