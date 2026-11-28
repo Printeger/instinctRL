@@ -1,0 +1,327 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_brake_recovery_verified": {
+          "23": 11
+        },
+        "escape_command_handoff": {
+          "5": 1,
+          "6": 1,
+          "24": 1,
+          "25": 1,
+          "27": 1,
+          "28": 2,
+          "29": 1,
+          "31": 1
+        },
+        "escape_far_crossing_refined": {
+          "17": 4,
+          "18": 2
+        },
+        "escape_finite_edge": {
+          "0": 56,
+          "1": 66,
+          "2": 58,
+          "3": 64,
+          "4": 61,
+          "5": 41,
+          "6": 89,
+          "7": 58,
+          "8": 18,
+          "9": 18,
+          "10": 22,
+          "11": 22,
+          "12": 40,
+          "13": 9,
+          "14": 44,
+          "15": 10,
+          "16": 18,
+          "17": 21,
+          "18": 9,
+          "19": 21,
+          "20": 28,
+          "21": 6,
+          "22": 14,
+          "23": 20,
+          "24": 47,
+          "25": 31,
+          "26": 33,
+          "27": 73,
+          "28": 78,
+          "29": 38,
+          "30": 18,
+          "31": 47
+        },
+        "escape_intercept_continued": {
+          "16": 4,
+          "17": 4,
+          "18": 4,
+          "19": 4,
+          "20": 4,
+          "21": 8,
+          "22": 12
+        },
+        "escape_intercepted": {
+          "16": 50,
+          "17": 51,
+          "18": 34,
+          "19": 50,
+          "20": 52,
+          "21": 23,
+          "22": 82,
+          "23": 35
+        },
+        "escape_observed_heading": {
+          "0": 12,
+          "1": 12,
+          "2": 9,
+          "3": 6,
+          "6": 17,
+          "7": 9,
+          "9": 8,
+          "10": 6,
+          "11": 9,
+          "12": 20,
+          "14": 29,
+          "16": 4,
+          "17": 3,
+          "18": 6,
+          "19": 6,
+          "20": 11,
+          "21": 2,
+          "22": 9,
+          "23": 17,
+          "24": 31,
+          "25": 31,
+          "26": 27,
+          "27": 38,
+          "28": 5,
+          "29": 3,
+          "30": 7,
+          "31": 3
+        },
+        "escape_offset_stop": {
+          "16": 46,
+          "18": 16,
+          "19": 30,
+          "20": 12,
+          "22": 13,
+          "23": 6
+        },
+        "escape_oldest_partial_turn_verified": {
+          "19": 2,
+          "20": 1
+        },
+        "escape_settled_crossing": {
+          "19": 2,
+          "20": 1
+        },
+        "escape_shallow_steering": {
+          "0": 43,
+          "1": 47,
+          "2": 47,
+          "3": 51,
+          "4": 45,
+          "5": 38,
+          "6": 40,
+          "7": 42,
+          "12": 6,
+          "14": 2,
+          "16": 7,
+          "17": 16,
+          "18": 2,
+          "19": 4,
+          "20": 8,
+          "21": 2,
+          "23": 1,
+          "24": 1,
+          "26": 1,
+          "28": 65,
+          "29": 20,
+          "30": 9,
+          "31": 39
+        },
+        "escape_tracked_resume": {
+          "16": 4,
+          "17": 9,
+          "18": 3,
+          "19": 13,
+          "20": 9,
+          "21": 2,
+          "22": 9,
+          "23": 12
+        },
+        "escape_wall_tangent": {
+          "0": 21,
+          "5": 10,
+          "6": 17,
+          "9": 21,
+          "10": 19,
+          "11": 5,
+          "12": 23,
+          "14": 19,
+          "18": 32,
+          "19": 7,
+          "20": 1,
+          "24": 96,
+          "25": 55,
+          "26": 131,
+          "27": 59,
+          "29": 108,
+          "30": 9,
+          "31": 28
+        },
+        "faceted_wall_stopping_used": {
+          "28": 28,
+          "29": 55,
+          "30": 52,
+          "31": 26
+        },
+        "front_wall_brake_verified": {
+          "24": 21,
+          "25": 34,
+          "26": 6,
+          "27": 22
+        },
+        "local_wall_stopping": {
+          "0": 6,
+          "1": 7,
+          "2": 4,
+          "3": 4,
+          "5": 10,
+          "6": 1,
+          "11": 1,
+          "12": 1,
+          "20": 1,
+          "24": 48,
+          "25": 81,
+          "26": 46,
+          "27": 76,
+          "28": 28,
+          "29": 56,
+          "30": 53,
+          "31": 26
+        },
+        "wall_edge_reproof": {
+          "27": 3
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-96/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "cf925d999842bb6e66b218f302b6a764949879453a06371cca394a1b3d4dc80b"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 27,
+            "m": 0.28628793358802795,
+            "time_s": 101.355
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 30,
+            "m": 0.2851540360776075,
+            "time_s": 99.375
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 3,
+            "m": 0.3362995877282008,
+            "time_s": 20.225
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 17,
+            "m": 0.1801580536177339,
+            "time_s": 13.17
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 10,
+            "m": 0.4495909950801482,
+            "time_s": 13.015
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-96/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-96/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "6cfde00f1cdf2225967a6b34d06f06dce460c47f21260f901f2620c9c547b15a"
+      },
+      "windows": []
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-96/analysis/binding.json",
+    "sha256": "7bcf8dcafaa69fb24becc9b8fe2f7545b52f9c1e2052167251a17ccfe6075b79"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-96/analysis/clearance-and-progress.json",
+    "sha256": "f8cc302e1ea932d7924b670d5778cf9fafdc0bfea9d796e84d68737e7896c941"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "017eefb29463686cab255198263be52f2abbd1e6",
+  "status": "DEVELOPMENT_CURRENT_REQUEST_RECOVERY_SHORT_SAFETY_AND_STOPS_PASS"
+}
