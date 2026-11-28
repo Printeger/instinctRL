@@ -278,6 +278,10 @@ class TubeStoppingPipeline(ControlCorePipeline):
         self._oldest_issued_speed = self.config.ics.velocity_limit_m_s
         self._speed_at_oldest_scan = self.config.ics.velocity_limit_m_s
 
+    @property
+    def oldest_speed_bound(self):
+        return self._speed_at_oldest_scan
+
     def __call__(self, lidar_grid, state_vec, governor_action, history_dt_s, episode_reset,
                  explicit_reset, controller_quaternion_wxyz):
         result = super().__call__(lidar_grid,state_vec,governor_action,history_dt_s,episode_reset,

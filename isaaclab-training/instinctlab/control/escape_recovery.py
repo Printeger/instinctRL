@@ -103,6 +103,7 @@ CROSSING_STOP_25_V41 = 'm4-escape-brake-tube-p25-crossing-stop-v41'
 RECENT_COMMAND_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v42'
 STATIC_RETREAT_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 GRAVITY_ALIGNED_PROTECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v44'
+RELEASE_STOP_CERTIFICATES_25 = 'm4-escape-brake-tube-p25-crossing-stop-v45'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -136,7 +137,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V34: 25, CROSSING_STOP_25_V35: 25, CROSSING_STOP_25_V36: 25,
                        CROSSING_STOP_25_V37: 25, CROSSING_STOP_25_V38: 25, CROSSING_STOP_25_V39: 25,
                        CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
-                       STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25}
+                       STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25,
+                       RELEASE_STOP_CERTIFICATES_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -169,7 +171,8 @@ class EscapeRecovery(EscapeOption):
                  verify_zero_crossing_withdrawal=False, verify_ranked_reversal_stop=False,
                  verify_retreat_onset_side=False, verify_retreat_stop=False, retry_command_handoff=False,
                  verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
-                 verify_static_retreat_handoff=False, align_planar_protection=False):
+                 verify_static_retreat_handoff=False, align_planar_protection=False,
+                 verify_release_stop=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -209,6 +212,11 @@ class EscapeRecovery(EscapeOption):
             self.intercept_continued = torch.zeros_like(self.applied)
         self.command_handoff = command_handoff
         self.align_planar_protection = align_planar_protection
+        self.verify_release_stop = verify_release_stop
+        if verify_release_stop:
+            if not (verify_composed_crossing and crossing_stop_receding_hover and verify_static_retreat_handoff):
+                raise ValueError('ESCAPE_RELEASE_STOP_REQUIRES_CURRENT_PROTECTION')
+            self.release_wall_witness = torch.zeros_like(self.applied)
         self.retry_command_handoff = retry_command_handoff
         self.verify_recent_handoff = verify_recent_handoff
         if verify_recent_handoff and not retry_command_handoff:
@@ -473,6 +481,8 @@ class EscapeRecovery(EscapeOption):
         self.retreating[lanes] = False
         if self.verify_static_retreat_handoff:
             self.static_retreat_witness[lanes] = False
+        if self.verify_release_stop:
+            self.release_wall_witness[lanes] = False
         if self.verified_retreat_onset:
             self.retreat_request_kept[lanes] = False
         if self.verify_crossing_restart:
@@ -1700,7 +1710,10 @@ class EscapeRecovery(EscapeOption):
         proof = clear_fitted_crossing_at_stop(lidar[lanes], state[lanes], self.detector._full_rays,
                                              response, settled & onset, emergency_m)
         if self.crossing_stop_receding_hover:
-            ordinary = ~proof & ~onset & ~self.retreating[lanes]
+            opening_allowed = ~onset
+            if self.verify_release_stop:
+                opening_allowed |= history[:, -2, 6:9].norm(dim=1) > .03
+            ordinary = ~proof & opening_allowed & ~self.retreating[lanes]
             pending = lanes[ordinary]
             if len(pending):
                 pending_response = self.command_offsets[pending], self.command_coast[pending]
@@ -2645,6 +2658,50 @@ class EscapeRecovery(EscapeOption):
         self.retreating[release] = False
         self.retreat_hold_steps[release] = 0
         self.retreat_hold_direction[release] = 0.
+
+    @torch.no_grad()
+    def reprove_wall_stop_at_release(self, lidar, state, selected, config, previous_speed_bounds):
+        """Recheck a closing wall when the latest command first reaches zero."""
+        from .escape_passage import rotate_scan_rays
+        from .local_wall_stopping import certify_stop_at_front_wall
+
+        previous = self.release_wall_witness.clone()
+        self.release_wall_witness.zero_()
+        protected = (self.ranked | self.braking | self.retreating | self.holding | self.opening_steered
+                     | self.intercepted | self.intercept_continued | self.recovering | self.tracked_resume_used
+                     | self.detour_used | self.tangent_used | self.brake_recovery_verified
+                     | self.retreat_continuation_verified | self.crossing_restart_verified
+                     | self.composed_crossing_verified | (self.intercept_steps > 0) | (self.retreat_hold_steps > 0))
+        history = state.reshape(-1, 4, 13)
+        speed = history[:, -1, 6:9].norm(dim=1)
+        prior_request = history[:, -2, 6:9]
+        ordinary = self.applied & ~protected
+        rays = self.detector._full_rays
+        for index in (ordinary & (speed > .03) & (speed <= .30)).nonzero().flatten():
+            lane = index.reshape(1)
+            proof = certify_stop_at_front_wall(lidar[lane], state[lane], rays,
+                                                previous_speed_bound=previous_speed_bounds[int(index)],
+                                                require_closing=True)
+            self.release_wall_witness[lane] = proof is not None
+        released = ((speed <= 1.e-6) & (prior_request.norm(dim=1) > .03)
+                    & (self.remaining < DURATION_STEPS-1) & previous & ordinary)
+        for index in released.nonzero().flatten():
+            lane = index.reshape(1)
+            frame = history[index]
+            elapsed = .10 - (frame[-1, 12] - frame[-2, 12])
+            rotation = -.5 * elapsed * (frame[-2, :3] + frame[-1, :3])
+            approach = rotate_scan_rays(prior_request[lane], rotation)[0]
+            proof = certify_stop_at_front_wall(lidar[lane], state[lane], rays,
+                                                previous_speed_bound=previous_speed_bounds[int(index)],
+                                                require_closing=False, approach=approach)
+            if proof is None:
+                continue
+            neutral = selected.new_tensor([[0., .5, .5, .5]])
+            halt = self.issued(lidar[lane], state[lane], neutral, config)
+            if not bool(halt.metrics['emergency'][0, 0]):
+                self.static_stop_verified[lane] = True
+                self.released[lane] = True
+                self.hold_neutral(lane, selected)
 
     def apply_recovery(self, policy, action, config):
         if self.verify_retreat_onset_side:

@@ -141,10 +141,11 @@ def _forward_coverage(valid, aligned, along, heading, up, upper, required):
                for sign in (-1., 1.))
 
 
-def certify_stop_at_front_wall(lidar, state, rays, *, previous_speed_bound, require_closing):
+def certify_stop_at_front_wall(lidar, state, rays, *, previous_speed_bound, require_closing, approach=None):
     """Attribute supported closing returns to the same observed wall before stopping."""
     history = state.reshape(4, 13)
-    speed = float(history[-1, 6:9].norm())
+    request = history[-1, 6:9] if approach is None else approach
+    speed = float(request.norm())
     age = history[:, 12]
     if (not .03 < speed <= .30 or bool((age > .04).any() or (age.diff().abs() > .03).any()
             or history[-3:, :3].norm(dim=1).max() > .38)):
@@ -167,7 +168,7 @@ def certify_stop_at_front_wall(lidar, state, rays, *, previous_speed_bound, requ
     aligned, mounts, prior = _align_scans(rays, history)
     valid = (scans[:, 1] > .5) & (scans[:, 2] >= .65)
     points = scans[:, 0, :, None]*aligned+mounts
-    heading = history[-1, 6:9].detach().cpu().numpy()/speed
+    heading = request.detach().cpu().numpy()/speed
     tail = .35*max(.30, previous_speed_bound)*math.exp(-.30/.35)
     lower, upper, required, along, gap = _braking_capsule(points, valid, prior, heading, 0., tail)
     if gap < required or not _forward_coverage(valid, aligned, along, heading, up, upper, required):

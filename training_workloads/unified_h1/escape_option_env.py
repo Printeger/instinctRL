@@ -30,12 +30,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
     CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25,
-    GRAVITY_ALIGNED_PROTECTION_25,
+    GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-STATIC_RETREAT_HANDOFF_VERSIONS = (STATIC_RETREAT_HANDOFF_25, GRAVITY_ALIGNED_PROTECTION_25)
+GRAVITY_ALIGNED_PROTECTION_VERSIONS = (GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25)
+STATIC_RETREAT_HANDOFF_VERSIONS = (STATIC_RETREAT_HANDOFF_25, *GRAVITY_ALIGNED_PROTECTION_VERSIONS)
 RECENT_HANDOFF_VERSIONS = (RECENT_COMMAND_HANDOFF_25, *STATIC_RETREAT_HANDOFF_VERSIONS)
 COMPOSED_CROSSING_VERSIONS = (CROSSING_STOP_25_V41, *RECENT_HANDOFF_VERSIONS)
 CURRENT_REQUEST_RECOVERY_VERSIONS = (CROSSING_STOP_25_V40, *COMPOSED_CROSSING_VERSIONS)
@@ -146,7 +147,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.front_wall_braking = enabled and version in FRONT_WALL_BRAKING_VERSIONS
         self.faceted_wall_stopping = enabled and version in FACETED_WALL_STOPPING_VERSIONS
         self.wall_edge_reproof = enabled and version in WALL_EDGE_REPROOF_VERSIONS
-        align_planar = enabled and version == GRAVITY_ALIGNED_PROTECTION_25
+        align_planar = enabled and version in GRAVITY_ALIGNED_PROTECTION_VERSIONS
         for pipeline in self._control_pipelines:
             if pipeline.config.align_planar_protection != align_planar:
                 pipeline.config = replace(pipeline.config, align_planar_protection=align_planar)
@@ -252,7 +253,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_composed_crossing=version in COMPOSED_CROSSING_VERSIONS,
                                                 verify_recent_handoff=version in RECENT_HANDOFF_VERSIONS,
                                                 verify_static_retreat_handoff=version in STATIC_RETREAT_HANDOFF_VERSIONS,
-                                                align_planar_protection=align_planar)
+                                                align_planar_protection=align_planar,
+                                                verify_release_stop=version == RELEASE_STOP_CERTIFICATES_25)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -307,7 +309,16 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         if hasattr(self, '_clearance_samples'):
             self._captured = 0
         if isinstance(self.escape_option, EscapeRecovery):
-            actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
+            option = self.escape_option
+            config = self._control_pipelines[0].config
+            actions = option.apply_recovery(self._policy, actions, config)
+            if option.verify_release_stop:
+                from instinctlab.control.tube_stopping import TubeStoppingPipeline
+
+                bounds = [pipeline.oldest_speed_bound if isinstance(pipeline, TubeStoppingPipeline)
+                          else pipeline.config.ics.velocity_limit_m_s for pipeline in self._control_pipelines]
+                option.reprove_wall_stop_at_release(self._policy['lidar_grid'], self._policy['state_vec'],
+                                                   actions, config, bounds)
             if self.bilateral_stopping or self.tube_stopping or self.local_wall_stopping:
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
                 from instinctlab.control.local_wall_stopping import (
@@ -316,7 +327,6 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 )
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
-                option = self.escape_option
                 protected = (option.applied | option.retreating | option.braking | option.ranked | option.holding
                              | option.intercepted | option.recovering)
                 finite_stopping = self.tube_stopping or self.local_wall_stopping
