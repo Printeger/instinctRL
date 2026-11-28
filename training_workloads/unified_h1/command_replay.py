@@ -224,7 +224,9 @@ SUPPORTED_WALL_APPROACH_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v39'
 CURRENT_REQUEST_RECOVERY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v40'
 COMPOSED_CROSSING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v41'
 STATIC_RETREAT_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v43'
-COMPOSED_CROSSING_EXECUTIONS = (COMPOSED_CROSSING_EXECUTION, STATIC_RETREAT_HANDOFF_EXECUTION)
+GRAVITY_ALIGNED_PROTECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v44'
+STATIC_RETREAT_HANDOFF_EXECUTIONS = (STATIC_RETREAT_HANDOFF_EXECUTION, GRAVITY_ALIGNED_PROTECTION_EXECUTION)
+COMPOSED_CROSSING_EXECUTIONS = (COMPOSED_CROSSING_EXECUTION, *STATIC_RETREAT_HANDOFF_EXECUTIONS)
 CURRENT_REQUEST_RECOVERY_EXECUTIONS = (CURRENT_REQUEST_RECOVERY_EXECUTION, *COMPOSED_CROSSING_EXECUTIONS)
 SUPPORTED_WALL_EXECUTIONS = (SUPPORTED_WALL_APPROACH_EXECUTION, *CURRENT_REQUEST_RECOVERY_EXECUTIONS)
 COMPOSED_MOTION_EXECUTIONS = (COMBINED_CONTROL_EXECUTION, CROSSING_AND_WALL_MOTION_EXECUTION,
@@ -725,7 +727,7 @@ def novel_contract(params):
     elif params['experiment_id'] == NOVEL_COMPOSED_CROSSING_ID:
         execution = (COMPOSED_CROSSING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_STATIC_RETREAT_HANDOFF_ID:
-        execution = (STATIC_RETREAT_HANDOFF_EXECUTION,)
+        execution = (GRAVITY_ALIGNED_PROTECTION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -1417,9 +1419,14 @@ def run(backend, params):
             if not env.escape_option.verify_composed_crossing:
                 raise ValueError('COMMAND_COMPOSED_CROSSING_PROOF')
             model['verify_composed_crossing'] = True
-        if execution == STATIC_RETREAT_HANDOFF_EXECUTION:
+        if execution in STATIC_RETREAT_HANDOFF_EXECUTIONS:
             if not (env.escape_option.verify_recent_handoff and env.escape_option.verify_static_retreat_handoff):
                 raise ValueError('COMMAND_STATIC_RETREAT_HANDOFF_PROOF')
             model.update(verify_recent_handoff=True, verify_static_retreat_handoff=True)
+        if execution == GRAVITY_ALIGNED_PROTECTION_EXECUTION:
+            if not (env.escape_option.align_planar_protection
+                    and all(pipeline.config.align_planar_protection for pipeline in env._control_pipelines)):
+                raise ValueError('COMMAND_PLANAR_PROTECTION_PROOF')
+            model['align_planar_protection'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

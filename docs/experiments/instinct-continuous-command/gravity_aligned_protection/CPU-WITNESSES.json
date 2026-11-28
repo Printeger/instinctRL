@@ -1,0 +1,364 @@
+{
+  "artifacts": {
+    "hacker-long01-lane26-z-chain.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lane26-z-chain.jsonl",
+      "sha256": "bd238daef731ea8ec5364e71fd52a9b7682eec745c94ead98d15aa5eafb396d7"
+    },
+    "hacker-long01-lane26-z-projection-plus-control.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/hacker-long01-lane26-z-projection-plus-control.jsonl",
+      "sha256": "2daf070964119dc08e64937aa64953cd7125709a33f58f1b263d0da062163c65"
+    },
+    "long01-v44-lane26-production-packets.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-lane26-production-packets.jsonl",
+      "sha256": "b291f06419dcc7340d6dafdcb05f1d80fb899e6f1d8755094af18bd93a991ac4"
+    },
+    "long01-v44-lane26-production-packets.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-lane26-production-packets.py",
+      "sha256": "6cdb4383444f7cd8c3c03360bea4054cd22a5f8bb1b13c92becaa95d792c1b22"
+    },
+    "long01-v44-v43-closed.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-v43-closed.py",
+      "sha256": "67fc10ddd38818e80c15a2f2db2d7aa27dc85ba4d63b63cdae6a3c0c71e419d3"
+    },
+    "long01-v44-v43-crossing45.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-v43-crossing45.jsonl",
+      "sha256": "b58c131d3f0fbcb5956704d22a90c8c6b57d678689a2481d66fca7ffca172e8c"
+    },
+    "long01-v44-v43-lane26-terminal.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-v43-lane26-terminal.jsonl",
+      "sha256": "1eaea9c1b8fb195a238321141cd269a9f903e8750d57f80e77b06a698606ca69"
+    },
+    "long01-v44-v43-room-handoff.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-v43-room-handoff.jsonl",
+      "sha256": "d2a70a810bf9206d1f5daa6e2f96899175a6db1eb7701daad5afe7914b9e01f1"
+    },
+    "long01-v44-v43-room-retreat.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-v43-room-retreat.jsonl",
+      "sha256": "e2c669df0c195e33caf741f3762c34a2e8557f95d4102d9a0a041c194fc3a12f"
+    },
+    "long01-v44-v43-tube-retreat.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/long01-v44-v43-tube-retreat.jsonl",
+      "sha256": "cf0e0e8b5546ac28fc8ba39a43f8d8d9fab67296660952eea7f50ab5c0518993"
+    },
+    "scientist-long01-height-budget.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-height-budget.jsonl",
+      "sha256": "119661b30a350b5f8c258977314b5e8b76ca735ace4b045f4e92f52a40de426f"
+    },
+    "scientist-long01-height-budget.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-height-budget.py",
+      "sha256": "58d38a828e18f904bf9051544a267ac4255ef66802e97e4ed49634e09c3bdb80"
+    },
+    "scientist-long01-height-projection.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-height-projection.jsonl",
+      "sha256": "192e873b73200f4db1953d03d34d02f1b6ccfa863f1d4788f1905814eb16ff53"
+    },
+    "scientist-long01-height-projection.py": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/scientist-long01-height-projection.py",
+      "sha256": "10f3696c0d9a0371beefc5c0e918d25d2484021f98d4943d20bcd156f3082b7d"
+    },
+    "v40-long-lane26-reset-13706.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/v40-long-lane26-reset-13706.jsonl",
+      "sha256": "f2254c9e78360457b133e61b2ee1be0e594544e670a962a7b066433d7a1cef11"
+    },
+    "v40-long-lane27-altitude-reset.jsonl": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/v40-long-lane27-altitude-reset.jsonl",
+      "sha256": "cbd2e636690fe1f17692d31e2c7f83ac375a8a47bb8f7128609fe01b9e93d310"
+    }
+  },
+  "inherited_witnesses": {
+    "crossing45": {
+      "accepted_packets": 4,
+      "after": 0.3847610499042482,
+      "before": 0.38513399970956996
+    },
+    "room-handoff": {
+      "accepted_packets": 21,
+      "after": 0.7337472736087043,
+      "before": 0.7337491930207043
+    },
+    "room-retreat": {
+      "accepted_packets": 10,
+      "after": 0.8470337483437784,
+      "before": 0.8470337483437784
+    },
+    "tube-retreat": {
+      "accepted_packets": 8,
+      "after": 0.9722135229716442,
+      "before": 0.9722135229716442
+    }
+  },
+  "lane26_height": {
+    "all_issued": {
+      "negative_packets": 2595,
+      "negative_removed_m": -1.1029266408545582,
+      "net_removed_m": -0.8108759390971365,
+      "positive_packets": 9553,
+      "positive_removed_m": 0.29205070175742165,
+      "ticks": 13707
+    },
+    "all_unity_z_removed": {
+      "at_seconds": 1369.96,
+      "below_floor_first_s": null,
+      "minimum": 1.3068393857189542,
+      "terminal": 1.3107876944205465
+    },
+    "kind": "lane",
+    "lane": 26,
+    "layout": "corridor",
+    "native": {
+      "at_seconds": 1370.7,
+      "below_floor_first_s": 1370.695,
+      "minimum": 0.49991175532341003,
+      "terminal": 0.49991175532341003
+    },
+    "post_guard_nonzero_body_z_mask": {
+      "negative_packets": 0,
+      "negative_removed_m": 0.0,
+      "net_removed_m": 0.0,
+      "positive_packets": 0,
+      "positive_removed_m": 0.0,
+      "ticks": 0
+    },
+    "projected_pure_unmarked": {
+      "at_seconds": 1369.95,
+      "below_floor_first_s": null,
+      "minimum": 0.9006591486651758,
+      "terminal": 0.9046074574836837
+    },
+    "projected_select_pure_xy": {
+      "at_seconds": 1369.95,
+      "below_floor_first_s": null,
+      "minimum": 0.9006591486651758,
+      "terminal": 0.9046074574836837
+    },
+    "selected_marked": {
+      "negative_packets": 739,
+      "negative_removed_m": -0.44605205020542943,
+      "net_removed_m": -0.4046957021602737,
+      "positive_packets": 142,
+      "positive_removed_m": 0.041356348045155755,
+      "ticks": 1611
+    },
+    "selected_unmarked_extra": {
+      "negative_packets": 0,
+      "negative_removed_m": 0.0,
+      "net_removed_m": 0.0,
+      "positive_packets": 0,
+      "positive_removed_m": 0.0,
+      "ticks": 0
+    },
+    "steps": 13707
+  },
+  "lane27_reset": {
+    "command": {
+      "mode": "obstacleward",
+      "t_ms": 1567200,
+      "velocity_w_m_s": [
+        -0.04472284996243969,
+        -0.2559774880511833,
+        0.0
+      ]
+    },
+    "contact": false,
+    "issued": [
+      -0.31118056178092957,
+      -0.06387226283550262,
+      -0.0002966469037346542
+    ],
+    "lane": 27,
+    "layout": "corridor",
+    "reset": true,
+    "step": 15697,
+    "termination_reason": 3,
+    "z": 0.4997546672821045
+  },
+  "native_source": "017eefb29463686cab255198263be52f2abbd1e6",
+  "production_packets": [
+    {
+      "candidate": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "horizontal_error": 0.0,
+      "ics_beta": [
+        0.0,
+        0.0
+      ],
+      "measured_ray_reserve": [
+        0.7329820394515991,
+        0.7329820394515991
+      ],
+      "native": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 463
+    },
+    {
+      "candidate": [
+        -0.2999940812587738,
+        -0.0007982581155374646,
+        2.892193151637912e-10
+      ],
+      "horizontal_error": 7.566995918750763e-10,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.8245890140533447,
+        0.8245890140533447
+      ],
+      "native": [
+        -0.2999940812587738,
+        -0.0007982588722370565,
+        -0.0017080848338082433
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13700
+    },
+    {
+      "candidate": [
+        -0.29985877871513367,
+        -0.0008582926238887012,
+        -4.220055416226387e-10
+      ],
+      "horizontal_error": 2.9802322387695312e-08,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.8455171585083008,
+        0.8455171585083008
+      ],
+      "native": [
+        -0.29985880851745605,
+        -0.0008582926238887012,
+        -0.00916272308677435
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13701
+    },
+    {
+      "candidate": [
+        -0.2995782196521759,
+        -0.0009497294668108225,
+        -2.9103830456733704e-11
+      ],
+      "horizontal_error": 9.313225746154785e-10,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.8648397922515869,
+        0.8648397922515869
+      ],
+      "native": [
+        -0.2995782196521759,
+        -0.0009497303981333971,
+        -0.015873830765485764
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13702
+    },
+    {
+      "candidate": [
+        -0.29951202869415283,
+        -0.000952624948695302,
+        -2.6193447411060333e-10
+      ],
+      "horizontal_error": 2.9802322387695312e-08,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.8815562725067139,
+        0.8815562725067139
+      ],
+      "native": [
+        -0.29951199889183044,
+        -0.0009526251815259457,
+        -0.017077069729566574
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13703
+    },
+    {
+      "candidate": [
+        -0.29963377118110657,
+        -0.0008615244878455997,
+        4.94765117764473e-10
+      ],
+      "horizontal_error": 2.9802322387695312e-08,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.8947935104370117,
+        0.8947935104370117
+      ],
+      "native": [
+        -0.2996337413787842,
+        -0.0008615251863375306,
+        -0.014793562702834606
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13704
+    },
+    {
+      "candidate": [
+        -0.29978442192077637,
+        -0.0007637388771399856,
+        2.473825588822365e-10
+      ],
+      "horizontal_error": 1.0477378964424133e-09,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.9046429395675659,
+        0.9046429395675659
+      ],
+      "native": [
+        -0.29978442192077637,
+        -0.0007637378294020891,
+        -0.011343943886458874
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13705
+    },
+    {
+      "candidate": [
+        -0.2998896837234497,
+        -0.0007002955535426736,
+        -3.7834979593753815e-10
+      ],
+      "horizontal_error": 1.7462298274040222e-10,
+      "ics_beta": [
+        1.0,
+        1.0
+      ],
+      "measured_ray_reserve": [
+        0.9116866588592529,
+        0.9116866588592529
+      ],
+      "native": [
+        -0.2998896837234497,
+        -0.0007002957281656563,
+        -0.00810268148779869
+      ],
+      "source": "953c267f2281c191e9aa62036c82970b9430619f",
+      "t": 13706
+    }
+  ],
+  "production_source": "953c267f2281c191e9aa62036c82970b9430619f",
+  "schema_version": "instinctrl-gravity-protection-cpu-witnesses/1"
+}

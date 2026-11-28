@@ -20,7 +20,8 @@ from .command_replay import (
     OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTIONS,
     RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
-    COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTION,
+    COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTION,
+    STATIC_RETREAT_HANDOFF_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -419,12 +420,14 @@ def audit(output, params, counters):
             raise ValueError('COMMAND_REPLAY_EARLY_DIAGONAL_PROFILE')
         composed_crossing = model['execution'] in COMPOSED_CROSSING_EXECUTIONS
         request_recovery = model['execution'] in CURRENT_REQUEST_RECOVERY_EXECUTIONS
-        static_retreat_handoff = model['execution'] == STATIC_RETREAT_HANDOFF_EXECUTION
+        static_retreat_handoff = model['execution'] in STATIC_RETREAT_HANDOFF_EXECUTIONS
+        align_planar_protection = model['execution'] == GRAVITY_ALIGNED_PROTECTION_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
                 or model.get('verify_outward_brake', False) is not request_recovery
                 or model.get('verify_recent_handoff', False) is not static_retreat_handoff
-                or model.get('verify_static_retreat_handoff', False) is not static_retreat_handoff):
+                or model.get('verify_static_retreat_handoff', False) is not static_retreat_handoff
+                or model.get('align_planar_protection', False) is not align_planar_protection):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -662,6 +665,14 @@ def audit(output, params, counters):
                 for lane in range(LANES):
                     actor = row['actor_state'][lane]
                     observed = body_to_world(row['attitude_wxyz'][lane], actor[-1][6:9])
+                    if align_planar_protection:
+                        gravity = actor[-1][3:6]
+                        action = row['selected_action'][lane]
+                        if (action[0] == 0. and action[3] == .5 and actor[-1][12] <= .04
+                                and .9 <= dot(gravity, gravity) <= 1.1
+                                and abs(dot(gravity, actor[-1][6:9])) <= 1.e-5
+                                and abs(dot(gravity, row['v_gov_b'][lane])) > 1.e-6):
+                            raise ValueError('COMMAND_REPLAY_PLANAR_PROTECTION_BEHAVIOR')
                     if math.dist(observed, lane_value(row['raw_event'], lane)['velocity_w_m_s']) > 2e-6:
                         raise ValueError('COMMAND_REPLAY_ACTOR_INPUT')
                     if retreat_onset_floor[lane]:
