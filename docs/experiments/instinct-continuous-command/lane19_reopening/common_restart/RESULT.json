@@ -1,0 +1,159 @@
+{
+  "branch_commit": "0f6b41e8",
+  "branches": {
+    "nominal_or_negative": {
+      "best": {
+        "exact": {
+          "max_speed_after_deadline_m_s": 0.05152223850428972,
+          "maximum_drift_m": 0.19999900000081855,
+          "mover_min_by_case": {
+            "early_negative": 0.35641701742414866,
+            "hard_negative": 0.324268512867136,
+            "nominal": -0.004686517982706917
+          },
+          "open_loop_progress": {
+            "0.25": {
+              "first_five_progress_s": 0.5
+            },
+            "0.35": {
+              "first_five_progress_s": 0.5
+            },
+            "0.45": {
+              "first_five_progress_s": 0.5
+            }
+          },
+          "physical": {
+            "case": 0,
+            "case_name": "nominal",
+            "clearance_m": -0.004686517982706917,
+            "lag_s": 0.45,
+            "time_s": 109.695
+          },
+          "static_m": 1.1853947110295984
+        },
+        "optimization": {
+          "clearance_m": -0.00468651798268549,
+          "iteration": 5,
+          "seed_deg": 110.0,
+          "solver_min_margin": -0.004689007806562286,
+          "solver_status": 0,
+          "solver_success": true,
+          "support_samples": 104
+        }
+      },
+      "cases": [
+        "nominal",
+        "early_negative",
+        "hard_negative"
+      ],
+      "searches": 9
+    },
+    "positive": {
+      "best": {
+        "exact": {
+          "max_speed_after_deadline_m_s": 0.05152223850428972,
+          "maximum_drift_m": 0.19999900000081855,
+          "mover_min_by_case": {
+            "early_positive": 0.17335258688627497,
+            "hard_positive": 0.1520226173534961
+          },
+          "open_loop_progress": {
+            "0.25": {
+              "first_five_progress_s": 0.5
+            },
+            "0.35": {
+              "first_five_progress_s": 0.5
+            },
+            "0.45": {
+              "first_five_progress_s": 0.5
+            }
+          },
+          "physical": {
+            "case": 1,
+            "case_name": "hard_positive",
+            "clearance_m": 0.1520226173534961,
+            "lag_s": 0.45,
+            "time_s": 108.905
+          },
+          "static_m": 1.4910085894658043
+        },
+        "optimization": {
+          "clearance_m": 0.1520226173534961,
+          "iteration": 0,
+          "seed_deg": 150.0,
+          "solver_min_margin": 0.15354743569338716,
+          "solver_status": 0,
+          "solver_success": true,
+          "support_samples": 18
+        }
+      },
+      "cases": [
+        "early_positive",
+        "hard_positive"
+      ],
+      "searches": 9
+    }
+  },
+  "common": {
+    "best": {
+      "exact": {
+        "max_speed_after_deadline_m_s": 0.05152223850428972,
+        "maximum_drift_m": 0.19999900000081855,
+        "mover_min_by_case": {
+          "early_negative": 0.06581576377918774,
+          "early_positive": 0.1730254922684631,
+          "hard_negative": 0.0312822552162918,
+          "hard_positive": 0.15181512283040288,
+          "nominal": -0.04552335705274868
+        },
+        "open_loop_progress": {
+          "0.25": {
+            "first_five_progress_s": 0.5
+          },
+          "0.35": {
+            "first_five_progress_s": 0.5
+          },
+          "0.45": {
+            "first_five_progress_s": 0.5
+          }
+        },
+        "physical": {
+          "case": 4,
+          "case_name": "nominal",
+          "clearance_m": -0.04552335705274868,
+          "lag_s": 0.45,
+          "time_s": 109.875
+        },
+        "static_m": 1.4910085894658043
+      },
+      "optimization": {
+        "clearance_m": -0.04552335705274868,
+        "iteration": 4,
+        "seed_deg": 160.0,
+        "solver_min_margin": -0.04552636803829525,
+        "solver_status": 0,
+        "solver_success": true,
+        "support_samples": 172
+      }
+    },
+    "best_menu": 325,
+    "initial_menu_size": 17,
+    "searches": 51
+  },
+  "ics_closed_loop_steps": 0,
+  "raw": {
+    "BRANCHES": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-COMMON-RESTART/BRANCHES.json",
+      "sha256": "611d18f385c48e2e6e0b9b79622a86dd131a0b045517560756926156adbfb964"
+    },
+    "SEARCH": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-COMMON-RESTART/SEARCH.json",
+      "sha256": "35f17caef3b41c98c015ce4e90b65a04a9cff52b72083261601d7e8d65280095"
+    }
+  },
+  "schema": "instinctrl-lane19-common-restart/1",
+  "search_commit": "9beb15bc",
+  "status": "no-common-physical-witness",
+  "training_steps": 0,
+  "v60_native_evaluation_steps": 0
+}
