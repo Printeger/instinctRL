@@ -1,0 +1,322 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "2": 1,
+          "7": 1,
+          "24": 2,
+          "25": 1,
+          "29": 1,
+          "30": 1,
+          "31": 1
+        },
+        "escape_crossing_restart_verified": {
+          "20": 2
+        },
+        "escape_far_crossing_refined": {
+          "17": 1,
+          "20": 1,
+          "23": 2
+        },
+        "escape_finite_edge": {
+          "0": 90,
+          "1": 89,
+          "2": 75,
+          "3": 52,
+          "4": 57,
+          "5": 83,
+          "6": 77,
+          "7": 54,
+          "8": 23,
+          "9": 39,
+          "10": 21,
+          "11": 33,
+          "12": 47,
+          "13": 18,
+          "14": 10,
+          "15": 53,
+          "16": 20,
+          "17": 23,
+          "18": 30,
+          "19": 19,
+          "20": 32,
+          "21": 11,
+          "22": 17,
+          "23": 9,
+          "24": 66,
+          "25": 77,
+          "26": 128,
+          "27": 101,
+          "28": 48,
+          "29": 48,
+          "30": 65,
+          "31": 16
+        },
+        "escape_intercept_continued": {
+          "16": 4,
+          "17": 8,
+          "18": 8,
+          "19": 8,
+          "20": 8,
+          "21": 4,
+          "22": 16,
+          "23": 8
+        },
+        "escape_intercepted": {
+          "16": 44,
+          "17": 71,
+          "18": 59,
+          "19": 51,
+          "20": 43,
+          "21": 90,
+          "22": 91,
+          "23": 36
+        },
+        "escape_observed_heading": {
+          "0": 16,
+          "1": 18,
+          "2": 13,
+          "3": 5,
+          "4": 6,
+          "5": 18,
+          "6": 10,
+          "7": 7,
+          "8": 17,
+          "9": 19,
+          "10": 13,
+          "11": 16,
+          "12": 33,
+          "13": 12,
+          "14": 1,
+          "15": 21,
+          "16": 9,
+          "17": 15,
+          "18": 7,
+          "19": 3,
+          "20": 7,
+          "21": 3,
+          "22": 5,
+          "23": 3,
+          "24": 58,
+          "25": 61,
+          "26": 109,
+          "27": 95,
+          "29": 1,
+          "30": 1
+        },
+        "escape_offset_stop": {
+          "16": 12,
+          "17": 5,
+          "18": 1,
+          "19": 48,
+          "20": 22,
+          "21": 22,
+          "22": 29,
+          "23": 2
+        },
+        "escape_settled_crossing": {
+          "21": 1
+        },
+        "escape_shallow_steering": {
+          "0": 49,
+          "1": 48,
+          "2": 46,
+          "3": 42,
+          "4": 42,
+          "5": 44,
+          "6": 41,
+          "7": 18,
+          "10": 1,
+          "11": 1,
+          "16": 4,
+          "17": 3,
+          "18": 17,
+          "19": 8,
+          "20": 5,
+          "21": 5,
+          "22": 6,
+          "23": 1,
+          "25": 1,
+          "26": 1,
+          "28": 39,
+          "29": 41,
+          "30": 56,
+          "31": 11
+        },
+        "escape_tracked_resume": {
+          "16": 6,
+          "17": 9,
+          "18": 15,
+          "19": 3,
+          "20": 16,
+          "21": 2,
+          "22": 10,
+          "23": 10
+        },
+        "escape_wall_tangent": {
+          "2": 13,
+          "4": 2,
+          "6": 20,
+          "7": 2,
+          "8": 2,
+          "12": 13,
+          "13": 11,
+          "15": 12,
+          "24": 24,
+          "25": 15,
+          "26": 55,
+          "27": 23
+        },
+        "front_wall_brake_verified": {
+          "24": 31,
+          "25": 38,
+          "26": 8,
+          "27": 46
+        },
+        "local_wall_stopping": {
+          "0": 25,
+          "1": 49,
+          "2": 36,
+          "4": 6,
+          "5": 66,
+          "6": 56,
+          "7": 1,
+          "8": 1,
+          "9": 2,
+          "12": 1,
+          "16": 1,
+          "19": 4,
+          "20": 3,
+          "22": 2,
+          "23": 5,
+          "24": 64,
+          "25": 105,
+          "26": 103,
+          "27": 69,
+          "29": 1
+        },
+        "wall_edge_reproof": {
+          "25": 3,
+          "26": 6,
+          "27": 2
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-80/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "f8d66dd9cf3583bf11cf36726e53c57ca1ac664cb0e76bfc6dbc0f7da637fcb9"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 26,
+            "m": 0.2887870520353317,
+            "time_s": 114.54
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 30,
+            "m": 0.5599605732723508,
+            "time_s": 12.625
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 5,
+            "m": 0.26225388050079346,
+            "time_s": 65.075
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 18,
+            "m": 0.22244448180530024,
+            "time_s": 34.27
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 12,
+            "m": 0.48303344782880453,
+            "time_s": 31.275000000000002
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-80/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-80/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "61859b2130ad42e0661bce3974816dfebdb8b9f2ad439982886b88a043333802"
+      },
+      "windows": []
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-80/analysis/binding.json",
+    "sha256": "f590f641a77dcb12f21f9e3ed9ef1d451c79ef6f217bd087d679e6ba4860436c"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-80/analysis/clearance-and-progress.json",
+    "sha256": "321c5716da5505a6d3fa4328b185259f620c7c3a24b9a81219a365e3879a9912"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "468a1a3401d49230fd6fa67b48c1049963994e9b",
+  "status": "DEVELOPMENT_WALL_EDGE_REPROOF_SHORT_SAFETY_AND_STOPS_PASS"
+}
