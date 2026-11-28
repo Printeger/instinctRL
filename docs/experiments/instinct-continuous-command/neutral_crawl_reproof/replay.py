@@ -50,18 +50,20 @@ def run(inputs, lane, lag, variant, attitude, registration):
 
             def fresh(history):
                 nonlocal witness, proof_attempted, failure
-                if bool(fresh_motion_history(history)[0]):
-                    return True
+                original = fresh_motion_history(history)
+                if bool(original[0]):
+                    return original
                 proof_attempted = True
                 no_gyro = history.clone()
                 no_gyro[:, :, :3] = 0.
                 if not bool(fresh_motion_history(no_gyro)[0]):
                     failure = 'non_angular_history'
-                    return False
+                    return original
                 witness = reprove_plane_alignment(scan, state, rays)
                 if witness is None:
                     failure = 'plane_alignment'
-                return witness is not None
+                    return original
+                return torch.ones_like(original)
 
             def fit(*args,**kwargs):
                 if witness is None:
