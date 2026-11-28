@@ -18,7 +18,7 @@ from .command_replay import (
     LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS,
     BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTIONS, RETREAT_CONTINUATION_EXECUTIONS,
     OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTIONS,
-    RETREAT_ONSET_SIDE_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
+    RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTION, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
@@ -402,6 +402,9 @@ def audit(output, params, counters):
         retreat_onset_side_profile = model['execution'] in RETREAT_ONSET_SIDE_EXECUTIONS
         if model.get('verify_retreat_onset_side', False) is not retreat_onset_side_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_PROFILE')
+        retreat_stop_profile = model['execution'] == RETREAT_STOP_EXECUTION
+        if model.get('verify_retreat_stop', False) is not retreat_stop_profile:
+            raise ValueError('COMMAND_REPLAY_RETREAT_STOP_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
             raise ValueError('COMMAND_REPLAY_CROSSING_RESTART_PROFILE')
         if model.get('along_intercept', False) is not (model['execution'] in ALONG_INTERCEPT_EXECUTIONS):
@@ -543,6 +546,12 @@ def audit(output, params, counters):
                         or any(type(x) not in (float, int) or not math.isfinite(x) or (x != 0. and x < .389999)
                                for x in retreat_onset_floor)):
                     raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_BINDING')
+                retreat_stop_floor = row.get('escape_retreat_stop_floor', [0.]*LANES)
+                if (('escape_retreat_stop_floor' in row) != retreat_stop_profile
+                        or len(retreat_stop_floor) != LANES
+                        or any(type(x) not in (float, int) or not math.isfinite(x) or (x != 0. and x < .849999)
+                               for x in retreat_stop_floor)):
+                    raise ValueError('COMMAND_REPLAY_RETREAT_STOP_BINDING')
                 settled_crossing = row.get('escape_settled_crossing', [False]*LANES)
                 if (('escape_settled_crossing' in row) != sampled_turn_profile or len(settled_crossing) != LANES
                         or any(type(value) is not bool for value in settled_crossing)):
@@ -639,6 +648,12 @@ def audit(output, params, counters):
                                 or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
                                 or dot(issued, actor[-1][6:9]) <= 0. or dot(issued, actor[-1][9:12]) <= 0.):
                             raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_BEHAVIOR')
+                    if retreat_stop_floor[lane]:
+                        if (not held[lane] or not offset[lane] or row['recovery_retreating'][lane]
+                                or row['escape_active'][lane] or row['ics_emergency'][lane] or intercepted[lane]
+                                or math.hypot(*observed) > 1.e-6 or math.hypot(*actor[-2][6:9]) <= .03
+                                or math.hypot(*row['v_final_b'][lane]) > .001001):
+                            raise ValueError('COMMAND_REPLAY_RETREAT_STOP_BEHAVIOR')
                     if tangent[lane] and (not .09999 <= math.hypot(*observed) <= .30001
                             or row['escape_active'][lane] or intercepted[lane] or row['ics_emergency'][lane] != 0.
                             or dot(observed, row['v_final_w'][lane]) <= 0.):

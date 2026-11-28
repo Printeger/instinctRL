@@ -115,6 +115,8 @@ NOVEL_RETREAT_ONSET_SIDE_ID = NOVEL_PREFIX+'86'
 NOVEL_RETREAT_ONSET_SIDE_CONFIRM_ID = NOVEL_PREFIX+'87'
 NOVEL_CROSSING_AND_WALL_MOTION_ID = NOVEL_PREFIX+'88'
 NOVEL_CROSSING_AND_WALL_MOTION_CONFIRM_ID = NOVEL_PREFIX+'89'
+NOVEL_RETREAT_STOP_ID = NOVEL_PREFIX+'90'
+NOVEL_RETREAT_STOP_CONFIRM_ID = NOVEL_PREFIX+'91'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -224,7 +226,9 @@ OLDEST_PARTIAL_TURN_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v29'
 ZERO_CROSSING_WITHDRAWAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v31'
 RANKED_REVERSAL_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v32'
 RETREAT_ONSET_SIDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v35'
-RETREAT_ONSET_SIDE_EXECUTIONS = (RETREAT_ONSET_SIDE_EXECUTION, CROSSING_AND_WALL_MOTION_EXECUTION)
+RETREAT_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v37'
+RETREAT_ONSET_SIDE_EXECUTIONS = (RETREAT_ONSET_SIDE_EXECUTION, CROSSING_AND_WALL_MOTION_EXECUTION,
+                                RETREAT_STOP_EXECUTION)
 RANKED_REVERSAL_STOP_EXECUTIONS = (RANKED_REVERSAL_STOP_EXECUTION, COMBINED_CONTROL_EXECUTION, *RETREAT_ONSET_SIDE_EXECUTIONS)
 ZERO_CROSSING_WITHDRAWAL_EXECUTIONS = (ZERO_CROSSING_WITHDRAWAL_EXECUTION, *RANKED_REVERSAL_STOP_EXECUTIONS)
 ROOM_TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v33'
@@ -352,7 +356,8 @@ def compress_trace(run_id):
                                                        NOVEL_RANKED_REVERSAL_STOP_ID, NOVEL_RANKED_REVERSAL_STOP_CONFIRM_ID,
                                                        NOVEL_ROOM_TANGENT_MAGNITUDE_ID, NOVEL_COMBINED_CONTROL_ID,
                                                        NOVEL_RETREAT_ONSET_SIDE_ID, NOVEL_RETREAT_ONSET_SIDE_CONFIRM_ID,
-                                                       NOVEL_CROSSING_AND_WALL_MOTION_ID, NOVEL_CROSSING_AND_WALL_MOTION_CONFIRM_ID)
+                                                       NOVEL_CROSSING_AND_WALL_MOTION_ID, NOVEL_CROSSING_AND_WALL_MOTION_CONFIRM_ID,
+                                                       NOVEL_RETREAT_STOP_ID, NOVEL_RETREAT_STOP_CONFIRM_ID)
 
 
 def trace_path(output, label, condition, *, run_id):
@@ -682,6 +687,8 @@ def novel_contract(params):
         execution = (RETREAT_ONSET_SIDE_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_CROSSING_AND_WALL_MOTION_ID, NOVEL_CROSSING_AND_WALL_MOTION_CONFIRM_ID):
         execution = (CROSSING_AND_WALL_MOTION_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_RETREAT_STOP_ID, NOVEL_RETREAT_STOP_CONFIRM_ID):
+        execution = (RETREAT_STOP_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -993,6 +1000,7 @@ def run(backend, params):
             zero_crossing_withdrawal = execution in ZERO_CROSSING_WITHDRAWAL_EXECUTIONS
             ranked_reversal_stop = execution in RANKED_REVERSAL_STOP_EXECUTIONS
             retreat_onset_side = execution in RETREAT_ONSET_SIDE_EXECUTIONS
+            retreat_stop = execution == RETREAT_STOP_EXECUTION
             brake_recovery = execution in BRAKE_RECOVERY_EXECUTIONS
             brake_transition = execution in BRAKE_TRANSITION_EXECUTIONS
             if (configuration != {(.60, confirm, neighbors, standoff, inner_tube, aligns_rotation)}
@@ -1044,7 +1052,8 @@ def run(backend, params):
                     or env.escape_option.verify_oldest_partial_turn != oldest_partial_turn
                     or env.escape_option.verify_zero_crossing_withdrawal != zero_crossing_withdrawal
                     or env.escape_option.verify_ranked_reversal_stop != ranked_reversal_stop
-                    or env.escape_option.verify_retreat_onset_side != retreat_onset_side):
+                    or env.escape_option.verify_retreat_onset_side != retreat_onset_side
+                    or env.escape_option.verify_retreat_stop != retreat_stop):
                 raise ValueError('COMMAND_REPLAY_ICS_PROFILE')
             model['ics_profile'] = dict(radius_m=.60, confirms_closure=confirm)
             if neighbors:
@@ -1149,6 +1158,8 @@ def run(backend, params):
                 model['verify_ranked_reversal_stop'] = True
             if retreat_onset_side:
                 model['verify_retreat_onset_side'] = True
+            if retreat_stop:
+                model['verify_retreat_stop'] = True
         for name, crossing_ms in conditions(params).items():
             pulse = []
 
@@ -1283,6 +1294,8 @@ def run(backend, params):
                         tensors['escape_ranked_reversal_verified'] = option['ranked_reversal_verified']
                     if 'retreat_onset_side_floor' in option:
                         tensors['escape_retreat_onset_side_floor'] = option['retreat_onset_side_floor']
+                    if 'retreat_stop_floor' in option:
+                        tensors['escape_retreat_stop_floor'] = option['retreat_stop_floor']
                     if 'hover_own_side' in option:
                         tensors['escape_hover_own_side'] = option['hover_own_side']
                     if 'far_crossing_refined' in option:

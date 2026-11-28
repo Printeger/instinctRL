@@ -682,6 +682,75 @@ def braking_recovery_clearance(lidar, rays, state, position, motion, coast, radi
     return torch.stack(witness, dim=1)
 
 
+def retreat_stop_clearance(scan, state, rays, command_response, neutral):
+    """Verify a new stop when a visible moving surface is nearly tangent to the sensor."""
+    closing, _, times = _return_seed(scan, state, maximum_range_m=2.65)
+    gaps = times[0].diff()
+    if bool(closing[0]) or not bool(((gaps >= .07) & (gaps <= .13)).all()):
+        return None
+
+    history = state.reshape(4, 13)
+    depth = scan[0, 9]
+    up = F.normalize(-history[-1, 3:6], dim=0)
+    height = (rays @ up).reshape_as(depth)*depth
+    seen = (scan[0, 10] > .5) & (scan[0, 11] > .55)
+    seen &= (depth >= .85) & (depth < 2.10) & (height.abs() <= .50)
+    sectors = depth.masked_fill(~seen, torch.inf).reshape(depth.shape[0], 12, 30).transpose(0, 1).flatten(1)
+    nearest, indices = sectors.min(dim=1)
+    columns = torch.arange(12, device=indices.device)*30
+    seeds = ((indices//30)*360+indices % 30+columns)[nearest.isfinite()]
+    if not len(seeds):
+        return None
+
+    scans = scan.expand(len(seeds), -1, -1, -1)
+    states = state.expand(len(seeds), -1)
+    measured_times = times.expand(len(seeds), -1)
+    seeded = (torch.ones_like(seeds, dtype=torch.bool), seeds, measured_times)
+    supported, _, _, shapes = track_nearby_return(scans, states, rays, curved=True, maximum_previous_command=.31,
+                                                    seeded=seeded, fit_full_center=True)
+    centers, radii, valid = (torch.stack(parts, dim=1) for parts in zip(*shapes, strict=True))
+    supported &= valid.all(dim=1) & (radii.amax(dim=1)-radii.amin(dim=1) <= .04)
+    offsets, coast = command_response
+    offsets = offsets[0]+(history[-1, 12]-history[:, 12])[:, None]*coast[0]
+    corrected = centers+F.pad(offsets, (0, 1))
+    velocities = corrected.diff(dim=1)/gaps[None, :, None]
+    speed = velocities.norm(dim=2)
+    directions = F.normalize(velocities, dim=2)
+    supported &= ((directions[:, -1:]*directions).sum(dim=2).amin(dim=1) >= .995)
+    supported &= ((speed >= .20) & (speed <= 1.5)).all(dim=1)
+    if not bool(supported.any()):
+        return None
+
+    centers, radii, corrected = centers[supported], radii[supported], corrected[supported]
+    scans, states, measured_times = scans[supported], states[supported], measured_times[supported]
+    _, motion, _ = _fit_motion(corrected[..., :2], measured_times)
+    nearest, other, on_mover = fitted_sphere_returns(scans, rays, centers[:, -1], radii[:, -1])
+    if not bool((on_mover & (nearest >= .85) & other.isfinite() & (other >= .85)).all()):
+        return None
+    bound = braking_recovery_clearance(scans, rays, states, corrected[:, -1, :2], motion,
+        coast.expand(len(centers), -1), radii.amax(dim=1), neutral.expand(len(centers), -1)).amin()
+    if not bool(bound >= .85):
+        return None
+
+    ranges = scan[0, 0::3].flatten(1)
+    reliable = ((scan[0, 1::3] > .5) & (scan[0, 2::3] > .55)).flatten(1)
+    aligned = rays
+    points = []
+    for frame in (3, 2, 1, 0):
+        if frame < 3:
+            gyro = (history[frame, :3]+history[frame+1, :3])*.5
+            aligned = rotate_scan_rays(aligned, -gyro*gaps[frame])
+        points.append(aligned*ranges[frame, :, None])
+    points = torch.stack(points[::-1])
+    for center, radius in zip(centers, radii, strict=True):
+        sphere = ((points-center[:, None]).norm(dim=2)-radius[:, None]).abs() <= .018
+        other_surfaces = reliable & ~sphere
+        overlap = other_surfaces.all(dim=0).float().mean()
+        if (float(overlap) < .65 or not _nearby_scans_agree(ranges, other_surfaces, history, rays, gaps, offsets)):
+            return None
+    return bound
+
+
 def approach_scores(lidar, state, rays, issued):
     """Estimate separation for admissible escape commands after a nearby reversal."""
     accepted, history, elapsed, _ = track_nearby_return(lidar, state, rays)
