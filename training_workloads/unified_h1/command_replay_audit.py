@@ -23,7 +23,7 @@ from .command_replay import (
     COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, GRAVITY_ALIGNED_PROTECTION_EXECUTIONS,
     RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
-    COLLECTIVE_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS, STATIC_TURN_ONSET_EXECUTION,
+    COLLECTIVE_PROJECTION_EXECUTION, FRONT_WALL_HANDOFF_EXECUTIONS, STATIC_TURN_ONSET_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -471,7 +471,7 @@ def audit(output, params, counters):
         neutral_retry = model['execution'] in NEUTRAL_RETRY_EXECUTIONS
         observed_turn_braking = model['execution'] in OBSERVED_TURN_BRAKING_EXECUTIONS
         front_wall_handoff = model['execution'] in FRONT_WALL_HANDOFF_EXECUTIONS
-        collective_projection = model['execution'] in COLLECTIVE_PROJECTION_EXECUTIONS
+        collective_projection = model['execution'] == COLLECTIVE_PROJECTION_EXECUTION
         static_turn_onset = model['execution'] == STATIC_TURN_ONSET_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery

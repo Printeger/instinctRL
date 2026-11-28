@@ -36,8 +36,7 @@ from instinctlab.control.escape_recovery import (
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-COLLECTIVE_PROJECTION_VERSIONS = (COLLECTIVE_PROJECTION_25, STATIC_TURN_ONSET_25)
-FRONT_WALL_HANDOFF_VERSIONS = (FRONT_WALL_HANDOFF_25, *COLLECTIVE_PROJECTION_VERSIONS)
+FRONT_WALL_HANDOFF_VERSIONS = (FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25, STATIC_TURN_ONSET_25)
 OBSERVED_TURN_BRAKING_VERSIONS = (OBSERVED_TURN_BRAKING_25, *FRONT_WALL_HANDOFF_VERSIONS)
 NEUTRAL_RETRY_VERSIONS = (NEUTRAL_RETRY_25, *OBSERVED_TURN_BRAKING_VERSIONS)
 TANGENT_RESPONSE_HEADROOM_VERSIONS = (TANGENT_RESPONSE_HEADROOM_25, *NEUTRAL_RETRY_VERSIONS)
@@ -150,8 +149,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self._set_lidar_mount(pitch)
         previous_version = getattr(self, 'escape_option_version', None)
         self.escape_option_version = version if enabled else None
-        projection = self.escape_option_version in COLLECTIVE_PROJECTION_VERSIONS
-        previous_projection = previous_version in COLLECTIVE_PROJECTION_VERSIONS
+        projection = self.escape_option_version == COLLECTIVE_PROJECTION_25
+        previous_projection = previous_version == COLLECTIVE_PROJECTION_25
         if projection and not previous_projection:
             from instinctlab.control.collective_projection import CollectiveProjectionAdapter
 
@@ -336,7 +335,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
     def _pre_physics_step(self, actions):
         if hasattr(self, '_clearance_samples'):
             self._captured = 0
-        if getattr(self, 'escape_option_version', None) in COLLECTIVE_PROJECTION_VERSIONS:
+        if getattr(self, 'escape_option_version', None) == COLLECTIVE_PROJECTION_25:
             self._wrench_adapter.peak_correction.zero_()
         if isinstance(self.escape_option, EscapeRecovery):
             option = self.escape_option
@@ -431,7 +430,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             self.extras['pre_reset']['clearance_samples'] = self._clearance_samples
         if getattr(self, 'capture_ics_limiter', False):
             self.extras['pre_reset']['ics_limiter'] = self._ics_limiter_witness()
-        if getattr(self, 'escape_option_version', None) in COLLECTIVE_PROJECTION_VERSIONS:
+        if getattr(self, 'escape_option_version', None) == COLLECTIVE_PROJECTION_25:
             self.extras['pre_reset']['collective_projection_peak_m_s2'] = (
                 self._wrench_adapter.peak_correction.detach().clone())
         if self.escape_option is not None:

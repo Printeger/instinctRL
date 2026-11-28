@@ -244,8 +244,8 @@ OBSERVED_TURN_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v49'
 FRONT_WALL_HANDOFF_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v50'
 COLLECTIVE_PROJECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v51'
 STATIC_TURN_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v52'
-COLLECTIVE_PROJECTION_EXECUTIONS = (COLLECTIVE_PROJECTION_EXECUTION, STATIC_TURN_ONSET_EXECUTION)
-FRONT_WALL_HANDOFF_EXECUTIONS = (FRONT_WALL_HANDOFF_EXECUTION, *COLLECTIVE_PROJECTION_EXECUTIONS)
+FRONT_WALL_HANDOFF_EXECUTIONS = (FRONT_WALL_HANDOFF_EXECUTION, COLLECTIVE_PROJECTION_EXECUTION,
+                                STATIC_TURN_ONSET_EXECUTION)
 OBSERVED_TURN_BRAKING_EXECUTIONS = (OBSERVED_TURN_BRAKING_EXECUTION, *FRONT_WALL_HANDOFF_EXECUTIONS)
 NEUTRAL_RETRY_EXECUTIONS = (NEUTRAL_RETRY_EXECUTION, *OBSERVED_TURN_BRAKING_EXECUTIONS)
 TANGENT_RESPONSE_HEADROOM_EXECUTIONS = (TANGENT_RESPONSE_HEADROOM_EXECUTION, *NEUTRAL_RETRY_EXECUTIONS)
@@ -1546,7 +1546,7 @@ def run(backend, params):
             if env.escape_option_version != execution:
                 raise ValueError('COMMAND_FRONT_WALL_HANDOFF_PROOF')
             model['front_wall_handoff'] = True
-        if execution in COLLECTIVE_PROJECTION_EXECUTIONS:
+        if execution == COLLECTIVE_PROJECTION_EXECUTION:
             from instinctlab.control.collective_projection import CollectiveProjectionAdapter
 
             if not isinstance(env._wrench_adapter, CollectiveProjectionAdapter):

@@ -1,0 +1,41 @@
+{
+  "absolute_paths_and_file_content_preserved": true,
+  "actual_released_bytes": 331993088,
+  "available_after_bytes": 37976227840,
+  "raw_artifacts_touched": false,
+  "schema_version": "instinctrl-closed-snapshot-dedup/1",
+  "scope": {
+    "demo-images": {
+      "actual_released_bytes": 118353920,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-unreferenced-headroom-5gmjkhsn/demo-images/PLAN.json",
+        "sha256": "f36d795ffb65bb21102028d9f84196f1d8068d30c51257a6c686001b35182b04"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-unreferenced-headroom-5gmjkhsn/demo-images/RESULT.json",
+        "sha256": "db1eebb1948c55e0b94dc8f98c7d4eed1168a8df6bcb48a915ff0f0f4d17c99e"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-unreferenced-headroom-5gmjkhsn/demo-images/share-identical-snapshot-files.py",
+        "sha256": "07f6964141d783a4f1e42c4a362b4cc3c30015472ea1a81aa281a8ec68f18c2c"
+      },
+      "verified_paths": 24
+    },
+    "unused-sparse": {
+      "actual_released_bytes": 213639168,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-unreferenced-headroom-5gmjkhsn/unused-sparse/PLAN.json",
+        "sha256": "ad48d981c2820b783a1b2e1f459fbcdee99c835f3b9284f41dba2472c34c409d"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-unreferenced-headroom-5gmjkhsn/unused-sparse/RESULT.json",
+        "sha256": "6a13884f9e3f076a8151980ee485dee35c6006449bf4f6728dd39141d2e6d923"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-unreferenced-headroom-5gmjkhsn/unused-sparse/share-identical-snapshot-files.py",
+        "sha256": "a9a59954462a325e056b7259c7de60a4d5c72d4d6fa3d09de12aa06fffc3fd7a"
+      },
+      "verified_paths": 8970
+    }
+  }
+}
