@@ -116,6 +116,8 @@
 
 墙面进展与撤离停驻组合通过同输入的五类首飞、净空及全部停车。原停车和新令交接保持，走廊固定窗实测沿令 0/79 至 12/79，最差可行低进展从 7.9 降至 2.3 秒，继续用相同配置跑预登记独立输入。 [同输入组合实测](experiments/instinct-continuous-command/wall_motion_and_stop/REPORT.md)
 
+同一 v38 组合在预登记的独立 Crazy 回放通过五类短程首飞、净空和全部停车，最低净空 0.18016 米，零接触与重置。跟踪和恢复仍有未达标轨迹。冻结相同权重、控制和源码做完整 R6。 [独立组合实测](experiments/instinct-continuous-command/independent_wall_motion_and_stop/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
