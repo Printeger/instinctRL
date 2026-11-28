@@ -28,18 +28,19 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
-    CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37,
+    CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36)
+COMPOSED_MOTION_VERSIONS = (CROSSING_STOP_25_V34, CROSSING_STOP_25_V36, CROSSING_STOP_25_V38)
 FACETED_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V28, *COMPOSED_MOTION_VERSIONS)
 WALL_EDGE_REPROOF_VERSIONS = (CROSSING_STOP_25_V30, *COMPOSED_MOTION_VERSIONS)
 BRAKE_TRANSITION_VERSIONS = (CROSSING_STOP_25_V27, *COMPOSED_MOTION_VERSIONS)
 FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28, *WALL_EDGE_REPROOF_VERSIONS)
 LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, *FRONT_WALL_BRAKING_VERSIONS)
-RETREAT_ONSET_SIDE_VERSIONS = (CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37)
+RETREAT_STOP_VERSIONS = (CROSSING_STOP_25_V37, CROSSING_STOP_25_V38)
+RETREAT_ONSET_SIDE_VERSIONS = (CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, *RETREAT_STOP_VERSIONS)
 RANKED_REVERSAL_STOP_VERSIONS = (CROSSING_STOP_25_V32, CROSSING_STOP_25_V34, *RETREAT_ONSET_SIDE_VERSIONS)
 ZERO_CROSSING_WITHDRAWAL_VERSIONS = (CROSSING_STOP_25_V31, *RANKED_REVERSAL_STOP_VERSIONS)
 OLDEST_PARTIAL_TURN_VERSIONS = (CROSSING_STOP_25_V29, CROSSING_STOP_25_V33, *ZERO_CROSSING_WITHDRAWAL_VERSIONS)
@@ -191,7 +192,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 finite_edge=version in FINITE_EDGE_VERSIONS,
                                                 edge_continuation=version == EDGE_CONTINUATION_25_VERSION,
                                                 tangent_magnitude=version in (TANGENT_MAGNITUDE_25_VERSION, CROSSING_STOP_25_V33,
-                                                                              CROSSING_STOP_25_V36),
+                                                                              CROSSING_STOP_25_V36, CROSSING_STOP_25_V38),
                                                 verified_resume=version == VERIFIED_RESUME_25_VERSION,
                                                 verified_zero=version in VERIFIED_ZERO_VERSIONS,
                                                 intercept_choice=version in INTERCEPT_CHOICE_VERSIONS,
@@ -234,7 +235,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_zero_crossing_withdrawal=version in ZERO_CROSSING_WITHDRAWAL_VERSIONS,
                                                 verify_ranked_reversal_stop=version in RANKED_REVERSAL_STOP_VERSIONS,
                                                 verify_retreat_onset_side=version in RETREAT_ONSET_SIDE_VERSIONS,
-                                                verify_retreat_stop=version == CROSSING_STOP_25_V37)
+                                                verify_retreat_stop=version in RETREAT_STOP_VERSIONS)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

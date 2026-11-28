@@ -93,7 +93,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
                     OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTIONS,
                     RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS,
-                    RANKED_REVERSAL_STOP_EXECUTIONS, RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTION,
+                    RANKED_REVERSAL_STOP_EXECUTIONS, RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
                     ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
@@ -209,7 +209,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['verify_ranked_reversal_stop'] = True
                     if override in RETREAT_ONSET_SIDE_EXECUTIONS:
                         expected['verify_retreat_onset_side'] = True
-                    if override == RETREAT_STOP_EXECUTION:
+                    if override in RETREAT_STOP_EXECUTIONS:
                         expected['verify_retreat_stop'] = True
                     if observed != expected:
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')

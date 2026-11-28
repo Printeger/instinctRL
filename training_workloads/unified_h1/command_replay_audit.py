@@ -18,7 +18,7 @@ from .command_replay import (
     LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS,
     BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTIONS, RETREAT_CONTINUATION_EXECUTIONS,
     OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTIONS,
-    RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTION, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
+    RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
@@ -402,7 +402,7 @@ def audit(output, params, counters):
         retreat_onset_side_profile = model['execution'] in RETREAT_ONSET_SIDE_EXECUTIONS
         if model.get('verify_retreat_onset_side', False) is not retreat_onset_side_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_ONSET_SIDE_PROFILE')
-        retreat_stop_profile = model['execution'] == RETREAT_STOP_EXECUTION
+        retreat_stop_profile = model['execution'] in RETREAT_STOP_EXECUTIONS
         if model.get('verify_retreat_stop', False) is not retreat_stop_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_STOP_PROFILE')
         if model.get('verify_crossing_restart', False) is not crossing_restart_profile:
