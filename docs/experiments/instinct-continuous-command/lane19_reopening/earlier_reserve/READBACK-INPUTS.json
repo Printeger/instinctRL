@@ -1,0 +1,32 @@
+{
+  "native_metrics": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/analysis/clearance-and-progress.json",
+    "sha256": "73ce946fca80b5b05d4c879ab77b3edc06f4c45b5e0d8fd3d03db662643b591f"
+  },
+  "original_replay_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/closed/INPUTS.json",
+    "sha256": "237e6add964b48e7c0be117c916ec48df414a7ae7c6c59f461b9bcd6f49ff1fd"
+  },
+  "physical_receipt": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLIER-RESERVE/SEARCH-1052.json",
+    "sha256": "db3f99277b27cb68e4c2cac57b4d8ca987541cd2d6b9c415dc043ae2754273b2"
+  },
+  "protocol": {
+    "cases": [
+      "nominal",
+      "early_positive"
+    ],
+    "certificate_floor_m": 0.39,
+    "issue_tolerance_m_s": 2e-05,
+    "lag_s": 0.45,
+    "mode": "strict"
+  },
+  "reserve_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_reserve/INPUTS.json",
+    "sha256": "32005970d98850a55d7cf79eae40e23111e435f08deccc61281af071428e618d"
+  },
+  "reserve_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_reserve/find_reserve.py",
+    "sha256": "5c7a64b276ed45aa975d9a26234c2a3bfde868eaedb2cba45859e688aa8d5a0f"
+  }
+}
