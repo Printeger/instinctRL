@@ -431,6 +431,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if self.escape_option.verify_composed_crossing:
                     self.extras['pre_reset']['escape_option']['composed_crossing_floor'] = (
                         self.escape_option.composed_crossing_floor.detach().clone())
+                if self.escape_option.verify_static_retreat_handoff:
+                    self.extras['pre_reset']['escape_option']['static_retreat_witness'] = (
+                        self.escape_option.static_retreat_witness.detach().clone())
                 if self.escape_option.hover_escape_own_side:
                     self.extras['pre_reset']['escape_option']['hover_own_side'] = self.escape_option.hover_escape_redirected.detach().clone()
                 if self.escape_option.far_crossing_reference:

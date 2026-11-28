@@ -20,7 +20,7 @@ from .command_replay import (
     OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS, RANKED_REVERSAL_STOP_EXECUTIONS,
     RETREAT_ONSET_SIDE_EXECUTIONS, RETREAT_STOP_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS,
     FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
-    COMPOSED_CROSSING_EXECUTION, CURRENT_REQUEST_RECOVERY_EXECUTIONS,
+    COMPOSED_CROSSING_EXECUTIONS, CURRENT_REQUEST_RECOVERY_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -417,11 +417,14 @@ def audit(output, params, counters):
             raise ValueError('COMMAND_REPLAY_MODEL_EXECUTION')
         if model.get('early_diagonal', False) is not (model['execution'] in EARLY_DIAGONAL_EXECUTIONS):
             raise ValueError('COMMAND_REPLAY_EARLY_DIAGONAL_PROFILE')
-        composed_crossing = model['execution'] == COMPOSED_CROSSING_EXECUTION
+        composed_crossing = model['execution'] in COMPOSED_CROSSING_EXECUTIONS
         request_recovery = model['execution'] in CURRENT_REQUEST_RECOVERY_EXECUTIONS
+        static_retreat_handoff = model['execution'] == STATIC_RETREAT_HANDOFF_EXECUTION
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
-                or model.get('verify_outward_brake', False) is not request_recovery):
+                or model.get('verify_outward_brake', False) is not request_recovery
+                or model.get('verify_recent_handoff', False) is not static_retreat_handoff
+                or model.get('verify_static_retreat_handoff', False) is not static_retreat_handoff):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
         results[label] = {}
@@ -475,6 +478,12 @@ def audit(output, params, counters):
                     floor = row['escape_composed_crossing_floor']
                     if len(floor) != LANES or any(not math.isfinite(value) or value < 0. for value in floor):
                         raise ValueError('COMMAND_REPLAY_COMPOSED_CROSSING_LANES')
+                if ('escape_static_retreat_witness' in row) != static_retreat_handoff:
+                    raise ValueError('COMMAND_REPLAY_STATIC_RETREAT_BINDING')
+                if static_retreat_handoff:
+                    witness = row['escape_static_retreat_witness']
+                    if len(witness) != LANES or any(type(value) is not bool for value in witness):
+                        raise ValueError('COMMAND_REPLAY_STATIC_RETREAT_LANES')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
