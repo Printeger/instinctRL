@@ -1,0 +1,60 @@
+{
+  "actual_released_bytes": 2259808256,
+  "bundles": [
+    {
+      "actual_released_bytes": 787177472,
+      "available_after_bytes": 37287022592,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-final-headroom-a92pwvnw/PLAN.json",
+        "sha256": "3e580318ed7c8f311ae9f3ac43579c6f5ed5b105424eb68b060fbab7a22a3e0f"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-final-headroom-a92pwvnw/RESULT.json",
+        "sha256": "c0a77c51c03892c0df14ea25b74245c4875eea246a745a74d3a083c27496bf22"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-final-headroom-a92pwvnw/share-identical-snapshot-files.py",
+        "sha256": "a31be8832b8e8b7e55dc2118371d2cea38d979e9b20df9ccea70300f941c5b09"
+      },
+      "verified_paths": 717
+    },
+    {
+      "actual_released_bytes": 1049591808,
+      "available_after_bytes": 38333603840,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-supplement-headroom-x55_twyl/closed-full/PLAN.json",
+        "sha256": "8e2ef4b93aed9a106f84ca7d79d6deff0973eec86c39ad9c443dfb86bae196b1"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-supplement-headroom-x55_twyl/closed-full/RESULT.json",
+        "sha256": "22f7218558ca2a713ac0a3f863e5a7a0323c53f853ef71df6a148077305aac3b"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-supplement-headroom-x55_twyl/closed-full/share-identical-snapshot-files.py",
+        "sha256": "2746305ae106bdfbc63f1423b866135d1be6efd8d235480c0415b5525e48f5c0"
+      },
+      "verified_paths": 956
+    },
+    {
+      "actual_released_bytes": 423038976,
+      "available_after_bytes": 38753804288,
+      "plan": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-supplement-headroom-x55_twyl/closed-cpu-sparse/PLAN.json",
+        "sha256": "44d6b97a8adeb3f2a7a03c574474c6727737149a84ecef0a89ed5d154b733c6c"
+      },
+      "result": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-supplement-headroom-x55_twyl/closed-cpu-sparse/RESULT.json",
+        "sha256": "b1426dbbc0a0c91356c3ca77893f489bbb58ffc4de883c278fbd3854b13669f8"
+      },
+      "tool": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/producer-r6-supplement-headroom-x55_twyl/closed-cpu-sparse/share-identical-snapshot-files.py",
+        "sha256": "7c2a6119fb0b8db4382623783b6a495d48972612f1e26bd451891d890f815f00"
+      },
+      "verified_paths": 4635
+    }
+  ],
+  "schema_version": "instinctrl-detached-source-sharing-bundles/1",
+  "scope": "Closed native detached snapshots and idle CPU-only detached snapshots owned by this task",
+  "unchanged_floor_bytes": 32212254720,
+  "verified_paths": 6308
+}
