@@ -101,6 +101,7 @@ CROSSING_STOP_25_V39 = 'm4-escape-brake-tube-p25-crossing-stop-v39'
 CROSSING_STOP_25_V40 = 'm4-escape-brake-tube-p25-crossing-stop-v40'
 CROSSING_STOP_25_V41 = 'm4-escape-brake-tube-p25-crossing-stop-v41'
 RECENT_COMMAND_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v42'
+STATIC_RETREAT_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v43'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -133,7 +134,8 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V31: 25, CROSSING_STOP_25_V32: 25, CROSSING_STOP_25_V33: 25,
                        CROSSING_STOP_25_V34: 25, CROSSING_STOP_25_V35: 25, CROSSING_STOP_25_V36: 25,
                        CROSSING_STOP_25_V37: 25, CROSSING_STOP_25_V38: 25, CROSSING_STOP_25_V39: 25,
-                       CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25}
+                       CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
+                       STATIC_RETREAT_HANDOFF_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -165,7 +167,8 @@ class EscapeRecovery(EscapeOption):
                  verify_retreat_continuation=False, verify_brake_transition=False, verify_oldest_partial_turn=False,
                  verify_zero_crossing_withdrawal=False, verify_ranked_reversal_stop=False,
                  verify_retreat_onset_side=False, verify_retreat_stop=False, retry_command_handoff=False,
-                 verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False):
+                 verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
+                 verify_static_retreat_handoff=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -420,6 +423,11 @@ class EscapeRecovery(EscapeOption):
         self.retreat_hold_steps = torch.zeros_like(self.remaining)
         self.retreat_hold_direction = torch.zeros_like(self.direction)
         self.retreating = torch.zeros_like(self.applied)
+        self.verify_static_retreat_handoff = verify_static_retreat_handoff
+        if verify_static_retreat_handoff:
+            if not (early_retreat and align_intercept):
+                raise ValueError('ESCAPE_STATIC_HANDOFF_REQUIRES_ALIGNED_RETREAT')
+            self.static_retreat_witness = torch.zeros_like(self.applied)
         self.rear_switched = torch.zeros_like(self.applied)
         self.escape_speed = self.direction.new_full((lanes,), SPEED_M_S)
         self.retreat_basis = torch.zeros_like(self.direction)
@@ -461,6 +469,8 @@ class EscapeRecovery(EscapeOption):
         self.retreat_hold_steps[lanes] = 0
         self.retreat_hold_direction[lanes] = 0.
         self.retreating[lanes] = False
+        if self.verify_static_retreat_handoff:
+            self.static_retreat_witness[lanes] = False
         if self.verified_retreat_onset:
             self.retreat_request_kept[lanes] = False
         if self.verify_crossing_restart:
@@ -2585,6 +2595,54 @@ class EscapeRecovery(EscapeOption):
         self.composed_crossing_steps[fresh] = COMPOSED_CROSSING_RECHECKS
         self.composed_crossing_request[fresh] = request[fresh]
 
+    @torch.no_grad()
+    def handoff_static_retreat(self, lidar, state, selected, action, config):
+        """End a continuing retreat after two fresh static path checks."""
+        from .escape_passage import _return_seed, clear_static_scan, observed_path_clearance
+
+        previous = self.static_retreat_witness.clone()
+        self.static_retreat_witness.zero_()
+        history = state.reshape(-1, 4, 13)
+        request = history[:, -1, 6:9]
+        speed = request.norm(dim=1)
+        steady = (history[:, :, 6:9]-request[:, None]).norm(dim=2).amax(dim=1) <= .04
+        continuing = self.retreating & (self.retreat_hold_steps > 0) & (self.retreat_hold_steps < 14)
+        protected = self.applied | self.braking | self.ranked | self.intercepted | self.intercept_continued | self.holding
+        lanes = (continuing & ~protected & steady & (speed >= .08) & (speed <= .30)).nonzero().flatten()
+        if not len(lanes):
+            return
+
+        rays = self.detector._full_rays
+        scans, local = lidar[lanes], state[lanes]
+        actor = self.issued(scans, local, action[lanes], config)
+        held = self.issued(scans, local, selected[lanes], config)
+        heading = request[lanes]/speed[lanes, None]
+        along = (actor.v_final_b*heading).sum(dim=1)
+        old = (held.v_final_b*heading).sum(dim=1)
+        usable = ((actor.metrics['beta'][:, 0] >= .90) & (actor.metrics['emergency'][:, 0] == 0.)
+                  & (held.metrics['emergency'][:, 0] == 0.) & (along >= .66*speed[lanes])
+                  & (old < 0.) & (along-old >= .12))
+        observed = ((scans[:, 1::3] > .5) & (scans[:, 2::3] > .55)).all(dim=1).flatten(1)
+        forward = heading@rays.T >= .70
+        coverage = (observed & forward).sum(dim=1)/forward.sum(dim=1).clamp_min(1)
+        closing, _, _ = _return_seed(scans, local, maximum_range_m=2.65)
+        candidates = (usable & (coverage >= .45) & ~closing).nonzero().flatten()
+        if not len(candidates):
+            return
+
+        lanes, scans, local = lanes[candidates], scans[candidates], local[candidates]
+        offsets, coast = self.command_offsets[lanes], self.command_coast[lanes]
+        floor = observed_path_clearance(scans, rays, torch.zeros_like(coast),
+                                        actor.v_final_b[candidates, None], hold_s=2.4)[:, 0]
+        floor -= .35*coast.norm(dim=1)+.10*local[:, 48:51].norm(dim=1)+.058
+        static = clear_static_scan(scans, local, rays, (offsets, coast), eligible=floor >= .43)
+        self.static_retreat_witness[lanes] = static
+        release = lanes[static & previous[lanes]]
+        selected[release] = action[release]
+        self.retreating[release] = False
+        self.retreat_hold_steps[release] = 0
+        self.retreat_hold_direction[release] = 0.
+
     def apply_recovery(self, policy, action, config):
         if self.verify_retreat_onset_side:
             self.retreat_onset_side_floor.zero_()
@@ -2636,6 +2694,8 @@ class EscapeRecovery(EscapeOption):
             if self.edge_continuation:
                 self.edge_continued &= ~self.intercepted
                 self.edge_steps[self.intercepted] = 0
+        if self.verify_static_retreat_handoff:
+            self.handoff_static_retreat(policy['lidar_grid'], policy['state_vec'], selected, action, config)
         if self.verify_composed_crossing:
             self.verify_composed_crossing_action(policy['lidar_grid'], policy['state_vec'], selected, action, config)
         return selected

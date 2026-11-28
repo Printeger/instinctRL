@@ -75,6 +75,12 @@ def _nearby_scans_agree(ranges, reliable, history, rays, gaps, shifts):
 
 def clear_static_scan_at_stop(lidar, state, rays, command_response):
     """Check stopping room and consistent nearby surfaces after a zero request."""
+    at_stop = state[:, 45:48].norm(dim=1) <= 1.e-6
+    return clear_static_scan(lidar, state, rays, command_response, eligible=at_stop)
+
+
+def clear_static_scan(lidar, state, rays, command_response, *, eligible=None):
+    """Require four fresh scans that agree after rotational and command compensation."""
     history = state.reshape(-1, 4, 13)
     ranges = lidar[:, 0::3].flatten(2)
     reliable = ((lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)).flatten(2)
@@ -88,8 +94,10 @@ def clear_static_scan_at_stop(lidar, state, rays, command_response):
     drift = .35*coast.norm(dim=1)+.10*previous.norm(dim=1)
     ready = (ages <= .04).all(dim=1) & ((gaps >= .07) & (gaps <= .13)).all(dim=1)
     ready &= (history[:, :, :3].norm(dim=2).amax(dim=1) <= .18)
-    ready &= (history[:, :, 9:12].norm(dim=2).amax(dim=1) <= .31) & (history[:, -1, 6:9].norm(dim=1) <= 1.e-6)
+    ready &= history[:, :, 9:12].norm(dim=2).amax(dim=1) <= .31
     ready &= nearest.isfinite() & (nearest >= 1.) & (nearest-drift >= .85) & (coverage >= .65)
+    if eligible is not None:
+        ready &= eligible
     clear = torch.zeros_like(ready)
     for lane in ready.nonzero().flatten():
         shifts = offsets[lane]+(ages[lane, -1:]-ages[lane])[:, None]*coast[lane]
