@@ -1,0 +1,47 @@
+{
+  "case_references": {
+    "hard_positive": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-REOPENING/HARD-POSITIVE.json",
+      "sha256": "aac86b5796e6ad4f7a18fa68c64c0f3c0fa90cbf235d599faed7bce0ae0541e5"
+    },
+    "nominal": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-REOPENING/NOMINAL.json",
+      "sha256": "7d3964354778d9561a8ebd092ed9d9c9322208bddb55f79efee1b7c900737193"
+    }
+  },
+  "protocol": {
+    "certificate_floor_m": 0.39,
+    "eligible_loss": [
+      "no_registration",
+      "no_verified_continuation"
+    ],
+    "expiry_ticks": 9,
+    "priority_flags": [
+      "applied",
+      "retreating",
+      "braking",
+      "ranked",
+      "holding",
+      "static_stop_verified",
+      "crossing_restart_verified",
+      "intercepted",
+      "intercept_continued",
+      "handed_off",
+      "tracked_resume_used",
+      "composed_crossing_verified",
+      "brake_recovery_verified",
+      "offset_stopped",
+      "measured_mover_active",
+      "opening_steered"
+    ],
+    "queue_ticks": 1
+  },
+  "replay_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/closed/INPUTS.json",
+    "sha256": "237e6add964b48e7c0be117c916ec48df414a7ae7c6c59f461b9bcd6f49ff1fd"
+  },
+  "replay_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/closed/replay.py",
+    "sha256": "8653501b329792fe44b8ea94f9c2bd764494eb81de9079c8fc7025759e1ab045"
+  }
+}
