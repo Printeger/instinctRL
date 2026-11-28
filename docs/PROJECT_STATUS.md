@@ -94,6 +94,8 @@
 
 首个扫描区间折返的独立 Crazy 复验保留两处失败。街道 21 第 625 拍接触并重置，31/32 首飞完整。街道 22 的不同轨迹一次停车失败，漂移 0.59366 米。新增折返证明当次未触发，继续核对原保护切换。 [独立失败原件](experiments/instinct-continuous-command/independent_oldest_partial_turn/REPORT.md)
 
+斜面制动的同输入复验完成五类 32/32 首飞及停车，零接触与重置，最小净空保持 0.22244 米。管道 28 固定窗实测沿令从 0/37 增至 5/37。管道 31 下发增加三拍，实测沿令仍为零，保留实际缺口。 [同输入结果](experiments/instinct-continuous-command/faceted_wall_stopping/REPORT.md)
+
 # 接续 u1792 的两次有效正式长训完成
 
 已验收 **2/2** 次正式长训。B、C 各新增 1,024 次 PPO 更新和 524,288 个实际训练步，均通过训练覆盖、独立物理留出和完整 R6。B、C 的物理接触分别为 3/192 和 5/192，各自与同执行 `u1792` 的接触案例一致。A 完成相同训练规模和 R6，在物理留出新增一次树干接触，验收拒绝。 [结项报告与模型](experiments/instinct-post-u1792-two-long/REPORT.md)
