@@ -1,0 +1,438 @@
+{
+  "native_evaluation_steps": 0,
+  "outcomes": {
+    "carry": {
+      "early_positive": {
+        "backup": [
+          1061,
+          1062,
+          1063,
+          1064,
+          1065,
+          1066,
+          1067
+        ],
+        "handback": 1068,
+        "metrics": {
+          "feasible_packets": 18,
+          "feasible_rmse_m_s": 0.09089180878300662,
+          "min_mover_m": -0.1984705365080231,
+          "min_static_m": 1.5051265581927136,
+          "minimum_m": -0.1984705365080231,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 15,
+          "worst_time_s": 109.59,
+          "zero_window": {
+            "entry_speed_m_s": 0.0187701322135434,
+            "exit_speed_m_s": 0.03811638051384856,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.059851164652689685,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "prior_one_issue_metrics": {
+          "feasible_packets": 27,
+          "feasible_rmse_m_s": 0.1355730744561646,
+          "min_mover_m": 0.004051953463656888,
+          "min_static_m": 1.3594910179345683,
+          "minimum_m": 0.004051953463656888,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 19,
+          "worst_time_s": 108.86500000000001,
+          "zero_window": {
+            "entry_speed_m_s": 0.19291063628158658,
+            "exit_speed_m_s": 0.12091659200851784,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.1913921404972895,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "reproved": [
+          1052,
+          1053,
+          1054,
+          1055,
+          1056,
+          1057,
+          1058,
+          1059,
+          1060
+        ],
+        "stationary_translation": {
+          "accepted": false,
+          "minimum_singular": 0.9999960194919256,
+          "plane_count": 3,
+          "projection_residual_m": 6.685601636018421e-07,
+          "split_delta_m": 0.008359978486375132
+        },
+        "validation_1053": {
+          "available": 74,
+          "body": [
+            0.11636334657669067,
+            0.43444037437438965,
+            0.011452436447143555
+          ],
+          "decision": "reproved",
+          "dispatch_error_m_s": 9.9436602867637e-09,
+          "following_b": [
+            0.11636334657669067,
+            0.43444037437438965,
+            0.011452436447143555
+          ],
+          "max_floor_m": 0.4532603758948248,
+          "mover_backup_m": 0.4430206316299463,
+          "planned_issue_difference_m_s": 3.032166517868973e-08,
+          "planned_m": 0.49065694783950387,
+          "preferred_continuation_difference_m_s": 3.032166517868973e-08,
+          "qualified": 69,
+          "rank_m": 0.7982267240514391,
+          "static_backup_m": 0.6256757378578186,
+          "static_m": 0.7432405352592468,
+          "step": 1053,
+          "target_next_beta": 1.0,
+          "target_next_issue_error_m_s": 3.032166517868973e-08
+        }
+      },
+      "nominal": {
+        "backup": [
+          1061,
+          1062,
+          1063,
+          1064,
+          1065,
+          1066,
+          1067
+        ],
+        "handback": 1068,
+        "metrics": {
+          "feasible_packets": 41,
+          "feasible_rmse_m_s": 0.2790974039308093,
+          "min_mover_m": 0.44860228391992396,
+          "min_static_m": 1.085378716819282,
+          "minimum_m": 0.44860228391992396,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 18,
+          "worst_time_s": 109.485,
+          "zero_window": {
+            "entry_speed_m_s": 0.018756186375098103,
+            "exit_speed_m_s": 0.2264809875694814,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.08451861403841665,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "prior_one_issue_metrics": {
+          "feasible_packets": 18,
+          "feasible_rmse_m_s": 0.1022436560667546,
+          "min_mover_m": -0.1371256264606327,
+          "min_static_m": 1.3840221357306115,
+          "minimum_m": -0.1371256264606327,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 15,
+          "worst_time_s": 109.44000000000001,
+          "zero_window": {
+            "entry_speed_m_s": 0.15577410595962954,
+            "exit_speed_m_s": 0.06733632857880287,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.16142163765995643,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "reproved": [
+          1052,
+          1053,
+          1054,
+          1055,
+          1056,
+          1057,
+          1058,
+          1059,
+          1060
+        ],
+        "stationary_translation": {
+          "accepted": false,
+          "minimum_singular": 0.9999960194919256,
+          "plane_count": 3,
+          "projection_residual_m": 6.685601636018421e-07,
+          "split_delta_m": 0.008359978486375132
+        },
+        "validation_1053": {
+          "available": 74,
+          "body": [
+            0.11636334657669067,
+            0.43444037437438965,
+            0.011452436447143555
+          ],
+          "decision": "reproved",
+          "dispatch_error_m_s": 9.9436602867637e-09,
+          "following_b": [
+            0.11636334657669067,
+            0.43444037437438965,
+            0.011452436447143555
+          ],
+          "max_floor_m": 0.4532603758948248,
+          "mover_backup_m": 0.4430206316299463,
+          "planned_issue_difference_m_s": 3.032166517868973e-08,
+          "planned_m": 0.49065694783950387,
+          "preferred_continuation_difference_m_s": 3.032166517868973e-08,
+          "qualified": 69,
+          "rank_m": 0.7982267240514391,
+          "static_backup_m": 0.6256757378578186,
+          "static_m": 0.7432405352592468,
+          "step": 1053,
+          "target_next_beta": 1.0,
+          "target_next_issue_error_m_s": 3.032166517868973e-08
+        }
+      }
+    },
+    "guided": {
+      "early_positive": {
+        "backup": [
+          1061,
+          1062,
+          1063,
+          1064,
+          1065,
+          1066,
+          1067
+        ],
+        "handback": 1068,
+        "metrics": {
+          "feasible_packets": 19,
+          "feasible_rmse_m_s": 0.08643078439597558,
+          "min_mover_m": -0.14699937109199196,
+          "min_static_m": 1.5051265581927136,
+          "minimum_m": -0.14699937109199196,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 15,
+          "worst_time_s": 109.44500000000001,
+          "zero_window": {
+            "entry_speed_m_s": 0.031433059529332084,
+            "exit_speed_m_s": 0.0690703967006153,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.12721929289333517,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "prior_one_issue_metrics": {
+          "feasible_packets": 27,
+          "feasible_rmse_m_s": 0.1355730744561646,
+          "min_mover_m": 0.004051953463656888,
+          "min_static_m": 1.3594910179345683,
+          "minimum_m": 0.004051953463656888,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 19,
+          "worst_time_s": 108.86500000000001,
+          "zero_window": {
+            "entry_speed_m_s": 0.19291063628158658,
+            "exit_speed_m_s": 0.12091659200851784,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.1913921404972895,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "reproved": [
+          1052,
+          1053,
+          1054,
+          1055,
+          1056,
+          1057,
+          1058,
+          1059,
+          1060
+        ],
+        "stationary_translation": {
+          "accepted": false,
+          "minimum_singular": 0.9999998579635403,
+          "plane_count": 3,
+          "projection_residual_m": 5.180864681815971e-07,
+          "split_delta_m": 0.0016326329078047747
+        },
+        "validation_1053": {
+          "available": 72,
+          "body": [
+            0.11644244194030762,
+            0.43451809883117676,
+            0.006725788116455078
+          ],
+          "decision": "reproved",
+          "dispatch_error_m_s": 1.6557069790204385e-08,
+          "following_b": [
+            0.14994966983795166,
+            0.25968754291534424,
+            0.004179418087005615
+          ],
+          "max_floor_m": 0.4532603758948248,
+          "mover_backup_m": 0.44311195837339445,
+          "planned_issue_difference_m_s": 1.0710209608078003e-08,
+          "planned_m": 0.4270906870129859,
+          "preferred_continuation_difference_m_s": 0.21392381191253662,
+          "qualified": 67,
+          "rank_m": 0.7982267240514391,
+          "static_backup_m": 0.6256757378578186,
+          "static_m": 0.7254374623298645,
+          "step": 1053,
+          "target_next_beta": 0.0,
+          "target_next_issue_error_m_s": 0.44999998807907104
+        }
+      },
+      "nominal": {
+        "backup": [
+          1061,
+          1062,
+          1063,
+          1064,
+          1065,
+          1066,
+          1067
+        ],
+        "handback": 1068,
+        "metrics": {
+          "feasible_packets": 41,
+          "feasible_rmse_m_s": 0.27591652945032774,
+          "min_mover_m": 0.3976781551895505,
+          "min_static_m": 1.2345624424459973,
+          "minimum_m": 0.3976781551895505,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 19,
+          "worst_time_s": 109.08,
+          "zero_window": {
+            "entry_speed_m_s": 0.03143140953089096,
+            "exit_speed_m_s": 0.23374065448852524,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.07895738800996975,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "prior_one_issue_metrics": {
+          "feasible_packets": 18,
+          "feasible_rmse_m_s": 0.1022436560667546,
+          "min_mover_m": -0.1371256264606327,
+          "min_static_m": 1.3840221357306115,
+          "minimum_m": -0.1371256264606327,
+          "recovery": {
+            "anchor": 1110,
+            "confirmed_step": 1114,
+            "elapsed_s": 0.5,
+            "first_feasible": 1110,
+            "observed_offer_through": 1124
+          },
+          "tracked_packets": 15,
+          "worst_time_s": 109.44000000000001,
+          "zero_window": {
+            "entry_speed_m_s": 0.15577410595962954,
+            "exit_speed_m_s": 0.06733632857880287,
+            "frozen_stop_eligible": false,
+            "max_drift_m": 0.16142163765995643,
+            "sustained_speed_below_07_s": null
+          }
+        },
+        "reproved": [
+          1052,
+          1053,
+          1054,
+          1055,
+          1056,
+          1057,
+          1058,
+          1059,
+          1060
+        ],
+        "stationary_translation": {
+          "accepted": false,
+          "minimum_singular": 0.9999998579635403,
+          "plane_count": 3,
+          "projection_residual_m": 5.180864681815971e-07,
+          "split_delta_m": 0.0016326329078047747
+        },
+        "validation_1053": {
+          "available": 72,
+          "body": [
+            0.11644244194030762,
+            0.43451809883117676,
+            0.006725788116455078
+          ],
+          "decision": "reproved",
+          "dispatch_error_m_s": 1.6557069790204385e-08,
+          "following_b": [
+            0.14994966983795166,
+            0.25968754291534424,
+            0.004179418087005615
+          ],
+          "max_floor_m": 0.4532603758948248,
+          "mover_backup_m": 0.44311195837339445,
+          "planned_issue_difference_m_s": 1.0710209608078003e-08,
+          "planned_m": 0.4270906870129859,
+          "preferred_continuation_difference_m_s": 0.21392381191253662,
+          "qualified": 67,
+          "rank_m": 0.7982267240514391,
+          "static_backup_m": 0.6256757378578186,
+          "static_m": 0.7254374623298645,
+          "step": 1053,
+          "target_next_beta": 0.0,
+          "target_next_issue_error_m_s": 0.44999998807907104
+        }
+      }
+    }
+  },
+  "raw": {
+    "REGISTRATION": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-ADAPTIVE-RESERVE/REGISTRATION.json",
+      "sha256": "1ae32610d6a97628c216c8714d47c221b71b8447baafbbd89d88276eb55e2647"
+    },
+    "REPROOF": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-ADAPTIVE-RESERVE/REPROOF.json",
+      "sha256": "2494e8b53735a857ef10b4eeed59162e8821fa118dc2a602ae385b5d9cefe6a8"
+    }
+  },
+  "schema": "instinctrl-lane19-adaptive-reserve/1",
+  "source_commits": {
+    "registration": "172000ba",
+    "replay": "ecaf810b"
+  },
+  "status": "registered-renewal-lost-before-late-crossing",
+  "training_steps": 0
+}
