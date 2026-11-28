@@ -102,6 +102,7 @@ CROSSING_STOP_25_V40 = 'm4-escape-brake-tube-p25-crossing-stop-v40'
 CROSSING_STOP_25_V41 = 'm4-escape-brake-tube-p25-crossing-stop-v41'
 RECENT_COMMAND_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v42'
 STATIC_RETREAT_HANDOFF_25 = 'm4-escape-brake-tube-p25-crossing-stop-v43'
+GRAVITY_ALIGNED_PROTECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v44'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -135,7 +136,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V34: 25, CROSSING_STOP_25_V35: 25, CROSSING_STOP_25_V36: 25,
                        CROSSING_STOP_25_V37: 25, CROSSING_STOP_25_V38: 25, CROSSING_STOP_25_V39: 25,
                        CROSSING_STOP_25_V40: 25, CROSSING_STOP_25_V41: 25, RECENT_COMMAND_HANDOFF_25: 25,
-                       STATIC_RETREAT_HANDOFF_25: 25}
+                       STATIC_RETREAT_HANDOFF_25: 25, GRAVITY_ALIGNED_PROTECTION_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -168,7 +169,7 @@ class EscapeRecovery(EscapeOption):
                  verify_zero_crossing_withdrawal=False, verify_ranked_reversal_stop=False,
                  verify_retreat_onset_side=False, verify_retreat_stop=False, retry_command_handoff=False,
                  verify_outward_brake=False, verify_composed_crossing=False, verify_recent_handoff=False,
-                 verify_static_retreat_handoff=False):
+                 verify_static_retreat_handoff=False, align_planar_protection=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -207,6 +208,7 @@ class EscapeRecovery(EscapeOption):
             self.intercept_direction = torch.zeros_like(self.direction)
             self.intercept_continued = torch.zeros_like(self.applied)
         self.command_handoff = command_handoff
+        self.align_planar_protection = align_planar_protection
         self.retry_command_handoff = retry_command_handoff
         self.verify_recent_handoff = verify_recent_handoff
         if verify_recent_handoff and not retry_command_handoff:
@@ -548,7 +550,8 @@ class EscapeRecovery(EscapeOption):
             self.resumed[lanes] = False
 
     def issued(self, lidar, state, action, config):
-        request = decode_governor(action, state, config.governor).v_gov_b
+        request = decode_governor(action, state, config.governor,
+                                  align_planar_protection=self.align_planar_protection).v_gov_b
         return attenuate_command(lidar, self.detector._full_rays, request, .1, config.ics, state_vec=state)
 
     def select_lateral(self, lidar, state, selected, config):

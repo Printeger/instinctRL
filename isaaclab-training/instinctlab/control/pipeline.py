@@ -24,6 +24,7 @@ class ControlCoreConfig:
     anchor: AnchorConfig = AnchorConfig()
     ics: ICSConfig = ICSConfig()
     use_b0: bool = False
+    align_planar_protection: bool = False
 
     def __post_init__(self) -> None:
         if not isinstance(self.governor, GovernorConfig):
@@ -34,6 +35,8 @@ class ControlCoreConfig:
             raise TypeError("ics must be ICSConfig")
         if not isinstance(self.use_b0, bool):
             raise TypeError("use_b0 must be boolean")
+        if not isinstance(self.align_planar_protection, bool):
+            raise TypeError("align_planar_protection must be boolean")
 
 
 @dataclass(frozen=True)
@@ -90,7 +93,8 @@ class ControlCorePipeline:
                 raise ValueError("governor_action must remain finite and normalized in B0 mode")
             governor = b0_governor(state_vec, self.config.governor.velocity_limit)
         else:
-            governor = decode_governor(governor_action, state_vec, self.config.governor)
+            governor = decode_governor(governor_action, state_vec, self.config.governor,
+                                       align_planar_protection=self.config.align_planar_protection)
 
         ranges, validity, reliability = extract_lidar_history(lidar_grid)
         latest_ranges = ranges[:, -1]

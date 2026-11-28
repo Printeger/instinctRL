@@ -124,6 +124,30 @@ def test_governor_endpoints_formula_smoothing_and_direction_clip():
     assert torch.all(torch.linalg.vector_norm(out.v_gov_b, dim=-1) <= 1.0)
 
 
+def test_planar_protection_uses_measured_gravity_and_keeps_vertical_intent():
+    _, state = _actor(5)
+    tilt = .23
+    sine, cosine = math.sin(tilt), math.cos(tilt)
+    attitude = torch.tensor([[math.cos(tilt / 2), 0., math.sin(tilt / 2), 0.]]).expand(5, 4)
+    gravity = torch.tensor([sine, 0., -cosine])
+    state[:, 42:45] = gravity
+    state[:, 45:48] = torch.tensor([.2 * cosine, 0., .2 * sine])
+    state[2, 45:48] -= .1 * gravity
+    state[4, 51] = .10
+    action = torch.tensor([[0., .2, .5, .5]]).repeat(5, 1)
+    action[1, 0] = .85
+    action[3, 3] = .60
+
+    stock = decode_governor(action, state)
+    aligned = decode_governor(action, state, align_planar_protection=True)
+    before = rotate_body_to_world(stock.v_gov_b, attitude)
+    after = rotate_body_to_world(aligned.v_gov_b, attitude)
+    assert torch.equal(stock.v_corr_b, aligned.v_corr_b)
+    assert torch.equal(stock.v_gov_b[1:], aligned.v_gov_b[1:])
+    assert torch.allclose(after[0, :2], before[0, :2], atol=1.e-7, rtol=0.)
+    assert abs(float(after[0, 2])) < 1.e-7
+
+
 @pytest.mark.parametrize("bad", [-0.01, 1.01, float("nan")])
 def test_governor_rejects_action_domain_instead_of_clamping(bad):
     _, state = _actor(1)

@@ -30,11 +30,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28, CROSSING_STOP_25_V29, CROSSING_STOP_25_V30, CROSSING_STOP_25_V31, CROSSING_STOP_25_V32, CROSSING_STOP_25_V33,
     CROSSING_STOP_25_V34, CROSSING_STOP_25_V35, CROSSING_STOP_25_V36, CROSSING_STOP_25_V37, CROSSING_STOP_25_V38,
     CROSSING_STOP_25_V39, CROSSING_STOP_25_V40, CROSSING_STOP_25_V41, RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25,
+    GRAVITY_ALIGNED_PROTECTION_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-RECENT_HANDOFF_VERSIONS = (RECENT_COMMAND_HANDOFF_25, STATIC_RETREAT_HANDOFF_25)
+STATIC_RETREAT_HANDOFF_VERSIONS = (STATIC_RETREAT_HANDOFF_25, GRAVITY_ALIGNED_PROTECTION_25)
+RECENT_HANDOFF_VERSIONS = (RECENT_COMMAND_HANDOFF_25, *STATIC_RETREAT_HANDOFF_VERSIONS)
 COMPOSED_CROSSING_VERSIONS = (CROSSING_STOP_25_V41, *RECENT_HANDOFF_VERSIONS)
 CURRENT_REQUEST_RECOVERY_VERSIONS = (CROSSING_STOP_25_V40, *COMPOSED_CROSSING_VERSIONS)
 SUPPORTED_WALL_VERSIONS = (CROSSING_STOP_25_V39, *CURRENT_REQUEST_RECOVERY_VERSIONS)
@@ -144,7 +146,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.front_wall_braking = enabled and version in FRONT_WALL_BRAKING_VERSIONS
         self.faceted_wall_stopping = enabled and version in FACETED_WALL_STOPPING_VERSIONS
         self.wall_edge_reproof = enabled and version in WALL_EDGE_REPROOF_VERSIONS
+        align_planar = enabled and version == GRAVITY_ALIGNED_PROTECTION_25
         for pipeline in self._control_pipelines:
+            if pipeline.config.align_planar_protection != align_planar:
+                pipeline.config = replace(pipeline.config, align_planar_protection=align_planar)
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
             if hasattr(pipeline, 'allow_tube_stopping'):
@@ -246,7 +251,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_retreat_stop=version in RETREAT_STOP_VERSIONS,
                                                 verify_composed_crossing=version in COMPOSED_CROSSING_VERSIONS,
                                                 verify_recent_handoff=version in RECENT_HANDOFF_VERSIONS,
-                                                verify_static_retreat_handoff=version == STATIC_RETREAT_HANDOFF_25)
+                                                verify_static_retreat_handoff=version in STATIC_RETREAT_HANDOFF_VERSIONS,
+                                                align_planar_protection=align_planar)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:

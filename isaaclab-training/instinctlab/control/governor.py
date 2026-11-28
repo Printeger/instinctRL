@@ -78,7 +78,8 @@ def _validate_inputs(
 
 
 def decode_governor(
-    action: torch.Tensor, state_vec: torch.Tensor, config: GovernorConfig = GovernorConfig()
+    action: torch.Tensor, state_vec: torch.Tensor, config: GovernorConfig = GovernorConfig(),
+    *, align_planar_protection: bool = False,
 ) -> GovernorResult:
     """Decode normalized action into a bounded body-frame command."""
     v_cmd_b, previous_b = _validate_inputs(action, state_vec, config)
@@ -87,6 +88,15 @@ def decode_governor(
     candidate = alpha * v_cmd_b + v_corr_b
     if config.smoothing > 0.0:
         candidate = (1.0 - config.smoothing) * candidate + config.smoothing * previous_b
+    if align_planar_protection:
+        gravity = state_vec[:, 42:45]
+        gravity_squared = gravity.square().sum(dim=1, keepdim=True)
+        commanded_vertical = (v_cmd_b * gravity).sum(dim=1, keepdim=True)
+        planar = ((alpha == 0.) & (action[:, 3:4] == .5) & (commanded_vertical.abs() <= 1.e-5)
+                  & (gravity_squared >= .9) & (gravity_squared <= 1.1) & (state_vec[:, 51:52] <= .04))
+        # Keep a body-planar protective correction horizontal under tilt.
+        component = (candidate * gravity).sum(dim=1, keepdim=True) / gravity_squared.clamp_min(.9)
+        candidate = torch.where(planar, candidate - component * gravity, candidate)
     return GovernorResult(alpha, v_corr_b, clip_vector_norm(candidate, config.velocity_limit))
 
 
