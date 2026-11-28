@@ -117,6 +117,7 @@ MEASURED_CURVE_SLEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v55'
 MEASURED_CURVE_APPROACH_25 = 'm4-escape-brake-tube-p25-crossing-stop-v56'
 OBSERVED_MOVER_PREVIEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v57'
 GRAVITY_PREVIEW_RENEWAL_25 = 'm4-escape-brake-tube-p25-crossing-stop-v58'
+REGISTERED_MOVER_ENTRY_25 = 'm4-escape-brake-tube-p25-crossing-stop-v59'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -156,7 +157,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25, STATIC_TURN_ONSET_25: 25,
                        CORRIDOR_PROJECTION_25: 25, MEASURED_CURVE_DEFLECTION_25: 25,
                        MEASURED_CURVE_SLEW_25: 25, MEASURED_CURVE_APPROACH_25: 25, OBSERVED_MOVER_PREVIEW_25: 25,
-                       GRAVITY_PREVIEW_RENEWAL_25: 25}
+                       GRAVITY_PREVIEW_RENEWAL_25: 25, REGISTERED_MOVER_ENTRY_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -193,7 +194,7 @@ class EscapeRecovery(EscapeOption):
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
                  verify_neutral_retry=False, observed_turn_braking=False, verify_static_turn=False,
                  verify_measured_curve=False, limit_curve_entry=False, require_curve_approach=False,
-                 verify_observed_mover_preview=False, gravity_preview_reproof=False):
+                 verify_observed_mover_preview=False, gravity_preview_reproof=False, registered_mover_entry=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -214,6 +215,7 @@ class EscapeRecovery(EscapeOption):
         self.verify_static_turn = verify_static_turn
         self.verify_measured_curve = verify_measured_curve
         self.verify_observed_mover_preview = verify_observed_mover_preview
+        self.verify_registered_mover_entry = registered_mover_entry
         if verify_measured_curve:
             from .measured_curve_deflection import MeasuredCurveDeflection
 
@@ -226,6 +228,11 @@ class EscapeRecovery(EscapeOption):
 
             self.mover_preview = ObservedMoverPreview(lanes, self.direction, gravity_reproof=gravity_preview_reproof)
             self.measured_preview = self.direction.new_zeros((lanes, self.mover_preview.record_width))
+        if registered_mover_entry:
+            if not (verify_measured_curve and verify_observed_mover_preview and gravity_preview_reproof):
+                raise ValueError('Registered mover entry requires both measured protections')
+            self.registered_mover_rearm = torch.zeros_like(self.remaining)
+            self.registered_mover_witness = self.direction.new_zeros((lanes, 6))
         if verify_static_turn:
             if not verified_retreat_onset:
                 raise ValueError('Static turn recheck requires verified retreat onset')
@@ -520,6 +527,9 @@ class EscapeRecovery(EscapeOption):
         if self.verify_observed_mover_preview:
             self.mover_preview.reset(lanes)
             self.measured_preview[lanes] = 0.
+        if self.verify_registered_mover_entry:
+            self.registered_mover_rearm[lanes] = 0
+            self.registered_mover_witness[lanes] = 0.
         if self.static_scan_stop:
             self.static_stop_verified[lanes] = False
         if self.verify_overlapping_stop:
@@ -2929,6 +2939,47 @@ class EscapeRecovery(EscapeOption):
         selected[used] = actor_action[used]
         return margin
 
+    def apply_registered_mover_entry(self, policy, selected, config, blocked):
+        from .measured_curve_deflection import fresh_motion_history
+        from .registered_mover_entry import registered_mover_entry, registered_mover_handoff
+
+        lidar, state = policy['lidar_grid'], policy['state_vec']
+        history = state.reshape(-1, 4, 13)
+        speed = history[:, -1, 6:9].norm(dim=1)
+        fresh = fresh_motion_history(history) & (self.curve_deflection.age >= 4.)
+        pending = self.registered_mover_rearm == 10
+        self.registered_mover_rearm.sub_(1).clamp_min_(0)
+        self.registered_mover_witness.zero_()
+        rays = self.detector._full_rays
+        for lane in (pending & fresh & ~blocked).nonzero().flatten().tolist():
+            scan, packet = lidar[lane:lane+1], state[lane:lane+1]
+            coast = torch.stack([value[lane] for value in self.curve_deflection.coast]).cpu().numpy()
+            if registered_mover_handoff(scan, packet, selected[lane:lane+1], config,
+                                         rays=rays, coast=coast, issued=self.issued):
+                self.registered_mover_witness[lane, 0] = 2.
+            elif not bool(self.tangent_used[lane] | self.detour_used[lane]):
+                neutral = selected.new_tensor([[0., .5, .5, .5]])
+                result = self.issued(scan, packet, neutral, config)
+                if not bool(result.metrics['emergency'][0, 0]):
+                    selected[lane] = neutral[0]
+                    self.registered_mover_witness[lane, 0] = 3.
+        reliable = (lidar[:, 10] > .5) & (lidar[:, 11] > .55)
+        nearest = lidar[:, 9].masked_fill(~reliable, torch.inf).flatten(1).amin(dim=1)
+        ready = (fresh & ~blocked & ~self.tangent_used & ~self.detour_used & (self.registered_mover_rearm == 0)
+                 & (speed >= .06) & (speed <= .30) & (nearest >= .85) & (nearest <= 1.4))
+        for lane in ready.nonzero().flatten().tolist():
+            coast = torch.stack([value[lane] for value in self.curve_deflection.coast]).cpu().numpy()
+            proof = registered_mover_entry(lidar[lane:lane+1], state[lane:lane+1], selected[lane:lane+1], config,
+                                           rays=rays, coast=coast, issued=self.issued,
+                                           action_for_velocity=self.action_for_velocity)
+            if proof is None:
+                continue
+            selected[lane], witness = proof
+            self.registered_mover_rearm[lane] = 10
+            self.registered_mover_witness[lane] = state.new_tensor((1., *witness))
+        mode = self.registered_mover_witness[:, 0]
+        self.measured_mover_active |= (mode == 1.) | (mode == 3.)
+
     def apply_recovery(self, policy, action, config):
         if self.verify_retreat_onset_side:
             self.retreat_onset_side_floor.zero_()
@@ -3016,6 +3067,15 @@ class EscapeRecovery(EscapeOption):
                     rays=self.detector._full_rays, blocked=blocked | self.applied | self.measured_mover_active,
                     observer=self.curve_deflection, issued=self.issued, action_for_velocity=self.action_for_velocity)
                 self.measured_mover_active |= self.measured_preview[:, 0] > 0.
+            if self.verify_registered_mover_entry:
+                registered_blocked = (self.applied | self.retreating | self.braking | self.ranked | self.holding
+                                      | self.static_stop_verified | self.crossing_restart_verified
+                                      | (self.zero_crossing_commit > 0) | (self.observed_turn_brake_floor > 0.)
+                                      | self.intercepted | self.intercept_continued | self.handed_off
+                                      | self.tracked_resume_used | self.composed_crossing_verified
+                                      | self.brake_recovery_verified | self.offset_stopped | self.recovering
+                                      | self.opening_steered | self.measured_mover_active)
+                self.apply_registered_mover_entry(policy, selected, config, registered_blocked)
         return selected
 
     def _apply_recovery(self, policy, action, config):

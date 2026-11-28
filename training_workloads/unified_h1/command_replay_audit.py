@@ -25,7 +25,8 @@ from .command_replay import (
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
     COLLECTIVE_PROJECTION_EXECUTIONS, CORRIDOR_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS,
     MEASURED_CURVE_APPROACH_EXECUTIONS, MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTIONS,
-    GRAVITY_PREVIEW_RENEWAL_EXECUTION, OBSERVED_MOVER_PREVIEW_EXECUTIONS, STATIC_TURN_ONSET_EXECUTIONS,
+    GRAVITY_PREVIEW_RENEWAL_EXECUTIONS, OBSERVED_MOVER_PREVIEW_EXECUTIONS, REGISTERED_MOVER_ENTRY_EXECUTION,
+    STATIC_TURN_ONSET_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -482,7 +483,8 @@ def audit(output, params, counters):
         measured_curve_slew = model['execution'] in MEASURED_CURVE_SLEW_EXECUTIONS
         measured_curve_approach = model['execution'] in MEASURED_CURVE_APPROACH_EXECUTIONS
         observed_mover_preview = model['execution'] in OBSERVED_MOVER_PREVIEW_EXECUTIONS
-        gravity_preview_renewal = model['execution'] == GRAVITY_PREVIEW_RENEWAL_EXECUTION
+        gravity_preview_renewal = model['execution'] in GRAVITY_PREVIEW_RENEWAL_EXECUTIONS
+        registered_mover_entry = model['execution'] == REGISTERED_MOVER_ENTRY_EXECUTION
         static_turn_onset = model['execution'] in STATIC_TURN_ONSET_EXECUTIONS
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
@@ -503,6 +505,7 @@ def audit(output, params, counters):
                 or model.get('measured_curve_approach', False) is not measured_curve_approach
                 or model.get('observed_mover_preview', False) is not observed_mover_preview
                 or model.get('gravity_preview_renewal', False) is not gravity_preview_renewal
+                or model.get('registered_mover_entry', False) is not registered_mover_entry
                 or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
@@ -627,6 +630,19 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_GRAVITY_PREVIEW_RENEWAL_BINDING')
                 elif 'escape_observed_mover_preview' in row:
                     raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_SCOPE')
+                if registered_mover_entry:
+                    registered = row.get('escape_registered_mover_entry', ())
+                    if (len(registered) != LANES or any(len(value) != 6 for value in registered)
+                            or any(mode not in (0., 1., 2., 3.)
+                                   or not all(math.isfinite(x) for x in (floor, latest, prior, projected, backup))
+                                   or (mode != 1. and any((floor, latest, prior, projected, backup)))
+                                   or (mode == 1. and (min(floor, backup) < .389999 or latest >= .360001
+                                                       or prior >= .150001 or projected < .119999
+                                                       or projected-prior < .079999))
+                                   for mode, floor, latest, prior, projected, backup in registered)):
+                        raise ValueError('COMMAND_REPLAY_REGISTERED_MOVER_ENTRY_BINDING')
+                elif 'escape_registered_mover_entry' in row:
+                    raise ValueError('COMMAND_REPLAY_REGISTERED_MOVER_ENTRY_SCOPE')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
@@ -1021,6 +1037,21 @@ def audit(output, params, counters):
                                 or (count > 1 and (step == 0 or rows[step-1]['escape_observed_mover_preview'][lane][0]
                                                   != count-1))):
                             raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_BEHAVIOR')
+                    if registered_mover_entry and registered[lane][0]:
+                        mode = registered[lane][0]
+                        issue = row['v_final_b'][lane]
+                        command = actor[-1][6:9]
+                        if (row['escape_active'][lane] or intercepted[lane] or continued[lane] or handoff[lane]
+                                or held[lane] or row['ics_emergency'][lane] or previews[lane][0] or curves[lane][1]
+                                or (mode == 1. and (row['ics_beta'][lane] < .89999
+                                                   or not .059999 <= math.hypot(*command) <= .300001
+                                                   or math.dist(issue, actor[-1][9:12]) > .30005))
+                                or (mode != 1. and (not step or rows[step-1]['reset'][lane]
+                                    or rows[step-1]['escape_registered_mover_entry'][lane][0] != 1.))
+                                or (mode == 2. and (math.hypot(*command) < .029999
+                                                   or dot(issue, command) < .59999*dot(command, command)))
+                                or (mode == 3. and math.hypot(*issue) > 1.e-6)):
+                            raise ValueError('COMMAND_REPLAY_REGISTERED_MOVER_ENTRY_BEHAVIOR')
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)

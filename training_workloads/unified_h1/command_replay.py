@@ -139,9 +139,11 @@ NOVEL_MEASURED_CURVE_SLEW_ID = NOVEL_PREFIX+'110'
 NOVEL_MEASURED_CURVE_APPROACH_ID = NOVEL_PREFIX+'111'
 NOVEL_OBSERVED_MOVER_PREVIEW_ID = NOVEL_PREFIX+'112'
 NOVEL_GRAVITY_PREVIEW_RENEWAL_ID = NOVEL_PREFIX+'113'
+NOVEL_REGISTERED_MOVER_ENTRY_ID = NOVEL_PREFIX+'114'
 OBSERVABLE_SWEEP_DEVELOPMENT_IDS = (NOVEL_OBSERVABLE_SWEEP_ID, NOVEL_MEASURED_CURVE_DEFLECTION_ID,
                                    NOVEL_MEASURED_CURVE_SLEW_ID, NOVEL_MEASURED_CURVE_APPROACH_ID,
-                                   NOVEL_OBSERVED_MOVER_PREVIEW_ID, NOVEL_GRAVITY_PREVIEW_RENEWAL_ID)
+                                   NOVEL_OBSERVED_MOVER_PREVIEW_ID, NOVEL_GRAVITY_PREVIEW_RENEWAL_ID,
+                                   NOVEL_REGISTERED_MOVER_ENTRY_ID)
 RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID,
                            *OBSERVABLE_SWEEP_DEVELOPMENT_IDS)
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
@@ -266,7 +268,9 @@ MEASURED_CURVE_SLEW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v55'
 MEASURED_CURVE_APPROACH_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v56'
 OBSERVED_MOVER_PREVIEW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v57'
 GRAVITY_PREVIEW_RENEWAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v58'
-OBSERVED_MOVER_PREVIEW_EXECUTIONS = (OBSERVED_MOVER_PREVIEW_EXECUTION, GRAVITY_PREVIEW_RENEWAL_EXECUTION)
+REGISTERED_MOVER_ENTRY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v59'
+GRAVITY_PREVIEW_RENEWAL_EXECUTIONS = (GRAVITY_PREVIEW_RENEWAL_EXECUTION, REGISTERED_MOVER_ENTRY_EXECUTION)
+OBSERVED_MOVER_PREVIEW_EXECUTIONS = (OBSERVED_MOVER_PREVIEW_EXECUTION, *GRAVITY_PREVIEW_RENEWAL_EXECUTIONS)
 MEASURED_CURVE_APPROACH_EXECUTIONS = (MEASURED_CURVE_APPROACH_EXECUTION, *OBSERVED_MOVER_PREVIEW_EXECUTIONS)
 MEASURED_CURVE_SLEW_EXECUTIONS = (MEASURED_CURVE_SLEW_EXECUTION, *MEASURED_CURVE_APPROACH_EXECUTIONS)
 MEASURED_CURVE_EXECUTIONS = (MEASURED_CURVE_DEFLECTION_EXECUTION, *MEASURED_CURVE_SLEW_EXECUTIONS)
@@ -803,6 +807,8 @@ def novel_contract(params):
         execution = (OBSERVED_MOVER_PREVIEW_EXECUTION,)
     elif params['experiment_id'] == NOVEL_GRAVITY_PREVIEW_RENEWAL_ID:
         execution = (GRAVITY_PREVIEW_RENEWAL_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_REGISTERED_MOVER_ENTRY_ID:
+        execution = (REGISTERED_MOVER_ENTRY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FRONT_WALL_HANDOFF_ID:
         execution = (FRONT_WALL_HANDOFF_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COLLECTIVE_PROJECTION_ID:
@@ -1462,6 +1468,8 @@ def run(backend, params):
                         tensors['escape_measured_curve_deflection'] = pre['measured_curve_deflection']
                     if 'observed_mover_preview' in pre:
                         tensors['escape_observed_mover_preview'] = pre['observed_mover_preview']
+                    if 'registered_mover_entry' in pre:
+                        tensors['escape_registered_mover_entry'] = pre['registered_mover_entry']
                     if 'braking' in option:
                         tensors['escape_braking'] = option['braking']
                     if 'retreating' in option:
@@ -1651,12 +1659,16 @@ def run(backend, params):
             from instinctlab.control.observed_mover_preview import ObservedMoverPreview
 
             preview = env.escape_option.mover_preview
-            gravity_reproof = execution == GRAVITY_PREVIEW_RENEWAL_EXECUTION
+            gravity_reproof = execution in GRAVITY_PREVIEW_RENEWAL_EXECUTIONS
             if (not env.escape_option.verify_observed_mover_preview or not isinstance(preview, ObservedMoverPreview)
                     or preview.gravity_reproof is not gravity_reproof):
                 raise ValueError('COMMAND_OBSERVED_MOVER_PREVIEW_PROOF')
             model['observed_mover_preview'] = True
             if gravity_reproof:
                 model['gravity_preview_renewal'] = True
+        if execution == REGISTERED_MOVER_ENTRY_EXECUTION:
+            if not env.escape_option.verify_registered_mover_entry:
+                raise ValueError('COMMAND_REGISTERED_MOVER_ENTRY_PROOF')
+            model['registered_mover_entry'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

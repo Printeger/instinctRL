@@ -29,10 +29,8 @@ class _Fit:
         return np.pad(self.acceleration.mean(axis=1), ((0, 0), (0, 1)))
 
 
-def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False, coherent=True,
-                align_gravity=False):
-    history = state.reshape(4, 13)
-    ages = history[:, 12]
+def _return_shapes(lidar, state, rays, *, entry, require_approach=False, check_visibility=True,
+                   align_gravity=False):
     valid = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
     distance, seed = lidar[:, 9].masked_fill(~valid[:, -1], torch.inf).flatten(1).min(dim=1)
     if entry and (not .85 <= float(distance[0]) <= 1.4 or float(valid.all(dim=1).float().mean()) < .50):
@@ -47,16 +45,28 @@ def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=F
     centers, radii, supported = (torch.stack(values, dim=1)[0] for values in zip(*shapes, strict=True))
     if not bool(tracked[0] & supported.all()) or float(radii.max()-radii.min()) > (.025 if entry else .04):
         return None
-    if entry or not coherent:
+    if check_visibility:
         if require_approach and not bool((centers.norm(dim=1).diff()[-2:] <= -_MIN_RANGE_CLOSURE_M).all()):
             return None
         near, other, visible = fitted_sphere_returns(lidar, rays, centers[-1:], radii[-1:])
         if not bool(visible[0] & (other[0] >= near[0]+.06)):
             return None
 
-    gaps = times[0].diff().cpu().numpy()
-    if ((gaps < .065) | (gaps > .135)).any():
+    gaps = times[0].diff()
+    if bool(((gaps < .065) | (gaps > .135)).any()):
         return None
+    return centers, radii.max(), times[0], gaps
+
+
+def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False, coherent=True,
+                align_gravity=False):
+    shape = _return_shapes(lidar, state, rays, entry=entry, require_approach=require_approach,
+                           check_visibility=entry or not coherent, align_gravity=align_gravity)
+    if shape is None:
+        return None
+    centers, radius, _, gaps = shape
+    gaps = gaps.cpu().numpy()
+    ages = state.reshape(4, 13)[:, 12]
     age = (ages[-1]-ages).cpu().numpy()
     points = centers[:, :2].cpu().numpy()[None]+offsets+age[None, :, None]*coast[:, None]
     velocities = np.diff(points, axis=1)/gaps[None, :, None]
@@ -74,7 +84,7 @@ def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=F
     velocity = np.pad(velocity, ((0, 0), (0, 1)))
     if np.linalg.norm(velocity, axis=1).max() > 1.42:
         return None
-    return _Fit(centers[-1].cpu().numpy(), float(radii.max()), velocity, acceleration)
+    return _Fit(centers[-1].cpu().numpy(), float(radius), velocity, acceleration)
 
 
 def _curved_clearance(fit, targets, coast, queued, hold):
