@@ -1,0 +1,245 @@
+{
+  "experiment_commit": "d34bfc19e58e8475943d07fa3ed19c0bd24b4595",
+  "minimum_clearance_m": 0.15,
+  "native_evaluation_steps": 0,
+  "pairs": {
+    "HARD-POSITIVE": {
+      "case": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": 1
+      },
+      "cpu_renewal_steps": [
+        1060,
+        1061,
+        1062,
+        1063,
+        1064,
+        1065,
+        1066
+      ],
+      "onset": {
+        "best_ics_floor_m": 0.5269140174784825,
+        "body": [
+          0.025127768516540527,
+          0.04824626445770264,
+          -0.0036664605140686035
+        ],
+        "certified": 142,
+        "decision": "onset",
+        "dispatch_error_m_s": 2.3890157144998747e-09,
+        "following": [
+          0.1538723111152649,
+          0.4226481318473816,
+          -0.010093450546264648
+        ],
+        "rank_m": 0.7891647245963185,
+        "registered_acceleration": [
+          0.3799808562437654,
+          0.4420875537722241
+        ],
+        "selected_floor_m": 0.5212051648503033,
+        "stock_floor_m": 0.3312281146553181,
+        "stock_rank_m": 0.38108794468984397,
+        "stop_backup_m": 0.5212051648503033,
+        "witness_reproduced": true
+      },
+      "raw": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-REOPENING/HARD-POSITIVE.json",
+        "sha256": "aac86b5796e6ad4f7a18fa68c64c0f3c0fa90cbf235d599faed7bce0ae0541e5"
+      },
+      "release_dispatch_w": [
+        -0.15503758192062378,
+        -0.20520250499248505,
+        -2.7568148652790114e-08
+      ],
+      "release_proof": {
+        "best_ics_floor_m": 0.44353719018524806,
+        "certified": 0,
+        "reason": "no_verified_continuation",
+        "registered_acceleration": [
+          0.575482075055104,
+          0.6346531155723485
+        ],
+        "stock_floor_m": 0.19683502132631847,
+        "stock_rank_m": -0.011357520416195754
+      },
+      "released_step": 1067,
+      "renewal": {
+        "feasible_packets": 16,
+        "feasible_rmse_m_s": 0.05930384932318968,
+        "min_mover_m": -0.16060923116021492,
+        "min_static_m": 1.5128811095581023,
+        "minimum_m": -0.16060923116021492,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 15,
+        "worst_time_s": 109.605,
+        "zero_window": {
+          "entry_speed_m_s": 0.1552576905519423,
+          "exit_speed_m_s": 0.2769947394367966,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.2268509709180361,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "stock": {
+        "feasible_packets": 26,
+        "feasible_rmse_m_s": 0.1201652254744071,
+        "min_mover_m": 0.0041037527468086865,
+        "min_static_m": 1.3292566066169982,
+        "minimum_m": 0.0041037527468086865,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 20,
+        "worst_time_s": 108.9,
+        "zero_window": {
+          "entry_speed_m_s": 0.15148546627011952,
+          "exit_speed_m_s": 0.10948897866708372,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.2032678317247724,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "stock_onset_reconstruction": {
+        "archived_finite_edge": true,
+        "beta_error": 0.0,
+        "body_error_m_s": 0.0,
+        "finite_edge": true,
+        "stock_action_error": 0.0,
+        "world_error_m_s": 0.0
+      }
+    },
+    "NOMINAL": {
+      "case": {
+        "attitude": "recorded",
+        "fork_step": 1064,
+        "sign": 0
+      },
+      "cpu_renewal_steps": [
+        1060,
+        1061,
+        1062,
+        1063,
+        1064,
+        1065,
+        1066,
+        1067,
+        1068
+      ],
+      "onset": {
+        "best_ics_floor_m": 0.5269140174784825,
+        "body": [
+          0.025127768516540527,
+          0.04824626445770264,
+          -0.0036664605140686035
+        ],
+        "certified": 142,
+        "decision": "onset",
+        "dispatch_error_m_s": 2.3890157144998747e-09,
+        "following": [
+          0.1538723111152649,
+          0.4226481318473816,
+          -0.010093450546264648
+        ],
+        "rank_m": 0.7891647245963185,
+        "registered_acceleration": [
+          0.3799808562437654,
+          0.4420875537722241
+        ],
+        "selected_floor_m": 0.5212051648503033,
+        "stock_floor_m": 0.3312281146553181,
+        "stock_rank_m": 0.38108794468984397,
+        "stop_backup_m": 0.5212051648503033,
+        "witness_reproduced": true
+      },
+      "raw": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-REOPENING/NOMINAL.json",
+        "sha256": "7d3964354778d9561a8ebd092ed9d9c9322208bddb55f79efee1b7c900737193"
+      },
+      "release_dispatch_w": [
+        -0.15503758192062378,
+        -0.20520249009132385,
+        -4.78939909953624e-09
+      ],
+      "release_proof": {
+        "reason": "no_registration"
+      },
+      "released_step": 1069,
+      "renewal": {
+        "feasible_packets": 41,
+        "feasible_rmse_m_s": 0.0739864318450953,
+        "min_mover_m": 0.3887730379218539,
+        "min_static_m": 1.512881150052861,
+        "minimum_m": 0.3887730379218539,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 41,
+        "worst_time_s": 108.535,
+        "zero_window": {
+          "entry_speed_m_s": 0.3949922729598067,
+          "exit_speed_m_s": 0.26511394277250144,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.23077633756211363,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "stock": {
+        "feasible_packets": 14,
+        "feasible_rmse_m_s": 0.055938944266989116,
+        "min_mover_m": -0.07951580305033956,
+        "min_static_m": 1.3823637749397106,
+        "minimum_m": -0.07951580305033956,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1119,
+          "elapsed_s": 1.0,
+          "first_feasible": 1111,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 10,
+        "worst_time_s": 109.9,
+        "zero_window": {
+          "entry_speed_m_s": 0.06760942375738918,
+          "exit_speed_m_s": 0.28212318949532866,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.26136423145322163,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "stock_onset_reconstruction": {
+        "archived_finite_edge": true,
+        "beta_error": 0.0,
+        "body_error_m_s": 0.0,
+        "finite_edge": true,
+        "stock_action_error": 0.0,
+        "world_error_m_s": 0.0
+      }
+    }
+  },
+  "raw_cpu_branch_packets": 356,
+  "schema": "instinctrl-lane19-cpu-reopening-closed/1",
+  "source_commit": "a346bea85a7478f0da3905dc2dae58cdc179b150",
+  "status": "lane-local-cpu-failed-perturbation-floor",
+  "training_steps": 0,
+  "unstarted": [
+    "hard_negative",
+    "early_positive",
+    "early_negative"
+  ]
+}
