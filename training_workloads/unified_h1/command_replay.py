@@ -135,7 +135,9 @@ NOVEL_STATIC_TURN_ONSET_ID = NOVEL_PREFIX+'106'
 NOVEL_CORRIDOR_PROJECTION_ID = NOVEL_PREFIX+'107'
 NOVEL_OBSERVABLE_SWEEP_ID = NOVEL_PREFIX+'108'
 NOVEL_MEASURED_CURVE_DEFLECTION_ID = NOVEL_PREFIX+'109'
-OBSERVABLE_SWEEP_DEVELOPMENT_IDS = (NOVEL_OBSERVABLE_SWEEP_ID, NOVEL_MEASURED_CURVE_DEFLECTION_ID)
+NOVEL_MEASURED_CURVE_SLEW_ID = NOVEL_PREFIX+'110'
+OBSERVABLE_SWEEP_DEVELOPMENT_IDS = (NOVEL_OBSERVABLE_SWEEP_ID, NOVEL_MEASURED_CURVE_DEFLECTION_ID,
+                                   NOVEL_MEASURED_CURVE_SLEW_ID)
 RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID,
                            *OBSERVABLE_SWEEP_DEVELOPMENT_IDS)
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
@@ -256,7 +258,9 @@ COLLECTIVE_PROJECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v51'
 STATIC_TURN_ONSET_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v52'
 CORRIDOR_PROJECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v53'
 MEASURED_CURVE_DEFLECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v54'
-CORRIDOR_PROJECTION_EXECUTIONS = (CORRIDOR_PROJECTION_EXECUTION, MEASURED_CURVE_DEFLECTION_EXECUTION)
+MEASURED_CURVE_SLEW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v55'
+MEASURED_CURVE_EXECUTIONS = (MEASURED_CURVE_DEFLECTION_EXECUTION, MEASURED_CURVE_SLEW_EXECUTION)
+CORRIDOR_PROJECTION_EXECUTIONS = (CORRIDOR_PROJECTION_EXECUTION, *MEASURED_CURVE_EXECUTIONS)
 STATIC_TURN_ONSET_EXECUTIONS = (STATIC_TURN_ONSET_EXECUTION, *CORRIDOR_PROJECTION_EXECUTIONS)
 COLLECTIVE_PROJECTION_EXECUTIONS = (COLLECTIVE_PROJECTION_EXECUTION, *CORRIDOR_PROJECTION_EXECUTIONS)
 FRONT_WALL_HANDOFF_EXECUTIONS = (FRONT_WALL_HANDOFF_EXECUTION, COLLECTIVE_PROJECTION_EXECUTION,
@@ -781,6 +785,8 @@ def novel_contract(params):
         execution = (CORRIDOR_PROJECTION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_MEASURED_CURVE_DEFLECTION_ID:
         execution = (MEASURED_CURVE_DEFLECTION_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_MEASURED_CURVE_SLEW_ID:
+        execution = (MEASURED_CURVE_SLEW_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FRONT_WALL_HANDOFF_ID:
         execution = (FRONT_WALL_HANDOFF_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COLLECTIVE_PROJECTION_ID:
@@ -1609,11 +1615,15 @@ def run(backend, params):
         if execution in CORRIDOR_PROJECTION_EXECUTIONS:
             verify_corridor_projection(env)
             model['corridor_projection'] = True
-        if execution == MEASURED_CURVE_DEFLECTION_EXECUTION:
+        if execution in MEASURED_CURVE_EXECUTIONS:
             from instinctlab.control.measured_curve_deflection import MeasuredCurveDeflection
 
-            if not isinstance(env.escape_option.curve_deflection, MeasuredCurveDeflection):
+            slew = execution == MEASURED_CURVE_SLEW_EXECUTION
+            curve = env.escape_option.curve_deflection
+            if not isinstance(curve, MeasuredCurveDeflection) or curve.limit_entry is not slew:
                 raise ValueError('COMMAND_MEASURED_CURVE_DEFLECTION_PROOF')
             model['measured_curve_deflection'] = True
+            if slew:
+                model['measured_curve_slew'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

@@ -24,7 +24,7 @@ from .command_replay import (
     RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
     COLLECTIVE_PROJECTION_EXECUTIONS, CORRIDOR_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS,
-    MEASURED_CURVE_DEFLECTION_EXECUTION, STATIC_TURN_ONSET_EXECUTIONS,
+    MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTION, STATIC_TURN_ONSET_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -477,7 +477,8 @@ def audit(output, params, counters):
         front_wall_handoff = model['execution'] in FRONT_WALL_HANDOFF_EXECUTIONS
         collective_projection = model['execution'] in COLLECTIVE_PROJECTION_EXECUTIONS
         corridor_projection = model['execution'] in CORRIDOR_PROJECTION_EXECUTIONS
-        measured_curve = model['execution'] == MEASURED_CURVE_DEFLECTION_EXECUTION
+        measured_curve = model['execution'] in MEASURED_CURVE_EXECUTIONS
+        measured_curve_slew = model['execution'] == MEASURED_CURVE_SLEW_EXECUTION
         static_turn_onset = model['execution'] in STATIC_TURN_ONSET_EXECUTIONS
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
@@ -494,6 +495,7 @@ def audit(output, params, counters):
                 or model.get('collective_projection', False) is not collective_projection
                 or model.get('corridor_projection', False) is not corridor_projection
                 or model.get('measured_curve_deflection', False) is not measured_curve
+                or model.get('measured_curve_slew', False) is not measured_curve_slew
                 or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
@@ -980,6 +982,11 @@ def audit(output, params, counters):
                     if hover_own_side[lane] and (not intercepted[lane] or row['escape_active'][lane]
                             or row['ics_beta'][lane] < .89999 or any(math.hypot(*frame[6:9]) > 1.e-6 for frame in actor)):
                         raise ValueError('COMMAND_REPLAY_HOVER_OWN_SIDE_BEHAVIOR')
+                    if measured_curve_slew and curves[lane][1]:
+                        if (intercepted[lane] or continued[lane] or handoff[lane] or held[lane]
+                                or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                                or (curves[lane][0] and math.dist(row['v_final_b'][lane], actor[-1][9:12]) > .30005)):
+                            raise ValueError('COMMAND_REPLAY_MEASURED_CURVE_SLEW_BEHAVIOR')
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)

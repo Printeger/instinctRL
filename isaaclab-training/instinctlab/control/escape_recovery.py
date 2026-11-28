@@ -113,6 +113,7 @@ COLLECTIVE_PROJECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v51'
 STATIC_TURN_ONSET_25 = 'm4-escape-brake-tube-p25-crossing-stop-v52'
 CORRIDOR_PROJECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v53'
 MEASURED_CURVE_DEFLECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v54'
+MEASURED_CURVE_SLEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v55'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -150,7 +151,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        RELEASE_STOP_CERTIFICATES_25: 25, STEADY_HANDOFF_25: 25,
                        TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25,
                        FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25, STATIC_TURN_ONSET_25: 25,
-                       CORRIDOR_PROJECTION_25: 25, MEASURED_CURVE_DEFLECTION_25: 25}
+                       CORRIDOR_PROJECTION_25: 25, MEASURED_CURVE_DEFLECTION_25: 25, MEASURED_CURVE_SLEW_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -186,7 +187,7 @@ class EscapeRecovery(EscapeOption):
                  verify_static_retreat_handoff=False, align_planar_protection=False,
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
                  verify_neutral_retry=False, observed_turn_braking=False, verify_static_turn=False,
-                 verify_measured_curve=False):
+                 verify_measured_curve=False, limit_curve_entry=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -209,7 +210,7 @@ class EscapeRecovery(EscapeOption):
         if verify_measured_curve:
             from .measured_curve_deflection import MeasuredCurveDeflection
 
-            self.curve_deflection = MeasuredCurveDeflection(lanes, self.direction)
+            self.curve_deflection = MeasuredCurveDeflection(lanes, self.direction, limit_entry=limit_curve_entry)
             self.measured_curve = self.direction.new_zeros((lanes, 3))
         if verify_static_turn:
             if not verified_retreat_onset:
@@ -2982,9 +2983,14 @@ class EscapeRecovery(EscapeOption):
             blocked = (self.retreating | self.braking | self.ranked | self.holding | self.static_stop_verified
                        | self.crossing_restart_verified | (self.zero_crossing_commit > 0)
                        | (self.observed_turn_brake_floor > 0.))
+            if self.curve_deflection.limit_entry:
+                blocked |= (self.intercepted | self.intercept_continued | self.handed_off | self.tracked_resume_used
+                            | self.composed_crossing_verified | self.brake_recovery_verified | self.offset_stopped
+                            | self.tangent_used | self.detour_used)
             self.measured_curve = self.curve_deflection.apply(
                 policy['lidar_grid'], policy['state_vec'], selected, config,
-                rays=self.detector._full_rays, blocked=blocked, issued=self.issued)
+                rays=self.detector._full_rays, blocked=blocked, issued=self.issued,
+                action_for_velocity=self.action_for_velocity)
         return selected
 
     def _apply_recovery(self, policy, action, config):

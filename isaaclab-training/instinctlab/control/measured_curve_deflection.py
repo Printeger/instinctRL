@@ -14,6 +14,7 @@ _QUEUES_S = (0., .025, .05, .075, .10)
 _TIMES_S = np.arange(601)*.005
 _PASS_S = 2.4
 _SURFACE_FLOOR_M = .39
+_ENTRY_DELTA_M_S = .30
 
 
 @dataclass
@@ -142,6 +143,24 @@ def _choices(lidar, state, rays, fit, coast, config, issued, *, entry):
     return best
 
 
+def _limited_entry(scan, state, action, score, config, issued, action_for_velocity):
+    full = issued(scan, state, action[None], config).v_final_b
+    previous = state[:, 48:51]
+    change = full-previous
+    size = float(change.norm())
+    if size <= _ENTRY_DELTA_M_S:
+        return action, score
+
+    step = previous+(_ENTRY_DELTA_M_S/size)*change
+    trial = action_for_velocity(step, previous, config.governor)
+    limited = issued(scan, state, trial, config).v_final_b
+    if float((limited-previous).norm()) > _ENTRY_DELTA_M_S+1.e-5:
+        return None, 0.
+    # A one-packet change can shift the subsequent response by at most its
+    # velocity difference times that packet's duration in the response model.
+    return trial[0], score-.10*float((full-limited).norm())
+
+
 @dataclass
 class _Pass:
     action: torch.Tensor
@@ -153,12 +172,13 @@ class _Pass:
 
 
 class MeasuredCurveDeflection:
-    def __init__(self, lanes, reference):
+    def __init__(self, lanes, reference, *, limit_entry=False):
         self.passes = [None]*lanes
         self.offsets = [reference.new_zeros((lanes, 4, 2)) for _ in _LAGS_S]
         self.coast = [reference.new_zeros((lanes, 2)) for _ in _LAGS_S]
         self.age = reference.new_zeros(lanes)
         self.rearm = reference.new_zeros(lanes)
+        self.limit_entry = limit_entry
 
     def reset(self, lanes):
         for lane in lanes.tolist():
@@ -169,7 +189,7 @@ class MeasuredCurveDeflection:
         self.age[lanes] = 0.
         self.rearm[lanes] = 0.
 
-    def apply(self, lidar, state, selected, config, *, rays, blocked, issued):
+    def apply(self, lidar, state, selected, config, *, rays, blocked, issued, action_for_velocity):
         for index, lag in enumerate(_LAGS_S):
             self.offsets[index], self.coast[index] = advance_command_response(
                 self.offsets[index], self.coast[index], state, lag=lag)
@@ -197,6 +217,7 @@ class MeasuredCurveDeflection:
             coast = torch.stack([v[lane] for v in self.coast]).cpu().numpy()
             item = self.passes[lane]
             score = 0.
+            startup = None
             if item is None:
                 fit = _fit_return(scan, packet, rays, offsets, coast, entry=True)
                 if fit is None:
@@ -212,13 +233,18 @@ class MeasuredCurveDeflection:
                 if choice is None:
                     continue
                 action, packets, score = choice
+                if self.limit_entry:
+                    startup, score = _limited_entry(scan, packet, action, score, config, issued, action_for_velocity)
+                    if score < _SURFACE_FLOOR_M:
+                        continue
                 side = torch.cross(-packet[0, 42:45], packet.new_tensor(fit.mean_acceleration()[1]), dim=0)
                 item = _Pass(action.clone(), side/side.norm(), packets)
                 self.passes[lane] = item
             elif not self._renew(item, scan, packet, rays, offsets, coast, config, issued):
                 self.passes[lane] = None
                 continue
-            check = issued(scan, packet, item.action[None], config)
+            proposed = item.action if startup is None else startup
+            check = issued(scan, packet, proposed[None], config)
             if bool(check.metrics['emergency'][0, 0]) or float(check.metrics['beta'][0, 0]) < .90:
                 self.passes[lane] = None
                 continue
@@ -229,7 +255,7 @@ class MeasuredCurveDeflection:
                         and float(original.v_final_b[0]@latest) >= .60*float(latest@latest)):
                     self.passes[lane] = None
                     continue
-            selected[lane] = item.action
+            selected[lane] = proposed
             if score:
                 self.rearm[lane] = item.remaining
             item.elapsed += 1

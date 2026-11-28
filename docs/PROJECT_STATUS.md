@@ -26,6 +26,8 @@
 
 `v53` 的新种子独立 Crazy 回放完成 38,400 个评价步和 3,832.3 路秒首飞暴露。街道第 20 路接触重置，首飞 31/32，松杆 30/32，最低包络 −0.115 米。街道第 16、17、19 路也低于 0.15 米。第 20 路在来物仍可跟踪时失去候选并停住，第 16 路早期个案则耗尽缺失续持。当前验证提前避让，同版全量 R6 和 30 分钟验收暂缓。 [独立短程结果](experiments/instinct-continuous-command/independent_observable_sweep/REPORT.md)
 
+`v54` 同输入配对仍在第 20 路第 1,122 拍接触重置。首拍提前避让后，原生角速超过分支入口，动作仅执行一拍。第 18 路同时出现原截线标志和新动作，冻结行为审核拒绝。另行复算原件得首飞 31/32、松杆 30/32、最低净空 −0.103 米，28 路轨迹和下发逐拍一致。下一配对检验首拍速度增量和原截线优先级。 [配对原件与诊断](experiments/instinct-continuous-command/measured_curve_deflection/REPORT.md)
+
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
