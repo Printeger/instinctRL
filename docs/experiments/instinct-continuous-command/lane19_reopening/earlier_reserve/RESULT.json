@@ -1,0 +1,536 @@
+{
+  "certified_continuation_open_loop_m": 0.22807279265063973,
+  "continuation_commit": "7572441d",
+  "first_readback_commit": "9d6b18e5",
+  "native_evaluation_steps": 0,
+  "physical": {
+    "1052": {
+      "menu": {
+        "absolute_population": 69,
+        "bare_stock_body": [
+          -0.0,
+          -0.0,
+          -0.0
+        ],
+        "capture_error_m": 4.689744159680487e-07,
+        "local_wall_stopping_hold_s": 0.0,
+        "native_beta": 0.0,
+        "native_body": [
+          -0.0,
+          -0.0,
+          -0.0
+        ],
+        "nonzero_population": 69,
+        "rank_gain_count": 0,
+        "stock_rank_m": 0.7964238767516201,
+        "stock_short_floor_m": 0.29240417900326954
+      },
+      "modes": {
+        "guarded": {
+          "attempts": 7,
+          "clearance_m": 0.2364940973930646,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000159666,
+              "lag_s": 0.45,
+              "physical_min_m": 0.600719783328671,
+              "quiet_speed_m_s": 0.06916486599226847,
+              "static_min_m": 1.2389427574286682,
+              "time_s": 105.205
+            },
+            {
+              "case": "early_positive",
+              "drift_m": 0.19990000000159666,
+              "lag_s": 0.45,
+              "physical_min_m": 0.2364940973930646,
+              "quiet_speed_m_s": 0.06916486599226847,
+              "static_min_m": 1.2389427574286682,
+              "time_s": 108.99000000000001
+            }
+          ]
+        },
+        "strict": {
+          "attempts": 7,
+          "clearance_m": 0.23475317696852904,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000034033,
+              "lag_s": 0.45,
+              "physical_min_m": 0.600719783328671,
+              "quiet_speed_m_s": 0.05078013936762563,
+              "static_min_m": 1.2379268709309585,
+              "time_s": 105.205
+            },
+            {
+              "case": "early_positive",
+              "drift_m": 0.19990000000034033,
+              "lag_s": 0.45,
+              "physical_min_m": 0.23475317696852904,
+              "quiet_speed_m_s": 0.05078013936762563,
+              "static_min_m": 1.2379268709309585,
+              "time_s": 108.99000000000001
+            }
+          ]
+        }
+      }
+    },
+    "1055": {
+      "menu": {
+        "absolute_population": 154,
+        "bare_stock_body": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "capture_error_m": 4.046585770467459e-06,
+        "local_wall_stopping_hold_s": 0.0,
+        "native_beta": 0.0,
+        "native_body": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "nonzero_population": 154,
+        "rank_gain_count": 0,
+        "stock_rank_m": 0.8100221954916966,
+        "stock_short_floor_m": 0.3839792453614791
+      },
+      "modes": {
+        "guarded": {
+          "attempts": 7,
+          "clearance_m": 0.12219197575257013,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000134872,
+              "lag_s": 0.45,
+              "physical_min_m": 0.5600691495039318,
+              "quiet_speed_m_s": 0.06938074771919435,
+              "static_min_m": 1.259449939355538,
+              "time_s": 108.765
+            },
+            {
+              "case": "early_positive",
+              "drift_m": 0.19990000000134872,
+              "lag_s": 0.45,
+              "physical_min_m": 0.12219197575257013,
+              "quiet_speed_m_s": 0.06938074771919435,
+              "static_min_m": 1.259449939355538,
+              "time_s": 109.08
+            }
+          ]
+        },
+        "strict": {
+          "attempts": 7,
+          "clearance_m": 0.12066983283791177,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000006117,
+              "lag_s": 0.45,
+              "physical_min_m": 0.5586622011592177,
+              "quiet_speed_m_s": 0.05087279004613052,
+              "static_min_m": 1.263738250072057,
+              "time_s": 108.77
+            },
+            {
+              "case": "early_positive",
+              "drift_m": 0.19990000000006117,
+              "lag_s": 0.45,
+              "physical_min_m": 0.12066983283791177,
+              "quiet_speed_m_s": 0.05087279004613052,
+              "static_min_m": 1.263738250072057,
+              "time_s": 109.08
+            }
+          ]
+        }
+      }
+    },
+    "1058": {
+      "menu": {
+        "absolute_population": 167,
+        "bare_stock_body": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "capture_error_m": 4.1392977403464926e-06,
+        "local_wall_stopping_hold_s": 0.0,
+        "native_beta": 0.0,
+        "native_body": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "nonzero_population": 167,
+        "rank_gain_count": 0,
+        "stock_rank_m": 0.8480609638934271,
+        "stock_short_floor_m": 0.47632867725604855
+      },
+      "modes": {
+        "guarded": {
+          "attempts": 7,
+          "clearance_m": 0.02209595852859303,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000049193,
+              "lag_s": 0.45,
+              "physical_min_m": 0.02209595852859303,
+              "quiet_speed_m_s": 0.06990000000103914,
+              "static_min_m": 0.9189527467945311,
+              "time_s": 111.11000000000001
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.19990000000049193,
+              "lag_s": 0.25,
+              "physical_min_m": 0.024437235886815234,
+              "quiet_speed_m_s": 0.06990000000103914,
+              "static_min_m": 0.9189527467945311,
+              "time_s": 111.06500000000001
+            }
+          ]
+        },
+        "strict": {
+          "attempts": 7,
+          "clearance_m": 0.021800313979590258,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.1999000000003929,
+              "lag_s": 0.45,
+              "physical_min_m": 0.021800313979590258,
+              "quiet_speed_m_s": 0.05115771064933924,
+              "static_min_m": 0.9211155080106153,
+              "time_s": 111.10500000000002
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.1999000000003929,
+              "lag_s": 0.25,
+              "physical_min_m": 0.024038093828047447,
+              "quiet_speed_m_s": 0.05115771064933924,
+              "static_min_m": 0.9211155080106153,
+              "time_s": 111.06000000000002
+            }
+          ]
+        }
+      }
+    },
+    "1059": {
+      "menu": {
+        "absolute_population": 167,
+        "bare_stock_body": [
+          -0.0,
+          -0.0,
+          0.0
+        ],
+        "capture_error_m": 4.1392977403464926e-06,
+        "local_wall_stopping_hold_s": 0.6000000238418579,
+        "native_beta": 1.0,
+        "native_body": [
+          -0.07241307199001312,
+          -0.23541216552257538,
+          0.0012028050841763616
+        ],
+        "nonzero_population": 167,
+        "rank_gain_count": 0,
+        "stock_rank_m": 0.8620578129774981,
+        "stock_short_floor_m": 0.4714896539439911
+      },
+      "modes": {
+        "guarded": {
+          "attempts": 7,
+          "clearance_m": 0.017807184230583584,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000045272,
+              "lag_s": 0.45,
+              "physical_min_m": 0.017807184230583584,
+              "quiet_speed_m_s": 0.06990000000012501,
+              "static_min_m": 0.951814713150327,
+              "time_s": 111.045
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.19990000000045272,
+              "lag_s": 0.25,
+              "physical_min_m": 0.018512259545588994,
+              "quiet_speed_m_s": 0.06990000000012501,
+              "static_min_m": 0.951814713150327,
+              "time_s": 111.0
+            }
+          ]
+        },
+        "strict": {
+          "attempts": 7,
+          "clearance_m": 0.017718429272420844,
+          "groups": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000085514,
+              "lag_s": 0.45,
+              "physical_min_m": 0.017718429272420844,
+              "quiet_speed_m_s": 0.051303947229364426,
+              "static_min_m": 0.9516145981314423,
+              "time_s": 111.04
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.19990000000085514,
+              "lag_s": 0.25,
+              "physical_min_m": 0.017727053910717938,
+              "quiet_speed_m_s": 0.051303947229364426,
+              "static_min_m": 0.9516145981314423,
+              "time_s": 111.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "physical_commit": "92c6d1bc",
+  "raw": {
+    "CONTINUATION": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLIER-RESERVE/CONTINUATION.json",
+      "sha256": "17a9591e6cf432b125430929b3efb31beaf344203c70a9ec51bc5f5d04b4dac8"
+    },
+    "READBACK": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLIER-RESERVE/READBACK.json",
+      "sha256": "d2ccf82150a7ca4a04fb84ce92aeca7511bac74243ca83180565a28fc994f258"
+    },
+    "SEARCH": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLIER-RESERVE/SEARCH.json",
+      "sha256": "1fe704cd0bca896e96a1d9b32864ebddaf9857d3a6803bcf0bd2fb4a42be9050"
+    }
+  },
+  "readback": {
+    "early_positive": {
+      "before": {
+        "predicted_beta": 1.0,
+        "predicted_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "predicted_error_m_s": 0.0,
+        "priority": [],
+        "reason": "following_plan_ics_mismatch",
+        "requested_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "step": 1052,
+        "witness_reproduced": false
+      },
+      "new_rejection": {
+        "predicted_beta": 1.0,
+        "predicted_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "predicted_error_m_s": 1.0710209608078003e-08,
+        "priority": [],
+        "reason": "following_plan_ics_mismatch",
+        "requested_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725798826664686
+        ],
+        "step": 1053
+      },
+      "one_issue_candidate": {
+        "feasible_packets": 27,
+        "feasible_rmse_m_s": 0.1355730744561646,
+        "min_mover_m": 0.004051953463656888,
+        "min_static_m": 1.3594910179345683,
+        "minimum_m": 0.004051953463656888,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 19,
+        "worst_time_s": 108.86500000000001,
+        "zero_window": {
+          "entry_speed_m_s": 0.19291063628158658,
+          "exit_speed_m_s": 0.12091659200851784,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.1913921404972895,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "stock": {
+        "feasible_packets": 28,
+        "feasible_rmse_m_s": 0.14352301771070705,
+        "min_mover_m": 0.045681692432623044,
+        "min_static_m": 1.3161491619233894,
+        "minimum_m": 0.045681692432623044,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 19,
+        "worst_time_s": 108.81000000000002,
+        "zero_window": {
+          "entry_speed_m_s": 0.16017273760721715,
+          "exit_speed_m_s": 0.13000921938930224,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.22231492222273766,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "verified_issue": {
+        "backup_m": 0.40201947502305924,
+        "body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "decision": "issued",
+        "dispatch_error_m_s": 1.6557069790204385e-08,
+        "planned_m": 0.44213186283702444,
+        "predicted_beta": 1.0,
+        "predicted_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "predicted_error_m_s": 0.0,
+        "priority": [],
+        "requested_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "static_m": 0.7415580821037292,
+        "step": 1052,
+        "witness_reproduced": false
+      }
+    },
+    "nominal": {
+      "before": {
+        "predicted_beta": 1.0,
+        "predicted_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "predicted_error_m_s": 0.0,
+        "priority": [],
+        "reason": "following_plan_ics_mismatch",
+        "requested_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "step": 1052,
+        "witness_reproduced": false
+      },
+      "new_rejection": {
+        "predicted_beta": 1.0,
+        "predicted_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "predicted_error_m_s": 1.0710209608078003e-08,
+        "priority": [],
+        "reason": "following_plan_ics_mismatch",
+        "requested_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725798826664686
+        ],
+        "step": 1053
+      },
+      "one_issue_candidate": {
+        "feasible_packets": 18,
+        "feasible_rmse_m_s": 0.1022436560667546,
+        "min_mover_m": -0.1371256264606327,
+        "min_static_m": 1.3840221357306115,
+        "minimum_m": -0.1371256264606327,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 15,
+        "worst_time_s": 109.44000000000001,
+        "zero_window": {
+          "entry_speed_m_s": 0.15577410595962954,
+          "exit_speed_m_s": 0.06733632857880287,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.16142163765995643,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "stock": {
+        "feasible_packets": 19,
+        "feasible_rmse_m_s": 0.10095587354937882,
+        "min_mover_m": -0.16317923443535642,
+        "min_static_m": 1.3621745869509985,
+        "minimum_m": -0.16317923443535642,
+        "recovery": {
+          "anchor": 1110,
+          "confirmed_step": 1114,
+          "elapsed_s": 0.5,
+          "first_feasible": 1110,
+          "observed_offer_through": 1124
+        },
+        "tracked_packets": 15,
+        "worst_time_s": 109.415,
+        "zero_window": {
+          "entry_speed_m_s": 0.15816356640678228,
+          "exit_speed_m_s": 0.0529518198737775,
+          "frozen_stop_eligible": false,
+          "max_drift_m": 0.16358120106938367,
+          "sustained_speed_below_07_s": null
+        }
+      },
+      "verified_issue": {
+        "backup_m": 0.40201947502305924,
+        "body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "decision": "issued",
+        "dispatch_error_m_s": 1.6557069790204385e-08,
+        "planned_m": 0.44213186283702444,
+        "predicted_beta": 1.0,
+        "predicted_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "predicted_error_m_s": 0.0,
+        "priority": [],
+        "requested_body": [
+          0.11644244194030762,
+          0.43451809883117676,
+          0.006725788116455078
+        ],
+        "static_m": 0.7415580821037292,
+        "step": 1052,
+        "witness_reproduced": false
+      }
+    }
+  },
+  "schema": "instinctrl-lane19-earlier-reserve/1",
+  "status": "physical-witness-limited-to-one-closed-packet",
+  "training_steps": 0
+}
