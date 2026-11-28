@@ -534,7 +534,8 @@ def conditions(params):
         return {'layout_routes': params['street_center_ms']}
     if params['experiment_id'].startswith(LONG_PREFIX):
         protocol = json.loads(checked(params['protocol']).read_bytes())
-        return {'layout_routes': protocol['street_center_ms']}
+        key = 'street_sweep' if 'street_sweep' in protocol else 'street_center_ms'
+        return {'layout_routes': protocol[key]}
     if route_layouts(params['experiment_id']):
         return {'layout_routes': CONDITIONS['crossing_at_reversal']}
     return CONDITIONS
@@ -760,6 +761,19 @@ def novel_contract(params):
                     explicit_resets=len(labels), automatic_resets=transitions))
 
 
+def authored_street_sweep(seed):
+    from instinctlab.observations.moving_sphere import street_sweep_phase
+    from .robustness_scenarios import reset_spec
+
+    block = dict(id='continuous-replay-independent', task='pulse_hold')
+    phases = []
+    for lane in range(LANES):
+        if command_layout(lane) == 'street_gap':
+            spec = reset_spec(block, seed=seed, split='development', lane=lane, mount_position_m=(0., 0., .05))
+            phases.append(street_sweep_phase(seed, lane, spec['root_position_local_m'][0]))
+    return dict(schema_version='instinctrl-independent-street-sweep/1', phase_m=phases)
+
+
 def long_contract(params):
     fields = {'experiment_id', 'training_seed', 'seed', 'models', 'execution', 'stream', 'protocol',
               'clearance_envelope', 'wall_seconds', 'output_cap_bytes'}
@@ -772,13 +786,17 @@ def long_contract(params):
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
     protocol = json.loads(checked(params['protocol']).read_bytes())
+    sweep = 'street_sweep' in protocol
+    crossing_field = 'street_sweep' if sweep else 'street_center_ms'
+    scenario = protocol.get(crossing_field)
+    version = 'instinctrl-command-long-protocol/2' if sweep else 'instinctrl-command-long-protocol/1'
     if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
-                          'progress_opportunities', 'acceptance_gates', 'street_center_ms', 'pulse_acceleration_m_s2'}
-            or protocol['schema_version'] != 'instinctrl-command-long-protocol/1'
+                          'progress_opportunities', 'acceptance_gates', crossing_field, 'pulse_acceleration_m_s2'}
+            or protocol['schema_version'] != version
             or protocol['experiment_id'] != params['experiment_id'] or protocol['scene_seed'] != params['seed']
             or protocol['stream'] != params['stream'] or protocol['execution'] != params['execution']
             or protocol['checkpoint'] != params['models']['candidate']
-            or not valid_crossing_centers(protocol['street_center_ms'])
+            or not (scenario == authored_street_sweep(params['seed']) if sweep else valid_crossing_centers(scenario))
             or type(protocol['pulse_acceleration_m_s2']) not in (int, float)
             or protocol['pulse_acceleration_m_s2'] not in (.5, 1.)):
         raise ValueError('COMMAND_REPLAY_LONG_FREEZE')
@@ -959,8 +977,10 @@ def run(backend, params):
     long_run = params['experiment_id'].startswith(LONG_PREFIX)
     compressed = compress_trace(params['experiment_id'])
     independently_timed = novel or long_run
+    street_sweep = None
     if independently_timed:
         settings = json.loads(checked(params['protocol']).read_bytes()) if long_run else params
+        street_sweep = settings.get('street_sweep')
         block.update(id='continuous-replay-independent', task='pulse_hold',
                      pulse_acceleration_m_s2=settings['pulse_acceleration_m_s2'])
     output = Path(backend.output)
@@ -1216,7 +1236,7 @@ def run(backend, params):
                 model['verify_retreat_onset_side'] = True
             if retreat_stop:
                 model['verify_retreat_stop'] = True
-        for name, crossing_ms in conditions(params).items():
+        for name, crossing in conditions(params).items():
             pulse = []
 
             def capture_force(row):
@@ -1232,17 +1252,22 @@ def run(backend, params):
                 [spec['sensor_position_local_m'] for spec in env._r6_physics['specs']])
             modes = torch.full((LANES,), 7, device=env.device, dtype=torch.long)
             delay = None
-            if crossing_ms is not None:
+            phase = None
+            if crossing is not None:
                 ids = obstacle.indices
                 modes[street] = 2 + ids[street].remainder(2)
-                if independently_timed:
+                if street_sweep is not None:
                     delay = axis.new_zeros(LANES)
-                    delay[street] = axis.new_tensor(crossing_ms)/1000.-CROSSING_START_M/CROSSING_SPEED_M_S
+                    phase = axis.new_zeros((LANES, 2))
+                    phase[street] = axis.new_tensor(street_sweep['phase_m'])
+                elif independently_timed:
+                    delay = axis.new_zeros(LANES)
+                    delay[street] = axis.new_tensor(crossing)/1000.-CROSSING_START_M/CROSSING_SPEED_M_S
                 else:
-                    delay = crossing_ms/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
+                    delay = crossing/1000. - CROSSING_START_M/CROSSING_SPEED_M_S
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
                                half_period_s=CROSSING_TRAVEL_S if timed_crossings else None,
-                               exact_clock=independently_timed)
+                               exact_clock=independently_timed, sweep_phase_m=phase)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])
@@ -1254,11 +1279,15 @@ def run(backend, params):
             with ExitStack() as files:
                 handle = files.enter_context(trace.open('xb'))
                 dense = files.enter_context(dense_path.open('xb')) if capture else None
-                save_row(handle, dict(kind='initial', mover_start_w=obstacle.start.cpu().tolist(),
-                                      path_reference_w=sensor_origins.cpu().tolist(),
-                                      scene_origins_w=env.scene.env_origins.cpu().tolist(),
-                                      root_state_w=env._robot.data.root_state_w.cpu().tolist(),
-                                      departure_delay_s=delay.cpu().tolist() if independently_timed else delay, layouts=layouts))
+                initial = dict(kind='initial', mover_start_w=obstacle.start.cpu().tolist(),
+                               path_reference_w=sensor_origins.cpu().tolist(),
+                               scene_origins_w=env.scene.env_origins.cpu().tolist(),
+                               root_state_w=env._robot.data.root_state_w.cpu().tolist(),
+                               departure_delay_s=delay.cpu().tolist() if independently_timed else delay,
+                               layouts=layouts)
+                if street_sweep is not None:
+                    initial['street_sweep'] = street_sweep
+                save_row(handle, initial)
                 for step in range(steps):
                     backend.resource_check('before_command_replay_step', step)
                     counters.require_step_capacity(kind='nontraining', lanes=LANES,

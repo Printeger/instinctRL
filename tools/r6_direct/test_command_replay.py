@@ -17,6 +17,38 @@ def test_long_trace_gzip_preserves_the_original_json_lines(tmp_path):
         assert replay.read().encode() == raw
 
 
+def test_street_sweep_checks_each_physical_tick_and_restarts_the_lane_clock(tmp_path):
+    import numpy as np
+    import torch
+    from instinctlab.observations.moving_sphere import street_sweep_pose
+    from training_workloads.unified_h1.command_replay import CLEARANCE_SHAPE, LANES, authored_street_sweep, command_layout
+    from training_workloads.unified_h1.command_replay_audit import verify_street_sweep
+
+    layouts = [command_layout(i) for i in range(LANES)]
+    street = [i for i, layout in enumerate(layouts) if layout == 'street_gap']
+    origins = torch.arange(LANES * 3, dtype=torch.float64).reshape(LANES, 3)
+    sweep = authored_street_sweep(829377162)
+    phases = torch.as_tensor(sweep['phase_m'], dtype=torch.float64)
+    rows = [{'reset': [i == street[0] for i in range(LANES)]}, {'reset': [False] * LANES}]
+    starts = torch.zeros((2, len(street)), dtype=torch.float64)
+    starts[1, 1:] = .10
+    substep = torch.arange(21, dtype=torch.float64)[None, :, None] * .005
+    locations = street_sweep_pose(origins[street][None, None], starts[:, None] + substep, phases[None, None])
+    initial_positions = origins.clone()
+    initial_positions[street] = locations[0, 0]
+    initial = {'scene_origins_w': origins.tolist(), 'mover_start_w': initial_positions.tolist()}
+    samples = np.zeros((2, *CLEARANCE_SHAPE), dtype='<f4')
+    for index, lane in enumerate(street):
+        samples[:, :, lane, 3:6] = locations[:, :, index].numpy()
+    path = tmp_path / 'clearance.f32'
+    samples.tofile(path)
+    verify_street_sweep(path, initial, rows, layouts, sweep)
+    samples[1, 5, street[0], 4] += .01
+    samples.tofile(path)
+    with pytest.raises(ValueError, match='COMMAND_REPLAY_SWEEP_CLEARANCE_PATH'):
+        verify_street_sweep(path, initial, rows, layouts, sweep)
+
+
 def test_shallow_steering_requires_two_observed_paths_and_respects_protection():
     import torch
     from instinctlab.control.escape_recovery import EscapeRecovery

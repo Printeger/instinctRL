@@ -100,7 +100,7 @@ def verify_clearance(path, initial, rows):
         previous = row
 
 
-def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, acceleration):
+def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, acceleration, *, sweep=None):
     from .robustness import lane_role
 
     pulse = json.loads(path.read_bytes())
@@ -120,6 +120,10 @@ def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, accele
                 raise ValueError('COMMAND_REPLAY_PULSE_FORCE')
         if len(row['mass_kg']) != LANES:
             raise ValueError('COMMAND_REPLAY_PULSE_LANES')
+    if sweep is not None:
+        if initial.get('street_sweep') != sweep or initial['departure_delay_s'] != [0.]*LANES:
+            raise ValueError('COMMAND_REPLAY_SWEEP_BINDING')
+        return
     centers = iter(center_times)
     for lane, (layout, delay) in enumerate(zip(layouts, initial['departure_delay_s'], strict=True)):
         center = next(centers) if layout == 'street_gap' else None
@@ -137,6 +141,35 @@ def verify_pulse_and_crossing(path, initial, rows, layouts, center_times, accele
             offset = math.copysign(min(CROSSING_START_M, before_center_s*CROSSING_SPEED_M_S), start)
             if abs(rows[step]['mover_position_w'][lane][1]-reference-offset) > .04:
                 raise ValueError('COMMAND_REPLAY_CROSSING_READBACK')
+
+
+def verify_street_sweep(path, initial, rows, layouts, sweep):
+    """Reconstruct the prescribed 5 ms mover path from frozen phases and lane clocks."""
+    import numpy as np
+    import torch
+    from instinctlab.observations.moving_sphere import street_sweep_pose
+
+    samples = dense_clearance(path, len(rows))
+    street = [i for i, layout in enumerate(layouts) if layout == 'street_gap']
+    origins = torch.as_tensor(initial['scene_origins_w'], dtype=torch.float64)[street]
+    phases = torch.as_tensor(sweep['phase_m'], dtype=torch.float64)
+    if not torch.allclose(torch.as_tensor(initial['mover_start_w'], dtype=torch.float64)[street],
+                          street_sweep_pose(origins, torch.zeros(len(street), dtype=torch.float64), phases),
+                          atol=.003, rtol=0.):
+        raise ValueError('COMMAND_REPLAY_SWEEP_START')
+    episode_steps = np.empty((len(rows), len(street)), dtype=np.int32)
+    elapsed = np.zeros(len(street), dtype=np.int32)
+    for i, row in enumerate(rows):
+        episode_steps[i] = elapsed
+        elapsed = np.where([row['reset'][j] for j in street], 0, elapsed+1)
+    substeps = torch.arange(CLEARANCE_SHAPE[0], dtype=torch.float64)*.005
+    for start in range(0, len(rows), 256):
+        stop = min(start+256, len(rows))
+        clocks = torch.as_tensor(episode_steps[start:stop], dtype=torch.float64)[:, None]*.10
+        expected = street_sweep_pose(origins[None, None], clocks+substeps[None, :, None], phases[None, None])
+        actual = torch.as_tensor(np.take(samples[start:stop, :, :, 3:6], street, axis=2), dtype=torch.float64)
+        if not torch.allclose(actual, expected, atol=.003, rtol=0.):
+            raise ValueError(f'COMMAND_REPLAY_SWEEP_CLEARANCE_PATH {start}:{stop}')
 
 
 def score_lane(rows, initial, lane, crossing):
@@ -267,6 +300,7 @@ def audit(output, params, counters):
         protocol = json.loads(checked(params['protocol']).read_bytes())
         sources.extend([params['protocol'], protocol['progress_opportunities'], protocol['acceptance_gates']])
         pulse_settings = protocol
+    sweep = pulse_settings.get('street_sweep')
     resets = 0
     results = {}
     first_pose = None
@@ -453,6 +487,8 @@ def audit(output, params, counters):
                 if dense != output/f'{label}-{name}-clearance.f32':
                     raise ValueError('COMMAND_REPLAY_CLEARANCE_PATH')
                 verify_clearance(dense, initial, rows)
+                if sweep is not None:
+                    verify_street_sweep(dense, initial, rows, layouts, sweep)
                 sources.append(trial['clearance'])
             if ('pulse' in trial) != pulse_enabled:
                 raise ValueError('COMMAND_REPLAY_PULSE_BINDING')
@@ -460,8 +496,8 @@ def audit(output, params, counters):
                 pulse = checked(trial['pulse'])
                 if pulse != output/f'{label}-{name}-pulse.json':
                     raise ValueError('COMMAND_REPLAY_PULSE_PATH')
-                verify_pulse_and_crossing(pulse, initial, rows, layouts, pulse_settings['street_center_ms'],
-                                          pulse_settings['pulse_acceleration_m_s2'])
+                verify_pulse_and_crossing(pulse, initial, rows, layouts, pulse_settings.get('street_center_ms'),
+                                          pulse_settings['pulse_acceleration_m_s2'], sweep=sweep)
                 sources.append(trial['pulse'])
             if first_pose is None:
                 first_pose = initial['root_state_w']
