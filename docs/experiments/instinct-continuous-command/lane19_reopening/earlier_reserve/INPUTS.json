@@ -1,0 +1,161 @@
+{
+  "closed_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/closed/replay.py",
+    "sha256": "8653501b329792fe44b8ea94f9c2bd764494eb81de9079c8fc7025759e1ab045"
+  },
+  "common_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/common_restart/find_restart.py",
+    "sha256": "c70af861d5e810cdade10836211bd54ea00483cf589ef485e2f8ab581d153734"
+  },
+  "dense": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+    "sha256": "bf3701716492e2c001481f2e0deb8e2e4a5fed686bfd27419f8063e5aff879c9"
+  },
+  "modes": {
+    "guarded": {
+      "extra_motion_ticks": 4,
+      "restart_slew": true,
+      "seeds": [
+        [
+          30,
+          30,
+          30
+        ],
+        [
+          105,
+          105,
+          105
+        ],
+        [
+          195,
+          195,
+          195
+        ],
+        [
+          270,
+          270,
+          270
+        ]
+      ],
+      "split_step": 1110
+    },
+    "strict": {
+      "extra_motion_ticks": 0,
+      "restart_slew": true,
+      "seeds": [
+        [
+          30,
+          30,
+          30
+        ],
+        [
+          105,
+          105,
+          105
+        ],
+        [
+          195,
+          195,
+          195
+        ],
+        [
+          270,
+          270,
+          270
+        ]
+      ],
+      "split_step": 1110
+    }
+  },
+  "protocol": {
+    "anchors": [
+      1052,
+      1055,
+      1058,
+      1059
+    ],
+    "cap_m_s": 0.45,
+    "case_groups": [
+      [
+        "nominal",
+        "early_negative",
+        "hard_negative"
+      ],
+      [
+        "early_positive",
+        "hard_positive"
+      ]
+    ],
+    "cases": {
+      "early_negative": {
+        "attitude": "recorded",
+        "fork_step": 1062,
+        "sign": -1
+      },
+      "early_positive": {
+        "attitude": "recorded",
+        "fork_step": 1062,
+        "sign": 1
+      },
+      "hard_negative": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": -1
+      },
+      "hard_positive": {
+        "attitude": "fixed",
+        "fork_step": 1064,
+        "sign": 1
+      },
+      "nominal": {
+        "attitude": "recorded",
+        "fork_step": 1064,
+        "sign": 0
+      }
+    },
+    "directions": 8,
+    "drift_headroom_m": 0.0001,
+    "drift_m": 0.2,
+    "expected_firsts": 17,
+    "lags_s": [
+      0.25,
+      0.35,
+      0.45
+    ],
+    "lane": 19,
+    "max_solver_iterations": 110,
+    "optimization_end": 1110,
+    "recovery_anchor": 1110,
+    "refinements": 5,
+    "return_to_ccg": 1102,
+    "scene_seed": 1999375583,
+    "score_end": 1149,
+    "seed_bearings_deg": [
+      160.0,
+      180.0,
+      200.0
+    ],
+    "slew_m_s": 0.3,
+    "speed_headroom_m_s": 0.0001,
+    "start": 1060,
+    "stop_speed_m_s": 0.07,
+    "wanted_margin_m": 0.15,
+    "witnesses_per_case": 3,
+    "zero_window": [
+      1070,
+      1084
+    ]
+  },
+  "reopening_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/INPUTS.json",
+    "sha256": "07e15913b072cb6cb68755f613e2ac912df946c6735d5bcccff9db29928b27cd"
+  },
+  "shared_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/shared_prefix/INPUTS.json",
+    "sha256": "77d97d702de129f896c211011c2f0923a77f9aa92728c37941ed8c9a4d647692"
+  },
+  "shared_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/shared_prefix/find_shared_prefix.py",
+    "sha256": "796bcaab3e8c8577a31204c332cafb2f67832ca7260a3cc12566b98945d987b5"
+  }
+}
