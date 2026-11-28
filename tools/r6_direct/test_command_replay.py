@@ -229,6 +229,36 @@ def test_crossing_stop_proof_keeps_the_vehicle_clear_after_it_brakes():
     assert (clearance < .39).all()
 
 
+def test_crossing_brake_renewal_keeps_the_identity_on_the_shared_scan(monkeypatch):
+    import torch
+    from instinctlab.control import brake_renewal
+
+    clock = torch.tensor([-.30, -.20, -.10, 0.]).repeat(4, 1)
+    centers = torch.zeros(4, 4, 3)
+    centers[:, :, 0] = 1.10
+    centers[:, :, 1] = .5*clock
+    radii = torch.full_like(clock, .34)
+    history = torch.zeros(4, 52)
+    anchors = torch.cat((centers[:, -2], radii[:, -2, None], torch.tensor([[0., .50, -1.1]]).repeat(4, 1)), dim=1)
+    anchors[1, 0] += .04
+    anchors[2, 5] = -.50
+    anchors[3, 6] = 1.1
+
+    def nearest(lidar, state, rays, *, require_nearest):
+        assert require_nearest
+        return torch.arange(4), centers, radii, clock
+
+    monkeypatch.setattr(brake_renewal, '_crossing_shapes', nearest)
+    lanes, position, motion, coast, radius = brake_renewal.renew_crossing(
+        None, history, None, torch.zeros(4, 4, 2), torch.zeros(4, 2), anchors)
+
+    assert lanes.tolist() == [0]
+    torch.testing.assert_close(position, torch.tensor([[1.10, 0.]]))
+    torch.testing.assert_close(motion, torch.tensor([[0., .50]]))
+    torch.testing.assert_close(coast, torch.zeros(1, 2))
+    torch.testing.assert_close(radius, torch.tensor([.34]))
+
+
 def test_crossing_clearance_checks_a_release_before_the_planned_stop():
     import torch
     from instinctlab.control.escape_passage import intercept_scores

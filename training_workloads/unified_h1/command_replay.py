@@ -121,6 +121,8 @@ NOVEL_WALL_MOTION_AND_STOP_ID = NOVEL_PREFIX+'92'
 NOVEL_WALL_MOTION_AND_STOP_CONFIRM_ID = NOVEL_PREFIX+'93'
 NOVEL_SUPPORTED_WALL_APPROACH_ID = NOVEL_PREFIX+'94'
 NOVEL_SUPPORTED_WALL_APPROACH_CONFIRM_ID = NOVEL_PREFIX+'95'
+NOVEL_CURRENT_REQUEST_RECOVERY_ID = NOVEL_PREFIX+'96'
+NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID = NOVEL_PREFIX+'97'
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
@@ -216,8 +218,10 @@ COMBINED_CONTROL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v34'
 CROSSING_AND_WALL_MOTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v36'
 WALL_MOTION_AND_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v38'
 SUPPORTED_WALL_APPROACH_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v39'
+CURRENT_REQUEST_RECOVERY_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v40'
+SUPPORTED_WALL_EXECUTIONS = (SUPPORTED_WALL_APPROACH_EXECUTION, CURRENT_REQUEST_RECOVERY_EXECUTION)
 COMPOSED_MOTION_EXECUTIONS = (COMBINED_CONTROL_EXECUTION, CROSSING_AND_WALL_MOTION_EXECUTION,
-                              WALL_MOTION_AND_STOP_EXECUTION, SUPPORTED_WALL_APPROACH_EXECUTION)
+                              WALL_MOTION_AND_STOP_EXECUTION, *SUPPORTED_WALL_EXECUTIONS)
 BRAKE_TRANSITION_EXECUTIONS = (BRAKE_TRANSITION_EXECUTION, *COMPOSED_MOTION_EXECUTIONS)
 BRAKE_RECOVERY_EXECUTIONS = (BRAKE_RECOVERY_EXECUTION, *BRAKE_TRANSITION_EXECUTIONS)
 FRONT_WALL_BRAKING_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v25'
@@ -235,7 +239,7 @@ ZERO_CROSSING_WITHDRAWAL_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v31
 RANKED_REVERSAL_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v32'
 RETREAT_ONSET_SIDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v35'
 RETREAT_STOP_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v37'
-RETREAT_STOP_EXECUTIONS = (RETREAT_STOP_EXECUTION, WALL_MOTION_AND_STOP_EXECUTION, SUPPORTED_WALL_APPROACH_EXECUTION)
+RETREAT_STOP_EXECUTIONS = (RETREAT_STOP_EXECUTION, WALL_MOTION_AND_STOP_EXECUTION, *SUPPORTED_WALL_EXECUTIONS)
 RETREAT_ONSET_SIDE_EXECUTIONS = (RETREAT_ONSET_SIDE_EXECUTION, CROSSING_AND_WALL_MOTION_EXECUTION,
                                 *RETREAT_STOP_EXECUTIONS)
 RANKED_REVERSAL_STOP_EXECUTIONS = (RANKED_REVERSAL_STOP_EXECUTION, COMBINED_CONTROL_EXECUTION, *RETREAT_ONSET_SIDE_EXECUTIONS)
@@ -243,7 +247,7 @@ ZERO_CROSSING_WITHDRAWAL_EXECUTIONS = (ZERO_CROSSING_WITHDRAWAL_EXECUTION, *RANK
 ROOM_TANGENT_MAGNITUDE_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v33'
 TANGENT_MAGNITUDE_EXECUTIONS = (TANGENT_MAGNITUDE_EXECUTION, ROOM_TANGENT_MAGNITUDE_EXECUTION,
                                 CROSSING_AND_WALL_MOTION_EXECUTION, WALL_MOTION_AND_STOP_EXECUTION,
-                                SUPPORTED_WALL_APPROACH_EXECUTION)
+                                *SUPPORTED_WALL_EXECUTIONS)
 OLDEST_PARTIAL_TURN_EXECUTIONS = (OLDEST_PARTIAL_TURN_EXECUTION, ROOM_TANGENT_MAGNITUDE_EXECUTION,
                                   *ZERO_CROSSING_WITHDRAWAL_EXECUTIONS)
 RETREAT_CONTINUATION_EXECUTIONS = (RETREAT_CONTINUATION_EXECUTION, *OLDEST_PARTIAL_TURN_EXECUTIONS)
@@ -334,7 +338,8 @@ def arm_execution(params, label):
 
 
 def compress_trace(run_id):
-    return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
+    return run_id.startswith(LONG_PREFIX) or run_id in (NOVEL_CURRENT_REQUEST_RECOVERY_ID, NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID,
+                                                       NOVEL_INTERCEPT_CHOICE_ID, NOVEL_TRACKING_CONFIRM_ID,
                                                        NOVEL_EARLY_DIAGONAL_ID, NOVEL_DIAGONAL_CONFIRM_ID,
                                                        NOVEL_RESERVE_DIRECTION_ID, NOVEL_CROSSING_FALLBACK_ID,
                                                        NOVEL_OPENING_STEERING_ID, NOVEL_ALONG_INTERCEPT_ID,
@@ -704,6 +709,8 @@ def novel_contract(params):
         execution = (WALL_MOTION_AND_STOP_EXECUTION,)
     elif params['experiment_id'] in (NOVEL_SUPPORTED_WALL_APPROACH_ID, NOVEL_SUPPORTED_WALL_APPROACH_CONFIRM_ID):
         execution = (SUPPORTED_WALL_APPROACH_EXECUTION,)
+    elif params['experiment_id'] in (NOVEL_CURRENT_REQUEST_RECOVERY_ID, NOVEL_CURRENT_REQUEST_RECOVERY_CONFIRM_ID):
+        execution = (CURRENT_REQUEST_RECOVERY_EXECUTION,)
     elif params['experiment_id'] == NOVEL_ALONG_CONFIRM_ID:
         execution = ALONG_INTERCEPT_EXECUTIONS
     wall = 1800 if paired else 1200
@@ -894,6 +901,11 @@ def verify_supported_wall_pipelines(env):
 
     if {type(pipeline) for pipeline in env._control_pipelines} != {SupportedWallEdgeReproofPipeline}:
         raise ValueError('COMMAND_SUPPORTED_WALL_PIPELINE')
+
+
+def verify_current_request_recovery(env):
+    if not (env.escape_option.retry_command_handoff and env.escape_option.verify_outward_brake):
+        raise ValueError('COMMAND_CURRENT_REQUEST_RECOVERY')
 
 
 def run(backend, params):
@@ -1374,8 +1386,11 @@ def run(backend, params):
                 filename = f'{label}-{name}-pulse.json'
                 atomic_json_replace(output, filename, pulse)
                 model['trials'][name]['pulse'] = file_pin(output/filename)
-        if execution == SUPPORTED_WALL_APPROACH_EXECUTION:
+        if execution in SUPPORTED_WALL_EXECUTIONS:
             verify_supported_wall_pipelines(env)
             model['supported_wall_approach'] = True
+        if execution == CURRENT_REQUEST_RECOVERY_EXECUTION:
+            verify_current_request_recovery(env)
+            model.update(retry_command_handoff=True, verify_outward_brake=True)
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))
