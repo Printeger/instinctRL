@@ -1,0 +1,20 @@
+{
+  "closed_pair": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-ADAPTIVE-RESERVE/REPROOF.json",
+    "sha256": "2494e8b53735a857ef10b4eeed59162e8821fa118dc2a602ae385b5d9cefe6a8"
+  },
+  "from": 1060,
+  "options": {
+    "erosion_m": 0.02,
+    "gap_m": 0.06,
+    "minimum_half_height_m": 0.2,
+    "minimum_half_returns": 12,
+    "mixed_surface_shift_m": 0.006
+  },
+  "readback_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_reserve/READBACK-INPUTS.json",
+    "sha256": "484030c499ab7846d58492afa6f51bdd7aa6829ad96950dd71177484e1cd45f3"
+  },
+  "start": 1052,
+  "through": 1064
+}
