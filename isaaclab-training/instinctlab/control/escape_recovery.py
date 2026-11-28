@@ -93,6 +93,7 @@ CROSSING_STOP_25_V31 = 'm4-escape-brake-tube-p25-crossing-stop-v31'
 CROSSING_STOP_25_V32 = 'm4-escape-brake-tube-p25-crossing-stop-v32'
 CROSSING_STOP_25_V33 = 'm4-escape-brake-tube-p25-crossing-stop-v33'
 CROSSING_STOP_25_V34 = 'm4-escape-brake-tube-p25-crossing-stop-v34'
+CROSSING_STOP_25_V35 = 'm4-escape-brake-tube-p25-crossing-stop-v35'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -123,7 +124,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        CROSSING_STOP_25_V25: 25, CROSSING_STOP_25_V26: 25, CROSSING_STOP_25_V27: 25,
                        CROSSING_STOP_25_V28: 25, CROSSING_STOP_25_V29: 25, CROSSING_STOP_25_V30: 25,
                        CROSSING_STOP_25_V31: 25, CROSSING_STOP_25_V32: 25, CROSSING_STOP_25_V33: 25,
-                       CROSSING_STOP_25_V34: 25}
+                       CROSSING_STOP_25_V34: 25, CROSSING_STOP_25_V35: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -151,7 +152,8 @@ class EscapeRecovery(EscapeOption):
                  retain_only_clipped_retreat=False, verify_hover_reference_reserve=False,
                  verify_crossing_restart=False, verify_overlapping_stop=False, verify_brake_recovery=False,
                  verify_retreat_continuation=False, verify_brake_transition=False, verify_oldest_partial_turn=False,
-                 verify_zero_crossing_withdrawal=False, verify_ranked_reversal_stop=False):
+                 verify_zero_crossing_withdrawal=False, verify_ranked_reversal_stop=False,
+                 verify_retreat_onset_side=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -236,6 +238,11 @@ class EscapeRecovery(EscapeOption):
             if not verify_zero_crossing_withdrawal:
                 raise ValueError('Ranked reversal proof requires verified crossing withdrawal')
             self.ranked_reversal_verified = torch.zeros_like(self.applied)
+        self.verify_retreat_onset_side = verify_retreat_onset_side
+        if verify_retreat_onset_side:
+            if not (crossing_retreat_own_side and reserve_direction):
+                raise ValueError('Retreat onset side proof requires same-side retreat and a reserve observation')
+            self.retreat_onset_side_floor = self.direction.new_zeros(lanes)
         self.verify_crossing_restart = verify_crossing_restart
         if verify_crossing_restart:
             if not (verify_hover_reference_reserve and tracked_resume and align_intercept and hover_escape_own_side):
@@ -398,6 +405,8 @@ class EscapeRecovery(EscapeOption):
             self.zero_crossing_floor[lanes] = 0.
         if self.verify_ranked_reversal_stop:
             self.ranked_reversal_verified[lanes] = False
+        if self.verify_retreat_onset_side:
+            self.retreat_onset_side_floor[lanes] = 0.
         if self.opening_steering:
             self.opening_steered[lanes] = False
         self.since_escape[lanes] = RECOVERY_LIMIT
@@ -1729,6 +1738,40 @@ class EscapeRecovery(EscapeOption):
         use = (crossed & (torch.minimum(torch.minimum(swept[:, 1], settled[:, 1]), robust)-queued >= .39)
                & (swept[:, 1]-swept[:, 0] >= .20))
         remaining = torch.full_like(candidates, 14)
+        if self.verify_retreat_onset_side:
+            recent = self.reserve_direction_seen[lanes[candidates]]
+            previous_heading = self.intercept_direction[lanes[candidates]]
+            recent &= (previous_heading*direction).sum(dim=1) >= .75
+            recent &= ((previous[candidates]*direction).sum(dim=1) >= .12)
+            recent &= ((request[candidates]*direction).sum(dim=1) >= .12)
+            fresh_turn = history.reshape(-1, 4, 13)[:, :, :3].norm(dim=2).amax(dim=1) <= .28
+            offset = (position*normal).sum(dim=1).abs()
+            old_motion = current.v_final_b[candidates]
+            inward = ((old_motion*direction).sum(dim=1) <= -.12) & (current.metrics['emergency'][candidates, 0] == 0.)
+            examine = (recent & fresh_turn & (offset[candidates] >= .32) & inward & access
+                       & ~crossed & (swept[:, 0] < .21) & (settled[:, 0] < 0.)).nonzero().flatten()
+            if len(examine):
+                target = checked.v_final_b[examine, None]
+                position_now, motion_now, coast_now, radius_now = (value[examine] for value in points)
+                forward = unit[candidates[examine]]
+                across = normal[candidates[examine]]
+                minimum = torch.minimum(swept[examine, 1], settled[examine, 1])
+                for angle in (-.04, 0., .04):
+                    heading = torch.nn.functional.normalize(forward+angle*across, dim=1)
+                    lateral = torch.stack((-heading[:, 1], heading[:, 0]), dim=1)
+                    start = ((position_now-.35*coast_now)*lateral).sum(dim=1)
+                    end = start-1.5*(target[:, 0, :2]*lateral).sum(dim=1)
+                    minimum = torch.minimum(minimum, start.sign()*end-radius_now)
+                    for delta in (-.12, 0., .12):
+                        varied = (tracked_speed[examine]+delta).clamp_min(.20)*heading
+                        sweep = intercept_scores(position_now, varied, coast_now, radius_now, target,
+                                                 hold_s=1.5, preview_steps=121)[:, 0]
+                        minimum = torch.minimum(minimum, sweep)
+                bound = minimum-.10*previous[candidates[examine]].norm(dim=1)
+                verified = (bound >= .39) & (bound-swept[examine, 0] >= .20)
+                approved = examine[verified]
+                use[approved] = True
+                self.retreat_onset_side_floor[lanes[candidates[approved]]] = bound[verified]
         if self.crossing_retreat_extended:
             retry = (crossed & ~use).nonzero().flatten()
             if len(retry):
@@ -2322,6 +2365,8 @@ class EscapeRecovery(EscapeOption):
 
     @torch.no_grad()
     def apply_recovery(self, policy, action, config):
+        if self.verify_retreat_onset_side:
+            self.retreat_onset_side_floor.zero_()
         if self.verify_zero_crossing_withdrawal:
             latest = policy['state_vec'][:, 45:48]
             changed = (self.zero_crossing_commit > 0) & (latest.norm(dim=1) > 1.e-6)

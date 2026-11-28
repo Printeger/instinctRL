@@ -181,7 +181,7 @@ def run(plan, input_pin):
             FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTIONS, WALL_EDGE_REPROOF_EXECUTIONS,
             OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTIONS,
             RETREAT_CONTINUATION_EXECUTIONS, OLDEST_PARTIAL_TURN_EXECUTIONS, ZERO_CROSSING_WITHDRAWAL_EXECUTIONS,
-            RANKED_REVERSAL_STOP_EXECUTIONS,
+            RANKED_REVERSAL_STOP_EXECUTIONS, RETREAT_ONSET_SIDE_EXECUTION,
             EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
             INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
             ROTATION_TUBE_EXECUTIONS, TANGENT_MAGNITUDE_EXECUTIONS,
@@ -381,6 +381,7 @@ def run(plan, input_pin):
                     oldest_partial_turn = option_version in OLDEST_PARTIAL_TURN_EXECUTIONS
                     zero_crossing_withdrawal = option_version in ZERO_CROSSING_WITHDRAWAL_EXECUTIONS
                     ranked_reversal_stop = option_version in RANKED_REVERSAL_STOP_EXECUTIONS
+                    retreat_onset_side = option_version == RETREAT_ONSET_SIDE_EXECUTION
                     brake_recovery = option_version in BRAKE_RECOVERY_EXECUTIONS
                     brake_transition = option_version in BRAKE_TRANSITION_EXECUTIONS
                     expected = (.15, .60 if tube else 0., tube, use_neighbors, standoff, inner_tube, aligns_rotation)
@@ -438,7 +439,8 @@ def run(plan, input_pin):
                             or env.escape_option.verify_retreat_continuation != retreat_continuation
                             or env.escape_option.verify_oldest_partial_turn != oldest_partial_turn
                             or env.escape_option.verify_zero_crossing_withdrawal != zero_crossing_withdrawal
-                            or env.escape_option.verify_ranked_reversal_stop != ranked_reversal_stop):
+                            or env.escape_option.verify_ranked_reversal_stop != ranked_reversal_stop
+                            or env.escape_option.verify_retreat_onset_side != retreat_onset_side):
                         raise ValueError('COMMAND_REGRESSION_EXECUTION_READBACK')
                     execution = dict(execution=option_version,
                            checkpoint=selection['checkpoint'], mount_pitch_degrees=env.lidar_mount_pitch_degrees,
@@ -543,6 +545,8 @@ def run(plan, input_pin):
                         execution['verify_zero_crossing_withdrawal'] = True
                     if ranked_reversal_stop:
                         execution['verify_ranked_reversal_stop'] = True
+                    if retreat_onset_side:
+                        execution['verify_retreat_onset_side'] = True
                     atomic(backend.output/'command-execution.json', execution)
             if counters.nontraining_transitions!=contract['budgets']['nontraining_transitions']:raise RuntimeError('DIRECT_FINAL_COUNT')
             if journaled:
