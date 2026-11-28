@@ -1,0 +1,2638 @@
+{
+  "by_layout": {
+    "corridor": [
+      {
+        "candidate_events": {
+          "all": 5,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 4,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 17798,
+          "maximum_measured_link_envelope_m": 0.20981724560260773,
+          "minimum_clearance_lower_bound_m": 0.33033981919288635,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 24,
+        "progress": {
+          "lane24-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3628996841609478,
+            "met_fraction": 0.95,
+            "met_steps": 19,
+            "observed_only_rmse_m_s": 0.04235644884403441,
+            "requested_progress_m": 0.44000000000000006,
+            "scheduled_moving_steps": 20
+          },
+          "lane24-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.41712952852249147,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.03148219066941806,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.33033981919288635,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.934852600097656,
+          "maximum_y_m": 0.4219512939453125,
+          "minimum_y_m": -0.5728912353515625
+        },
+        "stops": {
+          "lane24-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08606110472880409,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 922,
+          "fraction_at_least_60_percent_of_intent": 0.8622559652928417,
+          "longest_slow_feasible_start_step": 828,
+          "longest_slow_feasible_window_s": 0.8,
+          "mean_along_intent_m_s": 0.15933652307692275,
+          "requested_moving_steps": 931,
+          "rmse_m_s": 0.1071972961918578
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 13,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 11,
+          "recoveries_missed": 4
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 14057,
+          "maximum_measured_link_envelope_m": 0.2098248302936554,
+          "minimum_clearance_lower_bound_m": 0.3365904837846756,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 25,
+        "progress": {
+          "lane25-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.35511808544397355,
+            "met_fraction": 0.95,
+            "met_steps": 19,
+            "observed_only_rmse_m_s": 0.0457290349624226,
+            "requested_progress_m": 0.44000000000000006,
+            "scheduled_moving_steps": 20
+          },
+          "lane25-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4102818861603737,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.03499264327510479,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.3365904837846756,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.819854736328125,
+          "maximum_y_m": 0.42913818359375,
+          "minimum_y_m": -0.4198455810546875
+        },
+        "stops": {
+          "lane25-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08641713532779642,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 957,
+          "fraction_at_least_60_percent_of_intent": 0.6489028213166145,
+          "longest_slow_feasible_start_step": 1036,
+          "longest_slow_feasible_window_s": 3.8000000000000003,
+          "mean_along_intent_m_s": 0.12042450852276197,
+          "requested_moving_steps": 976,
+          "rmse_m_s": 0.15285960446563043
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 5,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 5,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 20365,
+          "maximum_measured_link_envelope_m": 0.20982113480567932,
+          "minimum_clearance_lower_bound_m": 0.34974783658981323,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 26,
+        "progress": {
+          "lane26-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.35785301551222803,
+            "met_fraction": 0.95,
+            "met_steps": 19,
+            "observed_only_rmse_m_s": 0.044539491315974435,
+            "requested_progress_m": 0.44000000000000006,
+            "scheduled_moving_steps": 20
+          },
+          "lane26-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4126535013318062,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.0337645287082837,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.34974783658981323,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.5815582275390625,
+          "maximum_y_m": 0.29669189453125,
+          "minimum_y_m": -0.450653076171875
+        },
+        "stops": {
+          "lane26-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08633888009176964,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 953,
+          "fraction_at_least_60_percent_of_intent": 0.7387198321091291,
+          "longest_slow_feasible_start_step": 673,
+          "longest_slow_feasible_window_s": 3.2,
+          "mean_along_intent_m_s": 0.13143576632004111,
+          "requested_moving_steps": 975,
+          "rmse_m_s": 0.13535251971213658
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 10,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 9,
+          "recoveries_missed": 4
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 11902,
+          "maximum_measured_link_envelope_m": 0.20982015132904053,
+          "minimum_clearance_lower_bound_m": 0.36177901923656464,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 27,
+        "progress": {
+          "lane27-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3585359945893288,
+            "met_fraction": 0.95,
+            "met_steps": 19,
+            "observed_only_rmse_m_s": 0.04421709651277108,
+            "requested_progress_m": 0.44000000000000006,
+            "scheduled_moving_steps": 20
+          },
+          "lane27-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4125595510005951,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.033798862802806105,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.36177901923656464,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.9945220947265625,
+          "maximum_y_m": 0.3603653907775879,
+          "minimum_y_m": -0.4407590925693512
+        },
+        "stops": {
+          "lane27-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08642772131163906,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 930,
+          "fraction_at_least_60_percent_of_intent": 0.7698924731182796,
+          "longest_slow_feasible_start_step": 1142,
+          "longest_slow_feasible_window_s": 1.7000000000000002,
+          "mean_along_intent_m_s": 0.14157486710139866,
+          "requested_moving_steps": 949,
+          "rmse_m_s": 0.13086200667000342
+        }
+      }
+    ],
+    "open_tube": [
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 1,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 21013,
+          "maximum_measured_link_envelope_m": 0.20981964468955994,
+          "minimum_clearance_lower_bound_m": 0.6255107077507186,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 28,
+        "progress": {
+          "lane28-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3039738876745105,
+            "met_fraction": 0.8,
+            "met_steps": 16,
+            "observed_only_rmse_m_s": 0.07249143181514042,
+            "requested_progress_m": 0.42000000000000004,
+            "scheduled_moving_steps": 20
+          },
+          "lane28-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3944208234548569,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.052292282489659114,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.6255107077507186,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.848052978515625,
+          "maximum_y_m": 0.4871978759765625,
+          "minimum_y_m": -0.4659423828125
+        },
+        "stops": {
+          "lane28-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08626119011110864,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 941,
+          "fraction_at_least_60_percent_of_intent": 0.7832093517534537,
+          "longest_slow_feasible_start_step": 676,
+          "longest_slow_feasible_window_s": 2.1,
+          "mean_along_intent_m_s": 0.15359452313290048,
+          "requested_moving_steps": 965,
+          "rmse_m_s": 0.1214458057635613
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 2,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 2711,
+          "maximum_measured_link_envelope_m": 0.20982405543327332,
+          "minimum_clearance_lower_bound_m": 0.6647770567385909,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 29,
+        "progress": {
+          "lane29-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3064750533550978,
+            "met_fraction": 0.8,
+            "met_steps": 16,
+            "observed_only_rmse_m_s": 0.07186432365370515,
+            "requested_progress_m": 0.42000000000000004,
+            "scheduled_moving_steps": 20
+          },
+          "lane29-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3987635329365731,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.05077709806064294,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.6647770567385909,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.156707763671875,
+          "maximum_y_m": 0.566253662109375,
+          "minimum_y_m": -0.5887908935546875
+        },
+        "stops": {
+          "lane29-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08519339653715013,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 929,
+          "fraction_at_least_60_percent_of_intent": 0.7502691065662002,
+          "longest_slow_feasible_start_step": 650,
+          "longest_slow_feasible_window_s": 2.2,
+          "mean_along_intent_m_s": 0.14140222695696258,
+          "requested_moving_steps": 938,
+          "rmse_m_s": 0.13258739275494785
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 4,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 4,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 18967,
+          "maximum_measured_link_envelope_m": 0.20982763171195984,
+          "minimum_clearance_lower_bound_m": 0.4794018500457733,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 30,
+        "progress": {
+          "lane30-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.30314497631043197,
+            "met_fraction": 0.8,
+            "met_steps": 16,
+            "observed_only_rmse_m_s": 0.0727209223169612,
+            "requested_progress_m": 0.42000000000000004,
+            "scheduled_moving_steps": 20
+          },
+          "lane30-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.39312300086021423,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.052684561781037864,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.4794018500457733,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.229156494140625,
+          "maximum_y_m": 0.590423583984375,
+          "minimum_y_m": -0.695465087890625
+        },
+        "stops": {
+          "lane30-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08612378028459716,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 939,
+          "fraction_at_least_60_percent_of_intent": 0.7561235356762513,
+          "longest_slow_feasible_start_step": 618,
+          "longest_slow_feasible_window_s": 2.0,
+          "mean_along_intent_m_s": 0.14313997126487404,
+          "requested_moving_steps": 963,
+          "rmse_m_s": 0.13659827104788508
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 3,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 2,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 13892,
+          "maximum_measured_link_envelope_m": 0.20983098447322845,
+          "minimum_clearance_lower_bound_m": 0.42901662670178586,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 31,
+        "progress": {
+          "lane31-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.30481100268661976,
+            "met_fraction": 0.8,
+            "met_steps": 16,
+            "observed_only_rmse_m_s": 0.07229143971051695,
+            "requested_progress_m": 0.42000000000000004,
+            "scheduled_moving_steps": 20
+          },
+          "lane31-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3957405090332031,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.05181171193972913,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.42901662670178586,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.049468994140625,
+          "maximum_y_m": 0.8034439086914062,
+          "minimum_y_m": -0.8325042724609375
+        },
+        "stops": {
+          "lane31-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.08566603637247884,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 905,
+          "fraction_at_least_60_percent_of_intent": 0.8331491712707182,
+          "longest_slow_feasible_start_step": 530,
+          "longest_slow_feasible_window_s": 0.9,
+          "mean_along_intent_m_s": 0.15751632550299768,
+          "requested_moving_steps": 928,
+          "rmse_m_s": 0.09554768193640431
+        }
+      }
+    ],
+    "room_corner": [
+      {
+        "candidate_events": {
+          "all": 0,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 0,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 13482,
+          "maximum_measured_link_envelope_m": 0.20983824133872986,
+          "minimum_clearance_lower_bound_m": 0.5961923897266388,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 0,
+        "progress": {
+          "lane0-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.38887200802564625,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.04905541059959517,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane0-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.330444248020649,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.024778694829747424,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.5961923897266388,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.011627197265625,
+          "maximum_y_m": 1.90972900390625,
+          "minimum_y_m": -0.0866546630859375
+        },
+        "stops": {
+          "lane0-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.04985738230822598,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 1020,
+          "fraction_at_least_60_percent_of_intent": 0.8225490196078431,
+          "longest_slow_feasible_start_step": 179,
+          "longest_slow_feasible_window_s": 2.0,
+          "mean_along_intent_m_s": 0.15729419449477647,
+          "requested_moving_steps": 1044,
+          "rmse_m_s": 0.09946909182576016
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 1,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 13960,
+          "maximum_measured_link_envelope_m": 0.20983341336250305,
+          "minimum_clearance_lower_bound_m": 0.47704854094307825,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 1,
+        "progress": {
+          "lane1-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3925708115100861,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.047423238205564947,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane1-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3319269984960556,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.024041962950653892,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.47704854094307825,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.382781982421875,
+          "maximum_y_m": 1.5883255004882812,
+          "minimum_y_m": -0.40030670166015625
+        },
+        "stops": {
+          "lane1-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05355871827506599,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 981,
+          "fraction_at_least_60_percent_of_intent": 0.7879714576962283,
+          "longest_slow_feasible_start_step": 167,
+          "longest_slow_feasible_window_s": 3.1,
+          "mean_along_intent_m_s": 0.151462978656535,
+          "requested_moving_steps": 1005,
+          "rmse_m_s": 0.11673827681073458
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 1,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 5721,
+          "maximum_measured_link_envelope_m": 0.20982235670089722,
+          "minimum_clearance_lower_bound_m": 0.6342182159423828,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 2,
+        "progress": {
+          "lane2-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3888280615210533,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.049043685695645524,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane2-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.32187239676713947,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.038935996404780786,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.6342182159423828,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.17791748046875,
+          "maximum_y_m": 2.0979645252227783,
+          "minimum_y_m": -0.05960126221179962
+        },
+        "stops": {
+          "lane2-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.04923330829836871,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 986,
+          "fraction_at_least_60_percent_of_intent": 0.7596348884381339,
+          "longest_slow_feasible_start_step": 271,
+          "longest_slow_feasible_window_s": 4.2,
+          "mean_along_intent_m_s": 0.14497846380919127,
+          "requested_moving_steps": 1010,
+          "rmse_m_s": 0.11588114654038469
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 2,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 21760,
+          "maximum_measured_link_envelope_m": 0.20983612537384033,
+          "minimum_clearance_lower_bound_m": 0.3399735285860729,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 3,
+        "progress": {
+          "lane3-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.39147909432649614,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.0479450757217846,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane3-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.14241921635111796,
+            "met_fraction": 0.35,
+            "met_steps": 7,
+            "observed_only_rmse_m_s": 0.13720196762138026,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.3399735285860729,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.715850830078125,
+          "maximum_y_m": 2.2899246215820312,
+          "minimum_y_m": -0.0856781005859375
+        },
+        "stops": {
+          "lane3-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05356236701566947,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 998,
+          "fraction_at_least_60_percent_of_intent": 0.7214428857715431,
+          "longest_slow_feasible_start_step": 267,
+          "longest_slow_feasible_window_s": 4.6000000000000005,
+          "mean_along_intent_m_s": 0.14101977787552863,
+          "requested_moving_steps": 1009,
+          "rmse_m_s": 0.13413337081688037
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 4,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 3,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 20697,
+          "maximum_measured_link_envelope_m": 0.20982718467712402,
+          "minimum_clearance_lower_bound_m": 0.5309979535841713,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 4,
+        "progress": {
+          "lane4-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3859279155731201,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.05030919135954842,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane4-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3293381005525589,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.025334276407820013,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.5309979535841713,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.002960205078125,
+          "maximum_y_m": 1.6637115478515625,
+          "minimum_y_m": -0.2813262939453125
+        },
+        "stops": {
+          "lane4-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05340976866949134,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 1020,
+          "fraction_at_least_60_percent_of_intent": 0.8294117647058824,
+          "longest_slow_feasible_start_step": 172,
+          "longest_slow_feasible_window_s": 2.7,
+          "mean_along_intent_m_s": 0.16317197478311826,
+          "requested_moving_steps": 1042,
+          "rmse_m_s": 0.11023052255688598
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 1,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 3868,
+          "maximum_measured_link_envelope_m": 0.2098253220319748,
+          "minimum_clearance_lower_bound_m": 0.6751269400119781,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 5,
+        "progress": {
+          "lane5-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3884675487875939,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.04927103778328603,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane5-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.330880768597126,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.024560093096842154,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.6751269400119781,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.8288726806640625,
+          "maximum_y_m": 2.11993408203125,
+          "minimum_y_m": -0.0595550537109375
+        },
+        "stops": {
+          "lane5-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05407805312887479,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 969,
+          "fraction_at_least_60_percent_of_intent": 0.7863777089783281,
+          "longest_slow_feasible_start_step": 180,
+          "longest_slow_feasible_window_s": 1.9000000000000001,
+          "mean_along_intent_m_s": 0.14756126955340998,
+          "requested_moving_steps": 976,
+          "rmse_m_s": 0.11244061699578947
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 1,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 15050,
+          "maximum_measured_link_envelope_m": 0.20982258021831512,
+          "minimum_clearance_lower_bound_m": 0.5699693419242035,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 6,
+        "progress": {
+          "lane6-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.39076198637485504,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.04828433594842906,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane6-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3324178084731102,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.023797126895865914,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.5699693419242035,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.363372802734375,
+          "maximum_y_m": 1.645538330078125,
+          "minimum_y_m": -0.3241424560546875
+        },
+        "stops": {
+          "lane6-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05427670746154511,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 1000,
+          "fraction_at_least_60_percent_of_intent": 0.752,
+          "longest_slow_feasible_start_step": 169,
+          "longest_slow_feasible_window_s": 3.0,
+          "mean_along_intent_m_s": 0.1352065568295939,
+          "requested_moving_steps": 1024,
+          "rmse_m_s": 0.12260285958871893
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 3,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 3,
+          "recoveries_missed": 2
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 23554,
+          "maximum_measured_link_envelope_m": 0.20981484651565552,
+          "minimum_clearance_lower_bound_m": 0.4158395610197104,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 7,
+        "progress": {
+          "lane7-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3874230042099953,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.049710504652611676,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          },
+          "lane7-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.33051872700452806,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.024749254263964977,
+            "requested_progress_m": 0.38,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.4158395610197104,
+        "route": {
+          "indoor_corner_passed": true,
+          "indoor_door_passed": true,
+          "maximum_x_m": 7.5253143310546875,
+          "maximum_y_m": 2.190951108932495,
+          "minimum_y_m": -0.2215576171875
+        },
+        "stops": {
+          "lane7-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05427729920548402,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 974,
+          "fraction_at_least_60_percent_of_intent": 0.7761806981519507,
+          "longest_slow_feasible_start_step": 1144,
+          "longest_slow_feasible_window_s": 3.2,
+          "mean_along_intent_m_s": 0.14737210941984913,
+          "requested_moving_steps": 998,
+          "rmse_m_s": 0.11579965104992446
+        }
+      }
+    ],
+    "street_gap": [
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 1,
+          "mover_visible": 2,
+          "recoveries": 2,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 14992,
+          "maximum_measured_link_envelope_m": 0.20981350541114807,
+          "minimum_clearance_lower_bound_m": 0.06626674596504128,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 16,
+        "progress": {
+          "lane16-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4304110869765282,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07410824296590302,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane16-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.33972810533548303,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.06403468656833293,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.06626674596504128,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 3.2348532676696777,
+          "maximum_y_m": 0.39093017578125,
+          "minimum_y_m": -0.8445281982421875
+        },
+        "stops": {
+          "lane16-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.050875627685834,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 769,
+          "fraction_at_least_60_percent_of_intent": 0.7516254876462939,
+          "longest_slow_feasible_start_step": 341,
+          "longest_slow_feasible_window_s": 2.2,
+          "mean_along_intent_m_s": 0.14237543127882746,
+          "requested_moving_steps": 895,
+          "rmse_m_s": 0.10549518431028103
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 3,
+          "interventions_missed": 1,
+          "mover_visible": 3,
+          "recoveries": 3,
+          "recoveries_missed": 2
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 18320,
+          "maximum_measured_link_envelope_m": 0.20980730652809143,
+          "minimum_clearance_lower_bound_m": 0.0999267137245951,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 17,
+        "progress": {
+          "lane17-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.14845217000693084,
+            "met_fraction": 0.0,
+            "met_steps": 0,
+            "observed_only_rmse_m_s": 0.25603437040948096,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane17-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.34097321326007957,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.06366220267865194,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.0999267137245951,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 3.2081971168518066,
+          "maximum_y_m": 0.44493040442466736,
+          "minimum_y_m": -0.634337842464447
+        },
+        "stops": {
+          "lane17-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05013117344298825,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 849,
+          "fraction_at_least_60_percent_of_intent": 0.7232037691401649,
+          "longest_slow_feasible_start_step": 564,
+          "longest_slow_feasible_window_s": 3.3000000000000003,
+          "mean_along_intent_m_s": 0.12969588119562905,
+          "requested_moving_steps": 906,
+          "rmse_m_s": 0.1441244262371849
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 1,
+          "recoveries": 1,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 13711,
+          "maximum_measured_link_envelope_m": 0.20981425046920776,
+          "minimum_clearance_lower_bound_m": 0.3810051492503421,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 18,
+        "progress": {
+          "lane18-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.42455385923385625,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07628321281974759,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane18-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.33549264072400053,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.06546988529490362,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.23194877689288879,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 4.362663269042969,
+          "maximum_y_m": 0.141510009765625,
+          "minimum_y_m": -1.5118484497070312
+        },
+        "stops": {
+          "lane18-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.050225656701504924,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 918,
+          "fraction_at_least_60_percent_of_intent": 0.7875816993464052,
+          "longest_slow_feasible_start_step": 313,
+          "longest_slow_feasible_window_s": 3.3000000000000003,
+          "mean_along_intent_m_s": 0.14875318486368527,
+          "requested_moving_steps": 946,
+          "rmse_m_s": 0.11099853386208286
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 3,
+          "interventions_missed": 1,
+          "mover_visible": 3,
+          "recoveries": 3,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 21972,
+          "maximum_measured_link_envelope_m": 0.2098173201084137,
+          "minimum_clearance_lower_bound_m": -0.09106523465296762,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 19,
+        "progress": {
+          "lane19-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.43249613493680955,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07329193687237444,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane19-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.25141925876047544,
+            "met_fraction": 0.6,
+            "met_steps": 12,
+            "observed_only_rmse_m_s": 0.12877957784091373,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": -0.09106523465296762,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 1.5399534702301025,
+          "maximum_y_m": 0.3870849609375,
+          "minimum_y_m": -1.06329345703125
+        },
+        "stops": {
+          "lane19-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.059783850297408715,
+            "stopped_after_s": null
+          }
+        },
+        "stops_passed": 0,
+        "tracking": {
+          "feasible_moving_steps": 836,
+          "fraction_at_least_60_percent_of_intent": 0.7822966507177034,
+          "longest_slow_feasible_start_step": 1026,
+          "longest_slow_feasible_window_s": 2.8000000000000003,
+          "mean_along_intent_m_s": 0.15035218415600493,
+          "requested_moving_steps": 944,
+          "rmse_m_s": 0.10791446147624893
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 6,
+          "interventions_missed": 0,
+          "mover_visible": 2,
+          "recoveries": 5,
+          "recoveries_missed": 4
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 22460,
+          "maximum_measured_link_envelope_m": 0.20982010662555695,
+          "minimum_clearance_lower_bound_m": -0.10339718898530986,
+          "samples": 22461
+        },
+        "elapsed_s": 112.3,
+        "first_contact_step": 1122,
+        "first_reset_step": 1122,
+        "lane": 20,
+        "progress": {
+          "lane20-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4322711952030659,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07344353172509861,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane20-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3439202832397287,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.06254862968923681,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": -0.11475207056795572,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 3.0490646362304688,
+          "maximum_y_m": 1.666717529296875,
+          "minimum_y_m": -0.1652374267578125
+        },
+        "stops": {
+          "lane20-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.05071395108347173,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 854,
+          "fraction_at_least_60_percent_of_intent": 0.7213114754098361,
+          "longest_slow_feasible_start_step": 739,
+          "longest_slow_feasible_window_s": 3.3000000000000003,
+          "mean_along_intent_m_s": 0.13778453843465516,
+          "requested_moving_steps": 906,
+          "rmse_m_s": 0.1219859351147836
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 0,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 0,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 14466,
+          "maximum_measured_link_envelope_m": 0.20981574058532715,
+          "minimum_clearance_lower_bound_m": 0.6127371057734978,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 21,
+        "progress": {
+          "lane21-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.43143621236085894,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07357763698965278,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane21-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.340163499364042,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.06388149524233339,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.6127371057734978,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 3.8022079467773438,
+          "maximum_y_m": 1.3477020263671875,
+          "minimum_y_m": 0.05677032470703125
+        },
+        "stops": {
+          "lane21-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.050884319288727824,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 931,
+          "fraction_at_least_60_percent_of_intent": 0.80343716433942,
+          "longest_slow_feasible_start_step": 729,
+          "longest_slow_feasible_window_s": 1.1,
+          "mean_along_intent_m_s": 0.1493134899636251,
+          "requested_moving_steps": 937,
+          "rmse_m_s": 0.10990926314364909
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 4,
+          "interventions_missed": 1,
+          "mover_visible": 4,
+          "recoveries": 4,
+          "recoveries_missed": 2
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 13608,
+          "maximum_measured_link_envelope_m": 0.20981429517269135,
+          "minimum_clearance_lower_bound_m": 0.22622959007306148,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 22,
+        "progress": {
+          "lane22-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4308632478117943,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07409377335110578,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane22-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3797395982439041,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.03375465508759695,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.16719392108254022,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 3.2375259399414062,
+          "maximum_y_m": 1.1913366317749023,
+          "minimum_y_m": -1.1266921758651733
+        },
+        "stops": {
+          "lane22-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.18282533724033534,
+            "stopped_after_s": null
+          }
+        },
+        "stops_passed": 0,
+        "tracking": {
+          "feasible_moving_steps": 861,
+          "fraction_at_least_60_percent_of_intent": 0.8199767711962834,
+          "longest_slow_feasible_start_step": 698,
+          "longest_slow_feasible_window_s": 1.3,
+          "mean_along_intent_m_s": 0.16164849565567105,
+          "requested_moving_steps": 950,
+          "rmse_m_s": 0.1045840089965598
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 0,
+          "mover_visible": 2,
+          "recoveries": 2,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "mover",
+          "elapsed_physics_tick": 18270,
+          "maximum_measured_link_envelope_m": 0.20981551706790924,
+          "minimum_clearance_lower_bound_m": 0.32879982789887263,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 23,
+        "progress": {
+          "lane23-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4244732566177845,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.07628898435782365,
+            "requested_progress_m": 0.5600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane23-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3367722456539813,
+            "met_fraction": 0.85,
+            "met_steps": 17,
+            "observed_only_rmse_m_s": 0.06496904854022723,
+            "requested_progress_m": 0.447213595499958,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.28593436762092933,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 4.617805480957031,
+          "maximum_y_m": 0.23334503173828125,
+          "minimum_y_m": -1.365631103515625
+        },
+        "stops": {
+          "lane23-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.0501366002638241,
+            "stopped_after_s": 0.4
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 922,
+          "fraction_at_least_60_percent_of_intent": 0.7114967462039046,
+          "longest_slow_feasible_start_step": 1142,
+          "longest_slow_feasible_window_s": 3.4000000000000004,
+          "mean_along_intent_m_s": 0.12368144097103156,
+          "requested_moving_steps": 966,
+          "rmse_m_s": 0.14944929228358048
+        }
+      }
+    ],
+    "trunk_aisle": [
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 2,
+          "recoveries_missed": 2
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 20741,
+          "maximum_measured_link_envelope_m": 0.20982250571250916,
+          "minimum_clearance_lower_bound_m": 0.4127449468746651,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 8,
+        "progress": {
+          "lane8-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.36181593090295794,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.05545614524146953,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane8-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3949960991740227,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.07015247339565443,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.4127449468746651,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.071136474609375,
+          "maximum_y_m": 0.46265411376953125,
+          "minimum_y_m": -0.4904937744140625
+        },
+        "stops": {
+          "lane8-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07896511325752352,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 967,
+          "fraction_at_least_60_percent_of_intent": 0.7569803516028956,
+          "longest_slow_feasible_start_step": 973,
+          "longest_slow_feasible_window_s": 3.0,
+          "mean_along_intent_m_s": 0.12956534580874524,
+          "requested_moving_steps": 971,
+          "rmse_m_s": 0.10968668773616998
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 2,
+          "recoveries_missed": 1
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 15537,
+          "maximum_measured_link_envelope_m": 0.20982542634010315,
+          "minimum_clearance_lower_bound_m": 0.37885698476593466,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 9,
+        "progress": {
+          "lane9-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3580794706940651,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.05695059865994891,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane9-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3066770987218483,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.03713621104077294,
+            "requested_progress_m": 0.34409301068170517,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.37885698476593466,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.6474151611328125,
+          "maximum_y_m": 0.96160888671875,
+          "minimum_y_m": -0.5328826904296875
+        },
+        "stops": {
+          "lane9-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.02107137116019029,
+            "stopped_after_s": 0.1
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 958,
+          "fraction_at_least_60_percent_of_intent": 0.7306889352818372,
+          "longest_slow_feasible_start_step": 1049,
+          "longest_slow_feasible_window_s": 4.5,
+          "mean_along_intent_m_s": 0.12727114869247447,
+          "requested_moving_steps": 982,
+          "rmse_m_s": 0.10145165847386854
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 0,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 0,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 17917,
+          "maximum_measured_link_envelope_m": 0.2098168432712555,
+          "minimum_clearance_lower_bound_m": 0.46018040325666065,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 10,
+        "progress": {
+          "lane10-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.36433688402175907,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.054454907492938034,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane10-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.4146120429039002,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.03269702925864904,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.46018040325666065,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.5881500244140625,
+          "maximum_y_m": 0.4463958740234375,
+          "minimum_y_m": -0.4189453125
+        },
+        "stops": {
+          "lane10-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07727117518720933,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 922,
+          "fraction_at_least_60_percent_of_intent": 0.7266811279826464,
+          "longest_slow_feasible_start_step": 804,
+          "longest_slow_feasible_window_s": 2.6,
+          "mean_along_intent_m_s": 0.1304023266160606,
+          "requested_moving_steps": 946,
+          "rmse_m_s": 0.10558251266549458
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 3,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 3,
+          "recoveries_missed": 2
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 12718,
+          "maximum_measured_link_envelope_m": 0.20981614291667938,
+          "minimum_clearance_lower_bound_m": 0.5348787258155767,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 11,
+        "progress": {
+          "lane11-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.36391372531652455,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.054562444868923775,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane11-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.28479841249879173,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.05965021197449799,
+            "requested_progress_m": 0.34409301068170517,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.5348787258155767,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.682014465332031,
+          "maximum_y_m": 0.7324066162109375,
+          "minimum_y_m": -0.5217514038085938
+        },
+        "stops": {
+          "lane11-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07101068069595677,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 938,
+          "fraction_at_least_60_percent_of_intent": 0.7985074626865671,
+          "longest_slow_feasible_start_step": 922,
+          "longest_slow_feasible_window_s": 1.4000000000000001,
+          "mean_along_intent_m_s": 0.1385489829696847,
+          "requested_moving_steps": 947,
+          "rmse_m_s": 0.10431078897156781
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 1,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 1,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 18399,
+          "maximum_measured_link_envelope_m": 0.20981243252754211,
+          "minimum_clearance_lower_bound_m": 0.44073719922096244,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 12,
+        "progress": {
+          "lane12-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3560790829360485,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.05776816891401781,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane12-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.29761169404959803,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.02326400610052715,
+            "requested_progress_m": 0.34409301068170517,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.44073719922096244,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.2289276123046875,
+          "maximum_y_m": 0.6923794150352478,
+          "minimum_y_m": -0.4226151406764984
+        },
+        "stops": {
+          "lane12-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.083008235448648,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 967,
+          "fraction_at_least_60_percent_of_intent": 0.8097207859358841,
+          "longest_slow_feasible_start_step": 857,
+          "longest_slow_feasible_window_s": 1.7000000000000002,
+          "mean_along_intent_m_s": 0.14662797746532302,
+          "requested_moving_steps": 971,
+          "rmse_m_s": 0.09602474572174259
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 0,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 0,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 19607,
+          "maximum_measured_link_envelope_m": 0.2098170816898346,
+          "minimum_clearance_lower_bound_m": 0.541492004972651,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 13,
+        "progress": {
+          "lane13-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3626850739121437,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.05514627478386706,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane13-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.41305867880582814,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.033479539678279976,
+            "requested_progress_m": 0.4800000000000001,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.541492004972651,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.6302032470703125,
+          "maximum_y_m": 0.6275253295898438,
+          "minimum_y_m": -0.2517242431640625
+        },
+        "stops": {
+          "lane13-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.07839391205935038,
+            "stopped_after_s": 0.5
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 934,
+          "fraction_at_least_60_percent_of_intent": 0.7548179871520343,
+          "longest_slow_feasible_start_step": 562,
+          "longest_slow_feasible_window_s": 3.1,
+          "mean_along_intent_m_s": 0.13233154635708058,
+          "requested_moving_steps": 958,
+          "rmse_m_s": 0.10879156824250154
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 2,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 2,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 17920,
+          "maximum_measured_link_envelope_m": 0.20982253551483154,
+          "minimum_clearance_lower_bound_m": 0.47903269353713207,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 14,
+        "progress": {
+          "lane14-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3571823500096798,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.05734891839621815,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane14-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.3225300885740589,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.025736188852282963,
+            "requested_progress_m": 0.34409301068170517,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.47903269353713207,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 6.0033111572265625,
+          "maximum_y_m": 1.6390533447265625,
+          "minimum_y_m": -0.74005126953125
+        },
+        "stops": {
+          "lane14-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.029252283939280244,
+            "stopped_after_s": 0.2
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 915,
+          "fraction_at_least_60_percent_of_intent": 0.8043715846994536,
+          "longest_slow_feasible_start_step": 333,
+          "longest_slow_feasible_window_s": 1.3,
+          "mean_along_intent_m_s": 0.14702150757261484,
+          "requested_moving_steps": 935,
+          "rmse_m_s": 0.08975002765441367
+        }
+      },
+      {
+        "candidate_events": {
+          "all": 0,
+          "interventions_missed": 0,
+          "mover_visible": 0,
+          "recoveries": 0,
+          "recoveries_missed": 0
+        },
+        "clearance": {
+          "closest_surface": "static",
+          "elapsed_physics_tick": 22696,
+          "maximum_measured_link_envelope_m": 0.2098107933998108,
+          "minimum_clearance_lower_bound_m": 0.5146242401631874,
+          "samples": 24001
+        },
+        "elapsed_s": 120.0,
+        "first_contact_step": null,
+        "first_reset_step": null,
+        "lane": 15,
+        "progress": {
+          "lane15-progress-0": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.36437376737594607,
+            "met_fraction": 0.9,
+            "met_steps": 18,
+            "observed_only_rmse_m_s": 0.05441899058770046,
+            "requested_progress_m": 0.4600000000000002,
+            "scheduled_moving_steps": 20
+          },
+          "lane15-progress-1": {
+            "first_flight_moving_steps": 20,
+            "measured_progress_m": 0.2934800949058317,
+            "met_fraction": 1.0,
+            "met_steps": 20,
+            "observed_only_rmse_m_s": 0.05850342755134654,
+            "requested_progress_m": 0.34409301068170517,
+            "scheduled_moving_steps": 20
+          }
+        },
+        "reference_lower_m": 0.5146242401631874,
+        "route": {
+          "indoor_corner_passed": null,
+          "indoor_door_passed": null,
+          "maximum_x_m": 5.629281520843506,
+          "maximum_y_m": 0.837860107421875,
+          "minimum_y_m": -0.5636138916015625
+        },
+        "stops": {
+          "lane15-stop-0": {
+            "first_flight_completed_window": true,
+            "max_drift_m": 0.0037976785743399554,
+            "stopped_after_s": 0.1
+          }
+        },
+        "stops_passed": 1,
+        "tracking": {
+          "feasible_moving_steps": 921,
+          "fraction_at_least_60_percent_of_intent": 0.8284473398479913,
+          "longest_slow_feasible_start_step": 1126,
+          "longest_slow_feasible_window_s": 1.2000000000000002,
+          "mean_along_intent_m_s": 0.14744772102486559,
+          "requested_moving_steps": 930,
+          "rmse_m_s": 0.08773486155246321
+        }
+      }
+    ]
+  },
+  "contacts_all": {
+    "20": [
+      1122
+    ]
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 1,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "curve_onsets": {
+    "18": [
+      {
+        "score_m": 0.8057122826576233,
+        "step": 292
+      }
+    ],
+    "20": [
+      {
+        "score_m": 0.42005011439323425,
+        "step": 1088
+      }
+    ],
+    "22": [
+      {
+        "score_m": 0.4007938802242279,
+        "step": 639
+      }
+    ],
+    "23": [
+      {
+        "score_m": 0.8469955325126648,
+        "step": 303
+      }
+    ]
+  },
+  "dense": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+    "sha256": "217da8b7e94b2b7dc983aef73519ac80bf117f7f80587698aaa66559d1db82f8"
+  },
+  "first_different_native_packet": {
+    "18": {
+      "fields": [
+        "root_state_after_w",
+        "v_final_w"
+      ],
+      "step": 292
+    },
+    "20": {
+      "fields": [
+        "root_state_after_w",
+        "v_final_w"
+      ],
+      "step": 1088
+    },
+    "22": {
+      "fields": [
+        "root_state_after_w",
+        "v_final_w"
+      ],
+      "step": 639
+    },
+    "23": {
+      "fields": [
+        "root_state_after_w",
+        "v_final_w"
+      ],
+      "step": 303
+    }
+  },
+  "formal_acceptance": false,
+  "frozen_audit_error": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/n109-frozen-analysis-failure.log",
+    "sha256": "f51ea11d14eca0714aa084c88a5b96f89e9c628e691ca7ae3ec410b6d5a08df8"
+  },
+  "full_audit": false,
+  "geometry": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/results/research-r6-dynamic-assay/initial_preflight/geometry.json",
+    "sha256": "65d666b1f85694bf2e4840b37580d2037685c9552c4b5abb400932bb2eba1b9b"
+  },
+  "inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/measured_curve_deflection/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109-inputs.json",
+    "sha256": "6a92a9604a0035a67aead88dac3b5e51094ab9f77c4a4d04fd5f34c398686959"
+  },
+  "lane20_first_native_differences": [
+    {
+      "actual_world_m_s": [
+        0.05902884900569916,
+        -0.1255645900964737,
+        0.00018296221969649196
+      ],
+      "gyro_norms": [
+        0.0011801610806923487,
+        0.0011718864687632457,
+        0.0011443168160382216,
+        0.0011530996493452645
+      ],
+      "issued_world_m_s": [
+        0.05867095664143562,
+        -0.12551327049732208,
+        0.00020509633759502321
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1085
+    },
+    {
+      "actual_world_m_s": [
+        0.05905888229608536,
+        -0.12555773556232452,
+        0.0001888241822598502
+      ],
+      "gyro_norms": [
+        0.0011718864687632457,
+        0.0011443168160382216,
+        0.0011530996493452645,
+        0.0011035507223018555
+      ],
+      "issued_world_m_s": [
+        0.05866869539022446,
+        -0.12550196051597595,
+        0.0002123678132193163
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1086
+    },
+    {
+      "actual_world_m_s": [
+        0.05907613784074783,
+        -0.12553603947162628,
+        0.00019061008060816675
+      ],
+      "gyro_norms": [
+        0.0011443168160382216,
+        0.0011530996493452645,
+        0.0011035507223018555,
+        0.0011475228265074187
+      ],
+      "issued_world_m_s": [
+        0.058634206652641296,
+        -0.12541551887989044,
+        0.0001968107681022957
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1087
+    },
+    {
+      "actual_world_m_s": [
+        0.04848167300224304,
+        -0.1301138699054718,
+        0.0012811145279556513
+      ],
+      "gyro_norms": [
+        0.0011530996493452645,
+        0.0011035507223018555,
+        0.0011475228265074187,
+        0.0011093710722001296
+      ],
+      "issued_world_m_s": [
+        -0.3442615866661072,
+        -0.2897998094558716,
+        8.174168897312484e-09
+      ],
+      "measured_curve": [
+        0.42005011439323425,
+        1.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1088
+    },
+    {
+      "actual_world_m_s": [
+        0.01008869893848896,
+        -0.14600275456905365,
+        -0.0013599061639979482
+      ],
+      "gyro_norms": [
+        0.0011035507223018555,
+        0.0011475228265074187,
+        0.0011093710722001296,
+        0.4859196451085192
+      ],
+      "issued_world_m_s": [
+        0.05912138521671295,
+        -0.12653645873069763,
+        0.00023252470418810844
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1089
+    },
+    {
+      "actual_world_m_s": [
+        -0.012980538420379162,
+        -0.15468311309814453,
+        -0.0020375309977680445
+      ],
+      "gyro_norms": [
+        0.0011475228265074187,
+        0.0011093710722001296,
+        0.4859196451085192,
+        0.23468449704365413
+      ],
+      "issued_world_m_s": [
+        0.058197908103466034,
+        -0.12445753067731857,
+        0.0002448995364829898
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1090
+    },
+    {
+      "actual_world_m_s": [
+        -0.013226349838078022,
+        -0.15412387251853943,
+        -0.001515396754257381
+      ],
+      "gyro_norms": [
+        0.0011093710722001296,
+        0.4859196451085192,
+        0.23468449704365413,
+        0.26241853274446436
+      ],
+      "issued_world_m_s": [
+        0.05799398571252823,
+        -0.12394542247056961,
+        0.00014197405835147947
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1091
+    },
+    {
+      "actual_world_m_s": [
+        -0.001296252361498773,
+        -0.14903825521469116,
+        -0.001027983846142888
+      ],
+      "gyro_norms": [
+        0.4859196451085192,
+        0.23468449704365413,
+        0.26241853274446436,
+        0.12991020324995198
+      ],
+      "issued_world_m_s": [
+        0.05859793350100517,
+        -0.1253098100423813,
+        0.00028901189216412604
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1092
+    },
+    {
+      "actual_world_m_s": [
+        0.013647768646478653,
+        -0.14316964149475098,
+        -0.000759392452891916
+      ],
+      "gyro_norms": [
+        0.23468449704365413,
+        0.26241853274446436,
+        0.12991020324995198,
+        0.027718130586105033
+      ],
+      "issued_world_m_s": [
+        0.05893384665250778,
+        -0.12607420980930328,
+        0.00032868378912098706
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1093
+    },
+    {
+      "actual_world_m_s": [
+        0.02703910507261753,
+        -0.1381571888923645,
+        -0.0006008512573316693
+      ],
+      "gyro_norms": [
+        0.26241853274446436,
+        0.12991020324995198,
+        0.027718130586105033,
+        0.021322118700413187
+      ],
+      "issued_world_m_s": [
+        0.05898202210664749,
+        -0.12616582214832306,
+        0.0002915887162089348
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1094
+    },
+    {
+      "actual_world_m_s": [
+        0.02984965592622757,
+        -0.13677853345870972,
+        0.00027997992583550513
+      ],
+      "gyro_norms": [
+        0.12991020324995198,
+        0.027718130586105033,
+        0.021322118700413187,
+        0.035688708130888376
+      ],
+      "issued_world_m_s": [
+        -0.22720369696617126,
+        -0.21076145768165588,
+        0.0037312579806894064
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        0.06901938692856677,
+        -0.14761950076593014,
+        0.0
+      ],
+      "step": 1095
+    },
+    {
+      "actual_world_m_s": [
+        0.0018237308831885457,
+        -0.14363737404346466,
+        0.0007473553996533155
+      ],
+      "gyro_norms": [
+        0.027718130586105033,
+        0.021322118700413187,
+        0.035688708130888376,
+        0.3660763691703996
+      ],
+      "issued_world_m_s": [
+        -0.24445682764053345,
+        -0.17385578155517578,
+        -2.8492650017142296e-08
+      ],
+      "measured_curve": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_world_m_s": [
+        -0.11827105345932985,
+        0.2529595617068668,
+        0.0
+      ],
+      "step": 1096
+    }
+  ],
+  "matched_control": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/independent_observable_sweep/RESULT.json",
+    "sha256": "0f5b2bb853e4bf4224f3ec37532416dd023c00b9746b0c39344ef017cea3c425"
+  },
+  "native_exit": -15,
+  "native_result": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/results/research-r6-dynamic-assay/command_replay.json",
+    "sha256": "1add453f6dc08dd6753cfeb5929d52b29e2c25b2d84ace251f75bc7e5ce12c44"
+  },
+  "overlap_with_original_intercept": [
+    {
+      "lane": 18,
+      "measured_curve": [
+        0.0,
+        5.0,
+        0.0
+      ],
+      "selected_action": [
+        0.0,
+        0.8893406391143799,
+        0.275049090385437,
+        0.5176348090171814
+      ],
+      "step": 296
+    },
+    {
+      "lane": 18,
+      "measured_curve": [
+        0.0,
+        6.0,
+        0.0
+      ],
+      "selected_action": [
+        0.0,
+        0.8894931077957153,
+        0.2750236988067627,
+        0.5134450793266296
+      ],
+      "step": 297
+    },
+    {
+      "lane": 18,
+      "measured_curve": [
+        0.0,
+        7.0,
+        0.0
+      ],
+      "selected_action": [
+        0.0,
+        0.8896020650863647,
+        0.2749975025653839,
+        0.509171187877655
+      ],
+      "step": 298
+    }
+  ],
+  "pins": {
+    "launch": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/control/launch.json",
+      "sha256": "10f20643f2963dd7e4203d4d1cb1479470c3f1b0d1bb59da1120106fe8e36049"
+    },
+    "modules": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/CPU_MODULES.json",
+      "sha256": "d39c5a81c527e10cda49fc7f47192e49958eae61da2262c73eaf77ccca741083"
+    },
+    "receipt": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/control/receipt.json",
+      "sha256": "bd0aabaafb827f439ef8b963ddc1be07ef9baecde6563d5ed90d9b9b97910ce9"
+    },
+    "run_record": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/control/RUN_INPUTS.json",
+      "sha256": "a025638208c7ddf198e3509bb68907af9f8161a6d1cc358806f583f268ff2179"
+    },
+    "workload_state": {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/state.json",
+      "sha256": "46693d7b110337371e850576dac2be487fbe650a1c0a35635a240282273a1d6a"
+    }
+  },
+  "schema_version": "instinctrl-measured-curve-failed-native-audit/1",
+  "scorer": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-FREEZE/record-n109-raw-failure.py",
+    "sha256": "1b8540df72c2c4888a5cbbe450f7b24dd0bc436392dcbc852c58d6526d71fff9"
+  },
+  "source": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/measured_curve_deflection/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109-source.json",
+    "sha256": "32342fe51090ace1a193adc3fc806c0d6edc3dcfae01ca1266b77ba47132d99f"
+  },
+  "status": "FAILED_NATIVE_CONTACT_AND_FROZEN_BEHAVIOR_AUDIT",
+  "trace": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-109/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+    "sha256": "04c497e7b2bd688e85d8b95255c6c58476b02130d7761a0d1ff427d18c95dea2"
+  },
+  "wall_seconds": 654.3147434550337
+}
