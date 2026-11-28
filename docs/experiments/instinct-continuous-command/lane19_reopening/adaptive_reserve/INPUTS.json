@@ -1,0 +1,22 @@
+{
+  "prior_readback_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/earlier_reserve/READBACK-INPUTS.json",
+    "sha256": "484030c499ab7846d58492afa6f51bdd7aa6829ad96950dd71177484e1cd45f3"
+  },
+  "protocol": {
+    "arms": [
+      "guided",
+      "carry"
+    ],
+    "cases": [
+      "nominal",
+      "early_positive"
+    ],
+    "lag_s": 0.45,
+    "max_apply_step": 1090
+  },
+  "static_continuation": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-EARLIER-RESERVE/CONTINUATION.json",
+    "sha256": "17a9591e6cf432b125430929b3efb31beaf344203c70a9ec51bc5f5d04b4dac8"
+  }
+}
