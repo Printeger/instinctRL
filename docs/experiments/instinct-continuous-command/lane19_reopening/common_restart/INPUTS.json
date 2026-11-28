@@ -1,0 +1,50 @@
+{
+  "drift_bound": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-FIRST-ISSUE/DRIFT.json",
+    "sha256": "909660234a07624d6b5133459f8d7fd2f5375e9ec714accb8583445a8c81efcd"
+  },
+  "first_issue_menu": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-FIRST-ISSUE/SCREEN.json",
+    "sha256": "d6a9955c5af438113d26854472f450997f3eefa5d3637c52949bfd757d9464ee"
+  },
+  "parking_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/parking_authority/INPUTS.json",
+    "sha256": "45512942f673318ef6e98b70bb67ac226df9337ee2b9be03afff8b79407bdbf2"
+  },
+  "parking_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/parking_authority/screen_parking.py",
+    "sha256": "eb5d6fdbc0aec036f96e3d02e51ec52853e6b3ff80a2375c85b2e4a3f44be1d4"
+  },
+  "protocol": {
+    "cap_m_s": 0.45,
+    "drift_headroom_m": 1e-06,
+    "drift_m": 0.2,
+    "expected_firsts": 17,
+    "lags_s": [
+      0.25,
+      0.35,
+      0.45
+    ],
+    "lane": 19,
+    "max_solver_iterations": 110,
+    "optimization_end": 1110,
+    "recovery_anchor": 1110,
+    "refinements": 5,
+    "return_to_ccg": 1102,
+    "scene_seed": 1999375583,
+    "score_end": 1149,
+    "seed_bearings_deg": [
+      160.0,
+      180.0,
+      200.0
+    ],
+    "slew_m_s": 0.3,
+    "start": 1060,
+    "wanted_margin_m": 0.15,
+    "witnesses_per_case": 3,
+    "zero_window": [
+      1070,
+      1084
+    ]
+  }
+}
