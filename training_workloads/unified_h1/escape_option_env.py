@@ -27,12 +27,13 @@ from instinctlab.control.escape_recovery import (
     CROSSING_STOP_25_V11, CROSSING_STOP_25_V12, CROSSING_STOP_25_V13, CROSSING_STOP_25_V14, CROSSING_STOP_25_V15,
     CROSSING_STOP_25_V16, CROSSING_STOP_25_V17, CROSSING_STOP_25_V18, CROSSING_STOP_25_V19, CROSSING_STOP_25_V20, CROSSING_STOP_25_V21,
     CROSSING_STOP_25_V22, CROSSING_STOP_25_V23, CROSSING_STOP_25_V24, CROSSING_STOP_25_V25,
-    CROSSING_STOP_25_V26, CROSSING_STOP_25_V27,
+    CROSSING_STOP_25_V26, CROSSING_STOP_25_V27, CROSSING_STOP_25_V28,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, CROSSING_STOP_25_V25)
+FRONT_WALL_BRAKING_VERSIONS = (CROSSING_STOP_25_V25, CROSSING_STOP_25_V28)
+LOCAL_WALL_STOPPING_VERSIONS = (CROSSING_STOP_25_V22, *FRONT_WALL_BRAKING_VERSIONS)
 OVERLAPPING_STOP_VERSIONS = (CROSSING_STOP_25_V23, CROSSING_STOP_25_V26)
 CROSSING_RESTART_VERSIONS = (CROSSING_STOP_25_V21, CROSSING_STOP_25_V24, CROSSING_STOP_25_V27, *OVERLAPPING_STOP_VERSIONS,
                              *LOCAL_WALL_STOPPING_VERSIONS)
@@ -85,6 +86,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
     tube_stopping = False
     local_wall_stopping = False
     front_wall_braking = False
+    faceted_wall_stopping = False
     lidar_mount_pitch_degrees = 30
     lidar_rays_body = None
 
@@ -122,7 +124,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
         self.bilateral_stopping = enabled and version == CROSSING_STOP_25_V14
         self.tube_stopping = enabled and version == CROSSING_STOP_25_V19
         self.local_wall_stopping = enabled and version in LOCAL_WALL_STOPPING_VERSIONS
-        self.front_wall_braking = enabled and version == CROSSING_STOP_25_V25
+        self.front_wall_braking = enabled and version in FRONT_WALL_BRAKING_VERSIONS
+        self.faceted_wall_stopping = enabled and version == CROSSING_STOP_25_V28
         for pipeline in self._control_pipelines:
             if hasattr(pipeline, 'allow_bilateral_stopping'):
                 pipeline.allow_bilateral_stopping = False
@@ -271,7 +274,9 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             actions = self.escape_option.apply_recovery(self._policy, actions, self._control_pipelines[0].config)
             if self.bilateral_stopping or self.tube_stopping or self.local_wall_stopping:
                 from instinctlab.control.bilateral_stopping import BilateralStoppingPipeline
-                from instinctlab.control.local_wall_stopping import FrontWallBrakingPipeline, LocalWallStoppingPipeline
+                from instinctlab.control.local_wall_stopping import (
+                    FacetedWallBrakingPipeline, FrontWallBrakingPipeline, LocalWallStoppingPipeline,
+                )
                 from instinctlab.control.tube_stopping import TubeStoppingPipeline
 
                 option = self.escape_option
@@ -282,7 +287,10 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                     protected |= option.intercept_continued
                 if self.local_wall_stopping:
                     protected |= option.crossing_restart_verified
-                    pipeline_type = FrontWallBrakingPipeline if self.front_wall_braking else LocalWallStoppingPipeline
+                    if self.faceted_wall_stopping:
+                        pipeline_type = FacetedWallBrakingPipeline
+                    else:
+                        pipeline_type = FrontWallBrakingPipeline if self.front_wall_braking else LocalWallStoppingPipeline
                 else:
                     pipeline_type = TubeStoppingPipeline if self.tube_stopping else BilateralStoppingPipeline
                 if self.front_wall_braking:
@@ -404,6 +412,11 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                    baseline_velocity_b=baseline_velocity, baseline_beta=baseline_beta,
                                    gap_m=gap, required_gap_m=required_gap, cleared_limiting_beams=cleared)
                     self.extras['pre_reset']['escape_option'].update({prefix+'_'+key:value for key,value in receipt.items()})
+                    if self.faceted_wall_stopping:
+                        oblique = [p.tube_stopping is not None and p.tube_stopping[0].used_oblique_facets
+                                   for p in self._control_pipelines]
+                        self.extras['pre_reset']['escape_option']['faceted_wall_stopping_used'] = (
+                            self.escape_option.applied.new_tensor(oblique))
                 if self.front_wall_braking:
                     baseline_velocity = torch.zeros_like(self.escape_option.direction)
                     gap = baseline_velocity.new_zeros((self.num_envs,))

@@ -17,7 +17,7 @@ from .command_replay import (
     CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS,
     LOCAL_WALL_STOPPING_EXECUTIONS, LOCAL_WALL_STOPPING_TRACE_FIELDS, OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION,
     RETREAT_CONTINUATION_EXECUTION,
-    FRONT_WALL_BRAKING_EXECUTION, FRONT_WALL_BRAKING_TRACE_FIELDS,
+    FRONT_WALL_BRAKING_EXECUTIONS, FRONT_WALL_BRAKING_TRACE_FIELDS, FACETED_WALL_STOPPING_EXECUTION,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -376,9 +376,12 @@ def audit(output, params, counters):
         brake_transition_profile = model['execution'] == BRAKE_TRANSITION_EXECUTION
         if model.get('verify_brake_transition', False) is not brake_transition_profile:
             raise ValueError('COMMAND_REPLAY_BRAKE_TRANSITION_PROFILE')
-        front_wall_profile = model['execution'] == FRONT_WALL_BRAKING_EXECUTION
+        front_wall_profile = model['execution'] in FRONT_WALL_BRAKING_EXECUTIONS
         if model.get('front_wall_braking', False) is not front_wall_profile:
             raise ValueError('COMMAND_REPLAY_FRONT_WALL_PROFILE')
+        faceted_wall_profile = model['execution'] == FACETED_WALL_STOPPING_EXECUTION
+        if model.get('faceted_wall_stopping', False) is not faceted_wall_profile:
+            raise ValueError('COMMAND_REPLAY_FACETED_WALL_PROFILE')
         retreat_continuation_profile = model['execution'] == RETREAT_CONTINUATION_EXECUTION
         if model.get('verify_retreat_continuation', False) is not retreat_continuation_profile:
             raise ValueError('COMMAND_REPLAY_RETREAT_CONTINUATION_PROFILE')
@@ -557,6 +560,10 @@ def audit(output, params, counters):
                 if any(((field in row) != local_wall_stopping_profile) or (field in row and len(row[field]) != LANES)
                        for field in LOCAL_WALL_STOPPING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_LOCAL_WALL_BINDING')
+                faceted_wall = row.get('faceted_wall_stopping_used', [False]*LANES)
+                if ((('faceted_wall_stopping_used' in row) != faceted_wall_profile) or len(faceted_wall) != LANES
+                        or any(type(used) is not bool for used in faceted_wall)):
+                    raise ValueError('COMMAND_REPLAY_FACETED_WALL_BINDING')
                 if any(((field in row) != front_wall_profile) or (field in row and len(row[field]) != LANES)
                        for field in FRONT_WALL_BRAKING_TRACE_FIELDS):
                     raise ValueError('COMMAND_REPLAY_FRONT_WALL_BINDING')
@@ -670,6 +677,8 @@ def audit(output, params, counters):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_TARGET')
                         if not hold and any((before_beta,gap,required,cleared,*target,*baseline)):
                             raise ValueError('COMMAND_REPLAY_FINITE_TUBE_INACTIVE_TARGET')
+                        if faceted_wall[lane] and (abs(hold-.60) > 1.e-6 or cleared < 1):
+                            raise ValueError('COMMAND_REPLAY_FACETED_WALL_RECEIPT')
                         if hold and (min(abs(hold-.30),abs(hold-.60)) > 1.e-6
                                 or not .02999 <= math.hypot(*observed) <= .30001
                                 or not 0. < math.hypot(*target) <= .300001

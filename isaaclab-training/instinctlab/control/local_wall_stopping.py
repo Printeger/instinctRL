@@ -1,6 +1,7 @@
 """Check a finite braking path beside observed stationary surfaces."""
 
 from dataclasses import replace
+from functools import partial
 import math
 
 import numpy as np
@@ -12,7 +13,7 @@ from .escape_passage import _return_seed, _supported_closing_returns, moving_int
 from .governor import clip_vector_norm
 from .ics import AZIMUTH_SAMPLES, ELEVATION_SAMPLES, ICSResult, attenuate_command, mounted_mid360_rays_body
 from .tube_stopping import (
-    TubeStoppingDecision, TubeStoppingPipeline, _align_scans, _remaining_ratio, _surface_normals,
+    TubeStoppingDecision, TubeStoppingPipeline, _align_scans, _remaining_ratio, _surface_normals, _tube_planes,
 )
 
 
@@ -88,6 +89,49 @@ def _braking_capsule(points, valid, prior, heading, travel, tail):
     return lower, upper, float(required), along, gap
 
 
+def _oblique_facets(scans, history, rays, mounted, valid, up):
+    """Refit persistent longitudinal facets in the current IMU-aligned frame."""
+    candidates = _tube_planes(scans, history.detach().cpu().numpy(), rays)
+    if not candidates:
+        return []
+    rotations, mounts, _ = _align_scans(torch.eye(3, dtype=history.dtype, device=history.device), history)
+    prepared = []
+    for scan, rotation, mount in zip(scans, rotations, mounts, strict=True):
+        points, normals = _surface_normals(scan, rays)
+        points = points @ rotation + mount
+        nearby = np.linalg.norm(points, axis=1) < 1.65
+        prepared.append((points[nearby], (normals @ rotation)[nearby]))
+
+    planes = []
+    for normal, estimates in candidates:
+        if abs(normal @ up) <= .07:
+            continue
+        tangent = np.cross(up, normal)
+        if np.linalg.norm(tangent) < 1.e-6:
+            tangent = np.cross(np.array([0., 1., 0.]), normal)
+        tangent /= np.linalg.norm(tangent)
+        across = np.cross(normal, tangent)
+        distances = []
+        for (points, directions), estimate, mount in zip(prepared, estimates, mounts, strict=True):
+            offsets = points @ normal
+            centered = estimate + mount[0] @ normal
+            similar = (directions @ normal >= math.cos(.045)) & (abs(offsets-centered) <= .055)
+            if similar.sum() < 24:
+                break
+            distance = float(np.median(offsets[similar]))
+            patch = points[similar & (abs(offsets-distance) <= .013)]
+            if len(patch) < 24 or np.ptp(patch @ tangent) < .14 or np.ptp(patch @ across) < .20:
+                break
+            if np.sqrt(np.mean((patch @ normal-distance)**2)) > .006:
+                break
+            distances.append(distance)
+        if len(distances) != 3 or abs(np.diff(distances)).max() > .045:
+            continue
+        associated = valid.all(axis=0) & (abs(mounted @ normal-np.asarray(distances)[:, None]) <= .018).all(axis=0)
+        planes.append((normal, min(distances), associated))
+    return planes
+
+
 def _forward_coverage(valid, aligned, along, heading, up, upper, required):
     visible = valid & (aligned @ heading >= .99) & (along > upper+required+.025)
     bearing = aligned @ np.cross(up, heading)
@@ -136,7 +180,35 @@ def certify_stop_at_front_wall(lidar, state, rays, *, previous_speed_bound, requ
     return None
 
 
-def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *, previous_speed_bound):
+def _certify_associated_request(trial, planes, config, *, oblique=False):
+    result, proposed, heading, lower, upper, gap, required, projection, request_speed = trial
+    if not planes:
+        return None
+    explained = np.zeros(result.cache['active_mask'].shape[1], dtype=bool)
+    for normal, distance, associated in planes:
+        advance = heading @ normal
+        if distance-max(lower*advance, upper*advance) >= required:
+            explained |= associated
+    closing, ratios = _remaining_ratio(result.cache, config)
+    active = result.cache['active_mask']
+    matched = torch.as_tensor(explained, device=proposed.device)[None]
+    cleared = int((active & matched & (ratios < .90)).sum())
+    remaining = active & ~matched
+    count = remaining.sum(dim=1, keepdim=True)
+    beta = ratios.masked_fill(~remaining, 1.).amin(dim=1, keepdim=True)
+    beta = torch.where(count > 0, beta, torch.full_like(beta, config.empty_active_set_beta))
+    if not cleared or float(beta[0, 0]) < .90 or float(beta[0, 0])*projection < .60*request_speed**2:
+        return None
+    margin = (result.cache['v_safe_m_s']-closing).masked_fill(~remaining, torch.inf).amin(dim=1, keepdim=True)
+    metrics = dict(result.metrics, beta=beta, active_beam_count=count.to(proposed.dtype),
+                   worst_margin_m_s=torch.where(count > 0, margin, 0.))
+    certified = ICSResult(clip_vector_norm(proposed*beta, config.velocity_limit_m_s), metrics,
+                          dict(result.cache, active_mask=remaining))
+    return TubeStoppingDecision(certified, proposed, _HOLD_S, gap, required, cleared, oblique)
+
+
+def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *, previous_speed_bound,
+                               allow_oblique_facets=False):
     """Re-evaluate a bounded heading without removing unidentified restrictions."""
     history = state.reshape(4, 13)
     request = history[-1, 6:9]
@@ -166,6 +238,7 @@ def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *
     intent = array(request)
     tail = .35*max(.30, previous_speed_bound)*math.exp(-.30/.35)
     planes = None
+    blocked_trials = []
     for angle in _ANGLES:
         target = math.cos(angle)*forward+math.sin(angle)*side+vertical
         projection = float(target @ intent)
@@ -185,29 +258,19 @@ def certify_local_wall_request(lidar, state, rays, governed, config, baseline, *
             return TubeStoppingDecision(result, proposed, _HOLD_S, gap, float(required), 0)
         if planes is None:
             planes = _local_planes(scans, history, array(rays), points, valid, up)
-        if not planes:
-            continue
-        explained = np.zeros(len(rays), dtype=bool)
-        for normal, distance, associated in planes:
-            advance = heading @ normal
-            if distance-max(lower*advance, upper*advance) >= required:
-                explained |= associated
-        closing, ratios = _remaining_ratio(result.cache, config)
-        active = result.cache['active_mask']
-        matched = torch.as_tensor(explained, device=rays.device)[None]
-        cleared = int((active & matched & (ratios < .90)).sum())
-        remaining = active & ~matched
-        count = remaining.sum(dim=1, keepdim=True)
-        beta = ratios.masked_fill(~remaining, 1.).amin(dim=1, keepdim=True)
-        beta = torch.where(count > 0, beta, torch.full_like(beta, config.empty_active_set_beta))
-        if not cleared or float(beta[0, 0]) < .90 or float(beta[0, 0])*projection < .60*speed**2:
-            continue
-        margin = (result.cache['v_safe_m_s']-closing).masked_fill(~remaining, torch.inf).amin(dim=1, keepdim=True)
-        metrics = dict(result.metrics, beta=beta, active_beam_count=count.to(proposed.dtype),
-                       worst_margin_m_s=torch.where(count > 0, margin, 0.))
-        certified = ICSResult(clip_vector_norm(proposed*beta, config.velocity_limit_m_s), metrics,
-                              dict(result.cache, active_mask=remaining))
-        return TubeStoppingDecision(certified, proposed, _HOLD_S, gap, float(required), cleared)
+        trial = (result, proposed, heading, lower, upper, gap, float(required), projection, speed)
+        decision = _certify_associated_request(trial, planes, config)
+        if decision is not None:
+            return decision
+        if allow_oblique_facets:
+            blocked_trials.append(trial)
+    if blocked_trials:
+        facets = _oblique_facets(scans, history, array(rays), points, valid, up)
+        if facets:
+            for trial in blocked_trials:
+                decision = _certify_associated_request(trial, planes+facets, config, oblique=True)
+                if decision is not None:
+                    return decision
     return None
 
 
@@ -257,3 +320,7 @@ class FrontWallBrakingPipeline(LocalWallStoppingPipeline):
         self._last_ics_cache = checked.cache
         world = rotate_body_to_world(checked.v_final_b, controller_quaternion_wxyz)
         return replace(result, v_final_b=checked.v_final_b, v_final_w=world, ics_metrics=checked.metrics)
+
+
+class FacetedWallBrakingPipeline(FrontWallBrakingPipeline):
+    certify = staticmethod(partial(certify_local_wall_request, allow_oblique_facets=True))

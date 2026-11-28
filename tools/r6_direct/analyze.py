@@ -89,7 +89,7 @@ def analyze(input_pin, *, probability_diagnostic=None):
                     BILATERAL_STOPPING_EXECUTION, SAMPLED_TURN_EXECUTIONS, OBSERVED_HEADING_EXECUTIONS, SHALLOW_STEERING_EXECUTIONS,
                     FAR_CROSSING_REFERENCE_EXECUTIONS, HOVER_OWN_SIDE_EXECUTIONS, VERIFIED_RETREAT_ONSET_EXECUTIONS,
                     CLIPPED_RETREAT_ONSET_EXECUTIONS, TUBE_STOPPING_EXECUTION,
-                    CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTION,
+                    CROSSING_RESTART_EXECUTIONS, HOVER_REFERENCE_RESERVE_EXECUTIONS, LOCAL_WALL_STOPPING_EXECUTIONS, FRONT_WALL_BRAKING_EXECUTIONS, FACETED_WALL_STOPPING_EXECUTION,
                     OVERLAPPING_STOP_EXECUTIONS, BRAKE_RECOVERY_EXECUTIONS, BRAKE_TRANSITION_EXECUTION, RETREAT_CONTINUATION_EXECUTION,
                     EARLY_DIAGONAL_EXECUTIONS, FINITE_INTERCEPT_EXECUTIONS,
                     INTERCEPT_CHOICE_EXECUTIONS, OPENING_STEERING_EXECUTIONS, RESERVE_DIRECTION_EXECUTIONS,
@@ -190,8 +190,10 @@ def analyze(input_pin, *, probability_diagnostic=None):
                         expected['verify_brake_recovery'] = True
                     if override == BRAKE_TRANSITION_EXECUTION:
                         expected['verify_brake_transition'] = True
-                    if override == FRONT_WALL_BRAKING_EXECUTION:
+                    if override in FRONT_WALL_BRAKING_EXECUTIONS:
                         expected['front_wall_braking'] = True
+                    if override == FACETED_WALL_STOPPING_EXECUTION:
+                        expected['faceted_wall_stopping'] = True
                     if override == RETREAT_CONTINUATION_EXECUTION:
                         expected['verify_retreat_continuation'] = True
                     if observed != expected:

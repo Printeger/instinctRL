@@ -30,6 +30,7 @@ class TubeStoppingDecision:
     observed_gap_m: float
     required_gap_m: float
     cleared_limiting_beams: int
+    used_oblique_facets: bool = False
 
 
 def _surface_normals(scan, rays):
