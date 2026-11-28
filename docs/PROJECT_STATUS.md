@@ -48,6 +48,8 @@ v60 离线复算定位两处停杆失守。两路先在第 159 拍降至停稳�
 
 第 22 路录存姿态局部交回从 2.8 秒缩至 2.0 秒，停稳 0.4 秒、最低净空 0.344 米，恢复仍超过 1.5 秒。第 203 拍的两段动作在乐观响应下，赶时限的组合最高动态下界仅 0.317 米，低于 0.39 米短证。原生与训练均未新增。 [交回复验](experiments/instinct-continuous-command/neutral_crawl_reproof/handoff/REPORT.md)
 
+第 22 路提前斜向撤离并复核后续沿向下发，在录存姿态 CPU 对照中把恢复从 2.0 秒缩到 1.6 秒。停稳 0.4 秒、漂移 0.106 米、最低净空 0.278 米。仍比恢复门槛晚一拍，故保留局部证据。 [撤离选向与再接管结果](experiments/instinct-continuous-command/neutral_crawl_reproof/egress_direction/REPORT.md)
+
 全部当前输入使用仿真的 Crazy Command Generator。冻结 B/C 基线在名义重合组各 8/8 街道接触，均早于换向。同 B 权重提前制动在原种子与新布局街道均降至 0/8，无横穿时运动与下发保持一致。证据一直指向执行与保护，当前未新增训练。 [配对基线](experiments/instinct-continuous-command/BASELINE.md) · [提前制动](experiments/instinct-continuous-command/guard/REPORT.md)
 
 独立 120 秒组合发现两次街道接触，随后拆分验证了折返时序、运动补偿、净空余量和短时撤离冲突。优先级候选完成 32/32 条匹配首飞，五类零接触、零重置，5 ms 最小净空为 +0.228 m。新指令交接配对两臂均 32/32 完整、同样的最差净空，室内过门 8/8，过角从 5/8 增至 6/8。另有 110 秒同权重松杆配对将走廊与室内漂移降至 0.105 m 和 0.130 m。 [独立失败原件](experiments/instinct-continuous-command/novel/REPORT.md) · [撤离优先级](experiments/instinct-continuous-command/intercept_priority/REPORT.md) · [最新指令交接](experiments/instinct-continuous-command/command_handoff/REPORT.md) · [松杆配对](experiments/instinct-continuous-command/stop_release/REPORT.md)
