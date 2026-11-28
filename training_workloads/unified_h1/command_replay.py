@@ -137,8 +137,10 @@ NOVEL_OBSERVABLE_SWEEP_ID = NOVEL_PREFIX+'108'
 NOVEL_MEASURED_CURVE_DEFLECTION_ID = NOVEL_PREFIX+'109'
 NOVEL_MEASURED_CURVE_SLEW_ID = NOVEL_PREFIX+'110'
 NOVEL_MEASURED_CURVE_APPROACH_ID = NOVEL_PREFIX+'111'
+NOVEL_OBSERVED_MOVER_PREVIEW_ID = NOVEL_PREFIX+'112'
 OBSERVABLE_SWEEP_DEVELOPMENT_IDS = (NOVEL_OBSERVABLE_SWEEP_ID, NOVEL_MEASURED_CURVE_DEFLECTION_ID,
-                                   NOVEL_MEASURED_CURVE_SLEW_ID, NOVEL_MEASURED_CURVE_APPROACH_ID)
+                                   NOVEL_MEASURED_CURVE_SLEW_ID, NOVEL_MEASURED_CURVE_APPROACH_ID,
+                                   NOVEL_OBSERVED_MOVER_PREVIEW_ID)
 RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID,
                            *OBSERVABLE_SWEEP_DEVELOPMENT_IDS)
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
@@ -261,7 +263,9 @@ CORRIDOR_PROJECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v53'
 MEASURED_CURVE_DEFLECTION_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v54'
 MEASURED_CURVE_SLEW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v55'
 MEASURED_CURVE_APPROACH_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v56'
-MEASURED_CURVE_SLEW_EXECUTIONS = (MEASURED_CURVE_SLEW_EXECUTION, MEASURED_CURVE_APPROACH_EXECUTION)
+OBSERVED_MOVER_PREVIEW_EXECUTION = 'm4-escape-brake-tube-p25-crossing-stop-v57'
+MEASURED_CURVE_APPROACH_EXECUTIONS = (MEASURED_CURVE_APPROACH_EXECUTION, OBSERVED_MOVER_PREVIEW_EXECUTION)
+MEASURED_CURVE_SLEW_EXECUTIONS = (MEASURED_CURVE_SLEW_EXECUTION, *MEASURED_CURVE_APPROACH_EXECUTIONS)
 MEASURED_CURVE_EXECUTIONS = (MEASURED_CURVE_DEFLECTION_EXECUTION, *MEASURED_CURVE_SLEW_EXECUTIONS)
 CORRIDOR_PROJECTION_EXECUTIONS = (CORRIDOR_PROJECTION_EXECUTION, *MEASURED_CURVE_EXECUTIONS)
 STATIC_TURN_ONSET_EXECUTIONS = (STATIC_TURN_ONSET_EXECUTION, *CORRIDOR_PROJECTION_EXECUTIONS)
@@ -792,6 +796,8 @@ def novel_contract(params):
         execution = (MEASURED_CURVE_SLEW_EXECUTION,)
     elif params['experiment_id'] == NOVEL_MEASURED_CURVE_APPROACH_ID:
         execution = (MEASURED_CURVE_APPROACH_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_OBSERVED_MOVER_PREVIEW_ID:
+        execution = (OBSERVED_MOVER_PREVIEW_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FRONT_WALL_HANDOFF_ID:
         execution = (FRONT_WALL_HANDOFF_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COLLECTIVE_PROJECTION_ID:
@@ -1449,6 +1455,8 @@ def run(backend, params):
                         tensors['corridor_projection_width_m'] = pre['corridor_projection_width_m']
                     if 'measured_curve_deflection' in pre:
                         tensors['escape_measured_curve_deflection'] = pre['measured_curve_deflection']
+                    if 'observed_mover_preview' in pre:
+                        tensors['escape_observed_mover_preview'] = pre['observed_mover_preview']
                     if 'braking' in option:
                         tensors['escape_braking'] = option['braking']
                     if 'retreating' in option:
@@ -1624,7 +1632,7 @@ def run(backend, params):
             from instinctlab.control.measured_curve_deflection import MeasuredCurveDeflection
 
             slew = execution in MEASURED_CURVE_SLEW_EXECUTIONS
-            approach = execution == MEASURED_CURVE_APPROACH_EXECUTION
+            approach = execution in MEASURED_CURVE_APPROACH_EXECUTIONS
             curve = env.escape_option.curve_deflection
             if (not isinstance(curve, MeasuredCurveDeflection) or curve.limit_entry is not slew
                     or curve.require_approach is not approach):
@@ -1634,5 +1642,12 @@ def run(backend, params):
                 model['measured_curve_slew'] = True
             if approach:
                 model['measured_curve_approach'] = True
+        if execution == OBSERVED_MOVER_PREVIEW_EXECUTION:
+            from instinctlab.control.observed_mover_preview import ObservedMoverPreview
+
+            preview = env.escape_option.mover_preview
+            if not env.escape_option.verify_observed_mover_preview or not isinstance(preview, ObservedMoverPreview):
+                raise ValueError('COMMAND_OBSERVED_MOVER_PREVIEW_PROOF')
+            model['observed_mover_preview'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

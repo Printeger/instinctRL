@@ -115,6 +115,7 @@ CORRIDOR_PROJECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v53'
 MEASURED_CURVE_DEFLECTION_25 = 'm4-escape-brake-tube-p25-crossing-stop-v54'
 MEASURED_CURVE_SLEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v55'
 MEASURED_CURVE_APPROACH_25 = 'm4-escape-brake-tube-p25-crossing-stop-v56'
+OBSERVED_MOVER_PREVIEW_25 = 'm4-escape-brake-tube-p25-crossing-stop-v57'
 MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        REDIRECT_25_VERSION: 25, FALLBACK_25_VERSION: 25, FRONT_SWITCH_25_VERSION: 25,
                        REAR_SWITCH_25_VERSION: 25, REAR_CLEARANCE_25_VERSION: 25, FRONT_CLEARANCE_25_VERSION: 25,
@@ -153,7 +154,7 @@ MOUNT_PITCH_DEGREES = {MOUNT_25_VERSION: 25, MOUNT_28_VERSION: 28,
                        TANGENT_RESPONSE_HEADROOM_25: 25, NEUTRAL_RETRY_25: 25, OBSERVED_TURN_BRAKING_25: 25,
                        FRONT_WALL_HANDOFF_25: 25, COLLECTIVE_PROJECTION_25: 25, STATIC_TURN_ONSET_25: 25,
                        CORRIDOR_PROJECTION_25: 25, MEASURED_CURVE_DEFLECTION_25: 25,
-                       MEASURED_CURVE_SLEW_25: 25, MEASURED_CURVE_APPROACH_25: 25}
+                       MEASURED_CURVE_SLEW_25: 25, MEASURED_CURVE_APPROACH_25: 25, OBSERVED_MOVER_PREVIEW_25: 25}
 FAST_LATERAL_SPEED_M_S = .45
 RECOVERY_DELAY = 28
 RECOVERY_LIMIT = 65
@@ -189,7 +190,8 @@ class EscapeRecovery(EscapeOption):
                  verify_static_retreat_handoff=False, align_planar_protection=False,
                  verify_release_stop=False, verify_steady_handoff=False, tangent_response_headroom=False,
                  verify_neutral_retry=False, observed_turn_braking=False, verify_static_turn=False,
-                 verify_measured_curve=False, limit_curve_entry=False, require_curve_approach=False):
+                 verify_measured_curve=False, limit_curve_entry=False, require_curve_approach=False,
+                 verify_observed_mover_preview=False):
         super().__init__(lanes=lanes, device=device, dtype=dtype)
         self.recenter = recenter
         self.lateral = lateral
@@ -209,12 +211,19 @@ class EscapeRecovery(EscapeOption):
         self.retain_only_clipped_retreat = retain_only_clipped_retreat
         self.verify_static_turn = verify_static_turn
         self.verify_measured_curve = verify_measured_curve
+        self.verify_observed_mover_preview = verify_observed_mover_preview
         if verify_measured_curve:
             from .measured_curve_deflection import MeasuredCurveDeflection
 
             self.curve_deflection = MeasuredCurveDeflection(
                 lanes, self.direction, limit_entry=limit_curve_entry, require_approach=require_curve_approach)
             self.measured_curve = self.direction.new_zeros((lanes, 3))
+            self.measured_mover_active = self.direction.new_zeros(lanes, dtype=torch.bool)
+        if verify_observed_mover_preview:
+            from .observed_mover_preview import ObservedMoverPreview
+
+            self.mover_preview = ObservedMoverPreview(lanes, self.direction)
+            self.measured_preview = self.direction.new_zeros((lanes, 4))
         if verify_static_turn:
             if not verified_retreat_onset:
                 raise ValueError('Static turn recheck requires verified retreat onset')
@@ -505,6 +514,10 @@ class EscapeRecovery(EscapeOption):
         if self.verify_measured_curve:
             self.curve_deflection.reset(lanes)
             self.measured_curve[lanes] = 0.
+            self.measured_mover_active[lanes] = False
+        if self.verify_observed_mover_preview:
+            self.mover_preview.reset(lanes)
+            self.measured_preview[lanes] = 0.
         if self.static_scan_stop:
             self.static_stop_verified[lanes] = False
         if self.verify_overlapping_stop:
@@ -2886,7 +2899,7 @@ class EscapeRecovery(EscapeOption):
                      | self.offset_stopped | (self.intercept_steps > 0) | (self.retreat_hold_steps > 0)
                      | (self.observed_turn_brake_floor > 0.))
         if self.verify_measured_curve:
-            protected |= self.measured_curve[:, 1] > 0.
+            protected |= self.measured_mover_active
         margin = state.new_zeros(len(state))
         for lane in (self.applied & ~protected).nonzero().flatten().tolist():
             pipeline = pipelines[lane]
@@ -2994,6 +3007,13 @@ class EscapeRecovery(EscapeOption):
                 policy['lidar_grid'], policy['state_vec'], selected, config,
                 rays=self.detector._full_rays, blocked=blocked, issued=self.issued,
                 action_for_velocity=self.action_for_velocity)
+            self.measured_mover_active = self.measured_curve[:, 1] > 0.
+            if self.verify_observed_mover_preview:
+                self.measured_preview = self.mover_preview.apply(
+                    policy['lidar_grid'], policy['state_vec'], selected, config,
+                    rays=self.detector._full_rays, blocked=blocked | self.applied | self.measured_mover_active,
+                    observer=self.curve_deflection, issued=self.issued, action_for_velocity=self.action_for_velocity)
+                self.measured_mover_active |= self.measured_preview[:, 0] > 0.
         return selected
 
     def _apply_recovery(self, policy, action, config):

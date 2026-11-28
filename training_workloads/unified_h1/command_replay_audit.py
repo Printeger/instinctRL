@@ -24,8 +24,8 @@ from .command_replay import (
     RELEASE_STOP_CERTIFICATES_EXECUTIONS, STATIC_RETREAT_HANDOFF_EXECUTIONS, STEADY_HANDOFF_EXECUTIONS,
     TANGENT_RESPONSE_HEADROOM_EXECUTIONS, NEUTRAL_RETRY_EXECUTIONS, OBSERVED_TURN_BRAKING_EXECUTIONS,
     COLLECTIVE_PROJECTION_EXECUTIONS, CORRIDOR_PROJECTION_EXECUTIONS, FRONT_WALL_HANDOFF_EXECUTIONS,
-    MEASURED_CURVE_APPROACH_EXECUTION, MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTIONS,
-    STATIC_TURN_ONSET_EXECUTIONS,
+    MEASURED_CURVE_APPROACH_EXECUTIONS, MEASURED_CURVE_EXECUTIONS, MEASURED_CURVE_SLEW_EXECUTIONS,
+    OBSERVED_MOVER_PREVIEW_EXECUTION, STATIC_TURN_ONSET_EXECUTIONS,
     CROSSING_SHALLOW_EXECUTIONS, CROSSING_STOP_EXECUTIONS,
     FINITE_INTERCEPT_EXECUTIONS,
     OPENING_STEERING_EXECUTIONS,
@@ -480,7 +480,8 @@ def audit(output, params, counters):
         corridor_projection = model['execution'] in CORRIDOR_PROJECTION_EXECUTIONS
         measured_curve = model['execution'] in MEASURED_CURVE_EXECUTIONS
         measured_curve_slew = model['execution'] in MEASURED_CURVE_SLEW_EXECUTIONS
-        measured_curve_approach = model['execution'] == MEASURED_CURVE_APPROACH_EXECUTION
+        measured_curve_approach = model['execution'] in MEASURED_CURVE_APPROACH_EXECUTIONS
+        observed_mover_preview = model['execution'] == OBSERVED_MOVER_PREVIEW_EXECUTION
         static_turn_onset = model['execution'] in STATIC_TURN_ONSET_EXECUTIONS
         if (model.get('verify_composed_crossing', False) is not composed_crossing
                 or model.get('retry_command_handoff', False) is not request_recovery
@@ -499,6 +500,7 @@ def audit(output, params, counters):
                 or model.get('measured_curve_deflection', False) is not measured_curve
                 or model.get('measured_curve_slew', False) is not measured_curve_slew
                 or model.get('measured_curve_approach', False) is not measured_curve_approach
+                or model.get('observed_mover_preview', False) is not observed_mover_preview
                 or model.get('static_turn_onset', False) is not static_turn_onset):
             raise ValueError('COMMAND_REPLAY_CURRENT_REQUEST_PROFILE')
         sources.append(verify_mount(model['lidar_mount'], output, label, 25))
@@ -604,6 +606,19 @@ def audit(output, params, counters):
                         raise ValueError('COMMAND_REPLAY_MEASURED_CURVE_BINDING')
                 elif 'escape_measured_curve_deflection' in row:
                     raise ValueError('COMMAND_REPLAY_MEASURED_CURVE_SCOPE')
+                if observed_mover_preview:
+                    previews = row.get('escape_observed_mover_preview', ())
+                    if (len(previews) != LANES or any(len(value) != 4 for value in previews)
+                            or any(count not in range(11) or not all(math.isfinite(x) for x in (floor, latest, projected))
+                                   or (not count and any((floor, latest, projected)))
+                                   or (count and (floor < .389999 or peak or curve[1]))
+                                   or (count == 1 and (projected < .119999 or latest >= .360001))
+                                   or (count != 1 and projected)
+                                   for (count, floor, latest, projected), curve, peak in
+                                   zip(previews, curves, trim, strict=True))):
+                        raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_BINDING')
+                elif 'escape_observed_mover_preview' in row:
+                    raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_SCOPE')
                 if ('escape_clear_pass_hold' in row) != (model['execution'] in CLEAR_PASS_EXECUTIONS):
                     raise ValueError('COMMAND_REPLAY_HOLD_BINDING')
                 held = row.get('escape_clear_pass_hold', [False]*LANES)
@@ -990,6 +1005,14 @@ def audit(output, params, counters):
                                 or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
                                 or (curves[lane][0] and math.dist(row['v_final_b'][lane], actor[-1][9:12]) > .30005)):
                             raise ValueError('COMMAND_REPLAY_MEASURED_CURVE_SLEW_BEHAVIOR')
+                    if observed_mover_preview and previews[lane][0]:
+                        count = previews[lane][0]
+                        if (row['escape_active'][lane] or intercepted[lane] or continued[lane] or handoff[lane]
+                                or held[lane] or row['ics_emergency'][lane] or row['ics_beta'][lane] < .89999
+                                or (count == 1 and math.dist(row['v_final_b'][lane], actor[-1][9:12]) > .30005)
+                                or (count > 1 and (step == 0 or rows[step-1]['escape_observed_mover_preview'][lane][0]
+                                                  != count-1))):
+                            raise ValueError('COMMAND_REPLAY_OBSERVED_MOVER_PREVIEW_BEHAVIOR')
                     if intercepted[lane]:
                         alpha, x, y, z = row['selected_action'][lane]
                         planar_speed = math.hypot(x-.5, y-.5)

@@ -29,7 +29,7 @@ class _Fit:
         return np.pad(self.acceleration.mean(axis=1), ((0, 0), (0, 1)))
 
 
-def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False):
+def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=False, coherent=True):
     history = state.reshape(4, 13)
     ages = history[:, 12]
     valid = (lidar[:, 1::3] > .5) & (lidar[:, 2::3] > .55)
@@ -46,7 +46,7 @@ def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=F
     centers, radii, supported = (torch.stack(values, dim=1)[0] for values in zip(*shapes, strict=True))
     if not bool(tracked[0] & supported.all()) or float(radii.max()-radii.min()) > (.025 if entry else .04):
         return None
-    if entry:
+    if entry or not coherent:
         if require_approach and not bool((centers.norm(dim=1).diff()[-2:] <= -_MIN_RANGE_CLOSURE_M).all()):
             return None
         near, other, visible = fitted_sphere_returns(lidar, rays, centers[-1:], radii[-1:])
@@ -60,15 +60,17 @@ def _fit_return(lidar, state, rays, offsets, coast, *, entry, require_approach=F
     points = centers[:, :2].cpu().numpy()[None]+offsets+age[None, :, None]*coast[:, None]
     velocities = np.diff(points, axis=1)/gaps[None, :, None]
     acceleration = np.diff(velocities, axis=1)/(.5*(gaps[:-1]+gaps[1:]))[None, :, None]
-    if entry:
+    if entry and coherent:
         lengths = np.linalg.norm(acceleration, axis=2)
         if lengths.min() < .35 or lengths.max() > .85:
             return None
         alignment = (acceleration[:, 0]*acceleration[:, 1]).sum(axis=1)/lengths.prod(axis=1)
         if alignment.min() < .999 or np.linalg.norm(np.diff(acceleration, axis=1), axis=2).max() > .09:
             return None
-    mean = acceleration.mean(axis=1)
-    velocity = np.pad(velocities[:, -1]+.5*gaps[-1]*mean, ((0, 0), (0, 1)))
+    velocity = velocities[:, -1]
+    if coherent:
+        velocity = velocity+.5*gaps[-1]*acceleration.mean(axis=1)
+    velocity = np.pad(velocity, ((0, 0), (0, 1)))
     if np.linalg.norm(velocity, axis=1).max() > 1.42:
         return None
     return _Fit(centers[-1].cpu().numpy(), float(radii.max()), velocity, acceleration)
@@ -174,6 +176,13 @@ class _Pass:
     turned: bool = False
 
 
+def fresh_motion_history(history):
+    age = history[:, :, 12]
+    return (((age >= 0.) & (age <= .04)).all(dim=1) & (age.diff(dim=1).abs() <= .03).all(dim=1)
+            & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .40)
+            & ((-history[:, -1, 3:6]).norm(dim=1) > .90))
+
+
 class MeasuredCurveDeflection:
     def __init__(self, lanes, reference, *, limit_entry=False, require_approach=False):
         self.passes = [None]*lanes
@@ -200,10 +209,7 @@ class MeasuredCurveDeflection:
         self.age.add_(1)
         self.rearm.sub_(1).clamp_min_(0)
         history = state.reshape(-1, 4, 13)
-        age = history[:, :, 12]
-        fresh = (((age >= 0.) & (age <= .04)).all(dim=1) & (age.diff(dim=1).abs() <= .03).all(dim=1)
-                 & (history[:, :, :3].norm(dim=2).amax(dim=1) <= .40)
-                 & ((-history[:, -1, 3:6]).norm(dim=1) > .90) & ~blocked & (self.age >= 4.))
+        fresh = fresh_motion_history(history) & ~blocked & (self.age >= 4.)
         speed = history[:, -1, 6:9].norm(dim=1)
         current = fresh & (speed > .03)
         active = state.new_tensor([item is not None for item in self.passes], dtype=torch.bool)

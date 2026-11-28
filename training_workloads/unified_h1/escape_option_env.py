@@ -33,12 +33,13 @@ from instinctlab.control.escape_recovery import (
     GRAVITY_ALIGNED_PROTECTION_25, RELEASE_STOP_CERTIFICATES_25, STEADY_HANDOFF_25, TANGENT_RESPONSE_HEADROOM_25,
     NEUTRAL_RETRY_25, OBSERVED_TURN_BRAKING_25, FRONT_WALL_HANDOFF_25, COLLECTIVE_PROJECTION_25,
     STATIC_TURN_ONSET_25, CORRIDOR_PROJECTION_25, MEASURED_CURVE_DEFLECTION_25, MEASURED_CURVE_SLEW_25,
-    MEASURED_CURVE_APPROACH_25,
+    MEASURED_CURVE_APPROACH_25, OBSERVED_MOVER_PREVIEW_25,
 )
 from instinctlab.envs.unified_h1_direct_env import UnifiedH1DirectEnv
 
 
-MEASURED_CURVE_SLEW_VERSIONS = (MEASURED_CURVE_SLEW_25, MEASURED_CURVE_APPROACH_25)
+MEASURED_CURVE_APPROACH_VERSIONS = (MEASURED_CURVE_APPROACH_25, OBSERVED_MOVER_PREVIEW_25)
+MEASURED_CURVE_SLEW_VERSIONS = (MEASURED_CURVE_SLEW_25, *MEASURED_CURVE_APPROACH_VERSIONS)
 MEASURED_CURVE_VERSIONS = (MEASURED_CURVE_DEFLECTION_25, *MEASURED_CURVE_SLEW_VERSIONS)
 CORRIDOR_PROJECTION_VERSIONS = (CORRIDOR_PROJECTION_25, *MEASURED_CURVE_VERSIONS)
 STATIC_TURN_ONSET_VERSIONS = (STATIC_TURN_ONSET_25, *CORRIDOR_PROJECTION_VERSIONS)
@@ -296,7 +297,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                                                 verify_static_turn=version in STATIC_TURN_ONSET_VERSIONS,
                                                 verify_measured_curve=version in MEASURED_CURVE_VERSIONS,
                                                 limit_curve_entry=version in MEASURED_CURVE_SLEW_VERSIONS,
-                                                require_curve_approach=version == MEASURED_CURVE_APPROACH_25)
+                                                require_curve_approach=version in MEASURED_CURVE_APPROACH_VERSIONS,
+                                                verify_observed_mover_preview=version == OBSERVED_MOVER_PREVIEW_25)
         else:
             raise ValueError('ESCAPE_OPTION_VERSION')
         if self.lidar_rays_body is not None:
@@ -371,7 +373,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 crossing = (option.intercepted | option.intercept_continued | (option.intercept_steps > 0)
                             | (option.observed_turn_brake_floor > 0.))
                 if option.verify_measured_curve:
-                    crossing |= option.measured_curve[:, 1] > 0.
+                    crossing |= option.measured_mover_active
                 self._wrench_adapter.eligible &= ~crossing
             actions = selected
             if option.verify_release_stop:
@@ -399,7 +401,7 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
                 if option.observed_turn_braking:
                     protected |= option.observed_turn_brake_floor > 0.
                 if option.verify_measured_curve:
-                    protected |= option.measured_curve[:, 1] > 0.
+                    protected |= option.measured_mover_active
                 if front_wall_handoff:
                     protected |= self._front_wall_handoff_margin > 0.
                 if self.local_wall_stopping:
@@ -474,6 +476,8 @@ class EscapeOptionEnv(UnifiedH1DirectEnv):
             if isinstance(self.escape_option, EscapeRecovery):
                 if self.escape_option.verify_measured_curve:
                     self.extras['pre_reset']['measured_curve_deflection'] = self.escape_option.measured_curve.detach().clone()
+                if self.escape_option.verify_observed_mover_preview:
+                    self.extras['pre_reset']['observed_mover_preview'] = self.escape_option.measured_preview.detach().clone()
                 self.extras['pre_reset']['escape_option']['recovery'] = self.escape_option.recovering.detach().clone()
                 self.extras['pre_reset']['escape_option']['redirected'] = self.escape_option.redirected.detach().clone()
                 if self.escape_option.clear_pass:
