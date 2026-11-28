@@ -1,0 +1,718 @@
+{
+  "schema": "instinctrl-v60-matched-restoration/1",
+  "baseline": "R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113",
+  "candidate": "R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-115",
+  "steps": 1200,
+  "lanes": 32,
+  "scene_seed": 1999375583,
+  "scorer": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/mover_passage_reproof/score_matched_restoration.py",
+    "sha256": "6bc21895dee36fea0eff8d181cf79fa14f95856f1804ecbb9505743a826924ba"
+  },
+  "production_scorer": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-SOURCE-135/tools/r6_direct/replay_clearance.py",
+    "sha256": "e6fc20e264897525fe9c892466359bb8fc0950ea3465813c82f699b93c1b1b21"
+  },
+  "gates": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/long/GATES.json",
+    "sha256": "45c89839e87a4b43a3c0e2fd1cc5e96dd8eed51996a933458f711c510c247a52"
+  },
+  "baseline_inputs": [
+    {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/analysis/clearance-and-progress.json",
+      "sha256": "ba8c1f0103c212897c7dcb7ff6dc10f62e87442bc2e2b6caa47b782f4b2a51e3"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/analysis/report.json",
+      "sha256": "2a856da3e04622ae8fd690f8e868583c15e353d27f2add5096a483810d9ad90a"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/control/receipt.json",
+      "sha256": "6354f7ba21afc7bac1eb6a0b3bd80f6d0bebc12419833c887f2ec59c0887f4e3"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+      "sha256": "1c3b8c78eb4d2958de01ab95bd57e210f6b55e1641d430646667487339d41990"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+      "sha256": "1221406ff06edfae30c42d35b786a08f9f8981d272137477292c7937242cb79d"
+    },
+    {
+      "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-113/results/research-r6-dynamic-assay/initial_preflight/geometry.json",
+      "sha256": "65d666b1f85694bf2e4840b37580d2037685c9552c4b5abb400932bb2eba1b9b"
+    },
+    {
+      "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/gravity_preview_renewal/OPPORTUNITIES.json",
+      "sha256": "89c86fe0ec6a1612cca73083718063ab452c75278bbdcda83ff5917f563e7646"
+    }
+  ],
+  "restoration_windows": [
+    {
+      "lane": 1,
+      "layout": "room_corner",
+      "hazard_start": 168,
+      "anchor": 187,
+      "end": 1200,
+      "expected_baseline_ticks": 16
+    },
+    {
+      "lane": 2,
+      "layout": "room_corner",
+      "hazard_start": 181,
+      "anchor": 192,
+      "end": 1200,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 3,
+      "layout": "room_corner",
+      "hazard_start": 502,
+      "anchor": 504,
+      "end": 1040,
+      "expected_baseline_ticks": 17
+    },
+    {
+      "lane": 3,
+      "layout": "room_corner",
+      "hazard_start": 1040,
+      "anchor": 1087,
+      "end": 1200,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 4,
+      "layout": "room_corner",
+      "hazard_start": 172,
+      "anchor": 177,
+      "end": 182,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 4,
+      "layout": "room_corner",
+      "hazard_start": 182,
+      "anchor": 192,
+      "end": 941,
+      "expected_baseline_ticks": 12
+    },
+    {
+      "lane": 4,
+      "layout": "room_corner",
+      "hazard_start": 941,
+      "anchor": 947,
+      "end": 1172,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 5,
+      "layout": "room_corner",
+      "hazard_start": 181,
+      "anchor": 182,
+      "end": 1200,
+      "expected_baseline_ticks": 22
+    },
+    {
+      "lane": 6,
+      "layout": "room_corner",
+      "hazard_start": 168,
+      "anchor": 192,
+      "end": 1200,
+      "expected_baseline_ticks": 12
+    },
+    {
+      "lane": 7,
+      "layout": "room_corner",
+      "hazard_start": 190,
+      "anchor": 192,
+      "end": 659,
+      "expected_baseline_ticks": 16
+    },
+    {
+      "lane": 7,
+      "layout": "room_corner",
+      "hazard_start": 659,
+      "anchor": 675,
+      "end": 1144,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 7,
+      "layout": "room_corner",
+      "hazard_start": 1144,
+      "anchor": 1167,
+      "end": 1200,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 8,
+      "layout": "trunk_aisle",
+      "hazard_start": 973,
+      "anchor": 995,
+      "end": 1011,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 8,
+      "layout": "trunk_aisle",
+      "hazard_start": 1011,
+      "anchor": 1030,
+      "end": 1200,
+      "expected_baseline_ticks": 31
+    },
+    {
+      "lane": 9,
+      "layout": "trunk_aisle",
+      "hazard_start": 762,
+      "anchor": 774,
+      "end": 989,
+      "expected_baseline_ticks": 8
+    },
+    {
+      "lane": 9,
+      "layout": "trunk_aisle",
+      "hazard_start": 989,
+      "anchor": 1005,
+      "end": 1200,
+      "expected_baseline_ticks": 26
+    },
+    {
+      "lane": 11,
+      "layout": "trunk_aisle",
+      "hazard_start": 1128,
+      "anchor": 1129,
+      "end": 1134,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 11,
+      "layout": "trunk_aisle",
+      "hazard_start": 1134,
+      "anchor": 1135,
+      "end": 1141,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 11,
+      "layout": "trunk_aisle",
+      "hazard_start": 1141,
+      "anchor": 1142,
+      "end": 1200,
+      "expected_baseline_ticks": 7
+    },
+    {
+      "lane": 12,
+      "layout": "trunk_aisle",
+      "hazard_start": 999,
+      "anchor": 1014,
+      "end": 1200,
+      "expected_baseline_ticks": 9
+    },
+    {
+      "lane": 14,
+      "layout": "trunk_aisle",
+      "hazard_start": 884,
+      "anchor": 892,
+      "end": 1108,
+      "expected_baseline_ticks": 12
+    },
+    {
+      "lane": 14,
+      "layout": "trunk_aisle",
+      "hazard_start": 1108,
+      "anchor": 1121,
+      "end": 1200,
+      "expected_baseline_ticks": 15
+    },
+    {
+      "lane": 16,
+      "layout": "street_gap",
+      "hazard_start": 366,
+      "anchor": 437,
+      "end": 669,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 16,
+      "layout": "street_gap",
+      "hazard_start": 669,
+      "anchor": 759,
+      "end": 1200,
+      "expected_baseline_ticks": 13
+    },
+    {
+      "lane": 17,
+      "layout": "street_gap",
+      "hazard_start": 480,
+      "anchor": 500,
+      "end": 542,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 17,
+      "layout": "street_gap",
+      "hazard_start": 542,
+      "anchor": 566,
+      "end": 872,
+      "expected_baseline_ticks": 36
+    },
+    {
+      "lane": 17,
+      "layout": "street_gap",
+      "hazard_start": 872,
+      "anchor": 913,
+      "end": 1200,
+      "expected_baseline_ticks": 53
+    },
+    {
+      "lane": 18,
+      "layout": "street_gap",
+      "hazard_start": 313,
+      "anchor": 315,
+      "end": 685,
+      "expected_baseline_ticks": 37
+    },
+    {
+      "lane": 18,
+      "layout": "street_gap",
+      "hazard_start": 685,
+      "anchor": 686,
+      "end": 1200,
+      "expected_baseline_ticks": 59
+    },
+    {
+      "lane": 19,
+      "layout": "street_gap",
+      "hazard_start": 169,
+      "anchor": 216,
+      "end": 603,
+      "expected_baseline_ticks": 14
+    },
+    {
+      "lane": 19,
+      "layout": "street_gap",
+      "hazard_start": 603,
+      "anchor": 646,
+      "end": 1052,
+      "expected_baseline_ticks": 16
+    },
+    {
+      "lane": 19,
+      "layout": "street_gap",
+      "hazard_start": 1052,
+      "anchor": 1110,
+      "end": 1200,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 20,
+      "layout": "street_gap",
+      "hazard_start": 278,
+      "anchor": 282,
+      "end": 840,
+      "expected_baseline_ticks": 24
+    },
+    {
+      "lane": 20,
+      "layout": "street_gap",
+      "hazard_start": 840,
+      "anchor": 860,
+      "end": 871,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 20,
+      "layout": "street_gap",
+      "hazard_start": 871,
+      "anchor": 874,
+      "end": 898,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 20,
+      "layout": "street_gap",
+      "hazard_start": 898,
+      "anchor": 907,
+      "end": 961,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 20,
+      "layout": "street_gap",
+      "hazard_start": 961,
+      "anchor": 962,
+      "end": 1085,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 20,
+      "layout": "street_gap",
+      "hazard_start": 1085,
+      "anchor": 1115,
+      "end": 1200,
+      "expected_baseline_ticks": 52
+    },
+    {
+      "lane": 22,
+      "layout": "street_gap",
+      "hazard_start": 169,
+      "anchor": 201,
+      "end": 590,
+      "expected_baseline_ticks": 16
+    },
+    {
+      "lane": 22,
+      "layout": "street_gap",
+      "hazard_start": 590,
+      "anchor": 602,
+      "end": 642,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 22,
+      "layout": "street_gap",
+      "hazard_start": 642,
+      "anchor": 679,
+      "end": 999,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 22,
+      "layout": "street_gap",
+      "hazard_start": 999,
+      "anchor": 1028,
+      "end": 1200,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 23,
+      "layout": "street_gap",
+      "hazard_start": 313,
+      "anchor": 325,
+      "end": 869,
+      "expected_baseline_ticks": 23
+    },
+    {
+      "lane": 23,
+      "layout": "street_gap",
+      "hazard_start": 869,
+      "anchor": 886,
+      "end": 1200,
+      "expected_baseline_ticks": 9
+    },
+    {
+      "lane": 24,
+      "layout": "corridor",
+      "hazard_start": 533,
+      "anchor": 549,
+      "end": 653,
+      "expected_baseline_ticks": 11
+    },
+    {
+      "lane": 24,
+      "layout": "corridor",
+      "hazard_start": 653,
+      "anchor": 661,
+      "end": 863,
+      "expected_baseline_ticks": 11
+    },
+    {
+      "lane": 24,
+      "layout": "corridor",
+      "hazard_start": 863,
+      "anchor": 888,
+      "end": 1023,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 24,
+      "layout": "corridor",
+      "hazard_start": 1023,
+      "anchor": 1028,
+      "end": 1113,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 525,
+      "anchor": 527,
+      "end": 589,
+      "expected_baseline_ticks": 14
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 589,
+      "anchor": 612,
+      "end": 636,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 636,
+      "anchor": 653,
+      "end": 687,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 687,
+      "anchor": 701,
+      "end": 708,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 708,
+      "anchor": 712,
+      "end": 727,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 727,
+      "anchor": 731,
+      "end": 750,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 750,
+      "anchor": 771,
+      "end": 845,
+      "expected_baseline_ticks": 56
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 845,
+      "anchor": 869,
+      "end": 944,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 961,
+      "anchor": 966,
+      "end": 1028,
+      "expected_baseline_ticks": 31
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 1028,
+      "anchor": 1067,
+      "end": 1082,
+      "expected_baseline_ticks": 12
+    },
+    {
+      "lane": 25,
+      "layout": "corridor",
+      "hazard_start": 1082,
+      "anchor": 1086,
+      "end": 1115,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 26,
+      "layout": "corridor",
+      "hazard_start": 535,
+      "anchor": 571,
+      "end": 663,
+      "expected_baseline_ticks": 12
+    },
+    {
+      "lane": 26,
+      "layout": "corridor",
+      "hazard_start": 663,
+      "anchor": 700,
+      "end": 757,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 26,
+      "layout": "corridor",
+      "hazard_start": 757,
+      "anchor": 797,
+      "end": 986,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 26,
+      "layout": "corridor",
+      "hazard_start": 986,
+      "anchor": 1003,
+      "end": 1133,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 26,
+      "layout": "corridor",
+      "hazard_start": 1133,
+      "anchor": 1150,
+      "end": 1200,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 564,
+      "anchor": 565,
+      "end": 570,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 570,
+      "anchor": 593,
+      "end": 625,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 625,
+      "anchor": 626,
+      "end": 655,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 655,
+      "anchor": 671,
+      "end": 766,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 766,
+      "anchor": 779,
+      "end": 857,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 857,
+      "anchor": 861,
+      "end": 906,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 906,
+      "anchor": 908,
+      "end": 963,
+      "expected_baseline_ticks": 30
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 963,
+      "anchor": 970,
+      "end": 1083,
+      "expected_baseline_ticks": 11
+    },
+    {
+      "lane": 27,
+      "layout": "corridor",
+      "hazard_start": 1128,
+      "anchor": 1168,
+      "end": 1200,
+      "expected_baseline_ticks": null
+    },
+    {
+      "lane": 28,
+      "layout": "open_tube",
+      "hazard_start": 1021,
+      "anchor": 1041,
+      "end": 1200,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 29,
+      "layout": "open_tube",
+      "hazard_start": 649,
+      "anchor": 664,
+      "end": 1018,
+      "expected_baseline_ticks": 13
+    },
+    {
+      "lane": 29,
+      "layout": "open_tube",
+      "hazard_start": 1018,
+      "anchor": 1025,
+      "end": 1200,
+      "expected_baseline_ticks": 10
+    },
+    {
+      "lane": 30,
+      "layout": "open_tube",
+      "hazard_start": 526,
+      "anchor": 529,
+      "end": 630,
+      "expected_baseline_ticks": 5
+    },
+    {
+      "lane": 30,
+      "layout": "open_tube",
+      "hazard_start": 630,
+      "anchor": 670,
+      "end": 934,
+      "expected_baseline_ticks": 9
+    },
+    {
+      "lane": 30,
+      "layout": "open_tube",
+      "hazard_start": 934,
+      "anchor": 961,
+      "end": 999,
+      "expected_baseline_ticks": 9
+    },
+    {
+      "lane": 30,
+      "layout": "open_tube",
+      "hazard_start": 999,
+      "anchor": 1012,
+      "end": 1200,
+      "expected_baseline_ticks": 9
+    },
+    {
+      "lane": 31,
+      "layout": "open_tube",
+      "hazard_start": 679,
+      "anchor": 692,
+      "end": 721,
+      "expected_baseline_ticks": 9
+    },
+    {
+      "lane": 31,
+      "layout": "open_tube",
+      "hazard_start": 721,
+      "anchor": 724,
+      "end": 1144,
+      "expected_baseline_ticks": 8
+    }
+  ],
+  "rule": {
+    "anchor": "N113 first feasible packet; end at next N113 risk onset or first-flight end",
+    "confirmation": "five consecutive feasible nonzero latest commands at measured 60 percent; inclusive fifth packet",
+    "missing_denominator": "all 82",
+    "timeout_ticks": 15,
+    "minimum_percentage_point_gain": 10,
+    "nearest_rank_percentile": 95,
+    "minimum_p95_gain_ticks": 3,
+    "p95_primary_cohort": "completed in both arms, guarded by nonincrease of timeout and missing on all 82 windows"
+  }
+}
