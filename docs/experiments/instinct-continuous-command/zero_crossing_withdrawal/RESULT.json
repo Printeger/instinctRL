@@ -1,0 +1,316 @@
+{
+  "arms": {
+    "candidate": {
+      "changes": {
+        "escape_command_handoff": {
+          "0": 1,
+          "5": 1,
+          "6": 1,
+          "24": 1,
+          "25": 2,
+          "26": 1,
+          "27": 1,
+          "28": 5,
+          "30": 2,
+          "31": 1
+        },
+        "escape_far_crossing_refined": {
+          "18": 2,
+          "22": 1
+        },
+        "escape_finite_edge": {
+          "0": 58,
+          "1": 88,
+          "2": 88,
+          "3": 39,
+          "4": 106,
+          "5": 35,
+          "6": 112,
+          "7": 75,
+          "8": 37,
+          "9": 12,
+          "10": 64,
+          "11": 19,
+          "12": 32,
+          "13": 10,
+          "14": 2,
+          "15": 31,
+          "16": 33,
+          "17": 13,
+          "18": 43,
+          "19": 8,
+          "20": 7,
+          "21": 36,
+          "22": 26,
+          "23": 4,
+          "24": 60,
+          "25": 93,
+          "26": 87,
+          "27": 64,
+          "28": 72,
+          "29": 38,
+          "30": 56,
+          "31": 110
+        },
+        "escape_intercept_continued": {
+          "16": 4,
+          "17": 4,
+          "18": 16,
+          "19": 4,
+          "20": 12,
+          "21": 8,
+          "22": 20,
+          "23": 8
+        },
+        "escape_intercepted": {
+          "16": 50,
+          "17": 44,
+          "18": 59,
+          "19": 46,
+          "20": 67,
+          "21": 41,
+          "22": 72,
+          "23": 56
+        },
+        "escape_observed_heading": {
+          "1": 28,
+          "2": 41,
+          "4": 44,
+          "5": 1,
+          "6": 37,
+          "7": 11,
+          "8": 7,
+          "9": 4,
+          "10": 26,
+          "11": 8,
+          "12": 24,
+          "13": 7,
+          "15": 21,
+          "16": 12,
+          "17": 9,
+          "18": 9,
+          "19": 2,
+          "20": 4,
+          "21": 13,
+          "22": 18,
+          "24": 56,
+          "25": 82,
+          "26": 84,
+          "27": 51,
+          "28": 22,
+          "30": 1,
+          "31": 25
+        },
+        "escape_offset_stop": {
+          "16": 18,
+          "17": 25,
+          "18": 1,
+          "19": 22,
+          "20": 8,
+          "21": 12,
+          "22": 17,
+          "23": 7
+        },
+        "escape_settled_crossing": {
+          "20": 1
+        },
+        "escape_shallow_steering": {
+          "0": 33,
+          "1": 47,
+          "2": 39,
+          "3": 38,
+          "4": 49,
+          "5": 26,
+          "6": 54,
+          "7": 38,
+          "12": 1,
+          "16": 11,
+          "17": 2,
+          "18": 16,
+          "19": 1,
+          "20": 1,
+          "21": 9,
+          "22": 3,
+          "23": 1,
+          "24": 1,
+          "26": 3,
+          "28": 39,
+          "29": 8,
+          "30": 10,
+          "31": 82
+        },
+        "escape_tracked_resume": {
+          "16": 19,
+          "17": 13,
+          "18": 7,
+          "19": 2,
+          "20": 12,
+          "21": 2,
+          "22": 5,
+          "23": 3
+        },
+        "escape_wall_tangent": {
+          "1": 3,
+          "2": 47,
+          "4": 1,
+          "7": 14,
+          "8": 3,
+          "9": 10,
+          "10": 4,
+          "11": 10,
+          "12": 12,
+          "13": 1,
+          "14": 13,
+          "15": 12,
+          "18": 10,
+          "25": 69,
+          "26": 70,
+          "27": 18,
+          "28": 9,
+          "29": 30,
+          "30": 46,
+          "31": 2
+        },
+        "zero_crossing_verified_stop": {
+          "21": 13
+        },
+        "zero_crossing_withdrawal": {
+          "21": 4
+        }
+      },
+      "dense": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-81/results/research-r6-dynamic-assay/candidate-layout_routes-clearance.f32",
+        "sha256": "a09805805647666be96c87d3091fb13e4a6269d58b5cb68da44a6567481f546f"
+      },
+      "layouts": {
+        "corridor": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 25,
+            "m": 0.4175141900777817,
+            "time_s": 14.73
+          },
+          "scheduled": 4
+        },
+        "open_tube": {
+          "complete": 4,
+          "contacts": [],
+          "first_flight_s": 480.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 28,
+            "m": 0.4620920982298663,
+            "time_s": 114.175
+          },
+          "scheduled": 4
+        },
+        "room_corner": {
+          "complete": 8,
+          "contacts": [],
+          "corner": 8,
+          "door": 8,
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 6,
+            "m": 0.2899927016996476,
+            "time_s": 20.25
+          },
+          "scheduled": 8
+        },
+        "street_gap": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [
+            {
+              "id": "lane22-first-stop",
+              "lane": 22
+            }
+          ],
+          "minimum": {
+            "lane": 20,
+            "m": 0.19644058322255425,
+            "time_s": 30.98
+          },
+          "scheduled": 8
+        },
+        "trunk_aisle": {
+          "complete": 8,
+          "contacts": [],
+          "first_flight_s": 960.0,
+          "fixed_stops_failed": [],
+          "minimum": {
+            "lane": 10,
+            "m": 0.515508044086759,
+            "time_s": 13.005
+          },
+          "scheduled": 8
+        }
+      },
+      "pulse": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-81/results/research-r6-dynamic-assay/candidate-layout_routes-pulse.json",
+        "sha256": "6909030b55beb2ae28949652c7bf10b960326a6a50c89a2ff108aa90984d1608"
+      },
+      "trace": {
+        "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-81/results/research-r6-dynamic-assay/candidate-layout_routes.jsonl.gz",
+        "sha256": "2bfbc0456d8ea8755052712fd733cdfdacc146552d40bca73b96130f203305aa"
+      },
+      "windows": [
+        {
+          "end_exclusive": 666,
+          "lane": 21,
+          "minimum_m": 0.23369318708033598,
+          "start": 589
+        },
+        {
+          "end_exclusive": 156,
+          "lane": 22,
+          "minimum_m": 1.001838009016071,
+          "start": 128
+        }
+      ]
+    }
+  },
+  "binding": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-81/analysis/binding.json",
+    "sha256": "5e735d0639f966497d0f9fa051ecd2a8cf3be90d4e4f5532670d3004c1dddef6"
+  },
+  "clearance": {
+    "path": "/home/mint/instinctrl-runs/R6-DIRECT-INSTINCT-GPU-COMMAND-NOVEL-81/analysis/clearance-and-progress.json",
+    "sha256": "9f4040aa454bc1a671f51a2a6d452c8fd748f644b58e32ea00d791b91183a6e3"
+  },
+  "counters": {
+    "actor_optimizer_steps": 0,
+    "attempted_policy_steps": 1200,
+    "attempted_updates": 0,
+    "automatic_resets": 0,
+    "completed_policy_steps": 1200,
+    "completed_updates": 0,
+    "critic_optimizer_steps": 0,
+    "explicit_resets": 1,
+    "initialization_physics_ticks": 2,
+    "live_process_starts": 1,
+    "nontraining_transitions": 38400,
+    "real_checkpoint_writes": 0,
+    "real_environment_transitions": 38400,
+    "real_optimizer_updates": 0,
+    "simulator_initializations": 1,
+    "synthetic_optimizer_steps": 0,
+    "synthetic_optimizer_updates": 0,
+    "synthetic_samples": 0,
+    "temporary_checkpoint_writes": 0,
+    "training_transitions": 0
+  },
+  "native": {
+    "error": "TimeoutError('DIRECT_CLEANUP_TIMEOUT')",
+    "exit_code": -15,
+    "remaining": []
+  },
+  "scientific_acceptance": false,
+  "source_commit": "9d08d03d3eb9d20f4e73ab762ee38edb7bc7bdff",
+  "status": "DEVELOPMENT_ZERO_CROSSING_WITHDRAWAL_SHORT_STOP_FAIL"
+}
