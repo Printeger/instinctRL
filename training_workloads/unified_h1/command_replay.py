@@ -133,7 +133,9 @@ NOVEL_FRONT_WALL_HANDOFF_ID = NOVEL_PREFIX+'104'
 NOVEL_COLLECTIVE_PROJECTION_ID = NOVEL_PREFIX+'105'
 NOVEL_STATIC_TURN_ONSET_ID = NOVEL_PREFIX+'106'
 NOVEL_CORRIDOR_PROJECTION_ID = NOVEL_PREFIX+'107'
-RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID)
+NOVEL_OBSERVABLE_SWEEP_ID = NOVEL_PREFIX+'108'
+RAMPED_STREET_SWEEP_IDS = (NOVEL_ACCELERATION_BOUNDED_SWEEP_ID, NOVEL_OBSERVED_TURN_BRAKING_ID,
+                           NOVEL_OBSERVABLE_SWEEP_ID)
 STREET_SWEEP_DEVELOPMENT_IDS = (NOVEL_STREET_SWEEP_ID, *RAMPED_STREET_SWEEP_IDS)
 MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATIC_RETREAT_HANDOFF_ID: 420,
                                     NOVEL_NEUTRAL_RETRY_ID: 200, NOVEL_FRONT_WALL_HANDOFF_ID: 200,
@@ -141,6 +143,8 @@ MATCHED_ENDURANCE_PREFIX_SECONDS = {NOVEL_COMPOSED_CROSSING_ID: 120, NOVEL_STATI
                                     NOVEL_CORRIDOR_PROJECTION_ID: 120}
 CORNER_PREFIX = PREFIX + 'CORNER-'
 LONG_PREFIX = PREFIX + 'LONG-'
+LONG_OBSERVABLE_SWEEP_ID = LONG_PREFIX+'02'
+FORMAL_GATE_SHA256 = '45c89839e87a4b43a3c0e2fd1cc5e96dd8eed51996a933458f711c510c247a52'
 PHYSICS_CLEARANCE_PREFIXES = (PASSAGE_PREFIX, REARM_PREFIX, RANK_PREFIX, CURVED_PREFIX, HOVER_PATH_PREFIX, STOP_RELEASE_PREFIX)
 ENDURANCE_PREFIXES = (ENDURANCE_PREFIX, HOVER_PREFIX, *PHYSICS_CLEARANCE_PREFIXES)
 RETURN_DURATION_MS = 36000
@@ -148,7 +152,9 @@ CLEARANCE_ID = EARLY_PREFIX + '02'
 REGRESSION_ID = PREFIX + 'R6-01'
 REGRESSION_RETRY_ID = PREFIX + 'R6-02'
 REGRESSION_SUPPORTED_WALL_ID = PREFIX + 'R6-03'
-REGRESSION_IDS = (REGRESSION_ID, REGRESSION_RETRY_ID, REGRESSION_SUPPORTED_WALL_ID)
+REGRESSION_CORRIDOR_PROJECTION_ID = PREFIX + 'R6-04'
+REGRESSION_IDS = (REGRESSION_ID, REGRESSION_RETRY_ID, REGRESSION_SUPPORTED_WALL_ID,
+                  REGRESSION_CORRIDOR_PROJECTION_ID)
 MODE = 'research-r6-dynamic-assay'
 LANES = 32
 STEP_MS = 100
@@ -767,6 +773,8 @@ def novel_contract(params):
         execution = (COMPOSED_CROSSING_EXECUTION,)
     elif params['experiment_id'] == NOVEL_OBSERVED_TURN_BRAKING_ID:
         execution = (OBSERVED_TURN_BRAKING_EXECUTION,)
+    elif params['experiment_id'] == NOVEL_OBSERVABLE_SWEEP_ID:
+        execution = (CORRIDOR_PROJECTION_EXECUTION,)
     elif params['experiment_id'] == NOVEL_FRONT_WALL_HANDOFF_ID:
         execution = (FRONT_WALL_HANDOFF_EXECUTION,)
     elif params['experiment_id'] == NOVEL_COLLECTIVE_PROJECTION_ID:
@@ -796,7 +804,9 @@ def novel_contract(params):
         raise ValueError('COMMAND_REPLAY_NOVEL_PARAMETERS')
     crossing = params[crossing_field]
     ramped = params['experiment_id'] in RAMPED_STREET_SWEEP_IDS
-    if not (crossing == authored_street_sweep(params['seed'], ramped=ramped) if sweep else valid_crossing_centers(crossing)):
+    observable = params['experiment_id'] == NOVEL_OBSERVABLE_SWEEP_ID
+    if not (crossing == authored_street_sweep(params['seed'], ramped=ramped, observable=observable)
+            if sweep else valid_crossing_centers(crossing)):
         raise ValueError('COMMAND_REPLAY_NOVEL_CROSSINGS')
     checked(params['models']['candidate'])
     clearance_radii(params['clearance_envelope'])
@@ -811,8 +821,10 @@ def novel_contract(params):
                     explicit_resets=len(labels), automatic_resets=transitions))
 
 
-def authored_street_sweep(seed, *, ramped=False):
-    from instinctlab.observations.moving_sphere import SWEEP_ACCELERATION_RAMP_S, street_sweep_phase
+def authored_street_sweep(seed, *, ramped=False, observable=False):
+    from instinctlab.observations.moving_sphere import (
+        OBSERVABLE_SWEEP_PROFILE, SWEEP_ACCELERATION_RAMP_S, street_sweep_phase,
+    )
     from .robustness_scenarios import reset_spec
 
     block = dict(id='continuous-replay-independent', task='pulse_hold')
@@ -821,6 +833,9 @@ def authored_street_sweep(seed, *, ramped=False):
         if command_layout(lane) == 'street_gap':
             spec = reset_spec(block, seed=seed, split='development', lane=lane, mount_position_m=(0., 0., .05))
             phases.append(street_sweep_phase(seed, lane, spec['root_position_local_m'][0]))
+    if observable:
+        return dict(schema_version='instinctrl-independent-street-sweep/3', phase_m=phases,
+                    ramp_s=SWEEP_ACCELERATION_RAMP_S, profile=OBSERVABLE_SWEEP_PROFILE)
     if ramped:
         return dict(schema_version='instinctrl-independent-street-sweep/2', phase_m=phases,
                     ramp_s=SWEEP_ACCELERATION_RAMP_S)
@@ -840,10 +855,11 @@ def long_contract(params):
     clearance_radii(params['clearance_envelope'])
     protocol = json.loads(checked(params['protocol']).read_bytes())
     versions = ('instinctrl-command-long-protocol/1', 'instinctrl-command-long-protocol/2',
-                'instinctrl-command-long-protocol/3')
+                'instinctrl-command-long-protocol/3', 'instinctrl-command-long-protocol/4')
     schema = protocol.get('schema_version')
     sweep = schema in versions[1:]
-    ramped = schema == versions[2]
+    ramped = schema in versions[2:]
+    observable = schema == versions[3]
     crossing_field = 'street_sweep' if sweep else 'street_center_ms'
     scenario = protocol.get(crossing_field)
     if (set(protocol) != {'schema_version', 'experiment_id', 'scene_seed', 'stream', 'execution', 'checkpoint',
@@ -852,7 +868,11 @@ def long_contract(params):
             or protocol['experiment_id'] != params['experiment_id'] or protocol['scene_seed'] != params['seed']
             or protocol['stream'] != params['stream'] or protocol['execution'] != params['execution']
             or protocol['checkpoint'] != params['models']['candidate']
-            or not (scenario == authored_street_sweep(params['seed'], ramped=ramped) if sweep else valid_crossing_centers(scenario))
+            or observable != (params['experiment_id'] == LONG_OBSERVABLE_SWEEP_ID)
+            or (observable and (params['execution'] != CORRIDOR_PROJECTION_EXECUTION
+                                or protocol['acceptance_gates'].get('sha256') != FORMAL_GATE_SHA256))
+            or not (scenario == authored_street_sweep(params['seed'], ramped=ramped, observable=observable)
+                    if sweep else valid_crossing_centers(scenario))
             or type(protocol['pulse_acceleration_m_s2']) not in (int, float)
             or protocol['pulse_acceleration_m_s2'] not in (.5, 1.)):
         raise ValueError('COMMAND_REPLAY_LONG_FREEZE')
@@ -1002,6 +1022,18 @@ def verify_supported_wall_pipelines(env, *, aligned=False):
 def verify_current_request_recovery(env):
     if not (env.escape_option.retry_command_handoff and env.escape_option.verify_outward_brake):
         raise ValueError('COMMAND_CURRENT_REQUEST_RECOVERY')
+
+
+def verify_corridor_projection(env):
+    from instinctlab.control.collective_projection import CollectiveProjectionAdapter
+    from instinctlab.control.corridor_projection_guard import CorridorProjectionGuard
+
+    if (not isinstance(env._wrench_adapter, CollectiveProjectionAdapter)
+            or not isinstance(env._corridor_projection, CorridorProjectionGuard)
+            or env._wrench_adapter.eligible is None
+            or not env.escape_option.verify_static_turn or not env.escape_option.observed_turn_braking
+            or not env.escape_option.verify_neutral_retry):
+        raise ValueError('COMMAND_CORRIDOR_PROJECTION_PROOF')
 
 
 def run(backend, params):
@@ -1324,7 +1356,8 @@ def run(backend, params):
             obstacle.configure(sensor_origins, axis, modes, departure_delay_s=delay,
                                half_period_s=CROSSING_TRAVEL_S if timed_crossings else None,
                                exact_clock=independently_timed, sweep_phase_m=phase,
-                               sweep_ramp_s=street_sweep.get('ramp_s', 0.) if street_sweep is not None else 0.)
+                               sweep_ramp_s=street_sweep.get('ramp_s', 0.) if street_sweep is not None else 0.,
+                               sweep_profile=street_sweep.get('profile') if street_sweep is not None else None)
             obstacle.end_travel_s[street & obstacle.active] = CROSSING_TRAVEL_S
             env.set_h1_initial_command(torch.zeros_like(env._command_b), 0)
             env.stage_r6_world_command(commands[0])
@@ -1566,8 +1599,7 @@ def run(backend, params):
                 raise ValueError('COMMAND_STATIC_TURN_ONSET_PROOF')
             model['static_turn_onset'] = True
         if execution == CORRIDOR_PROJECTION_EXECUTION:
-            if env._corridor_projection is None:
-                raise ValueError('COMMAND_CORRIDOR_PROJECTION_PROOF')
+            verify_corridor_projection(env)
             model['corridor_projection'] = True
         results[label] = model
     atomic_json_replace(output, 'command_replay.json', dict(models=results, counters=counters.snapshot()))

@@ -17,6 +17,9 @@ SWEEP_LENGTH_XY_M = (13., 2.7)
 SWEEP_SPEED_XY_M_S = (.37, .58)
 SWEEP_HEIGHT_M = 2.
 SWEEP_ACCELERATION_RAMP_S = 1.
+OBSERVABLE_SWEEP_PROFILE = 'raised-ramped'
+SWEEP_PROFILES = {None: (SWEEP_SPEED_XY_M_S, SWEEP_HEIGHT_M),
+                  OBSERVABLE_SWEEP_PROFILE: ((.30, .46), 2.24)}
 
 
 def street_sweep_phase(seed, lane, start_x):
@@ -29,10 +32,11 @@ def street_sweep_phase(seed, lane, start_x):
     return [x, schedule.uniform(0., y_period)]
 
 
-def street_sweep_pose(origins, age_s, phase_m, *, ramp_s=0.):
+def street_sweep_pose(origins, age_s, phase_m, *, ramp_s=0., profile=None):
     """Reflect a center along two independent, authored horizontal axes."""
     length = origins.new_tensor(SWEEP_LENGTH_XY_M)
-    speed = origins.new_tensor(SWEEP_SPEED_XY_M_S)
+    speed_xy, height = SWEEP_PROFILES[profile]
+    speed = origins.new_tensor(speed_xy)
     if ramp_s:
         acceleration = speed/ramp_s
         ramp_distance = .5*speed*ramp_s
@@ -51,14 +55,14 @@ def street_sweep_pose(origins, age_s, phase_m, *, ramp_s=0.):
         traveled = (phase_m+age_s[..., None]*speed).remainder(2.*length)
         offset = torch.minimum(traveled, 2.*length-traveled)
     xy = origins[..., :2]+origins.new_tensor(SWEEP_LOWER_XY_M)+offset
-    z = origins[..., 2:]+SWEEP_HEIGHT_M*torch.ones_like(xy[..., :1])
+    z = origins[..., 2:]+height*torch.ones_like(xy[..., :1])
     return torch.cat((xy, z), dim=-1)
 
 
-def street_sweep_initial_velocity(phase_m, ramp_s):
+def street_sweep_initial_velocity(phase_m, ramp_s, *, profile=None):
     """Velocity at the authored spatial phase for a ramped reflection."""
     length = phase_m.new_tensor(SWEEP_LENGTH_XY_M)
-    speed = phase_m.new_tensor(SWEEP_SPEED_XY_M_S)
+    speed = phase_m.new_tensor(SWEEP_PROFILES[profile][0])
     offset = torch.minimum(phase_m, 2.*length-phase_m)
     distance_to_turn = torch.minimum(offset, length-offset).clamp_min(0.)
     magnitude = (2.*speed/ramp_s*distance_to_turn).sqrt().minimum(speed)
@@ -140,7 +144,7 @@ class MovingSphere:
         self.contact_samples = 0
 
     def configure(self, sensor_origins, axis, modes, *, half_period_s=None, departure_delay_s=None,
-                  exact_clock=False, sweep_phase_m=None, sweep_ramp_s=0.):
+                  exact_clock=False, sweep_phase_m=None, sweep_ramp_s=0., sweep_profile=None):
         if self.enabled:
             raise RuntimeError('Existing moving-sphere block is active')
         if sweep_phase_m is not None and (not exact_clock or sweep_phase_m.shape != sensor_origins[:, :2].shape
@@ -154,6 +158,8 @@ class MovingSphere:
         if (type(sweep_ramp_s) not in (int, float) or sweep_ramp_s not in (0., SWEEP_ACCELERATION_RAMP_S)
                 or (sweep_ramp_s and sweep_phase_m is None)):
             raise ValueError('MOVING_SPHERE_STREET_SWEEP_RAMP')
+        if sweep_profile is not None and (sweep_profile != OBSERVABLE_SWEEP_PROFILE or not sweep_ramp_s):
+            raise ValueError('MOVING_SPHERE_STREET_SWEEP_PROFILE')
         if not self.verified_order:
             observed = self.asset.root_physx_view.get_transforms()[:, :3]
             if observed.shape != self.parked.shape:
@@ -175,6 +181,7 @@ class MovingSphere:
         self.departure_delay_s = departure_delay_s
         self.sweep_phase_m = sweep_phase_m
         self.sweep_ramp_s = sweep_ramp_s
+        self.sweep_profile = sweep_profile
         self.sweep_dt_s = None
         self.sweep_start_velocity = None
         if sweep_phase_m is not None:
@@ -182,7 +189,7 @@ class MovingSphere:
             self.sweep_origins[:, 2] -= PARK_HEIGHT_M
             self.start = self._street_sweep_pose(torch.zeros_like(self.age))
             if sweep_ramp_s:
-                velocity = street_sweep_initial_velocity(sweep_phase_m, sweep_ramp_s)
+                velocity = street_sweep_initial_velocity(sweep_phase_m, sweep_ramp_s, profile=sweep_profile)
                 self.sweep_start_velocity = velocity*self.active[:, None]
         self.motion_ticks = torch.zeros_like(self.indices) if exact_clock else None
         self.enabled = True
@@ -202,7 +209,8 @@ class MovingSphere:
         return self.start + travel_time.minimum(self.end_travel_s)[:, None] * self.velocity
 
     def _street_sweep_pose(self, age_s):
-        pose = street_sweep_pose(self.sweep_origins, age_s, self.sweep_phase_m, ramp_s=self.sweep_ramp_s)
+        pose = street_sweep_pose(self.sweep_origins, age_s, self.sweep_phase_m,
+                                 ramp_s=self.sweep_ramp_s, profile=self.sweep_profile)
         return torch.where(self.active[:, None], pose, self.parked)
 
     def reset(self, indices):
