@@ -1,0 +1,38 @@
+{
+  "branch_results": {
+    "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-COMMON-RESTART/BRANCHES.json",
+    "sha256": "611d18f385c48e2e6e0b9b79622a86dd131a0b045517560756926156adbfb964"
+  },
+  "common_inputs": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/common_restart/INPUTS.json",
+    "sha256": "4f4fd5957829296a4786d830f1d298d9c2df9a552777b7026ed1fc93136f41b3"
+  },
+  "common_script": {
+    "path": "/home/mint/rl_dev/instinctRL-dev/docs/experiments/instinct-continuous-command/lane19_reopening/common_restart/find_restart.py",
+    "sha256": "c70af861d5e810cdade10836211bd54ea00483cf589ef485e2f8ab581d153734"
+  },
+  "settings": {
+    "refinements": 8,
+    "released_cases": [
+      "nominal",
+      "early_negative",
+      "hard_negative"
+    ],
+    "seed_bearings_deg": [
+      0.0,
+      45.0,
+      90.0,
+      135.0,
+      180.0,
+      225.0,
+      270.0,
+      315.0
+    ],
+    "splits": [
+      1068,
+      1066,
+      1064,
+      1061
+    ]
+  }
+}
