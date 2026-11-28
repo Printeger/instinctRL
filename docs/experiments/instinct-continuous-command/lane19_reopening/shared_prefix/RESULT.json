@@ -1,0 +1,185 @@
+{
+  "ics_candidate_closed_loop_steps": 0,
+  "modes": {
+    "guarded_common": {
+      "best": {
+        "best": {
+          "clearance_m": -0.05343857430513366,
+          "group_outputs": [
+            {
+              "case": "nominal",
+              "drift_m": 0.1999000000014534,
+              "lag_s": 0.45,
+              "physical_min_m": -0.05343857430513366,
+              "quiet_speed_m_s": 0.06990000000027717,
+              "static_min_m": 1.490644591478663,
+              "time_s": 109.87
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.1999000000014534,
+              "lag_s": 0.45,
+              "physical_min_m": 0.14663101507553955,
+              "quiet_speed_m_s": 0.06990000000027717,
+              "static_min_m": 1.490644591478663,
+              "time_s": 108.925
+            }
+          ],
+          "iteration": 4,
+          "mover_clearance_m": -0.05343857430513366,
+          "seed": [
+            160,
+            160,
+            160
+          ],
+          "solver_success": true
+        },
+        "menu_id": 325
+      },
+      "candidate_count": 142,
+      "first_differing_issue": null,
+      "fully_stop_scored": 142,
+      "reference": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-SHARED-PREFIX/SEARCH-guarded_common.json",
+        "sha256": "90016d5631bdc2fa68c83d52c3acdcbd5cdd298c4f9c6362504cb8a9e2127d99"
+      }
+    },
+    "guarded_joint": {
+      "best": {
+        "best": {
+          "clearance_m": 0.1475447843192631,
+          "group_outputs": [
+            {
+              "case": "nominal",
+              "drift_m": 0.19990000000008318,
+              "lag_s": 0.45,
+              "physical_min_m": 0.14754763928550974,
+              "quiet_speed_m_s": 0.06990000000075924,
+              "static_min_m": 1.4190516498114445,
+              "time_s": 109.27
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.19990000000102962,
+              "lag_s": 0.45,
+              "physical_min_m": 0.1475447843192631,
+              "quiet_speed_m_s": 0.06926995582207056,
+              "static_min_m": 1.3831177260017988,
+              "time_s": 108.895
+            }
+          ],
+          "iteration": 4,
+          "mover_clearance_m": 0.1475447843192631,
+          "seed": [
+            220,
+            20,
+            200
+          ],
+          "solver_success": false
+        },
+        "menu_id": 325
+      },
+      "candidate_count": 142,
+      "first_differing_issue": 1067,
+      "fully_stop_scored": 136,
+      "reference": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-SHARED-PREFIX/SEARCH-guarded_joint.json",
+        "sha256": "236d52c83c9e45f902000b1caf6605b5bbe69422876977900f3418afea219fe6"
+      }
+    },
+    "strict_joint": {
+      "best": {
+        "best": {
+          "clearance_m": 0.14325926059111338,
+          "group_outputs": [
+            {
+              "case": "nominal",
+              "drift_m": 0.17202063049123253,
+              "lag_s": 0.45,
+              "physical_min_m": 0.14326941820187256,
+              "quiet_speed_m_s": 0.04448150282119822,
+              "static_min_m": 1.3179557425373871,
+              "time_s": 109.365
+            },
+            {
+              "case": "hard_positive",
+              "drift_m": 0.19990000000000646,
+              "lag_s": 0.45,
+              "physical_min_m": 0.14325926059111338,
+              "quiet_speed_m_s": 0.051688845600944375,
+              "static_min_m": 1.4992688401529455,
+              "time_s": 108.95
+            }
+          ],
+          "iteration": 4,
+          "mover_clearance_m": 0.14325926059111338,
+          "seed": [
+            170,
+            30,
+            160
+          ],
+          "solver_success": true
+        },
+        "menu_id": 324
+      },
+      "candidate_count": 17,
+      "first_differing_issue": 1067,
+      "fully_stop_scored": 17,
+      "reference": {
+        "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-SHARED-PREFIX/SEARCH-strict_joint.json",
+        "sha256": "511d799c4b02d32861f8b01f2e448ac97e4d1f340cdf3024fb344385d7df0778"
+      }
+    }
+  },
+  "native_evaluation_steps": 0,
+  "observation": {
+    "at_cutoff": {
+      "all_group_velocity_gap_m_s": null,
+      "hard_gap_after_error_m": null,
+      "hard_histories_identical": false,
+      "hard_registered_all_lags": false,
+      "min_hard_paired_projection_gap_m": null,
+      "step": 1067
+    },
+    "same_prefix_fit_by_lag": [
+      {
+        "hard_positive": false,
+        "lag_s": 0.25,
+        "nominal": false,
+        "observation_age_s": 0.0,
+        "step": 1067
+      },
+      {
+        "hard_positive": false,
+        "lag_s": 0.35,
+        "nominal": false,
+        "observation_age_s": 0.0,
+        "step": 1067
+      },
+      {
+        "hard_positive": true,
+        "lag_s": 0.45,
+        "nominal": true,
+        "observation_age_s": 0.0,
+        "step": 1067
+      }
+    ]
+  },
+  "raw": {
+    "OBSERVATION": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-SHARED-PREFIX/OBSERVATION.json",
+      "sha256": "875628bdfcfc8cd5513fb0dea8ef18ab339f5de8455264d92c103873f2ff7314"
+    },
+    "SEARCH": {
+      "path": "/home/mint/instinctrl-runs/INSTINCT-CONTINUOUS-COMMAND-CPU-LANE19-SHARED-PREFIX/SEARCH.json",
+      "sha256": "74f3425b3ab2aa8b5fdc22b3f1ef29f743899b025aa9f1a0aba6c7037d06b4b7"
+    }
+  },
+  "schema": "instinctrl-lane19-joint-shared-prefix/1",
+  "source_commits": {
+    "observation": "d81bff000eda0ce0740b95a401acff58732434a7",
+    "solver": "0e6924f762ce2452523ca3075fe30727cb3e8fbe"
+  },
+  "status": "no-clearance-and-stop-witness",
+  "training_steps": 0
+}
